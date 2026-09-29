@@ -1,0 +1,134 @@
+# The native test is deliberately NOT the Chromium/Linux suite. It launches the
+# Tauri debug .exe through tauri-driver/msedgedriver and fails without WebView2.
+# After the smoke it compiles and ZIPs the REAL release .exe (unsigned prototype).
+# Requires Actions access to this repository; no run has been observed locally.
+name: Windows Tauri / WebView2 native QA
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [arena/01a0da1c-arqgen-v3]
+    paths:
+      - .github/workflows/windows-webview2.yml
+      - Cargo.toml
+      - Cargo.lock
+      - core/**
+      - examples/**
+      - knowledge/**
+      - scripts/**
+      - web/**
+
+permissions:
+  contents: read
+
+jobs:
+  native-webview2:
+    runs-on: windows-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+          components: rustfmt
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - name: Versions and reproducible web dependencies
+        shell: pwsh
+        run: |
+          Write-Host "Windows $([System.Environment]::OSVersion.VersionString)"
+          rustc --version
+          cargo --version
+          node --version
+          npm --version
+          npm ci --prefix web
+          if ($LASTEXITCODE -ne 0) { throw 'npm ci failed' }
+      - name: Core and web regression gates (NOT native QA)
+        shell: pwsh
+        run: |
+          cargo fmt --all -- --check
+          if ($LASTEXITCODE -ne 0) { throw 'Rust formatting failed' }
+          cargo test --locked --workspace
+          if ($LASTEXITCODE -ne 0) { throw 'Rust tests failed' }
+          npm test --prefix web
+          if ($LASTEXITCODE -ne 0) { throw 'Web tests failed' }
+      - name: Build the actual Windows Tauri app (debug, no installer)
+        shell: pwsh
+        run: |
+          npm run tauri --prefix web -- build --debug --no-bundle
+          if ($LASTEXITCODE -ne 0) { throw 'Windows Tauri build failed' }
+          $app = Join-Path $env:GITHUB_WORKSPACE 'web/src-tauri/target/debug/arqgen-desktop.exe'
+          if (!(Test-Path $app)) { throw "Missing Tauri executable: $app" }
+          Get-FileHash $app -Algorithm SHA256 | Format-List
+          "ARQGEN_TAURI_BINARY=$app" >> $env:GITHUB_ENV
+      - name: Install native WebView2 drivers (no plugin/IPC in app)
+        shell: pwsh
+        run: |
+          cargo install tauri-driver --version 2.0.6 --locked
+          if ($LASTEXITCODE -ne 0) { throw 'tauri-driver installation failed' }
+          tauri-driver --version
+          if ($LASTEXITCODE -ne 0) { throw 'tauri-driver is not executable' }
+          # Pinned source; at runtime this tool downloads the driver
+          # matching the installed *WebView2 runtime* from Microsoft's server.
+          cargo install --git https://github.com/chippers/msedgedriver-tool --rev 8c4b34f51b45f5cf08013366d703de464ab871d1 --locked
+          if ($LASTEXITCODE -ne 0) { throw 'msedgedriver-tool installation failed' }
+          $folder = Join-Path $env:RUNNER_TEMP 'arqgen-edge-driver'
+          New-Item -ItemType Directory -Force -Path $folder | Out-Null
+          Push-Location $folder
+          try {
+            msedgedriver-tool
+            if ($LASTEXITCODE -ne 0) { throw 'No compatible WebView2 driver was downloaded' }
+            $edge = Join-Path $folder 'msedgedriver.exe'
+            if (!(Test-Path $edge)) { throw "Missing EdgeDriver: $edge" }
+            & $edge --version
+            if ($LASTEXITCODE -ne 0) { throw 'EdgeDriver is not executable' }
+            "ARQGEN_EDGEDRIVER=$edge" >> $env:GITHUB_ENV
+            "ARQGEN_TAURI_DRIVER=$((Get-Command tauri-driver).Source)" >> $env:GITHUB_ENV
+          } finally { Pop-Location }
+      - name: Smoke the REAL Tauri .exe in Edge WebView2
+        shell: pwsh
+        run: |
+          npm run test:webview2 --prefix web
+          if ($LASTEXITCODE -ne 0) { throw 'Native WebView2 smoke FAILED' }
+      - name: Compile release Windows GUI executable (without installer)
+        shell: pwsh
+        run: |
+          npm run tauri --prefix web -- build --no-bundle
+          if ($LASTEXITCODE -ne 0) { throw 'Release Windows .exe build failed' }
+          $app = Join-Path $env:GITHUB_WORKSPACE 'web/src-tauri/target/release/arqgen-desktop.exe'
+          if (!(Test-Path $app)) { throw "Missing release executable: $app" }
+          Get-FileHash $app -Algorithm SHA256 | Format-List
+      - name: Create and verify ZIP containing the actual release .exe
+        shell: pwsh
+        run: |
+          node scripts/package-windows.mjs
+          if ($LASTEXITCODE -ne 0) { throw 'Release executable ZIP failed validation' }
+      - name: Downloadable Windows EXE ZIP (unsigned prototype; WebView2 not included)
+        uses: actions/upload-artifact@v4
+        with:
+          name: ARQ-GEN-Windows-x64-0.21.0
+          path: artifacts/ARQ-GEN-Windows-x64-0.21.0.zip
+          if-no-files-found: error
+          retention-days: 7
+      - name: Produce NSIS offlineInstaller candidate (build only; not installation QA)
+        shell: pwsh
+        run: |
+          npm run tauri --prefix web -- build --bundles nsis
+          if ($LASTEXITCODE -ne 0) { throw 'NSIS build failed' }
+          $installers = @(Get-ChildItem 'web/src-tauri/target/release/bundle/nsis/*.exe' -ErrorAction SilentlyContinue)
+          if ($installers.Count -lt 1) { throw 'NSIS installer not produced' }
+          $installers | ForEach-Object { Get-FileHash $_.FullName -Algorithm SHA256 | Format-List }
+          Write-Host 'Installer build passed; installation on a CLEAN OFFLINE machine is STILL PENDING.'
+      - name: Diagnostic screenshot and Tauri lockfile (no unsigned installer uploaded)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-webview2-diagnostics
+          path: |
+            web/webview2-qa/failure.png
+            web/src-tauri/Cargo.lock
+          if-no-files-found: ignore
+          retention-days: 7

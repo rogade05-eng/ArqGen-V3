@@ -8200,3 +8200,21 @@ Con la especificación completa, el siguiente paso real es **empezar a implement
 6. **Fase 19–33:** UI + documentación + exportación + trazabilidad.
 
 **Corte crítico:** terminar la fase 18 y validar con un caso real. Antes de eso, ningún otro documento ni módulo tiene sentido.
+
+---
+
+# ADENDA DE IMPLEMENTACIÓN — MVP-0 (2026-09-25)
+
+Para el primer corte ejecutable, leer `docs/CONTRATO_MVP0.md` **antes** de traducir los contratos anteriores a código.
+Esa adenda resuelve las contradicciones y limita expresamente el alcance a una planta, parcela rectangular y reglas genéricas no certificadas; prevalece sobre las declaraciones anteriores **solo para MVP-0**.
+El informe `REVISION_ESPECIFICACION.md` documenta los problemas originales.
+
+Para el corte posterior MVP-0.1, `docs/CONTRATO_MVP01.md` prevalece en geometría de muros, áreas brutas/útiles y aberturas; no convierte los valores de ejemplo en normas certificadas.
+
+Para MVP-0.2, `docs/CONTRATO_MVP02.md` añade equipamiento 2D ilustrativo con zonas de uso y ruta interior; no certifica accesibilidad, ergonomía, ventilación ni normativa. Las partes anteriores de la especificación maestra conservan su carácter de visión futura.
+
+Para MVP-0.3, `docs/CONTRATO_MVP03.md` añade salidas y trazados de extracción reservados en planta para cada baño; sin equipo, caudal, conducto 3D o verificación de ventilación. Ningún estado de propuesta constituye aprobación técnica o normativa.
+
+Para MVP-0.4, `docs/CONTRATO_MVP04.md` añade únicamente un predimensionado nominal ilustrativo por baño. Calcula caudal OBJETIVO desde área útil, altura supuesta y renovaciones/hora supuestas; contrasta con referencia de ventilador EN AIRE LIBRE, velocidades hipotéticas de holgura y sección, y una banda vertical NUMÉRICA. No mide ni acredita caudal entregado, ventilación efectiva, conducto instalado, pérdidas de carga, reposición real, descarga segura ni cumplimiento normativo. `ventilation_status` permanece `not_evaluated`. Las partes previas son una visión futura, no código ya implementado.
+
+Para MVP-0.5, `docs/CONTRATO_MVP05.md` añade un presupuesto de presión EXCLUSIVAMENTE HIPOTÉTICO por baño. Su tramo recto procede de la reserva 2D y el espesor supuesto del muro; densidad, rozamiento, codos, salida y reserva de Pa son parámetros ilustrativos. Solo compara el objetivo con una interpolación ENTRE DOS PUNTOS NOMINALES SIN EQUIPO IDENTIFICADO, sin extrapolar. No verifica curvas de fabricante, pérdidas reales, punto de operación, caudal entregado, conducto 3D, reposición, descarga ni normativa. Ningún `ok` acredita ventilación efectiva: `ventilation_status` sigue `not_evaluated`.

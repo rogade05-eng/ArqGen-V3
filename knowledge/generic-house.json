@@ -1,0 +1,53 @@
+{
+  "id": "generic_house_demo",
+  "version": "0.8.0",
+  "regulatory_status": "illustrative_not_certified",
+  "setbacks": { "front": 3.0, "rear": 2.0, "left": 2.0, "right": 2.0 },
+  "max_coverage": 0.55,
+  "max_far": 0.70,
+  "corridor": { "min_width": 1.10, "soft_max_ratio": 0.15 },
+  "doors": { "main": 0.90, "room": 0.80, "bathroom": 0.70 },
+  "walls": { "exterior": 0.18, "partition": 0.12 },
+  "openings": { "corner_clearance": 0.15, "swing_clearance": 0.10 },
+  "max_egress_distance": 25.0,
+  "window_height": 1.20,
+  "spaces": {
+    "living_dining": { "area_min": 16.0, "area_pref": 20.0, "area_max": 38.0, "min_width": 3.00, "min_depth": 3.00, "window_ratio": 0.10 },
+    "kitchen": { "area_min": 7.0, "area_pref": 10.0, "area_max": 20.0, "min_width": 2.40, "min_depth": 2.40, "window_ratio": 0.10 },
+    "bedroom": { "area_min": 9.0, "area_pref": 11.0, "area_max": 20.0, "min_width": 2.70, "min_depth": 2.70, "window_ratio": 0.10 },
+    "bathroom": { "area_min": 3.0, "area_pref": 4.5, "area_max": 10.0, "min_width": 1.80, "min_depth": 1.80, "window_ratio": 0.05 }
+  },
+  "furnishings": {
+    "min_aisle": 0.55,
+    "sofa": { "width": 1.80, "depth": 0.80 },
+    "dining_table": { "width": 1.20, "depth": 0.75 },
+    "counter": { "width": 1.40, "depth": 0.60 },
+    "refrigerator": { "width": 0.60, "depth": 0.65 },
+    "bed": { "width": 1.35, "depth": 1.90 },
+    "shower": { "width": 0.85, "depth": 0.85 },
+    "toilet": { "width": 0.65, "depth": 0.70 },
+    "basin": { "width": 0.50, "depth": 0.42 }
+  },
+  "bath_exhaust": { "outlet_span": 0.16, "route_band": 0.16, "fixture_gap": 0.02, "max_run": 3.0 },
+  "bath_airflow": {
+    "assumed_ceiling_height": 2.60,
+    "target_ach": 4.0,
+    "fan_free_air_rating": 120.0,
+    "door_undercut": 0.025,
+    "max_transfer_velocity": 1.6,
+    "duct_height": 0.16,
+    "duct_bottom": 2.30,
+    "min_headroom": 2.10,
+    "max_duct_velocity": 2.0
+  },
+  "bath_pressure": {
+    "fan_reference_pressure_pa": 60.0,
+    "fan_reference_flow_m3h": 90.0,
+    "assumed_air_density_kg_m3": 1.20,
+    "assumed_darcy_factor": 0.04,
+    "assumed_bend_count": 2,
+    "assumed_bend_k": 1.5,
+    "assumed_outlet_k": 2.0,
+    "assumed_reserve_pa": 20.0
+  }
+}

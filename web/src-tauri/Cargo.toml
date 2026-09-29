@@ -1,0 +1,17 @@
+[package]
+name = "arqgen-desktop"
+version = "0.21.0"
+description = "ARQ GEN conceptual offline desktop shell"
+edition = "2021"
+build = "build.rs"
+
+# Isolated from the dependency-free core workspace. Desktop-only dependencies
+# must never prevent `cargo test --offline --workspace` in the root repo.
+[workspace]
+resolver = "2"
+
+[build-dependencies]
+tauri-build = { version = "=2.6.3", features = [] }
+
+[dependencies]
+tauri = { version = "=2.11.5", features = [] }

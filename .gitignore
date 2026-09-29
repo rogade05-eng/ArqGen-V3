@@ -1,0 +1,11 @@
+/target/
+/web/src-tauri/target/
+/node_modules/
+/web/node_modules/
+/dist/
+/web/dist/
+/web/webview2-qa/
+/artifacts/
+*.log
+.DS_Store
+/.arena/

@@ -1,0 +1,33 @@
+# Contrato correctivo — MVP-0.8: reabrir sin confiar en el archivo
+
+**Estado:** implementado en cliente web offline (2026-09-25). Amplía [MVP-0.7](CONTRATO_MVP07.md). El núcleo Rust/CLI/WASM **no cambia**: `engine_version = "mvp0.6-rust-0.7.0"`, `core.version = "0.7.0"` y `knowledge/generic-house.json@0.7.0`; web pasa a `0.9.0`. No se alteran hashes, reglas ni algoritmos para añadir un botón de interfaz.
+
+## 1. Guardar, abrir y verificar
+
+El JSON individual existente `{input, generation, selection}` y la comparativa `arqgen-illustrative-comparison-v1` siguen siendo los **únicos** dos formatos admitidos. Los archivos están en manos del usuario; el cuaderno sigue sin persistencia automática. «Abrir JSON y verificar» permite volver a cargar ambos. La importación:
+
+1. Limita el tamaño a **8 MiB** antes de leerlo; exige UTF-8 decodificable y JSON válido. El ruleset debe coincidir íntegramente con el demo instalado salvo los **tres parámetros editables** de `bath_pressure`; no se realiza migración silenciosa ni se aceptan declaraciones de certificación adicionales en el documento.
+2. Toma **solo cada `input`** como hipótesis candidata y vuelve a ejecutar el **WASM Rust local**. La validación estricta de reglas y geometría sigue residiendo en Rust. Requiere `status: "ok"` o `"infeasible"`; nunca guarda un `error` como escenario.
+3. Compara **estructuralmente y sin depender del orden de claves JSON** la `generation` guardada **entera** con la salida recién recalculada: hash, versiones, planos SVG, geometría, motivaciones, recuentos, estados y avisos. La comparación es iterativa y acotada en complejidad. En una comparativa se vuelven a verificar **todas** las columnas y su igualdad de parcela/programa/semilla/reglas fijas/versión mediante el contrato del [MVP-0.7](CONTRATO_MVP07.md), además de los metadatos del archivo.
+4. La operación es **todo o nada**. Un archivo adulterado, obsoleto o incompatible no sustituye formulario, planos ni cuaderno anteriores. Si pasa, se muestran **exclusivamente resultados recién devueltos por Rust**, **nunca** los SVG del archivo. Un JSON individual reemplaza el cuaderno por uno vacío; una comparativa restaura 2–3 columnas y muestra la primera regenerada. Cambios del formulario mientras se lee un archivo cancelan la importación.
+5. La propiedad `selection` de un JSON individual debe ser `null` o una preferencia preliminar coherente con hash, alternativa y fecha. Aunque sea válida **no se restaura automáticamente** como aprobación. El usuario debe revisar el resultado; una preferencia local previa (separada del archivo) sigue ligada a su propio hash.
+
+Esto verifica **consistencia y reproducibilidad frente a este ejecutable**, no firma digital, autoría, procedencia normativa, autenticidad de un fabricante ni validez de obra. El parser del navegador construye el objeto JSON antes del replay; la protección fundamental no depende de confiar en valores del archivo. El límite de 8 MiB no convierte una importación en un mecanismo de gestión de grandes proyectos.
+
+## 2. Ficha textual estrictamente conceptual
+
+Solo cuando existe una alternativa `ok` actualmente regenerada se permite «Ficha TXT». Es **texto plano**, no código HTML ni un informe reglamentario. Transcribe `input_hash`, motor/ruleset, semilla, parcela, programa, superficies bruta/útil/reserva y locales **ya computados por Rust** (valores de área redondeados a centésimas para lectura), cada `decision.rule` con su explicación, el histograma de descartes y los avisos. Para baños rotula el caudal como **OBJETIVO** y el presupuesto de presión como **HIPOTÉTICO**. El exportador exige que estados de ventilación y caudal entregado sigan `not_evaluated` y que el ID/versión de reglas coincidan con la entrada. No ejecuta fórmulas arquitectónicas nuevas.
+
+La ficha dice «NO APTO PARA OBRA» y excluye declaración de cumplimiento, caudal entregado, ficha de equipo, accesibilidad, estructura y ventilación verificada. No se genera ninguna ficha desde `error`, `infeasible` o un formulario modificado aún sin regenerar. El SVG y la ficha `.txt` **no sustituyen** el snapshot JSON si se necesita reproducir el escenario.
+
+## 3. Paquete estático reutilizable sin red
+
+`npm run build --prefix web` genera `dist/web/sw.js` a partir de los bytes del HTML, JS, CSS y WASM de ese **mismo build**. Solo esos archivos de aplicación entran en `CacheStorage`, no archivos del usuario ni respuestas JSON arbitrarias. El service worker se registra **solo en producción**, requiere HTTPS o localhost y una primera carga completa con red; después permite recargar la página y seguir generando sin red. Si la instalación falla, la etiqueta de la interfaz no anuncia la disponibilidad offline. La caché versionada se reemplaza al actualizar el build; tampoco es persistencia de proyectos ni sustituye un servidor local o un instalador de escritorio. El modo desarrollo de Vite funciona localmente mientras el servidor siga encendido, sin exigir servicio externo.
+
+## 4. Pruebas y límites posteriores
+
+`web/tests/archive.test.mjs` cubre replay individual, comparación de tres corridas (0/48, 12/48, 48/48), cambio de hash/versión/SVG/contadores/metadatos, reglas fijas incompatibles, falsificación de aprobación, formato desconocido y archivo excesivo; un fallo en la segunda columna no devuelve un cuaderno parcial. `web/tests/report.test.mjs` verifica que la ficha describe áreas, Q objetivo, presión supuesta, decisiones y avisos de resultados Rust y rechaza inviabilidad y estados alterados. `web/tests/offline.test.mjs` comprueba contenido restringido y versión por bytes de la caché. Se mantienen **37 pruebas Rust**, pruebas CLI/WASM de paridad y navegación de escritorio/móvil; en Chromium se comprobó recarga y generación con WASM **sin red** tras precargar la versión de producción, además de importación válida y fallida sin ejecutar SVG alterados ni modificar una vista anterior por error.
+
+Reproducir desde raíz: `cargo fmt --all -- --check`, `cargo test --offline --workspace`, `npm run build --prefix web`, `npm test --prefix web`; iniciar la vista con `npm run dev --prefix web`.
+
+**No confundir cierre del flujo demostrativo con producto terminado:** siguen fuera Tauri empaquetado, persistencia de proyecto transaccional, informes normativos, parcelas irregulares/varias plantas, programa derivado, evaluación/refinamiento completos, datos verificables de equipos y normativa por jurisdicción, diseño instalable y medición de caudal entregado. Véase [estado del producto](ESTADO_PRODUCTO.md). No se debe atribuir viabilidad reglamentaria o ventilación efectiva a estos ejemplos.

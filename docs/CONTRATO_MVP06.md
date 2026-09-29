@@ -1,0 +1,29 @@
+# Contrato correctivo — MVP-0.6: exploración de hipótesis de presión
+
+**Estado:** implementado en núcleo Rust, CLI y WebAssembly, con controles web (2026-09-25). Amplía el [MVP-0.5](CONTRATO_MVP05.md), sin cambiar su cálculo de presión a Q objetivo, las validaciones geométricas ni el alcance **estrictamente ilustrativo**. Se exploran hasta 48 variantes de una sola planta y parcela rectangular; «infeasible» significa que **esta búsqueda acotada** no encontró alternativa válida, no imposibilidad universal.
+
+## 1. Parámetros explorables y límites
+
+La interfaz permite editar exactamente tres valores de `rules.bath_pressure`: `fan_reference_pressure_pa` (5–500 Pa, demo 60), `fan_reference_flow_m3h` (1–500 m³/h y **estrictamente menor** que la referencia en aire libre, demo 90) y `assumed_reserve_pa` (0–100 Pa, demo 20). El punto en aire libre `(0 Pa, 120 m³/h)` del demo y los coeficientes de densidad, Darcy, codos y salida **no** son editables desde la UI; el núcleo conserva la validación estricta de todas las reglas. El formulario permite decimales. Una pareja de puntos incoherente (`Q_segundo ≥ Q_aire_libre`) es `error`, no una variante aprobada. Si el presupuesto hipotético sobrepasa la presión del segundo punto o la capacidad lineal interpolada queda bajo el objetivo nominal, el motor descarta la variante. No se extrapola.
+
+Cada generación usa un **clon nuevo** del ruleset JSON de demostración con esos tres valores sobrescritos; no modifica la importación compartida. «Restaurar hipótesis demo» restablece los tres valores originales y regenera si el resto del formulario es válido. La semilla sigue siendo reproducible. Cualquier cambio invalida la vista anterior para aprobación y descarga hasta regenerar; cada generación captura la entrada realmente enviada al motor.
+
+**No hay equipo real seleccionado ni curva de fabricante.** Dos puntos inventados y una interpolación no son una curva certificada, no determinan el punto real de operación ni el caudal entregado. Se mantienen `bath_pressure.status: "hypothetical_pressure_screen_only"`, `bath_pressure.delivered_flow_status: "not_evaluated"` y la ventilación del baño en `"not_evaluated"`. Tampoco se validan conductos instalados, aire de reposición, descargas, pérdidas reales, normativa ni seguridad de obra.
+
+## 2. Descartes por primera causa
+
+La respuesta Rust expone `rejection_summary: [{"reason": string, "count": entero}, ...]` **tanto en `ok` como en `infeasible`**. Cada variante generada que se rechaza contribuye **una vez** con el primer motivo informado por el motor; si supera este cribado no aparece en el histograma. El orden es determinista: recuento descendente y después texto de motivo ascendente. Siempre `sum(count) == rejected`, con `0 ≤ rejected ≤ generated`. Se conserva el historial de causas incluso si existen opciones válidas. Las `alternatives` de `infeasible` son `[]`; cuando fallan comprobaciones previas a la búsqueda, `generated: 0`, `rejected: 0`, `rejection_summary: []` y `reasons` describe el fallo. `error` tiene `rejection_summary: []` y `alternatives: []`; no simula que se evaluaron variantes.
+
+`reasons` de una búsqueda inviabilizada mantiene hasta cuatro causas resumidas para lectura rápida; **el histograma completo** es la fuente de los recuentos. Los motivos son diagnósticos del conjunto de reglas/propuestas ensayadas, **no** normativa, diagnóstico de instalación ni relación de todas las configuraciones posibles. La UI inserta los textos como `textContent`, no como HTML, y muestra el histograma en resultados válidos e inviables.
+
+## 3. Reproducción y exportación
+
+`input_hash` cubre el encargo, la semilla, **todo** el ruleset y la versión del motor. Modificar cualquiera de las tres hipótesis cambia el hash sin contaminar las siguientes peticiones. La descarga JSON web es `{ "input": { site, program, seed, rules }, "generation": respuesta_del_motor, "selection": preferencia_o_null }`. `input.rules` es un **snapshot de todas las reglas efectivamente empleadas**, incluyendo la pareja y la reserva editadas. La selección es una preferencia preliminar y se asocia al hash; no certifica nada. Para reejecutar por CLI, separar `input.rules` en `--rules` y pasar `{site, program, seed}` como encargo. El SVG aislado ilustra una alternativa, pero **no** incluye el snapshot de reglas: conservar el JSON para auditar o reproducir la hipótesis. `input_hash` es identificador reproducible, **no firma criptográfica**.
+
+Versión actual: `engine_version = "mvp0.6-rust-0.7.0"`, demo `rules.version = "0.7.0"`, paquetes Rust y web `0.7.0`. La versión demo anterior y sus preferencias se invalidan por hash/versionado. Un caso de prueba con segundo punto supuesto `20 m³/h` conserva tres alternativas `ok` pero descarta **12 de 48** variantes, cuyos motivos figuran en `rejection_summary`.
+
+## 4. Criterios comprobados y próximos límites
+
+Las pruebas Rust verifican sumas, orden, estados previos e inviabilidad, rechazo parcial y estabilidad de JSON; las pruebas WASM verifican hash distinto para cada parámetro, estado `not_evaluated`, invariantes del histograma y paridad byte a byte con CLI para escenarios válidos, parcialmente rechazados, inviables y erróneos. Reproducir desde la raíz: `cargo fmt --all -- --check`, `cargo test --offline --workspace`, `npm run build --prefix web`, `npm test --prefix web`. La UI se puede ejecutar con `npm run dev --prefix web` y revisar manualmente campos, restauración y descarga.
+
+**Siguiente límite técnico (no implementado):** una evaluación de ventilación requeriría un ventilador identificado con datos contrastables, red instalable 3D, pérdidas dependientes del caudal, curva del sistema y punto de operación, entrada de aire y descarga segura, reglamentación con fuentes locales, ensayo y medición de caudal entregado. Ninguna hipótesis de este corte satisface esos requisitos.

@@ -1,0 +1,18 @@
+[package]
+name = "arqgen-core"
+version = "0.16.0"
+edition = "2021"
+license = "LGPL-2.1-only"
+description = "Núcleo offline del primer corte de ARQ GEN"
+
+[lib]
+name = "arqgen_core"
+crate-type = ["rlib", "cdylib"]
+
+[[bin]]
+name = "arqgen"
+path = "src/bin/arqgen.rs"
+
+[[bin]]
+name = "arqgen-explore"
+path = "src/bin/arqgen-explore.rs"

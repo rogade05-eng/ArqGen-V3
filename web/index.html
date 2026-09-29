@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#173c36" />
+  <meta name="description" content="ARQ GEN: primer corte generativo arquitectónico, offline y trazable." />
+  <title>ARQ GEN — Anteproyecto offline</title>
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar" aria-label="Navegación del proyecto">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+        <div><strong>ARQ<span>·</span>GEN</strong><small>ESTUDIO GENERATIVO</small></div>
+      </div>
+      <div class="side-rule"></div>
+      <div class="sidebar-section-label">ESPACIO DE TRABAJO</div>
+      <nav class="side-nav">
+        <a href="#encargo" class="active"><span class="nav-icon">01</span> El encargo</a>
+        <a href="#propuestas"><span class="nav-icon">02</span> Propuestas</a>
+        <a href="#trazabilidad"><span class="nav-icon">03</span> Trazabilidad</a>
+        <a href="#explorador"><span class="nav-icon">04</span> Explorar semillas</a>
+        <a href="#comparador"><span class="nav-icon">05</span> Comparador</a>
+        <a href="#cartera"><span class="nav-icon">06</span> Cartera local</a>
+      </nav>
+      <div class="sidebar-note">
+        <div class="note-icon">⌁</div>
+        <div><strong>Una idea antes del plano.</strong><p>Exploración arquitectónica basada en reglas explícitas, sin IA ni servicios externos.</p></div>
+      </div>
+      <div class="sidebar-bottom">
+        <div class="side-status"><span class="status-dot"></span> Núcleo Rust · local</div>
+        <span>MVP-0.20 <span class="side-sep">/</span> Web 0.21</span>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="breadcrumbs"><span id="project-breadcrumb">Proyecto sin guardar</span><span class="crumb-sep">/</span><strong>Vivienda unifamiliar</strong></div>
+        <div class="topbar-right"><span class="offline-chip"><span class="status-dot"></span> <span id="offline-label">Servidor local, sin nube</span></span><span class="user-badge" aria-label="Revisión profesional requerida">AG</span></div>
+      </header>
+
+      <div class="page-content">
+        <section class="intro" aria-labelledby="page-title">
+          <div class="intro-copy">
+            <span class="eyebrow"><span class="eyebrow-line"></span> NÚCLEO GENERATIVO / VIVIENDA UNIFAMILIAR</span>
+            <h1 id="page-title">Un punto de partida <em>bien pensado.</em></h1>
+            <p>Describe la parcela y el programa. El motor ensaya organizaciones espaciales, descarta las inviables y te muestra alternativas explicables.</p>
+          </div>
+          <div class="scope-pill"><span class="scope-glyph">▤</span><span><strong>Alcance de este corte</strong><small>1 planta · 0–2 recortes posteriores · 0–2 zonas 2D · presión hipotética</small></span></div>
+        </section>
+
+        <div class="notice-bar" role="note"><span class="notice-icon">!</span><span><strong>Anteproyecto, no plano de obra.</strong> Reglas ilustrativas sin certificación. Baños con extracción <em>reservada en planta</em>, caudal OBJETIVO y un presupuesto de presión HIPOTÉTICO con dos puntos nominales interpolados. Sin equipo elegido ni curva de fabricante: NO acredita pérdidas de carga reales, caudal entregado, aire de reposición, conducto 3D ni descarga segura. Parcela, zonas reservadas y trazado frontal (recto o con dos giros) solo como croquis autodeclarados; sin linderos, calle, derechos de paso ni exigencias legales comprobados. Retiros demo NO medidos desde los entrantes. Ventilación efectiva, iluminación natural, accesibilidad y estructura pendientes; revisión profesional obligatoria.</span></div>
+
+        <div class="workspace" id="encargo">
+          <aside class="brief-panel">
+            <div class="panel-heading"><div><span class="section-kicker">01 / DEFINE EL CONTEXTO</span><h2>El encargo</h2></div><span class="heading-icon" aria-hidden="true">⌘</span></div>
+            <form id="brief-form">
+              <div class="form-block">
+                <div class="form-title"><span>01</span> Dimensiones de la parcela</div>
+                <p class="form-hint">Caja del croquis de parcela; acceso centrado en el frente continuo.</p>
+                <div class="field-grid">
+                  <label class="field">Frente total <span>m</span><input name="width" type="number" min="4" max="200" step="0.1" value="18" required /></label>
+                  <label class="field">Fondo máximo <span>m</span><input name="depth" type="number" min="4" max="200" step="0.1" value="22" required /></label>
+                </div>
+                <label class="field field-full">Orientación del frente <span>brújula</span>
+                  <select name="front_orientation"><option value="S" selected>Sur</option><option value="N">Norte</option><option value="E">Este</option><option value="W">Oeste</option></select>
+                </label>
+                <p class="context-hint" id="geometry-rules">Cargando retiros y espesores ilustrativos…</p>
+                <div class="plot-sketch">
+                  <label class="plot-check"><input name="plot_notch_enabled" type="checkbox" aria-controls="plot-notch-fields plot-notch-2-fields" aria-describedby="plot-notch-hint" /> Recortar la esquina posterior A · forma en L</label>
+                  <p class="context-hint" id="plot-notch-hint">Croquis del solicitante, NO levantamiento ni lindero legal. Esquina izquierda del frente = (0,0); x a la derecha e y hacia el fondo. El frente permanece continuo. Puedes recortar también la esquina posterior opuesta, conservando al menos 1 m de franja central dibujada (mínimo ilustrativo, NO retiro legal). Ambos recortes quedan FUERA del croquis: reducen área demo y excluyen huella bruta y bandas del trazado frontal 2D. Retiros solo desde la caja exterior, NO desde los entrantes; tampoco se evalúa acceso exterior, luz ni ventilación.</p>
+                  <fieldset id="plot-notch-fields" disabled hidden aria-label="Recorte posterior del croquis no verificado" aria-describedby="plot-notch-hint">
+                    <label class="field">Esquina del fondo
+                      <select name="notch_side"><option value="left">Izquierda</option><option value="right">Derecha</option></select>
+                    </label>
+                    <div class="field-grid">
+                      <label class="field">Ancho recortado <span>m</span><input name="notch_width" type="number" min="1" max="200" step="any" value="4" required /></label>
+                      <label class="field">Fondo recortado <span>m</span><input name="notch_depth" type="number" min="1" max="200" step="any" value="10" required /></label>
+                    </div>
+                    <p class="context-hint">Cada cota debe dejar al menos 1 m en la caja dibujada; Rust valida las medidas y la franja central si hay dos recortes.</p>
+                  </fieldset>
+                  <label class="plot-check"><input name="plot_notch_2_enabled" type="checkbox" aria-controls="plot-notch-2-fields" aria-describedby="plot-notch-hint" disabled /> Recortar también la esquina posterior opuesta · opcional</label>
+                  <fieldset id="plot-notch-2-fields" disabled hidden aria-label="Segundo recorte posterior del croquis no verificado" aria-describedby="plot-notch-hint">
+                    <div class="field-grid">
+                      <label class="field">Ancho B <span>m</span><input name="notch_2_width" type="number" min="1" max="200" step="any" value="3" required /></label>
+                      <label class="field">Fondo B <span>m</span><input name="notch_2_depth" type="number" min="1" max="200" step="any" value="9" required /></label>
+                    </div>
+                    <p class="context-hint">Se ubica automáticamente en la esquina contraria a A; no se recortan dos veces la misma esquina.</p>
+                  </fieldset>
+                </div>
+                <div class="approach-sketch">
+                  <strong class="approach-title">Trazado frontal elegido · SOLO croquis 2D</strong>
+                  <p class="context-hint" id="approach-hint">Desde un punto declarado del borde frontal hasta la puerta principal centrada. Rust comprueba el ancho completo de una franja recta o de tres bandas con dos giros ortogonales, dentro del retiro frontal ilustrativo y sin cruzar el recorte ni las zonas reservadas dibujadas. No busca otras rutas ni comprueba calle, servidumbre, nivel, pavimento, accesibilidad o acceso efectivo.</p>
+                  <label class="field field-full">Forma del croquis frontal
+                    <select name="approach_shape" aria-controls="approach-detour-fields" aria-describedby="approach-hint"><option value="straight_front_strip" selected>Recta desde el frente</option><option value="orthogonal_front_detour">Rodeo ortogonal · dos giros declarados</option></select>
+                  </label>
+                  <label class="field field-full">Ancho dibujado <span>m · hipótesis no normativa</span>
+                    <input name="approach_width" type="number" min="0.9" max="6" step="any" value="1.2" required aria-describedby="approach-hint" />
+                  </label>
+                  <fieldset id="approach-detour-fields" disabled hidden aria-label="Dos giros del croquis frontal no verificado" aria-describedby="approach-hint">
+                    <div class="field-grid">
+                      <label class="field">Punto del borde · x <span>m desde izquierda</span><input name="approach_front_x" type="number" min="0.6" max="17.4" step="any" value="11.5" required /></label>
+                      <label class="field">Cota de ambos giros · y <span>m desde frente</span><input name="approach_turn_y" type="number" min="0.6" max="2.4" step="any" value="1.6" required /></label>
+                    </div>
+                    <p class="context-hint">Entrada vertical hasta y; banda horizontal al eje de puerta; banda vertical final. El ancho entero debe caber en el retiro frontal demo, incluido en los giros. No añade superficie construida ni evita una reserva por una línea de ancho cero.</p>
+                  </fieldset>
+                  <p class="context-hint">Debe cubrir al menos el vano principal demo; no es ancho legal, itinerario accesible ni medición de campo.</p>
+                </div>
+                <div class="reservation-sketch">
+                  <label class="reservation-check"><input name="reserve_enabled" type="checkbox" aria-controls="reservation-fields reservation-2-fields" aria-describedby="reservation-hint" /> Evitar una zona rectangular A de la parcela</label>
+                  <p class="context-hint" id="reservation-hint">Hasta dos rectángulos voluntarios del solicitante, NO deslinde ni limitación legal verificada. Activa A para poder añadir B. Origen: esquina izquierda del frente; x a la derecha, y hacia el fondo. Deben quedar dentro del contorno, fuera del recorte y sin solaparse entre sí (contacto de bordes permitido). Excluyen huella bruta y todas las bandas del trazado frontal elegido en 2D; no evalúan acceso vial real, árboles ni iluminación.</p>
+                  <fieldset id="reservation-fields" disabled hidden aria-label="Zona voluntaria A no verificada" aria-describedby="reservation-hint">
+                    <div class="field-grid">
+                      <label class="field">x <span>m</span><input name="reserve_x" type="number" min="0" max="200" step="any" value="4.5" required /></label>
+                      <label class="field">y <span>m</span><input name="reserve_y" type="number" min="0" max="200" step="any" value="12" required /></label>
+                      <label class="field">Ancho <span>m</span><input name="reserve_width" type="number" min="0.1" max="200" step="any" value="2" required /></label>
+                      <label class="field">Fondo <span>m</span><input name="reserve_depth" type="number" min="0.1" max="200" step="any" value="2" required /></label>
+                    </div>
+                  </fieldset>
+                  <label class="reservation-check"><input name="reserve_2_enabled" type="checkbox" aria-controls="reservation-2-fields" aria-describedby="reservation-hint" disabled /> Añadir zona rectangular B · opcional</label>
+                  <fieldset id="reservation-2-fields" disabled hidden aria-label="Zona voluntaria B no verificada" aria-describedby="reservation-hint">
+                    <div class="field-grid">
+                      <label class="field">x <span>m</span><input name="reserve_2_x" type="number" min="0" max="200" step="any" value="13" required /></label>
+                      <label class="field">y <span>m</span><input name="reserve_2_y" type="number" min="0" max="200" step="any" value="12" required /></label>
+                      <label class="field">Ancho <span>m</span><input name="reserve_2_width" type="number" min="0.1" max="200" step="any" value="2" required /></label>
+                      <label class="field">Fondo <span>m</span><input name="reserve_2_depth" type="number" min="0.1" max="200" step="any" value="2" required /></label>
+                    </div>
+                    <p class="context-hint">Si la zona B cruza la A, Rust rechaza toda la entrada: no se descuenta dos veces la misma superficie.</p>
+                  </fieldset>
+                </div>
+              </div>
+              <div class="form-block">
+                <div class="form-title"><span>02</span> Programa arquitectónico</div>
+                <p class="form-hint">Sala-comedor y cocina incluidos en todas las propuestas.</p>
+                <div class="field-grid">
+                  <label class="field">Dormitorios <span>1–4</span><input name="bedrooms" type="number" min="1" max="4" step="1" value="3" required /></label>
+                  <label class="field">Baños <span>1–2</span><input name="bathrooms" type="number" min="1" max="2" step="1" value="2" required /></label>
+                </div>
+                <label class="field field-full">Huella bruta deseada <span>m² · orientativa</span><input name="target_built_area" type="number" min="30" max="500" step="1" value="95" required /></label>
+              </div>
+              <div class="form-block intake-block" role="group" aria-labelledby="intake-title" aria-describedby="intake-hint">
+                <div class="form-title" id="intake-title"><span>03</span> Contexto declarado · sin verificar</div>
+                <p class="form-hint">Cuba es el destino del producto, no la ubicación presumida de tu proyecto. Puedes dejar campos sin declarar.</p>
+                <label class="field field-full">Ubicación declarada
+                  <select name="project_jurisdiction"><option value="unreported" selected>Sin declarar</option><option value="CU">Cuba · declarada</option><option value="outside_CU">Fuera de Cuba · declarada</option></select>
+                </label>
+                <label class="field field-full">Clase de vivienda declarada
+                  <select name="housing_class"><option value="unreported" selected>Sin declarar</option><option value="urban_social">Vivienda social urbana · declarada</option><option value="other">Otra clase · declarada</option></select>
+                </label>
+                <div class="field-grid">
+                  <label class="field">Ocupantes <span>opcional · 1–20*</span><input name="occupants" type="number" min="1" max="20" step="1" placeholder="Sin declarar" /></label>
+                  <label class="field">Accesibilidad declarada
+                    <select name="accessibility_needs"><option value="unreported" selected>Sin declarar</option><option value="declared">Necesidades declaradas</option><option value="none_declared">No declaradas</option></select>
+                  </label>
+                </div>
+                <p class="context-hint" id="intake-hint">*Límite de captura del prototipo, no umbral normativo. Una declaración —incluso «no declaradas»— NO acredita aplicabilidad, exención, accesibilidad ni cumplimiento. Requiere fuente oficial y revisión profesional.</p>
+              </div>
+              <div class="form-block">
+                <div class="form-title"><span>04</span> Control de generación</div>
+                <label class="field field-full">Semilla reproducible <span>0–4294967295</span><input name="seed" type="number" min="0" max="4294967295" step="1" value="42" required /></label>
+                <p class="context-hint">Misma entrada y misma semilla → mismo resultado.</p>
+              </div>
+              <div class="form-block last-form-block scenario-block" role="group" aria-labelledby="scenario-title">
+                <div class="form-title" id="scenario-title"><span>05</span> Laboratorio de hipótesis</div>
+                <p class="form-hint">Solo cambia una referencia matemática, NO el rendimiento de un equipo real. Regenera para comparar.</p>
+                <p class="scenario-fixed" id="free-air-reference">Referencia en aire libre: cargando…</p>
+                <div class="field-grid">
+                  <label class="field">Presión del 2.º punto <span>Pa · supuestos</span><input name="fan_reference_pressure_pa" type="number" min="5" max="500" step="any" value="60" aria-describedby="scenario-hint" required /></label>
+                  <label class="field">Caudal del 2.º punto <span>m³/h · supuesto</span><input name="fan_reference_flow_m3h" type="number" min="1" max="120" step="any" value="90" aria-describedby="scenario-hint" required /></label>
+                </div>
+                <label class="field field-full">Reserva de presión <span>Pa · supuestos</span><input name="assumed_reserve_pa" type="number" min="0" max="100" step="any" value="20" aria-describedby="scenario-hint" required /></label>
+                <p class="context-hint" id="scenario-hint">Dos puntos nominales inventados; los demás coeficientes demo permanecen fijos. Nada aquí certifica caudal entregado.</p>
+                <button class="scenario-reset" id="reset-scenario" type="button">↺ &nbsp;Restaurar hipótesis demo</button>
+              </div>
+              <button class="primary-button" id="generate-button" type="submit"><span class="button-star" aria-hidden="true">✳</span> Generar alternativas <span class="button-arrow" aria-hidden="true">↗</span></button>
+              <button class="text-button" id="new-seed" type="button">↻ &nbsp;Probar otra semilla</button>
+              <div class="history-strip" role="group" aria-label="Historial de corridas validadas de esta pestaña">
+                <span><strong>↶ &nbsp;Corridas validadas</strong><small id="history-count">0 / 0 · solo esta sesión</small></span>
+                <div><button id="history-undo" type="button" disabled>← Deshacer</button><button id="history-redo" type="button" disabled>Rehacer →</button></div>
+                <p id="history-feedback" role="status" hidden></p>
+                <small>Hasta 12 estados <em>evaluados</em> en esta pestaña. Deshacer descarta cambios sin generar; cada restauración vuelve a ejecutar Rust. No es un historial de teclas, aprobación ni guardado automático.</small>
+              </div>
+            </form>
+            <div class="rule-source"><span class="rule-source-icon">◇</span><span><strong>Base de conocimiento local</strong><small id="rule-version">Cargando configuración…</small></span></div>
+          </aside>
+
+          <section class="results" id="propuestas" aria-live="polite">
+            <div id="engine-state" class="engine-state"><span class="spinner"></span> Iniciando motor Rust local…</div>
+            <div id="result-view" hidden>
+              <div class="result-heading"><div><span class="section-kicker">02 / EXPLORA SOLUCIONES</span><h2>Propuestas <span id="result-count">/ 03</span></h2></div><div class="result-meta"><span id="result-stamp">SEMILLA 42</span><span id="result-status" class="result-status">VALIDADAS</span></div></div>
+              <p class="result-description" id="selection-note"></p>
+              <section class="rejection-panel" id="run-rejections" aria-label="Motivos de descarte en esta búsqueda"></section>
+              <section class="scope-review" id="scope-review" role="note" aria-labelledby="scope-title">
+                <div class="scope-head"><div><span class="card-eyebrow">ÁMBITO Y EVIDENCIA · SOLO LECTURA</span><h3 id="scope-title">NC 598 y luz natural de baños</h3></div><strong id="scope-status">NO EVALUADO</strong></div>
+                <p id="scope-context"></p>
+                <p class="scope-daylight" id="scope-daylight"></p>
+                <details class="scope-sources"><summary>Procedencia: 1 copia PDF y 3 enlaces de terceros</summary><p id="scope-source-note"></p><ul id="scope-leads"></ul></details>
+                <p class="scope-pending" id="scope-stale" hidden>La entrada cambió: esta observación corresponde a la corrida anterior. Regenera antes de exportar.</p>
+              </section>
+              <div class="alternatives" id="alternatives" role="tablist" aria-label="Alternativas de planta"></div>
+              <div class="detail-grid" id="alt-panel" role="tabpanel" aria-labelledby="alt-tab-0" tabindex="0">
+                <div class="plan-card">
+                  <div class="card-toolbar"><div><span class="card-eyebrow">PLANTA CONCEPTUAL · SIN ESCALA DE IMPRESIÓN</span><h3 id="plan-title">Organización espacial</h3></div><span class="live-label"><span></span> Huella 2D contrastada con croquis</span></div>
+                  <div class="plan-frame" id="plan" aria-label="Planta de la alternativa seleccionada"></div>
+                  <div class="plan-legend"><span><i class="legend-swatch legend-public"></i> Pública</span><span><i class="legend-swatch legend-private"></i> Privada</span><span><i class="legend-swatch legend-service"></i> Servicio</span><span><i class="legend-swatch legend-wall"></i> Muro</span><span><i class="legend-window"></i> Ventana</span><span><i class="legend-swatch legend-fixture"></i> Equipamiento</span><span><i class="legend-swatch legend-exhaust"></i> Extracción reservada</span><span><i class="legend-swatch legend-site-reserve"></i> Zonas voluntarias</span><span><i class="legend-swatch legend-front-approach"></i> Trazado frontal 2D</span><span><i class="legend-swatch legend-plot-outline"></i> Contorno dibujado</span><button id="toggle-clearances" type="button" aria-controls="plan" aria-pressed="false">Ver holguras y paso</button></div>
+                  <p id="site-plot-summary" class="site-plot-summary" role="note" hidden></p>
+                  <p id="site-approach-summary" class="site-approach-summary" role="note" hidden></p>
+                  <p id="site-reservation-summary" class="site-reservation-summary" role="note" hidden></p>
+                </div>
+                <aside class="insights">
+                  <div class="insights-head"><span class="card-eyebrow">LECTURA DEL DISEÑO</span><h3>Lo que cuenta el plano</h3></div>
+                  <div class="area-ledger" role="group" aria-label="Balance de superficies modeladas">
+                    <div class="area-ledger-main"><span>HUELLA CONSTRUIDA · BRUTA</span><strong id="area-gross">—</strong></div>
+                    <div class="area-ledger-split"><span>Área útil <strong id="area-usable">—</strong></span><span>Muros y vanos <strong id="area-walls">—</strong></span></div>
+                    <p>Bruta = útil + franjas de muro, incluidos vanos.</p>
+                  </div>
+                  <div id="metric-list" class="metric-list"></div>
+                  <div class="mini-divider"></div>
+                  <div class="schedule-heading">Locales · área útil <span id="space-count"></span></div>
+                  <div class="schedule" id="space-schedule"></div>
+                  <div class="bath-exhaust-note" role="note"><strong id="exhaust-summary">—</strong><span>Proyección 2D hasta fachada, no conducto instalado.</span><div id="airflow-summary" class="airflow-summary"></div><small>Escenarios nominales e HIPOTÉTICOS, NO caudal entregado. Sin pérdidas reales, curva de fabricante, holgura real, interferencias en altura, descarga o ventilación efectiva comprobadas.</small></div>
+                  <div class="mini-divider"></div>
+                  <div class="trace" id="trazabilidad"><div class="schedule-heading">Por qué está aquí <span>↗</span></div><p class="trace-prompt">Selecciona un local en la planta para ver la decisión que lo sitúa.</p><p class="trace-equipment" id="trace-equipment" hidden></p><div id="trace-list"></div></div>
+                </aside>
+              </div>
+              <div class="warning-area" id="warnings"></div>
+              <details class="drawing-preview" id="drawing-preview" hidden>
+                <summary>Ver las tres láminas SVG A3 de esta alternativa · solo croquis</summary>
+                <div class="drawing-preview-grid" id="drawing-preview-grid" aria-label="Vista previa de tres hojas del mismo candidato Rust"></div>
+                <p>Vista previa reducida. Descarga el ZIP para abrir los SVG completos; imprimir al 100% y comprobar escala. No hay cortes, alzados ni segunda planta. <strong>NO APTO PARA OBRA.</strong></p>
+              </details>
+              <div class="action-bar"><div class="choice-copy"><strong id="choice-title">Tu criterio es el último paso.</strong><span id="choice-subtitle">Selecciona la propuesta que deseas desarrollar.</span></div><div class="action-buttons"><button type="button" class="ghost-button" id="export-json">↓ JSON</button><button type="button" class="ghost-button" id="export-svg">↓ SVG</button><button type="button" class="ghost-button" id="export-drawings" title="3 láminas conceptuales A3 SVG del mismo candidato, NO planos de obra">↓ Láminas SVG · ZIP</button><button type="button" class="ghost-button" id="export-report">↓ Ficha TXT</button><button type="button" class="approve-button" id="approve">Marcar como preferida <span>↗</span></button></div></div>
+              <p class="drawing-package-note">Láminas A3: emplazamiento declarado, planta amueblada y cotas del croquis. Tres vistas de <em>la misma alternativa</em>; todavía no hay cortes, fachadas, plantas superiores, hospital ni hotel. Imprimir al 100% y verificar escala. <strong>NO APTO PARA OBRA.</strong></p>
+              <p class="import-feedback" id="export-feedback" role="status" hidden></p>
+            </div>
+            <div id="empty-view" class="empty-view" hidden><div class="empty-symbol">◇</div><span class="section-kicker" id="empty-kicker">SIN PROPUESTAS</span><h2 id="empty-title">La parcela pide otra solución.</h2><p id="empty-message"></p><ul id="empty-reasons"></ul><section class="rejection-panel" id="empty-rejections" aria-label="Motivos de descarte en esta búsqueda" hidden></section><p class="empty-scope" id="empty-scope"></p></div>
+          </section>
+        </div>
+        <section class="comparison-panel explore-panel" id="explorador" aria-labelledby="explore-title">
+          <div class="comparison-heading">
+            <div><span class="section-kicker">03 / ENSANCHA LA BÚSQUEDA</span><h2 id="explore-title">Explorar varias semillas</h2></div>
+            <span class="comparison-count">SOLO CROQUIS · RUST LOCAL</span>
+          </div>
+          <p class="comparison-intro">Ensaya de <strong>2 a 12 semillas consecutivas</strong> para este mismo encargo y reglas. Rust revisa las 48 variantes de cada semilla, clasifica <strong>todas las que pasan sus restricciones demo</strong> por cinco objetivos heurísticos de Pareto y muestra hasta tres alternativas geométricamente separadas. Un frente Pareto de este lote <strong>NO es un óptimo global</strong>, viabilidad real, aprobación, cumplimiento cubano ni evaluación de luz o ventilación. El lote vive en esta pestaña; no se añade a la cartera ni al historial.</p>
+          <div class="comparison-toolbar explore-toolbar">
+            <label for="explore-count">Número de semillas
+              <select id="explore-count" aria-label="Número de semillas consecutivas"><option value="2">2 · 96 intentos</option><option value="4">4 · 192 intentos</option><option value="8" selected>8 · 384 intentos</option><option value="12">12 · 576 intentos</option></select>
+            </label>
+            <button class="compare-save" id="explore-start" type="button" disabled>Explorar lote con Rust</button>
+            <button class="compare-secondary" id="explore-cancel" type="button" disabled>Cancelar / borrar</button>
+            <button class="compare-secondary" id="explore-export" type="button" disabled>↓ Descargar lote JSON</button>
+            <button class="compare-secondary" id="explore-import" type="button" disabled>↑ Abrir lote y verificar</button>
+            <input id="explore-file" type="file" accept=".json,application/json" hidden aria-label="Seleccionar lote de semillas JSON para reproducir" />
+          </div>
+          <p class="import-feedback" id="explore-status" role="status" hidden></p>
+          <p class="comparison-message" id="explore-summary" aria-live="polite">Genera un encargo y explora semillas para ampliar la búsqueda limitada.</p>
+          <div id="explore-grid" class="explore-grid" aria-label="Alternativas de la exploración Rust"></div>
+          <details id="explore-audit" class="explore-audit" hidden><summary>Conteos y motivos por semilla · solo este lote</summary><div id="explore-audit-content"></div></details>
+          <p class="comparison-limit">Las propuestas del lote pueden <strong>no aparecer entre las tres de una corrida individual</strong>: aquí se comparan todas las variantes que Rust validó, no solo sus resultados abreviados. Descarga cada SVG conceptual o el JSON íntegro (máx. 8 MiB) para recuperarlo; al abrir JSON se reproduce <strong>todo el lote</strong> en el núcleo local antes de mostrar sus SVG. Si hay cambios o un proyecto abierto, se pide confirmación antes de sustituir el encargo en pantalla y limpiar el cuaderno; la cartera no se actualiza. Editar, deshacer, cambiar de proyecto o cancelar descarta el lote en memoria. Un archivo no firma ni certifica decisiones, linderos, accesibilidad, datos de extractor, ventilación efectiva o aptitud para obra.</p>
+        </section>
+        <section class="comparison-panel" id="comparador" aria-labelledby="comparison-title">
+          <div class="comparison-heading">
+            <div><span class="section-kicker">04 / COMPARA HIPÓTESIS</span><h2 id="comparison-title">Cuaderno de escenarios</h2></div>
+            <span class="comparison-count" id="comparison-count">0 / 3 GUARDADOS</span>
+          </div>
+          <p class="comparison-intro">Conserva hasta tres corridas del <strong>mismo contorno, trazado frontal y zonas voluntarias, programa, contexto, semilla y reglas fijas</strong>. Solo varían el segundo punto nominal y la reserva de presión. Puedes abrir el JSON de una corrida o una comparativa para <strong>verificarla de nuevo con Rust</strong>; comparar descartes NO equivale a medir ventilación ni elegir un equipo.</p>
+          <div class="comparison-toolbar">
+            <button class="compare-save" id="save-scenario" type="button" disabled>＋ Guardar corrida actual</button>
+            <button class="compare-secondary" id="export-comparison" type="button" disabled>↓ Comparativa JSON</button>
+            <button class="compare-secondary" id="clear-comparison" type="button" disabled>Limpiar</button>
+            <button class="compare-secondary" id="import-archive" type="button" disabled>↑ Abrir JSON y verificar</button>
+            <input id="import-file" type="file" accept=".json,application/json" hidden aria-label="Seleccionar corrida o comparativa JSON para verificar" />
+          </div>
+          <div class="local-workspace">
+            <div><strong>Copia rápida de una ranura · legado v8</strong><p>Guarda este encargo y hasta tres corridas en este navegador. Es independiente de la cartera de proyectos de más abajo; al reabrir, cada plano se recalcula con Rust. No sincroniza ni reemplaza una descarga JSON.</p></div>
+            <div class="local-workspace-actions">
+              <button class="compare-secondary" id="save-local" type="button" disabled>Guardar copia local</button>
+              <button class="compare-secondary" id="load-local" type="button" disabled>Reabrir copia</button>
+              <button class="compare-secondary" id="delete-local" type="button" disabled>Borrar copia</button>
+            </div>
+            <p class="import-feedback" id="local-feedback" role="status" hidden></p>
+          </div>
+          <p class="import-feedback" id="import-feedback" role="status" hidden></p>
+          <p class="comparison-message" id="comparison-message" role="status">Genera y guarda una primera corrida para iniciar la comparación.</p>
+          <div class="comparison-grid" id="comparison-items" aria-label="Escenarios guardados"></div>
+          <p class="comparison-limit">Cada columna usa una respuesta del mismo núcleo Rust. «Propuestas» son solo las alternativas seleccionadas para mostrar; los descartes describen esta búsqueda limitada. Caudal entregado y ventilación: <strong>NO EVALUADOS.</strong> El cuaderno en curso vive en memoria; usa la copia local explícita o descarga JSON para recuperarlo. Las copias del navegador se pueden borrar o perder al limpiar sus datos: <strong>descarga el JSON como respaldo</strong>. Nunca se acepta un plano guardado sin recalcular y comparar su respuesta completa.</p>
+        </section>
+        <section class="portfolio-panel" id="cartera" aria-labelledby="portfolio-title">
+          <div class="comparison-heading">
+            <div><span class="section-kicker">05 / ORGANIZA ENCARGOS</span><h2 id="portfolio-title">Cartera local de proyectos</h2></div>
+            <span class="comparison-count" id="portfolio-count">0 / 8 PROYECTOS</span>
+          </div>
+          <p class="comparison-intro">Hasta ocho encargos <strong>independientes</strong> en este navegador (máximo 16 MiB en total). Guarda o actualiza <strong>expresamente</strong>; no hay guardado automático. Al abrir o restaurar un respaldo se reproducen todas las corridas con el mismo Rust/WASM antes de mostrar planos o sustituir datos. Los nombres y fechas son etiquetas editables, no una firma, historial de auditoría ni expediente aprobado.</p>
+          <div class="portfolio-toolbar">
+            <label class="portfolio-name-label" for="portfolio-name">Nombre de trabajo · no incluir datos sensibles
+              <input id="portfolio-name" type="text" maxlength="80" autocomplete="off" placeholder="Ej. Casa patio · esquema A" />
+            </label>
+            <button class="compare-save" id="portfolio-create" type="button" disabled>＋ Guardar como proyecto nuevo</button>
+            <button class="compare-secondary" id="portfolio-update" type="button" disabled>Actualizar proyecto abierto</button>
+          </div>
+          <div class="portfolio-backup">
+            <span>Respaldo <strong>externo al navegador</strong> de toda la cartera:</span>
+            <button class="compare-secondary" id="portfolio-export" type="button" disabled>↓ Descargar cartera JSON</button>
+            <button class="compare-secondary" id="portfolio-import" type="button" disabled>↑ Restaurar cartera verificada</button>
+            <input id="portfolio-file" type="file" accept=".json,application/json" hidden aria-label="Seleccionar respaldo JSON de cartera para verificar" />
+          </div>
+          <p class="import-feedback" id="portfolio-status" role="status" hidden></p>
+          <div id="portfolio-list" class="portfolio-list" aria-label="Proyectos locales sin verificar"></div>
+          <p class="comparison-limit">Cada proyecto conserva un encargo evaluado y hasta tres corridas comparables; una apertura fallida <strong>no cambia el formulario</strong>. Restaurar un respaldo sustituye atómicamente la cartera local <strong>solo tras verificarlo completo y confirmar</strong>; la pantalla actual no se cambia hasta que abras un proyecto. El JSON puede incluir ubicación declarada y otros datos: consérvalo fuera del navegador. Borrar datos del sitio elimina esta cartera. La copia rápida de una ranura y los archivos individuales son independientes. <strong>Ni esta cartera ni un estado «viable» significan aprobación técnica, derechos sobre el suelo o cumplimiento cubano.</strong></p>
+        </section>
+        <footer class="page-footer"><span>ARQ GEN · WEB EXPERIMENTAL v0.21 · NÚCLEO RUST v0.16</span><span>Datos locales. Decisiones trazables. Revisión humana.</span></footer>
+      </div>
+    </main>
+  </div>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

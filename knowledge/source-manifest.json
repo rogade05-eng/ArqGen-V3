@@ -1,0 +1,156 @@
+{
+  "schema_version": "source-inventory-v1",
+  "source_commit": "0822b69edc27f8639461d768bce80ed716c3d67d",
+  "target_jurisdiction": "CU",
+  "target_typology": "single_family_house",
+  "status": "bibliographic_inventory_only_not_a_ruleset",
+  "notes": "Only documents are PDF copies inspected from the pinned main commit (source_commit and SHA-256 apply to them). external_leads are third-party preview links supplied later, not verified copies. Current validity, scope, copyright and professional interpretation are unverified. None may be executed as a regulatory rule.",
+  "documents": [
+    {
+      "file": "Norma Cubana Edifi Viv SSant Requisitos.pdf",
+      "sha256": "d751f68e963cb0dcae2f729f31c90c69e4c2d546d00ccc99c8eaaa33dcae4bd4",
+      "pdf_pages": 13,
+      "printed_id": "NC 598:2009",
+      "jurisdiction": "CU",
+      "subject": "urban_social_housing_sanitary_services",
+      "target_use": "conditional_scope_review",
+      "runtime_eligible": false
+    },
+    {
+      "file": "NC 624.pdf",
+      "sha256": "adc687a1a84bafc6d5d08e2975abd98666bb977a68e18f1ee1a27beb8d1da7a6",
+      "pdf_pages": 13,
+      "printed_id": "NC 624:2008",
+      "jurisdiction": "CU",
+      "subject": "cctv_intrusion_access_control_equipment",
+      "target_use": "outside_current_typology",
+      "runtime_eligible": false
+    },
+    {
+      "file": "NC-IEC 60364-1 Principios fundamentales.pdf",
+      "sha256": "7506f6d292ca3712c1f84782469fe4bfc8dc9cded3fa82d60646d31bb94c901d",
+      "pdf_pages": 37,
+      "printed_id": "NC IEC 60364-1:2006",
+      "jurisdiction": "CU",
+      "subject": "general_electrical_installations",
+      "target_use": "future_separate_electrical_module",
+      "runtime_eligible": false
+    },
+    {
+      "file": "NC-IEC 60364-7-710 Locales de usos medicos.pdf",
+      "sha256": "91ae20199543e15efcff3dfcc21313e59d0290e0dbfaced2c594ad8734c8b916",
+      "pdf_pages": 21,
+      "printed_id": "NC IEC 60364-7-710:2005",
+      "jurisdiction": "CU",
+      "subject": "electrical_installations_medical_locations",
+      "target_use": "outside_current_typology",
+      "runtime_eligible": false
+    },
+    {
+      "file": "NC-ISO 8995.pdf",
+      "sha256": "413b9442f573aef7b3dbfeaa2975c2364d2ab05b23cc4c4df04e60ea02f5e053",
+      "pdf_pages": 33,
+      "printed_id": "NC-ISO 8995/CIE S 008:2003",
+      "jurisdiction": "CU",
+      "subject": "indoor_workplace_lighting",
+      "target_use": "outside_current_typology",
+      "runtime_eligible": false
+    },
+    {
+      "file": "Normas de Arquitectura y urbanismo.pdf",
+      "sha256": "e7d8a92009aa1d0355c327758127f54a070a5197fd92039ccd2b99accda34a50",
+      "pdf_pages": 217,
+      "printed_id": "Ordenanzas 3457 y 3477 (Quito)",
+      "jurisdiction": "EC-Quito",
+      "subject": "quito_urban_architectural_ordinances",
+      "target_use": "foreign_jurisdiction_not_cuban_law",
+      "runtime_eligible": false
+    },
+    {
+      "file": "Guia de Diseño Arquitectonico para Establecimientos de Salud - Arquinube.pdf",
+      "sha256": "6ea0c4057af96a9ca137c4ae8c8f8a55621f723446e0ef0572ac1786da04ee76",
+      "pdf_pages": 135,
+      "printed_id": "República Dominicana, Ministerio de Salud Pública, julio 2015",
+      "jurisdiction": "DO",
+      "subject": "healthcare_facility_design_guide",
+      "target_use": "foreign_jurisdiction_not_cuban_law",
+      "runtime_eligible": false
+    },
+    {
+      "file": "ABNT_NBR_9050_2015.pdf",
+      "sha256": "c750f98aba18e74f6eafb095d1a838dfcf99b738f8b9a61786c9ba9737686134",
+      "pdf_pages": 162,
+      "printed_id": "ABNT NBR 9050:2015",
+      "jurisdiction": "BR",
+      "subject": "accessibility_brazil",
+      "target_use": "foreign_jurisdiction_not_cuban_law",
+      "runtime_eligible": false
+    },
+    {
+      "file": "NBR 6492 -REPRESENTACAO DE PROJETOS DE ARQUITETURA.pdf",
+      "sha256": "e55d95857ff90610ce06092a4c811f88521beaa3a7389d73a254e3a17661c086",
+      "pdf_pages": 27,
+      "printed_id": "ABNT NBR 6492:1994",
+      "jurisdiction": "BR",
+      "subject": "architectural_drawing_representation_brazil",
+      "target_use": "foreign_jurisdiction_not_cuban_law",
+      "runtime_eligible": false
+    },
+    {
+      "file": "NBR15575-1.pdf",
+      "sha256": "5c16852cc3746fbbc021c7aac0534a74f06229900e99dd57f0c93ede9df3c088",
+      "pdf_pages": 83,
+      "printed_id": "ABNT NBR 15575-1:2013",
+      "jurisdiction": "BR",
+      "subject": "residential_performance_brazil",
+      "target_use": "foreign_jurisdiction_not_cuban_law",
+      "runtime_eligible": false
+    },
+    {
+      "file": "Tomo1_Dise_o_arquitect_nico.pdf",
+      "sha256": "3580903ec0052f967486386239fdbf2ab859fd0df94692ea27561bc6c17989b4",
+      "pdf_pages": 27,
+      "printed_id": "Volumen 3, Tomo I, Diseño Arquitectónico (revisión 2014)",
+      "jurisdiction": "MX",
+      "subject": "educational_facilities_architectural_design",
+      "target_use": "foreign_jurisdiction_not_cuban_law",
+      "runtime_eligible": false
+    },
+    {
+      "file": "OFICINAS Dimensiones -.pdf",
+      "sha256": "7186d14ff48b32ad3d68b7b42174d7a0c0e3056951ea2baac6bb8b9cf3d6a17e",
+      "pdf_pages": 70,
+      "printed_id": "unverified_scanned_document",
+      "jurisdiction": "unknown",
+      "subject": "office_dimensions_scan",
+      "target_use": "unidentified_source_not_applicable",
+      "runtime_eligible": false
+    }
+  ],
+  "external_leads": [
+    {
+      "printed_id_claimed": "NC 391-1:2004",
+      "url": "https://es.scribd.com/document/726082869/NC-391-1-ACCESIBILIDAD-DE-LAS-PERSONAS-AL-MEDIO-FISICO",
+      "host": "Scribd (copia subida por un usuario)",
+      "relation": "Referencia de elementos generales de accesibilidad citada por NC 598:2009, apartado 2",
+      "status": "preview_only_official_edition_and_rights_unverified",
+      "runtime_eligible": false
+    },
+    {
+      "printed_id_claimed": "NC 391-2:2004",
+      "url": "https://es.scribd.com/document/726084792/NC-391-2",
+      "host": "Scribd (copia subida por un usuario)",
+      "relation": "Referencia de accesibilidad citada por NC 598:2009, apartado 2",
+      "status": "preview_only_official_edition_and_rights_unverified",
+      "runtime_eligible": false
+    },
+    {
+      "printed_id_claimed": "NC 337:2004",
+      "url": "https://es.scribd.com/document/839981906/NC-337-a2004-26p-his",
+      "host": "Scribd (copia subida por un usuario)",
+      "relation": "Referencia de muebles sanitarios citada por NC 598:2009, apartado 2",
+      "status": "preview_only_official_edition_and_rights_unverified",
+      "runtime_eligible": false
+    }
+  ]
+}

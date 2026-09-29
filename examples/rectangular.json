@@ -1,0 +1,13 @@
+{
+  "request_schema": "arqgen-brief-v8",
+  "site": { "width": 18.0, "depth": 22.0, "front_orientation": "S", "plot_outline": { "provenance": "user_sketch_unverified", "shape": "rectangle", "rear_notches": [] }, "front_approach": { "provenance": "user_sketch_unverified", "shape": "straight_front_strip", "width": 1.2, "front_x": null, "turn_y": null }, "reservation_provenance": "user_sketch_unverified", "reserved_areas": [] },
+  "program": { "bedrooms": 3, "bathrooms": 2, "target_built_area": 95.0 },
+  "project_context": {
+    "jurisdiction": "unreported",
+    "housing_class": "unreported",
+    "occupants": null,
+    "accessibility_needs": "unreported",
+    "provenance": "self_reported_unverified"
+  },
+  "seed": 42
+}
