@@ -24,4 +24,5 @@ const directory = join(root, 'examples/laminas-conceptuales');
 await mkdir(directory, { recursive: true });
 await writeFile(join(directory, 'muestra-vivienda-A3.zip'), pkg.bytes);
 for (const sheet of pkg.sheets) await writeFile(join(directory, sheet.filename), sheet.svg, 'utf8');
-console.log(`Tres SVG A3 + ZIP de vivienda CONCEPTUAL; seed ${input.seed}, candidato ${pkg.manifest.candidate_id}, SHA-256 ZIP ${createHash('sha256').update(pkg.bytes).digest('hex')}`);
+await writeFile(join(directory, 'nivel-0-2d.json'), JSON.stringify(pkg.envelope, null, 2), 'utf8');
+console.log(`Cuatro SVG A3 + modelo 2D + ZIP de vivienda CONCEPTUAL; seed ${input.seed}, candidato ${pkg.manifest.candidate_id}, SHA-256 ZIP ${createHash('sha256').update(pkg.bytes).digest('hex')}`);

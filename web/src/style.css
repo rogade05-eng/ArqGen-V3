@@ -250,7 +250,8 @@ h1 em { color: #638a72; font-weight: 400; }
 .drawing-preview { margin: 14px 0 0; border: 1px solid #c5d8cd; border-radius: 7px; background: #f7faf7; color: #365e4b; }
 .drawing-preview summary { cursor: pointer; padding: 12px 15px; font-size: 12px; font-weight: 750; }
 .drawing-preview summary:focus-visible { outline: 2px solid #416e58; outline-offset: 2px; }
-.drawing-preview-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(205px, 1fr)); gap: 12px; padding: 0 13px; }
+.drawing-preview-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; padding: 0 13px; }
+@media (max-width: 690px) { .drawing-preview-grid { grid-template-columns: minmax(0, 1fr); } }
 .drawing-preview-card { margin: 0; min-width: 0; background: #fff; border: 1px solid #e0e8df; border-radius: 5px; box-shadow: 0 2px 9px #24473514; overflow: hidden; }
 .drawing-preview-card img { display: block; width: 100%; height: auto; aspect-ratio: 297 / 420; object-fit: contain; }
 .drawing-preview-card figcaption { padding: 9px; border-top: 1px solid #edf0e9; color: #436854; font-size: 10px; font-weight: 750; }

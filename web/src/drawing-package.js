@@ -2,8 +2,9 @@
 // No new architecture, heights, floors, setbacks or code compliance is inferred.
 // Separate from candidate.svg: legacy replay and input hashes remain unchanged.
 import { strToU8, zipSync } from 'fflate';
+import { extractPlanEnvelope } from './plan-envelope.js';
 
-export const drawingPackageFormat = 'arqgen-conceptual-svg-sheets-v1';
+export const drawingPackageFormat = 'arqgen-conceptual-svg-sheets-v2';
 const PAPER = { width: 297, height: 420 }; // ISO A3 portrait, in millimetres.
 const VIEW = { x: 35, y: 67, width: 227, height: 250 };
 const FRAME = { x: 16, y: 48, width: 265, height: 290 };
@@ -97,7 +98,8 @@ function verifiedDrawing(input, generation, index) {
     near(alt.built_area, alt.usable_area + alt.wall_allowance_area) &&
     near(alt.usable_area, alt.circulation_usable_area + alt.rooms.reduce((n, r) => n + r.usable_area, 0)),
   'El cuadro de áreas no coincide con la alternativa de Rust.');
-  return { input, generation, alt, width, depth, front, box: bounds(footprint) };
+  const envelope = extractPlanEnvelope(alt, front); // area, continuity and every exterior opening verified
+  return { input, generation, alt, width, depth, front, envelope, box: bounds(footprint) };
 }
 
 function paperTransform(box) {
@@ -207,21 +209,18 @@ function dimensions(t, box, site = false) {
   return out;
 }
 
+function polygonPath(vertices, t) {
+  return vertices.map((p, i) => `${i ? 'L' : 'M'} ${fmt(t.X(p.x))} ${fmt(t.Y(p.y))}`).join(' ') + ' Z';
+}
+
 function siteSheet(d) {
   const box = { x: 0, y: 0, width: d.width, depth: d.depth };
   const t = paperTransform(box);
-  const verts = d.generation.site_plot.vertices;
-  const path = verts.map((p, i) => `${i ? 'L' : 'M'} ${fmt(t.X(p.x))} ${fmt(t.Y(p.y))}`).join(' ') + ' Z';
   let out = header('A-01', 'EMPLAZAMIENTO', 'Contorno y aproximación declarados · vivienda unifamiliar · una planta') +
-    `<path d="${path}" fill="#ebf2e9" stroke="#436860" stroke-width="0.75" stroke-dasharray="1.2 0.7"/>`;
-  // One compound, nonzero-winding path for ONLY the validated gross union.
-  // Rendering dozens of separate rects creates antialias seams that look like
-  // unvalidated partition lines on an otherwise solid site silhouette.
-  const footprintParts = [...d.alt.wall_zones, ...d.alt.corridor_usable_segments,
-    ...d.alt.rooms.map((room) => room.usable_rect)];
-  const compound = footprintParts.map((r) =>
-    `M ${fmt(t.X(r.x))} ${fmt(t.Y(r.y))} H ${fmt(t.X(r.x + r.width))} V ${fmt(t.Y(r.y + r.depth))} H ${fmt(t.X(r.x))} Z`).join(' ');
-  out += `<path d="${compound}" fill="#49695a"/>`;
+    `<path d="${polygonPath(d.generation.site_plot.vertices, t)}" fill="#ebf2e9" stroke="#436860" stroke-width="0.75" stroke-dasharray="1.2 0.7"/>`;
+  // One exact continuous gross outline: no bounding rectangle or antialias
+  // seams between source cells, and its area is checked against Rust.
+  out += `<path d="${polygonPath(d.envelope.footprint.vertices, t)}" fill="#49695a"/>`;
   for (const reservation of d.input.site.reserved_areas) {
     out += rect(reservation, t, '#e9bb9e', '#ab603e', 0.3, 'stroke-dasharray="1 0.5"');
   }
@@ -330,6 +329,57 @@ function planSheet(d, furnished, dimensioned) {
   return { svg: wrapSvg(d, code, out), denominator: t.denominator };
 }
 
+function envelopeSheet(d) {
+  const code = 'A-04';
+  const t = paperTransform(d.box);
+  const { footprint, perimeter_openings: openings } = d.envelope;
+  ensure(openings.length <= 9, 'Demasiados vanos para el índice de A-04: dividir antes de documentar.');
+  let out = header(code, 'ENVOLVENTE · PLANTA 2D',
+    'Perímetro bruto y vanos dibujados · NO es alzado, corte ni fachada verificada') +
+    `<path d="${polygonPath(footprint.vertices, t)}" fill="#e9f1ed" stroke="#294f4c" stroke-width="0.75"/>`;
+  // Segment lengths and IDs come from the one measured 2D polygon, never its
+  // bounding box. Short returns are still in the JSON, but not squeezed into
+  // misleading or illegible dimension text on the paper.
+  for (const edge of footprint.sides) {
+    const distance = edge.length_m * t.unit;
+    if (distance < 16) continue;
+    const x = (t.X(edge.from.x) + t.X(edge.to.x)) / 2;
+    const y = (t.Y(edge.from.y) + t.Y(edge.to.y)) / 2;
+    const label = `${edge.id} · ${fmt(edge.length_m)} m`;
+    if (edge.plan_side === 'top' || edge.plan_side === 'bottom') {
+      const labelY = edge.plan_side === 'top' ? y - 4.1
+        : y + 5.4 <= VIEW.y + VIEW.height - 2 ? y + 5.4 : y - 2.7;
+      out += text(x, labelY, label, 2.55, '#32675d',
+        'font-weight="700" text-anchor="middle"');
+    } else {
+      const lx = x + (edge.plan_side === 'left' ? -4.4 : 5.1);
+      out += `<text x="${fmt(lx)}" y="${fmt(y)}" transform="rotate(-90 ${fmt(lx)} ${fmt(y)})" ` +
+        `text-anchor="middle" font-family="Arial,sans-serif" font-weight="700" font-size="2.55" fill="#32675d">${xml(label)}</text>`;
+    }
+  }
+  for (const opening of openings) {
+    const color = opening.kind === 'entrada_2d' ? '#bc734e' : '#288899';
+    out += line(t.X(opening.from.x), t.Y(opening.from.y), t.X(opening.to.x),
+      t.Y(opening.to.y), color, 1.3);
+  }
+  out += compass(d.front) + scaleBar(t) +
+    titleNote('CONTORNO BRUTO VALIDADO · AZUL: VENTANA 2D · NARANJA: PUERTA · SIN COTAS Z') +
+    `<rect x="16" y="342" width="265" height="47" fill="#f3f7f5"/>` +
+    text(22, 348, 'VANOS DIBUJADOS SOBRE EL PERÍMETRO · EN PLANTA', 3, '#2b5c52', 'font-weight="700"') +
+    text(274, 348, `P=${fmt(footprint.perimeter_m)} m · A=${fmt(footprint.gross_area_m2)} m²`,
+      2.85, '#255e54', 'text-anchor="end" font-weight="700"') +
+    line(169, 344, 169, 387, '#ceded7', 0.28);
+  openings.forEach((opening, i) => {
+    const y = 353.5 + i * 3.7;
+    out += text(22, y, `${opening.id} · ${opening.room_id || 'Entrada desde frente declarado'}`, 2.55) +
+      text(175, y, `${opening.segment_id} · ${opening.world_orientation_declared}`, 2.6) +
+      text(272, y, `${fmt(opening.span_m)} m en planta`, 2.6, '#1e4b45',
+        'text-anchor="end" font-weight="700"');
+  });
+  out += footer(d, code, t);
+  return { svg: wrapSvg(d, code, out), denominator: t.denominator };
+}
+
 function wrapSvg(d, code, inner) {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${PAPER.width}mm" height="${PAPER.height}mm" viewBox="0 0 ${PAPER.width} ${PAPER.height}" role="img" aria-label="${xml(code)} · plano conceptual ARQ GEN, NO APTO PARA OBRA" data-package-format="${drawingPackageFormat}" data-engine-hash="${xml(d.generation.input_hash)}" data-candidate-id="${xml(d.alt.id)}">${inner}</svg>`;
 }
@@ -337,10 +387,11 @@ function wrapSvg(d, code, inner) {
 export function buildDrawingPackage(input, generation, index) {
   const d = verifiedDrawing(input, generation, index);
   const sheets = [
-    { number: 'A-01', title: 'Emplazamiento declarado', ...siteSheet(d) },
-    { number: 'A-02', title: 'Planta amueblada', ...planSheet(d, true, false) },
-    { number: 'A-03', title: 'Planta con cotas esquemáticas', ...planSheet(d, false, true) },
-  ].map((s) => ({ ...s, filename: `${s.number}-${s.number === 'A-01' ? 'emplazamiento' : s.number === 'A-02' ? 'planta-amueblada' : 'planta-cotas'}.svg` }));
+    { number: 'A-01', title: 'Emplazamiento declarado', filename: 'A-01-emplazamiento.svg', ...siteSheet(d) },
+    { number: 'A-02', title: 'Planta amueblada', filename: 'A-02-planta-amueblada.svg', ...planSheet(d, true, false) },
+    { number: 'A-03', title: 'Planta con cotas esquemáticas', filename: 'A-03-planta-cotas.svg', ...planSheet(d, false, true) },
+    { number: 'A-04', title: 'Envolvente y vanos 2D', filename: 'A-04-envolvente-2d.svg', ...envelopeSheet(d) },
+  ];
   const manifest = {
     format: drawingPackageFormat,
     engine_version: generation.engine_version,
@@ -352,6 +403,8 @@ export function buildDrawingPackage(input, generation, index) {
     units: 'metres_in_model_mm_on_A3_paper',
     sheets: sheets.map((s) => ({ number: s.number, title: s.title, filename: s.filename,
       paper: 'ISO_A3_portrait_297x420mm', nominal_scale: `1:${s.denominator}` })),
+    spatial_model: { filename: 'nivel-0-2d.json', format: d.envelope.format,
+      floor_index: 0, elevation_m: null, status: 'derived_from_rust_v8_plan_not_replayable_alone' },
     excluded_not_modelled: ['multi_floor', 'sections', 'elevations', 'roof', 'height', 'hospital', 'hotel',
       'real_access', 'delivered_ventilation', 'cuban_regulatory_compliance'],
     status: 'illustrative_not_certified',
@@ -360,9 +413,10 @@ export function buildDrawingPackage(input, generation, index) {
     'ARQ GEN · LÁMINAS CONCEPTUALES SVG · NO APTO PARA OBRA',
     `Alternativa ${d.alt.id} · huella ${fmt(d.alt.built_area)} m² · semilla ${input.seed}.`,
     '',
-    'Tres hojas ISO A3 vertical: A-01 emplazamiento declarado, A-02 planta amueblada y A-03 cotas esquemáticas.',
-    'Las tres vistas usan el mismo candidato validado por Rust; no son tres alternativas arquitectónicas.',
-    'Las cotas se derivan de rectángulos útiles y extensión de huella del croquis, NO son levantamiento, ejes reales ni plano para obra.',
+    'Cuatro hojas ISO A3 vertical: A-01 emplazamiento, A-02 planta amueblada, A-03 cotas esquemáticas y A-04 envolvente/vanos 2D.',
+    'Todas las vistas usan el mismo candidato validado por Rust; no son cuatro alternativas arquitectónicas.',
+    'nivel-0-2d.json deriva el perímetro y vanos del plan Rust, sin alturas, niveles adicionales, fachadas ni cubierta.',
+    'Las cotas proceden de rectángulos útiles, extensión y contorno bruto del croquis; NO son levantamiento ni plano para obra.',
     'Abrir/ imprimir a tamaño A3 al 100%; el visor o impresora puede cambiar la escala. Comprobar dimensiones antes de cualquier uso.',
     'origen-v8.json se puede importar en ARQ GEN para volver a ejecutar la entrada en Rust antes de adoptarla.',
     'No hay varias plantas, cortes, fachadas ni cubierta porque faltan niveles y alturas modelados.',
@@ -372,11 +426,12 @@ export function buildDrawingPackage(input, generation, index) {
   ].join('\n');
   const archive = Object.fromEntries([
     ...sheets.map((s) => [s.filename, s.svg]),
+    ['nivel-0-2d.json', JSON.stringify(d.envelope, null, 2)],
     ['manifest.json', JSON.stringify(manifest, null, 2)],
     ['origen-v8.json', JSON.stringify({ input, generation, selection: null }, null, 2)],
     ['LEEME-ANTES-DE-USAR.txt', readme],
   ].map(([name, contents]) => [name, [strToU8(contents), { mtime: FIXED_MTIME }]]));
   const bytes = zipSync(archive, { level: 6 });
   ensure(bytes.length < 2_000_000, 'El paquete documental excede el límite local de 2 MB.');
-  return { filename: `arqgen-laminas-CONCEPTUAL-${d.alt.id}.zip`, bytes, sheets, manifest };
+  return { filename: `arqgen-laminas-CONCEPTUAL-${d.alt.id}.zip`, bytes, sheets, manifest, envelope: d.envelope };
 }

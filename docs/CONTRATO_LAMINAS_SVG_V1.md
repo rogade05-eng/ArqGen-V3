@@ -1,5 +1,7 @@
 # Primer paquete de planos SVG — vivienda conceptual, sin alterar el núcleo Rust
 
+> **Histórico (v1):** el [paquete vigente v2](CONTRATO_LAMINAS_SVG_V2.md) añade una cuarta lámina y un modelo de perímetro/vanos 2D. El ejemplo enlazado a continuación se regenera ahora en formato v2; este documento conserva las pruebas y límites del corte original de tres hojas.
+
 **2026-09-29 · implementado como corte de presentación web** tras la confirmación del usuario: **hospitales y hoteles son tipologías funcionales futuras**, no meras referencias visuales. Este corte **no** las genera, no amplía el modelo 2D ni cambia el esquema v8, el `engine_version` o `web/public/core.wasm`. Ver las [11 referencias y hoja de ruta](OBJETIVO_VISUAL_VARIANTES_PLANOS.md) y el [ejemplo descargable](../examples/laminas-conceptuales/README.md).
 
 ## Salida implementada

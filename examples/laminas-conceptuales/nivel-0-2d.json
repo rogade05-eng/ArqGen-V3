@@ -1,0 +1,277 @@
+{
+  "format": "arqgen-plan-envelope-2d-v1",
+  "source_candidate_id": "cand-ab3376d8fef08f3b-22",
+  "coordinate_system": "xy_site_front_left_origin_metres_y_to_rear",
+  "level": {
+    "index": 0,
+    "elevation_m": null,
+    "status": "single_level_plan_2d_only"
+  },
+  "footprint": {
+    "vertices": [
+      {
+        "x": 4.390557361599001,
+        "y": 3
+      },
+      {
+        "x": 13.609442638401,
+        "y": 3
+      },
+      {
+        "x": 13.609442638401,
+        "y": 10.5
+      },
+      {
+        "x": 9.73,
+        "y": 10.5
+      },
+      {
+        "x": 9.73,
+        "y": 15.316277559420378
+      },
+      {
+        "x": 4.390557361599001,
+        "y": 15.316277559420378
+      }
+    ],
+    "sides": [
+      {
+        "id": "P01",
+        "from": {
+          "x": 4.390557361599001,
+          "y": 3
+        },
+        "to": {
+          "x": 13.609442638401,
+          "y": 3
+        },
+        "plan_side": "top",
+        "length_m": 9.218885276801998
+      },
+      {
+        "id": "P02",
+        "from": {
+          "x": 13.609442638401,
+          "y": 3
+        },
+        "to": {
+          "x": 13.609442638401,
+          "y": 10.5
+        },
+        "plan_side": "right",
+        "length_m": 7.5
+      },
+      {
+        "id": "P03",
+        "from": {
+          "x": 13.609442638401,
+          "y": 10.5
+        },
+        "to": {
+          "x": 9.73,
+          "y": 10.5
+        },
+        "plan_side": "bottom",
+        "length_m": 3.879442638400999
+      },
+      {
+        "id": "P04",
+        "from": {
+          "x": 9.73,
+          "y": 10.5
+        },
+        "to": {
+          "x": 9.73,
+          "y": 15.316277559420378
+        },
+        "plan_side": "right",
+        "length_m": 4.816277559420378
+      },
+      {
+        "id": "P05",
+        "from": {
+          "x": 9.73,
+          "y": 15.316277559420378
+        },
+        "to": {
+          "x": 4.390557361599001,
+          "y": 15.316277559420378
+        },
+        "plan_side": "bottom",
+        "length_m": 5.339442638401
+      },
+      {
+        "id": "P06",
+        "from": {
+          "x": 4.390557361599001,
+          "y": 15.316277559420378
+        },
+        "to": {
+          "x": 4.390557361599001,
+          "y": 3
+        },
+        "plan_side": "left",
+        "length_m": 12.316277559420378
+      }
+    ],
+    "gross_area_m2": 94.8578773351581,
+    "perimeter_m": 43.07032567244475
+  },
+  "perimeter_openings": [
+    {
+      "id": "D-ENT",
+      "kind": "entrada_2d",
+      "room_id": null,
+      "segment_id": "P01",
+      "plan_side": "top",
+      "world_orientation_declared": "S",
+      "offset_m": 4.159442638401,
+      "span_m": 0.9,
+      "from": {
+        "x": 8.55,
+        "y": 3
+      },
+      "to": {
+        "x": 9.450000000000001,
+        "y": 3
+      }
+    },
+    {
+      "id": "V-bathroom-1",
+      "kind": "ventana_dibujada_2d",
+      "room_id": "bathroom-1",
+      "segment_id": "P06",
+      "plan_side": "left",
+      "world_orientation_declared": "E",
+      "offset_m": 7.034656110070564,
+      "span_m": 0.27568777985887566,
+      "from": {
+        "x": 4.390557361599001,
+        "y": 8.281621449349814
+      },
+      "to": {
+        "x": 4.390557361599001,
+        "y": 8.005933669490938
+      }
+    },
+    {
+      "id": "V-bathroom-2",
+      "kind": "ventana_dibujada_2d",
+      "room_id": "bathroom-2",
+      "segment_id": "P02",
+      "plan_side": "right",
+      "world_orientation_declared": "W",
+      "offset_m": 5.829656110070564,
+      "span_m": 0.27568777985887566,
+      "from": {
+        "x": 13.609442638401,
+        "y": 8.829656110070564
+      },
+      "to": {
+        "x": 13.609442638401,
+        "y": 9.10534388992944
+      }
+    },
+    {
+      "id": "V-bedroom-1",
+      "kind": "ventana_dibujada_2d",
+      "room_id": "bedroom-1",
+      "segment_id": "P06",
+      "plan_side": "left",
+      "world_orientation_declared": "E",
+      "offset_m": 3.936468330211687,
+      "span_m": 0.8270633395766271,
+      "from": {
+        "x": 4.390557361599001,
+        "y": 11.379809229208691
+      },
+      "to": {
+        "x": 4.390557361599001,
+        "y": 10.552745889632064
+      }
+    },
+    {
+      "id": "V-bedroom-2",
+      "kind": "ventana_dibujada_2d",
+      "room_id": "bedroom-2",
+      "segment_id": "P02",
+      "plan_side": "right",
+      "world_orientation_declared": "W",
+      "offset_m": 3.636468330211687,
+      "span_m": 0.8270633395766271,
+      "from": {
+        "x": 13.609442638401,
+        "y": 6.636468330211687
+      },
+      "to": {
+        "x": 13.609442638401,
+        "y": 7.463531669788314
+      }
+    },
+    {
+      "id": "V-bedroom-3",
+      "kind": "ventana_dibujada_2d",
+      "room_id": "bedroom-3",
+      "segment_id": "P06",
+      "plan_side": "left",
+      "world_orientation_declared": "E",
+      "offset_m": 1.1164683302116867,
+      "span_m": 0.8270633395766271,
+      "from": {
+        "x": 4.390557361599001,
+        "y": 14.199809229208691
+      },
+      "to": {
+        "x": 4.390557361599001,
+        "y": 13.372745889632064
+      }
+    },
+    {
+      "id": "V-kitchen",
+      "kind": "ventana_dibujada_2d",
+      "room_id": "kitchen",
+      "segment_id": "P02",
+      "plan_side": "right",
+      "world_orientation_declared": "W",
+      "offset_m": 1.0124162935214986,
+      "span_m": 0.7351674129570018,
+      "from": {
+        "x": 13.609442638401,
+        "y": 4.012416293521499
+      },
+      "to": {
+        "x": 13.609442638401,
+        "y": 4.7475837064785
+      }
+    },
+    {
+      "id": "V-living-dining",
+      "kind": "ventana_dibujada_2d",
+      "room_id": "living-dining",
+      "segment_id": "P06",
+      "plan_side": "left",
+      "world_orientation_declared": "E",
+      "offset_m": 9.264805446376858,
+      "span_m": 1.3466666666666667,
+      "from": {
+        "x": 4.390557361599001,
+        "y": 6.05147211304352
+      },
+      "to": {
+        "x": 4.390557361599001,
+        "y": 4.704805446376852
+      }
+    }
+  ],
+  "not_modelled": [
+    "other_levels",
+    "sills",
+    "heads",
+    "floor_elevations",
+    "roof",
+    "sections",
+    "elevations",
+    "legal_facades",
+    "real_street_access"
+  ]
+}

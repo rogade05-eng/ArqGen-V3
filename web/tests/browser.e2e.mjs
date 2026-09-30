@@ -44,10 +44,10 @@ test('bundle real: láminas A3, dos recortes/zonas, replay, IndexedDB y recarga 
     await page.locator('#drawing-preview summary').click();
     await page.waitForFunction(() => {
       const images = [...document.querySelectorAll('.drawing-preview-card img')];
-      return images.length === 3 && images.every((image) => image.complete && image.naturalWidth > 0);
+      return images.length === 4 && images.every((image) => image.complete && image.naturalWidth > 0);
     });
     const captions = await page.locator('.drawing-preview-card figcaption').allTextContents();
-    assert.deepEqual(captions.map((text) => text.slice(0, 4)), ['A-01', 'A-02', 'A-03']);
+    assert.deepEqual(captions.map((text) => text.slice(0, 4)), ['A-01', 'A-02', 'A-03', 'A-04']);
     for (const caption of captions) assert.match(caption, /1:(50|100|200|500|1000|2000|5000)$/);
     const sheetsDownloaded = page.waitForEvent('download');
     await page.locator('#export-drawings').click();
@@ -55,8 +55,14 @@ test('bundle real: láminas A3, dos recortes/zonas, replay, IndexedDB y recarga 
     assert.match(sheetZip.suggestedFilename(), /^arqgen-laminas-CONCEPTUAL-cand-.*\.zip$/);
     const files = unzipSync(await readFile(await sheetZip.path()));
     const sheetManifest = JSON.parse(new TextDecoder().decode(files['manifest.json']));
-    assert.deepEqual(sheetManifest.sheets.map((sheet) => sheet.number), ['A-01', 'A-02', 'A-03']);
+    assert.deepEqual(sheetManifest.sheets.map((sheet) => sheet.number), ['A-01', 'A-02', 'A-03', 'A-04']);
+    assert.equal(sheetManifest.format, 'arqgen-conceptual-svg-sheets-v2');
     assert.match(new TextDecoder().decode(files['A-03-planta-cotas.svg']), /NO APTO PARA OBRA/);
+    assert.match(new TextDecoder().decode(files['A-04-envolvente-2d.svg']), /P01/);
+    const level = JSON.parse(new TextDecoder().decode(files['nivel-0-2d.json']));
+    assert.equal(level.source_candidate_id, sheetManifest.candidate_id);
+    assert.equal(level.level.elevation_m, null);
+    assert.ok(level.footprint.vertices.length >= 4 && level.perimeter_openings.length > 1);
     assert.equal(JSON.parse(new TextDecoder().decode(files['origen-v8.json'])).generation.status, 'ok');
     assert.equal(await page.locator('#export-feedback').getAttribute('data-state'), 'ok');
     await page.locator('input[name="plot_notch_enabled"]').check();
@@ -134,13 +140,13 @@ test('bundle real: láminas A3, dos recortes/zonas, replay, IndexedDB y recarga 
     assert.equal(await page.locator('input[name="fan_reference_pressure_pa"]').inputValue(), '45');
     if (!await page.locator('#drawing-preview').evaluate((element) => element.open))
       await page.locator('#drawing-preview summary').click();
-    await page.waitForFunction(() => [...document.querySelectorAll('.drawing-preview-card img')].length === 3 &&
+    await page.waitForFunction(() => [...document.querySelectorAll('.drawing-preview-card img')].length === 4 &&
       [...document.querySelectorAll('.drawing-preview-card img')].every((image) => image.complete && image.naturalWidth > 0));
     const offlineDownload = page.waitForEvent('download');
     await page.locator('#export-drawings').click();
     const offlineZip = unzipSync(await readFile(await (await offlineDownload).path()));
     assert.deepEqual(JSON.parse(new TextDecoder().decode(offlineZip['manifest.json'])).sheets.map((sheet) => sheet.number),
-      ['A-01', 'A-02', 'A-03'], 'ZIP y miniaturas funcionan tras recargar y reabrir una copia sin red.');
+      ['A-01', 'A-02', 'A-03', 'A-04'], 'ZIP y miniaturas funcionan tras recargar y reabrir una copia sin red.');
     assert.deepEqual(pageErrors, [], 'Sin errores JavaScript durante generación, importación o recarga offline.');
     await context.setOffline(false);
   } finally {

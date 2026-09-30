@@ -1323,7 +1323,7 @@ el('export-drawings').addEventListener('click', () => {
   try {
     const packageSvg = buildDrawingPackage(runInput, run, selectionIndex);
     download(packageSvg.bytes, 'application/zip', packageSvg.filename);
-    showFeedback('export-feedback', 'Descargadas 3 láminas SVG A3 de la misma alternativa: emplazamiento, planta amueblada y cotas ESQUEMÁTICAS. Ni cortes, fachadas, hotel u hospital están modelados. NO APTO PARA OBRA.');
+    showFeedback('export-feedback', 'Descargadas 4 láminas SVG A3 de la misma alternativa: emplazamiento, planta amueblada, cotas esquemáticas y envolvente/vanos 2D validados. El JSON de nivel 0 NO conoce alturas. Ni cortes, fachadas, hotel u hospital están modelados. NO APTO PARA OBRA.');
   } catch (error) {
     showFeedback('export-feedback', `No se exportaron las láminas: ${error.message}`, true);
   }

@@ -6,6 +6,7 @@ import { dirname, resolve } from 'node:path';
 import { unzipSync } from 'fflate';
 import { callCore } from '../src/core-client.js';
 import { buildDrawingPackage, drawingPackageFormat } from '../src/drawing-package.js';
+import { extractPlanEnvelope, planEnvelopeFormat } from '../src/plan-envelope.js';
 import { verifyArchive } from '../src/archive.js';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
@@ -21,19 +22,29 @@ function inspectPackage(brief, generation, choice = 0) {
   const files = unzipSync(result.bytes);
   assert.deepEqual(Object.keys(files), [
     'A-01-emplazamiento.svg', 'A-02-planta-amueblada.svg', 'A-03-planta-cotas.svg',
+    'A-04-envolvente-2d.svg', 'nivel-0-2d.json',
     'manifest.json', 'origen-v8.json', 'LEEME-ANTES-DE-USAR.txt',
   ]);
-  assert.equal(result.sheets.length, 3);
+  assert.equal(result.sheets.length, 4);
   assert.ok(result.bytes.length < 2_000_000);
   assert.match(result.filename, /^arqgen-laminas-CONCEPTUAL-cand-[a-f0-9]{16}-\d+\.zip$/);
   const manifest = JSON.parse(decoded(result.bytes, 'manifest.json'));
   assert.deepEqual(manifest, result.manifest);
   assert.equal(manifest.format, drawingPackageFormat);
+  assert.equal(manifest.format, 'arqgen-conceptual-svg-sheets-v2');
   assert.equal(manifest.input_hash, generation.input_hash);
   assert.equal(manifest.candidate_id, generation.alternatives[choice].id);
   assert.equal(manifest.status, 'illustrative_not_certified');
   assert.equal(manifest.model, 'single_floor_housing_schematic');
   assert.ok(manifest.excluded_not_modelled.includes('hospital') && manifest.excluded_not_modelled.includes('sections'));
+  assert.equal(manifest.spatial_model.filename, 'nivel-0-2d.json');
+  assert.equal(manifest.spatial_model.format, planEnvelopeFormat);
+  assert.equal(manifest.spatial_model.elevation_m, null);
+  const envelope = JSON.parse(decoded(result.bytes, manifest.spatial_model.filename));
+  assert.deepEqual(envelope, extractPlanEnvelope(generation.alternatives[choice], brief.site.front_orientation));
+  assert.equal(envelope.level.elevation_m, null);
+  assert.equal(envelope.source_candidate_id, manifest.candidate_id);
+  assert.ok(Math.abs(envelope.footprint.gross_area_m2 - generation.alternatives[choice].built_area) < 1e-5);
   for (const sheet of manifest.sheets) {
     const svg = decoded(result.bytes, sheet.filename);
     assert.equal(result.sheets.find((s) => s.number === sheet.number)?.svg, svg);
@@ -55,7 +66,7 @@ function inspectPackage(brief, generation, choice = 0) {
   return result;
 }
 
-test('A3 conceptual ZIP: tres vistas del MISMO candidato Rust y archivo importable con replay', () => {
+test('A3 conceptual ZIP: cuatro vistas y envolvente 2D del MISMO candidato con replay', () => {
   const brief = input();
   const generated = generate(brief);
   assert.equal(generated.status, 'ok');
@@ -64,11 +75,19 @@ test('A3 conceptual ZIP: tres vistas del MISMO candidato Rust y archivo importab
   const site = first.sheets[0];
   const furnished = first.sheets[1];
   const dimensions = first.sheets[2];
+  const envelope = first.sheets[3];
   assert.equal(site.denominator, 100);
   assert.equal(furnished.denominator, 50);
   assert.equal(dimensions.denominator, 50);
+  assert.equal(envelope.denominator, 50);
+  assert.match(envelope.svg, /ENVOLVENTE · PLANTA 2D/);
+  assert.match(envelope.svg, /P01 · 9\.22 m/);
+  assert.match(envelope.svg, /V-bedroom-1/);
   assert.match(site.svg, /18\.00 m · parcela declarada/);
   assert.match(site.svg, /22\.00 m · parcela/);
+  assert.equal(first.envelope.footprint.vertices.length, 6, 'La huella L tiene seis vértices, no su caja.');
+  assert.equal((site.svg.match(/fill="#49695a"/g) || []).length, 1,
+    'Silueta continua sin grietas o tabiques dibujados como perímetro.');
   assert.ok(!site.svg.includes('class="fixture"'), 'Ninguna decoración amueblada en el emplazamiento.');
   assert.match(furnished.svg, /ALTERNATIVA cand-/);
   assert.match(furnished.svg, /Estancias y muebles ilustrativos/i);
@@ -92,6 +111,8 @@ test('el ejemplo entregado en el repositorio coincide byte a byte con el WASM ve
   for (const sheet of pkg.sheets) {
     assert.equal(sheet.svg, await readFile(resolve(directory, sheet.filename), 'utf8'));
   }
+  assert.equal(JSON.stringify(pkg.envelope, null, 2),
+    await readFile(resolve(directory, 'nivel-0-2d.json'), 'utf8'));
 });
 
 test('cotas, huella y norte se derivan de la geometría incluso con dos recortes', () => {
@@ -129,6 +150,13 @@ test('no crea planos de entradas inviables, resultados falsificados ni áreas in
   const changedBrief = structuredClone(brief);
   changedBrief.site.width += 1;
   assert.throws(() => buildDrawingPackage(changedBrief, result, 0), /no corresponden al encargo vigente/);
+  const shiftedWindow = structuredClone(result);
+  shiftedWindow.alternatives[0].rooms[0].window.opening.x += 0.25;
+  assert.throws(() => buildDrawingPackage(brief, shiftedWindow, 0), /separada de su propio local/);
+  const fakeGross = structuredClone(result);
+  fakeGross.alternatives[0].wall_allowance_area += 0.1;
+  fakeGross.alternatives[0].built_area += 0.1; // sums still pass; polygon cannot
+  assert.throws(() => buildDrawingPackage(brief, fakeGross, 0), /superficie bruta incoherente/);
   const hostileLabel = structuredClone(result);
   hostileLabel.alternatives[0].label = '<script>alert(1)</script>&';
   const svg = buildDrawingPackage(brief, hostileLabel, 0).sheets[1].svg;
