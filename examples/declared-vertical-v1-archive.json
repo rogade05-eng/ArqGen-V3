@@ -1,0 +1,337 @@
+{
+  "format": "arqgen-declared-vertical-archive-v1",
+  "request": {
+    "format": "arqgen-declared-vertical-request-v1",
+    "typology": "single_family_house",
+    "input": {
+      "request_schema": "arqgen-brief-v8",
+      "site": {
+        "width": 18,
+        "depth": 22,
+        "front_orientation": "S",
+        "plot_outline": {
+          "provenance": "user_sketch_unverified",
+          "shape": "rectangle",
+          "rear_notches": []
+        },
+        "front_approach": {
+          "provenance": "user_sketch_unverified",
+          "shape": "straight_front_strip",
+          "width": 1.2,
+          "front_x": null,
+          "turn_y": null
+        },
+        "reservation_provenance": "user_sketch_unverified",
+        "reserved_areas": []
+      },
+      "program": {
+        "bedrooms": 3,
+        "bathrooms": 2,
+        "target_built_area": 95
+      },
+      "project_context": {
+        "jurisdiction": "unreported",
+        "housing_class": "unreported",
+        "occupants": null,
+        "accessibility_needs": "unreported",
+        "provenance": "self_reported_unverified"
+      },
+      "seed": 42,
+      "rules": {
+        "id": "generic_house_demo",
+        "version": "0.8.0",
+        "regulatory_status": "illustrative_not_certified",
+        "setbacks": {
+          "front": 3,
+          "rear": 2,
+          "left": 2,
+          "right": 2
+        },
+        "max_coverage": 0.55,
+        "max_far": 0.7,
+        "corridor": {
+          "min_width": 1.1,
+          "soft_max_ratio": 0.15
+        },
+        "doors": {
+          "main": 0.9,
+          "room": 0.8,
+          "bathroom": 0.7
+        },
+        "walls": {
+          "exterior": 0.18,
+          "partition": 0.12
+        },
+        "openings": {
+          "corner_clearance": 0.15,
+          "swing_clearance": 0.1
+        },
+        "max_egress_distance": 25,
+        "window_height": 1.2,
+        "spaces": {
+          "living_dining": {
+            "area_min": 16,
+            "area_pref": 20,
+            "area_max": 38,
+            "min_width": 3,
+            "min_depth": 3,
+            "window_ratio": 0.1
+          },
+          "kitchen": {
+            "area_min": 7,
+            "area_pref": 10,
+            "area_max": 20,
+            "min_width": 2.4,
+            "min_depth": 2.4,
+            "window_ratio": 0.1
+          },
+          "bedroom": {
+            "area_min": 9,
+            "area_pref": 11,
+            "area_max": 20,
+            "min_width": 2.7,
+            "min_depth": 2.7,
+            "window_ratio": 0.1
+          },
+          "bathroom": {
+            "area_min": 3,
+            "area_pref": 4.5,
+            "area_max": 10,
+            "min_width": 1.8,
+            "min_depth": 1.8,
+            "window_ratio": 0.05
+          }
+        },
+        "furnishings": {
+          "min_aisle": 0.55,
+          "sofa": {
+            "width": 1.8,
+            "depth": 0.8
+          },
+          "dining_table": {
+            "width": 1.2,
+            "depth": 0.75
+          },
+          "counter": {
+            "width": 1.4,
+            "depth": 0.6
+          },
+          "refrigerator": {
+            "width": 0.6,
+            "depth": 0.65
+          },
+          "bed": {
+            "width": 1.35,
+            "depth": 1.9
+          },
+          "shower": {
+            "width": 0.85,
+            "depth": 0.85
+          },
+          "toilet": {
+            "width": 0.65,
+            "depth": 0.7
+          },
+          "basin": {
+            "width": 0.5,
+            "depth": 0.42
+          }
+        },
+        "bath_exhaust": {
+          "outlet_span": 0.16,
+          "route_band": 0.16,
+          "fixture_gap": 0.02,
+          "max_run": 3
+        },
+        "bath_airflow": {
+          "assumed_ceiling_height": 2.6,
+          "target_ach": 4,
+          "fan_free_air_rating": 120,
+          "door_undercut": 0.025,
+          "max_transfer_velocity": 1.6,
+          "duct_height": 0.16,
+          "duct_bottom": 2.3,
+          "min_headroom": 2.1,
+          "max_duct_velocity": 2
+        },
+        "bath_pressure": {
+          "fan_reference_pressure_pa": 60,
+          "fan_reference_flow_m3h": 90,
+          "assumed_air_density_kg_m3": 1.2,
+          "assumed_darcy_factor": 0.04,
+          "assumed_bend_count": 2,
+          "assumed_bend_k": 1.5,
+          "assumed_outlet_k": 2,
+          "assumed_reserve_pa": 20
+        }
+      }
+    },
+    "candidate_id": "cand-ab3376d8fef08f3b-22",
+    "declared_vertical": {
+      "datum": "assumed_local_datum_not_surveyed",
+      "height_provenance": "illustrative_assumption_not_measured",
+      "floor_z_m": 0,
+      "wall_top_z_m": 3.1,
+      "entry_head_above_floor_m": 2.15,
+      "window_sill_above_floor_m": {
+        "living-dining": 0.8,
+        "kitchen": 0.95,
+        "bedroom-1": 0.9,
+        "bedroom-2": 0.9,
+        "bedroom-3": 0.9,
+        "bathroom-1": 1.4,
+        "bathroom-2": 1.4
+      }
+    }
+  },
+  "model": {
+    "datum": "assumed_local_datum_not_surveyed",
+    "facades": null,
+    "format": "arqgen-declared-vertical-model-v1",
+    "hash_method": "fnv1a64_canonical_json_noncryptographic",
+    "height_provenance": "illustrative_assumption_not_measured",
+    "levels": [
+      {
+        "floor_z_m": 0,
+        "level_id": "L0",
+        "openings": [
+          {
+            "bottom_z_m": 0,
+            "height_source": "explicit_illustrative_assumption",
+            "id": "main-entry",
+            "kind": "entrance",
+            "plan_opening_v8": {
+              "depth": 0.18,
+              "width": 0.9,
+              "x": 8.55,
+              "y": 3
+            },
+            "room_id": null,
+            "top_z_m": 2.15
+          },
+          {
+            "bottom_z_m": 1.4,
+            "height_source": "v8_demo_nominal_window_height",
+            "id": "window-bathroom-1",
+            "kind": "window",
+            "plan_opening_v8": {
+              "depth": 0.27568777985887566,
+              "width": 0.18,
+              "x": 4.390557361599001,
+              "y": 8.005933669490938
+            },
+            "room_id": "bathroom-1",
+            "top_z_m": 2.6
+          },
+          {
+            "bottom_z_m": 1.4,
+            "height_source": "v8_demo_nominal_window_height",
+            "id": "window-bathroom-2",
+            "kind": "window",
+            "plan_opening_v8": {
+              "depth": 0.27568777985887566,
+              "width": 0.18,
+              "x": 13.429442638401,
+              "y": 8.829656110070564
+            },
+            "room_id": "bathroom-2",
+            "top_z_m": 2.6
+          },
+          {
+            "bottom_z_m": 0.9,
+            "height_source": "v8_demo_nominal_window_height",
+            "id": "window-bedroom-1",
+            "kind": "window",
+            "plan_opening_v8": {
+              "depth": 0.8270633395766271,
+              "width": 0.18,
+              "x": 4.390557361599001,
+              "y": 10.552745889632064
+            },
+            "room_id": "bedroom-1",
+            "top_z_m": 2.1
+          },
+          {
+            "bottom_z_m": 0.9,
+            "height_source": "v8_demo_nominal_window_height",
+            "id": "window-bedroom-2",
+            "kind": "window",
+            "plan_opening_v8": {
+              "depth": 0.8270633395766271,
+              "width": 0.18,
+              "x": 13.429442638401,
+              "y": 6.636468330211687
+            },
+            "room_id": "bedroom-2",
+            "top_z_m": 2.1
+          },
+          {
+            "bottom_z_m": 0.9,
+            "height_source": "v8_demo_nominal_window_height",
+            "id": "window-bedroom-3",
+            "kind": "window",
+            "plan_opening_v8": {
+              "depth": 0.8270633395766271,
+              "width": 0.18,
+              "x": 4.390557361599001,
+              "y": 13.372745889632064
+            },
+            "room_id": "bedroom-3",
+            "top_z_m": 2.1
+          },
+          {
+            "bottom_z_m": 0.95,
+            "height_source": "v8_demo_nominal_window_height",
+            "id": "window-kitchen",
+            "kind": "window",
+            "plan_opening_v8": {
+              "depth": 0.7351674129570018,
+              "width": 0.18,
+              "x": 13.429442638401,
+              "y": 4.012416293521499
+            },
+            "room_id": "kitchen",
+            "top_z_m": 2.15
+          },
+          {
+            "bottom_z_m": 0.8,
+            "height_source": "v8_demo_nominal_window_height",
+            "id": "window-living-dining",
+            "kind": "window",
+            "plan_opening_v8": {
+              "depth": 1.3466666666666667,
+              "width": 0.18,
+              "x": 4.390557361599001,
+              "y": 4.704805446376854
+            },
+            "room_id": "living-dining",
+            "top_z_m": 2
+          }
+        ],
+        "room_ids": [
+          "bathroom-1",
+          "bathroom-2",
+          "bedroom-1",
+          "bedroom-2",
+          "bedroom-3",
+          "kitchen",
+          "living-dining"
+        ],
+        "wall_top_z_m": 3.1
+      }
+    ],
+    "model_hash": "70e9ade2b226f678",
+    "notice": "NO APTO PARA OBRA. Solo planta L0 de vivienda y cotas Z hipotéticas; no hay levantamiento, terreno, forjados, estructura, cubierta, escaleras, plantas adicionales, alzados, secciones ni comprobación normativa. Los rectángulos de huecos son de la planta v8, no geometría de fachada verificada. La altura nominal de las ventanas proviene del ejemplo v8; los alféizares, acceso, piso y coronación son hipótesis explícitas, no medidas.",
+    "roof": null,
+    "sections": null,
+    "source": {
+      "candidate_id": "cand-ab3376d8fef08f3b-22",
+      "engine_version": "mvp0.18-rust-0.15.0",
+      "input_hash": "ab3376d8fef08f3b",
+      "request_schema": "arqgen-brief-v8"
+    },
+    "status": "ok",
+    "typology": "single_family_house",
+    "vertical_connections": null
+  }
+}

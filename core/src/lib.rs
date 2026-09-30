@@ -9,14 +9,20 @@ pub mod json;
 pub mod model;
 mod pressure;
 mod svg;
+#[cfg(feature = "declared-vertical-v1")]
+mod vertical;
 
 pub use engine::{explore_json, generate_json};
+#[cfg(feature = "declared-vertical-v1")]
+pub use vertical::declared_vertical_json;
 
 // WebAssembly ABI: input/output are UTF-8 JSON bytes. The high 32 bits of the
 // returned u64 contain length; the low 32 bits contain the pointer. The caller
 // owns BOTH buffers and must call arq_free(ptr, len) on each exactly once.
 #[cfg(target_arch = "wasm32")]
 mod wasm {
+    #[cfg(feature = "declared-vertical-v1")]
+    use super::declared_vertical_json;
     use super::{explore_json, generate_json, model::error_json};
 
     #[no_mangle]
@@ -60,6 +66,13 @@ mod wasm {
     #[no_mangle]
     pub unsafe extern "C" fn arq_explore(ptr: *const u8, len: usize) -> u64 {
         respond(ptr, len, explore_json)
+    }
+
+    // Independent vertical declaration; arq_generate still returns EXACTLY v8.
+    #[cfg(feature = "declared-vertical-v1")]
+    #[no_mangle]
+    pub unsafe extern "C" fn arq_vertical(ptr: *const u8, len: usize) -> u64 {
+        respond(ptr, len, declared_vertical_json)
     }
 
     #[no_mangle]

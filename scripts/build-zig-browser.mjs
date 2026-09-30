@@ -22,7 +22,9 @@ const source = join(root, 'native/zig-browser-launcher.c');
 const version = JSON.parse(await readFile(join(web, 'package.json'), 'utf8')).version;
 const folderName = `ARQ-GEN-LOCAL-NO-TAURI-Windows-x64-${version}`;
 const zipName = `${folderName}.zip`;
-const wasmDigest = 'fe95bb201e1bcb92574e09bc196670062fdc75da3b13502f7e2cb56dc6ba0874';
+// The WASM must have been built/tested separately with Rust 1.88 and the
+// declared-vertical-v1 ABI. This launcher script never invokes Cargo itself.
+const wasmDigest = '4d2cde571b6706b6beafa7f25bf9f1fa18dd90951cf3e4ceacea4dd6c0b7ed01';
 const sha = (data) => createHash('sha256').update(data).digest('hex');
 
 function command(file, args, options = {}) {
@@ -44,6 +46,10 @@ async function getAssets() {
   const generation = callCore(instance.exports, 'arq_generate', input);
   assert.equal(generation.status, 'ok', 'El núcleo WASM debe generar el caso de prueba real.');
   assert.ok(generation.alternatives[0].svg.includes('NO APTO PARA OBRA'));
+  const verticalRequest = JSON.parse(await readFile(join(root, 'examples/declared-vertical-v1-request.json'), 'utf8'));
+  const verticalModel = callCore(instance.exports, 'arq_vertical', verticalRequest);
+  const expectedModel = JSON.parse(await readFile(join(root, 'examples/declared-vertical-v1-model.json'), 'utf8'));
+  assert.deepEqual(verticalModel, expectedModel, 'El WASM embebido debe verificar Z sin cambiar la salida v8.');
 
   const bundled = (await readdir(join(dist, 'assets'))).sort();
   assert.ok(bundled.length >= 3 && bundled.length <= 12 &&
@@ -141,6 +147,24 @@ async function testBrowser(baseUrl) {
       null, { timeout: 15_000 });
     await page.waitForFunction(() => navigator.serviceWorker.controller !== null,
       null, { timeout: 15_000 });
+    const verticalRequest = JSON.parse(await readFile(join(root, 'examples/declared-vertical-v1-request.json'), 'utf8'));
+    await page.locator('#vertical-panel summary').click();
+    assert.equal(await page.locator('#vertical-floor').inputValue(), '', 'No atribuir altura por defecto.');
+    await page.locator('#vertical-floor').fill(String(verticalRequest.declared_vertical.floor_z_m));
+    await page.locator('#vertical-wall').fill(String(verticalRequest.declared_vertical.wall_top_z_m));
+    await page.locator('#vertical-entry').fill(String(verticalRequest.declared_vertical.entry_head_above_floor_m));
+    for (const [room, sill] of Object.entries(verticalRequest.declared_vertical.window_sill_above_floor_m)) {
+      await page.locator(`#vertical-sill-${room}`).fill(String(sill));
+    }
+    await page.locator('#vertical-generate').click();
+    assert.equal(await page.locator('#vertical-export').isEnabled(), true);
+    const verticalDownload = page.waitForEvent('download');
+    await page.locator('#vertical-export').click();
+    const verticalFile = await verticalDownload;
+    const verticalArchiveBytes = await readFile(await verticalFile.path());
+    const verticalArchive = JSON.parse(verticalArchiveBytes.toString('utf8'));
+    assert.equal(verticalArchive.model.facades, null);
+    assert.equal(verticalArchive.model.levels[0].openings.length, 8);
     await page.locator('#explore-count').selectOption('2');
     await page.locator('#explore-start').click();
     await page.waitForFunction(() => document.querySelector('#explore-status')?.textContent?.includes('Lote calculado'));
@@ -150,14 +174,21 @@ async function testBrowser(baseUrl) {
     await page.locator('#portfolio-create').click();
     await page.waitForFunction(() => document.querySelector('#portfolio-count')?.textContent?.startsWith('1 / 8'));
     assert.deepEqual(await page.evaluate(() => window.__qaCsp), [], 'No debe haber CSP violada antes de recargar.');
+    await context.setOffline(true);
     await page.reload({ waitUntil: 'load' });
     await page.waitForFunction(() => document.querySelector('#portfolio-count')?.textContent?.startsWith('1 / 8'));
     await page.locator('#portfolio-list .portfolio-item button[aria-label^="Abrir y verificar"]').click();
     await page.waitForFunction(() => document.querySelector('#portfolio-status')?.textContent?.includes('abierto:'));
     assert.equal(await page.locator('#result-status').textContent(), 'VIABLES');
+    await page.locator('#vertical-panel summary').click();
+    assert.equal(await page.locator('#vertical-export').isEnabled(), false, 'Cotas no se guardan en cartera.');
+    await page.locator('#vertical-file').setInputFiles({ name: 'hipotesis-offline.json',
+      mimeType: 'application/json', buffer: verticalArchiveBytes });
+    await page.waitForFunction(() => document.querySelector('#vertical-export')?.disabled === false);
+    assert.equal(await page.locator('#vertical-model tbody tr').count(), 8);
     assert.deepEqual(await page.evaluate(() => window.__qaCsp), [], 'El shell no debe violar la CSP local.');
     assert.deepEqual(errors, [], 'No debe haber errores JS en Chromium/Linux.');
-    console.log('Chromium/Linux: WASM, Worker/CSP, SVG, SW offline, cartera IndexedDB y recarga local: OK (NO QA Windows).');
+    console.log('Chromium/Linux: WASM v8/Z, Worker/CSP, SVG, SW offline, cartera e importación vertical: OK (NO QA Windows).');
     await context.close();
   } finally { await browser.close(); }
 }
@@ -213,7 +244,9 @@ async function packageAlternative(temp, windowsExe) {
     'IMPORTANTE: NO ES TAURI, NO EMBEBE WEBVIEW2, NO ESTÁ PROBADO EN WINDOWS.',
     '',
     'Este EXE fue compilado cruzadamente desde Linux con Zig 0.13.0 (paquete npm de terceros).',
-    'Incorpora los archivos web y el WASM Rust previamente versionado; Rust NO se recompiló aquí.',
+    'Incorpora web 0.22 y WASM Rust 0.17 recompilado y verificado ANTES de empaquetar.',
+    'El script Zig no recompila Rust: comprueba SHA-256 y ejecución v8 + cotas Z declaradas.',
+    'Las cotas Z son JSON separado e hipotético; las láminas A3 siguen SOLO 2D/sin Z.',
     'Al abrirlo reserva SOLO 127.0.0.1:48765, sirve recursos de una lista cerrada',
     'y abre el navegador predeterminado. Mantén abierta la pequeña ventana de control;',
     'Cerrar servidor apaga el proceso. Si el puerto está ocupado, no arranca.',

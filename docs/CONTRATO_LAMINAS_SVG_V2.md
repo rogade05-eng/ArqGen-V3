@@ -25,7 +25,7 @@ Todas las hojas son SVG autónomos ISO A3 con escala **nominal**, rótulo de can
 
 ## Próximo contrato geométrico que aún falta
 
-Un **modelo versionado en Rust por tipología y por nivel** deberá especificar explícitamente cotas Z, alturas de piso/cubierta, huecos con antepecho/cabezal, relación entre niveles, escaleras/núcleos y programa funcional; sus invariantes deberán pasar antes de renderizar un alzado/corte. Hoy **no** hay altura legal de edificación, topografía ni un segundo nivel; no se deben calcular cortes/fachadas/3D a partir de `nivel-0-2d.json`. Para hospital/hotel además faltan relaciones de servicios, circulaciones, seguridad, accesibilidad, fuentes cubanas pertinentes vigentes y validación profesional. Nada de este corte sustituye QA nativo Windows/Tauri ni habilita obra.
+**Etapa posterior al ZIP v2:** se implementó un [modelo Rust/CLI/WASM y formulario web de Z declarada solo para la planta L0](CONTRATO_VERTICAL_DECLARADO_V1.md), con **JSON separado** y replay; **no se incorpora al ZIP A3**. Para un **modelo completo y versionado por tipología y nivel** aún faltan alturas de pisos/cubierta y suelo medidos o declarados con sus fuentes, relación entre niveles, escaleras/núcleos y programa funcional; sus invariantes deberán pasar antes de renderizar un alzado/corte. En el ZIP v2 **no** hay altura legal de edificación, topografía ni un segundo nivel; no se deben calcular cortes/fachadas/3D a partir de `nivel-0-2d.json`. Para hospital/hotel además faltan relaciones de servicios, circulaciones, seguridad, accesibilidad, fuentes cubanas pertinentes vigentes y validación profesional. Nada de este corte sustituye QA nativo Windows/Tauri ni habilita obra.
 
 ## Pruebas
 

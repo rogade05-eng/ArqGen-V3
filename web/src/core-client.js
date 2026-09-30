@@ -1,4 +1,5 @@
-// One bounded binary bridge for single runs and worker-only multi-seed runs.
+// One bounded binary bridge for single runs, worker-only multi-seed runs,
+// and versioned, explicitly declared vertical data (never part of v8 replay).
 // Never trust a saved output; the caller must replay through the local WASM.
 export async function loadCore() {
   // With Vite base './', a built worker lives under assets/ whereas the
@@ -13,7 +14,7 @@ export async function loadCore() {
 }
 
 export function callCore(engine, operation, input) {
-  if (!['arq_generate', 'arq_explore'].includes(operation) || typeof engine?.[operation] !== 'function') {
+  if (!['arq_generate', 'arq_explore', 'arq_vertical'].includes(operation) || typeof engine?.[operation] !== 'function') {
     throw new Error('Operación no disponible en el núcleo Rust local.');
   }
   const bytes = new TextEncoder().encode(JSON.stringify(input));

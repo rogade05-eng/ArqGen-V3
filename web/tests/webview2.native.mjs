@@ -12,6 +12,7 @@ import { fileURLToPath } from 'node:url';
 import { NativeWebDriver } from './native/webdriver.mjs';
 import { callCore } from '../src/core-client.js';
 import { makeExplorationArchive } from '../src/exploration.js';
+import { makeVerticalArchive } from '../src/vertical.js';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const web = resolve(root, 'web');
@@ -49,15 +50,31 @@ export async function buildArchives(dir, packedPath = resolve(root, 'dist/web/co
   const changed = structuredClone(document);
   changed.exploration.alternatives[0].candidate.svg += '<script>forged</script>';
   await writeFile(forged, JSON.stringify(changed));
-  return { valid, forged };
+  const verticalRequest = JSON.parse(await readFile(resolve(root, 'examples/declared-vertical-v1-request.json'), 'utf8'));
+  const verticalModel = callCore(instance.exports, 'arq_vertical', verticalRequest);
+  assert.equal(verticalModel.status, 'ok');
+  const verticalArchive = makeVerticalArchive(verticalRequest, verticalModel);
+  const verticalValid = join(dir, 'cotas-verificadas.json');
+  const verticalForged = join(dir, 'cotas-falsas.json');
+  await writeFile(verticalValid, JSON.stringify(verticalArchive));
+  const alteredVertical = structuredClone(verticalArchive);
+  alteredVertical.model.levels[0].openings[0].top_z_m += 0.1;
+  await writeFile(verticalForged, JSON.stringify(alteredVertical));
+  return { valid, forged, verticalRequest, verticalValid, verticalForged };
 }
 
-async function upload(driver, path) {
+async function upload(driver, path, selector = '#explore-file') {
   // Hidden file input: temporarily expose it to *WebDriver*; use native file
-  // sendKeys rather than modifying File/Blob APIs or trusting an archive SVG.
-  await driver.execute('document.querySelector("#explore-file").hidden = false; return true;');
-  try { await driver.sendFile('#explore-file', path); }
-  finally { await driver.execute('document.querySelector("#explore-file").hidden = true; return true;'); }
+  // sendKeys rather than modifying File/Blob APIs or trusting a saved model.
+  await driver.execute(`document.querySelector('${selector}').hidden = false; return true;`);
+  try { await driver.sendFile(selector, path); }
+  finally { await driver.execute(`document.querySelector('${selector}').hidden = true; return true;`); }
+}
+
+async function openVerticalPanel(driver) {
+  if (!(await driver.execute('return document.querySelector("#vertical-panel")?.open === true;'))) {
+    await driver.click('#vertical-panel summary');
+  }
 }
 
 async function scenario(driver, files) {
@@ -88,16 +105,69 @@ async function scenario(driver, files) {
   assert.match(initial.userAgent, /Edg\//, 'The renderer must be native Edge WebView2.');
   assert.match(initial.portfolio, /^0 \/ 8/, 'QA requires an empty isolated WebView2 profile.');
   console.log(`OK: WebView2 nativo, ${initial.protocol}//${initial.host}, Rust/WASM y ámbito NO EVALUADO.`);
-
   await driver.execute(`
     window.__qaIssues = [];
     window.addEventListener('error', (e) => window.__qaIssues.push(e.message));
     window.addEventListener('unhandledrejection', (e) => window.__qaIssues.push(String(e.reason)));
-    window.addEventListener('securitypolicyviolation', (e) =>
-      window.__qaIssues.push('CSP: ' + e.violatedDirective));
-    document.querySelector('#explore-count').value = '2';
+    window.addEventListener('securitypolicyviolation', (e) => window.__qaIssues.push('CSP: ' + e.violatedDirective));
     return true;
   `);
+
+  await openVerticalPanel(driver);
+  const emptyZ = await driver.execute('return document.querySelector("#vertical-floor").value === "";');
+  assert.equal(emptyZ, true, 'WebView2 must not prefill a guessed Z.');
+  const sillCount = await driver.execute(`
+    const heights = arguments[0];
+    function fill(id, value) {
+      const field = document.querySelector(id);
+      if (!field) throw new Error('Falta ' + id);
+      field.value = String(value);
+      field.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+    fill('#vertical-floor', heights.floor_z_m);
+    fill('#vertical-wall', heights.wall_top_z_m);
+    fill('#vertical-entry', heights.entry_head_above_floor_m);
+    for (const [room, sill] of Object.entries(heights.window_sill_above_floor_m)) {
+      fill('#vertical-sill-' + room, sill);
+    }
+    return document.querySelectorAll('#vertical-sills input').length;
+  `, [files.verticalRequest.declared_vertical]);
+  assert.equal(sillCount, 7);
+  await driver.click('#vertical-generate');
+  const zModel = await until('cotas Z explícitas de Rust en WebView2', () => driver.execute(`
+    const status = document.querySelector('#vertical-status');
+    if (status?.dataset.state === 'error') throw new Error(status.textContent);
+    return status?.dataset.state === 'ok' && !document.querySelector('#vertical-export')?.disabled ? {
+      openings: document.querySelectorAll('#vertical-model tbody tr').length,
+      title: document.querySelector('#vertical-model')?.textContent,
+    } : null;
+  `));
+  assert.equal(zModel.openings, 8);
+  assert.match(zModel.title, /NO APTO PARA OBRA/);
+  await upload(driver, files.verticalForged, '#vertical-file');
+  const badZ = await until('rechazo de archivo vertical adulterado en WebView2', () => driver.execute(`
+    const status = document.querySelector('#vertical-status');
+    return status?.dataset.state === 'error' ? {
+      message: status.textContent,
+      exportDisabled: document.querySelector('#vertical-export')?.disabled,
+      v8: document.querySelector('#result-status')?.textContent,
+    } : null;
+  `));
+  assert.match(badZ.message, /difiere del replay íntegro/);
+  assert.equal(badZ.exportDisabled, true);
+  assert.equal(badZ.v8, 'VIABLES');
+  await upload(driver, files.verticalValid, '#vertical-file');
+  const reopenedZ = await until('replay de cotas Z en WebView2', () => driver.execute(`
+    const status = document.querySelector('#vertical-status');
+    if (status?.dataset.state === 'error') throw new Error(status.textContent);
+    return status?.textContent?.includes('replay íntegro') &&
+      !document.querySelector('#vertical-export')?.disabled ?
+      document.querySelectorAll('#vertical-model tbody tr').length : null;
+  `));
+  assert.equal(reopenedZ, 8);
+  console.log('OK: Z explícita en WebView2; archivo adulterado rechazado y JSON separado reabierto con Rust.');
+
+  await driver.execute(`document.querySelector('#explore-count').value = '2'; return true;`);
   await driver.click('#explore-start');
   const explored = await until('worker Rust multisemilla', () => driver.execute(`
     const status = document.querySelector('#explore-status');
@@ -183,7 +253,27 @@ async function scenario(driver, files) {
   `));
   assert.equal(opened, true);
   assert.equal(await driver.execute('return document.querySelector("#result-status").textContent;'), 'VIABLES');
-  console.log('OK: recarga del bundle, cartera persistente y proyecto reabierto tras replay Rust.');
+  const zNotInPortfolio = await driver.execute('return document.querySelector("#vertical-export").disabled;');
+  assert.equal(zNotInPortfolio, true, 'La cartera v8 no guarda hipótesis Z.');
+  await driver.execute(`
+    window.__qaIssues = [];
+    window.addEventListener('error', (e) => window.__qaIssues.push(e.message));
+    window.addEventListener('unhandledrejection', (e) => window.__qaIssues.push(String(e.reason)));
+    window.addEventListener('securitypolicyviolation', (e) => window.__qaIssues.push('CSP: ' + e.violatedDirective));
+    return true;
+  `);
+  await openVerticalPanel(driver);
+  await upload(driver, files.verticalValid, '#vertical-file');
+  const afterZReload = await until('archivo Z separado tras abrir cartera WebView2', () => driver.execute(`
+    const status = document.querySelector('#vertical-status');
+    if (status?.dataset.state === 'error') throw new Error(status.textContent);
+    return status?.textContent?.includes('replay íntegro') &&
+      !document.querySelector('#vertical-export')?.disabled ?
+      document.querySelectorAll('#vertical-model tbody tr').length : null;
+  `));
+  assert.equal(afterZReload, 8);
+  assert.deepEqual(await driver.execute('return window.__qaIssues || [];'), [], 'No se permiten errores JS/CSP tras abrir Z.');
+  console.log('OK: recarga/cartera v8 sin Z implícita; archivo vertical reabierto aparte tras replay Rust.');
 }
 
 async function run() {

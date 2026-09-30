@@ -1,6 +1,6 @@
 [package]
 name = "arqgen-desktop"
-version = "0.21.0"
+version = "0.22.0"
 description = "ARQ GEN conceptual offline desktop shell"
 edition = "2021"
 build = "build.rs"

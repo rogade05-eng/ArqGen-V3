@@ -30,7 +30,7 @@
       </div>
       <div class="sidebar-bottom">
         <div class="side-status"><span class="status-dot"></span> Núcleo Rust · local</div>
-        <span>MVP-0.20 <span class="side-sep">/</span> Web 0.21</span>
+        <span>Motor v8 <span class="side-sep">/</span> Web 0.22</span>
       </div>
     </aside>
 
@@ -47,7 +47,7 @@
             <h1 id="page-title">Un punto de partida <em>bien pensado.</em></h1>
             <p>Describe la parcela y el programa. El motor ensaya organizaciones espaciales, descarta las inviables y te muestra alternativas explicables.</p>
           </div>
-          <div class="scope-pill"><span class="scope-glyph">▤</span><span><strong>Alcance de este corte</strong><small>1 planta · 0–2 recortes posteriores · 0–2 zonas 2D · presión hipotética</small></span></div>
+          <div class="scope-pill"><span class="scope-glyph">▤</span><span><strong>Alcance de este corte</strong><small>1 planta · cotas Z supuestas optativas · 0–2 recortes y zonas 2D</small></span></div>
         </section>
 
         <div class="notice-bar" role="note"><span class="notice-icon">!</span><span><strong>Anteproyecto, no plano de obra.</strong> Reglas ilustrativas sin certificación. Baños con extracción <em>reservada en planta</em>, caudal OBJETIVO y un presupuesto de presión HIPOTÉTICO con dos puntos nominales interpolados. Sin equipo elegido ni curva de fabricante: NO acredita pérdidas de carga reales, caudal entregado, aire de reposición, conducto 3D ni descarga segura. Parcela, zonas reservadas y trazado frontal (recto o con dos giros) solo como croquis autodeclarados; sin linderos, calle, derechos de paso ni exigencias legales comprobados. Retiros demo NO medidos desde los entrantes. Ventilación efectiva, iluminación natural, accesibilidad y estructura pendientes; revisión profesional obligatoria.</span></div>
@@ -231,7 +231,28 @@
                 <p>Vista previa reducida. Descarga el ZIP para abrir los SVG completos; imprimir al 100% y comprobar escala. No hay cortes, alzados ni segunda planta. <strong>NO APTO PARA OBRA.</strong></p>
               </details>
               <div class="action-bar"><div class="choice-copy"><strong id="choice-title">Tu criterio es el último paso.</strong><span id="choice-subtitle">Selecciona la propuesta que deseas desarrollar.</span></div><div class="action-buttons"><button type="button" class="ghost-button" id="export-json">↓ JSON</button><button type="button" class="ghost-button" id="export-svg">↓ SVG</button><button type="button" class="ghost-button" id="export-drawings" title="4 láminas conceptuales A3 SVG del mismo candidato, NO planos de obra">↓ Láminas SVG · ZIP</button><button type="button" class="ghost-button" id="export-report">↓ Ficha TXT</button><button type="button" class="approve-button" id="approve">Marcar como preferida <span>↗</span></button></div></div>
-              <p class="drawing-package-note">Láminas A3: emplazamiento declarado, planta amueblada, cotas esquemáticas y perímetro/vanos 2D. Cuatro vistas de <em>la misma alternativa</em>; el modelo de nivel 0 no contiene alturas. Todavía no hay cortes, fachadas, plantas superiores, hospital ni hotel. Imprimir al 100% y verificar escala. <strong>NO APTO PARA OBRA.</strong></p>
+              <p class="drawing-package-note">Láminas A3: emplazamiento declarado, planta amueblada, cotas esquemáticas y perímetro/vanos 2D. Cuatro vistas de <em>la misma alternativa</em>; el JSON de ese ZIP no contiene alturas. Todavía no hay cortes, fachadas, plantas superiores, hospital ni hotel. Imprimir al 100% y verificar escala. <strong>NO APTO PARA OBRA.</strong></p>
+              <details class="vertical-panel" id="vertical-panel" hidden>
+                <summary>Cotas Z explícitas para esta planta · Rust local · JSON separado</summary>
+                <div class="vertical-body">
+                  <p>Solo <strong>una planta de vivienda</strong>. Las cotas son hipótesis locales NO medidas: no hay terreno, cubierta, escaleras, fachadas ni cortes. No se aplican al ZIP A3 ni se guardan en la cartera. Deja vacío lo que no puedas declarar. <strong>NO APTO PARA OBRA.</strong></p>
+                  <div class="vertical-fields">
+                    <label for="vertical-floor">Piso L0 · Z local supuesta (m)<input id="vertical-floor" type="number" step="any" min="-1000" max="1000" placeholder="Sin declarar" /></label>
+                    <label for="vertical-wall">Coronación de muro · Z local supuesta (m)<input id="vertical-wall" type="number" step="any" placeholder="Sin declarar" /></label>
+                    <label for="vertical-entry">Cabeza del acceso SOBRE piso (m)<input id="vertical-entry" type="number" step="any" min="0" placeholder="Sin declarar" /></label>
+                  </div>
+                  <p>Alféizar SOBRE piso para cada ventana que ya existe en la planta Rust; su altura nominal proviene de las reglas demo, NO de un levantamiento.</p>
+                  <div class="vertical-sills" id="vertical-sills" aria-label="Alféizares declarados por local"></div>
+                  <div class="vertical-actions">
+                    <button type="button" id="vertical-generate">Verificar cotas en Rust</button>
+                    <button type="button" id="vertical-export" disabled>↓ Descargar JSON de cotas</button>
+                    <button type="button" id="vertical-import">↑ Abrir JSON y verificar</button>
+                    <input id="vertical-file" type="file" accept=".json,application/json" hidden aria-label="Seleccionar archivo de cotas para verificar" />
+                  </div>
+                  <p class="import-feedback" id="vertical-status" role="status" hidden></p>
+                  <div class="vertical-model" id="vertical-model" hidden aria-label="Resumen de cotas devueltas por Rust"></div>
+                </div>
+              </details>
               <p class="import-feedback" id="export-feedback" role="status" hidden></p>
             </div>
             <div id="empty-view" class="empty-view" hidden><div class="empty-symbol">◇</div><span class="section-kicker" id="empty-kicker">SIN PROPUESTAS</span><h2 id="empty-title">La parcela pide otra solución.</h2><p id="empty-message"></p><ul id="empty-reasons"></ul><section class="rejection-panel" id="empty-rejections" aria-label="Motivos de descarte en esta búsqueda" hidden></section><p class="empty-scope" id="empty-scope"></p></div>
@@ -309,7 +330,7 @@
           <div id="portfolio-list" class="portfolio-list" aria-label="Proyectos locales sin verificar"></div>
           <p class="comparison-limit">Cada proyecto conserva un encargo evaluado y hasta tres corridas comparables; una apertura fallida <strong>no cambia el formulario</strong>. Restaurar un respaldo sustituye atómicamente la cartera local <strong>solo tras verificarlo completo y confirmar</strong>; la pantalla actual no se cambia hasta que abras un proyecto. El JSON puede incluir ubicación declarada y otros datos: consérvalo fuera del navegador. Borrar datos del sitio elimina esta cartera. La copia rápida de una ranura y los archivos individuales son independientes. <strong>Ni esta cartera ni un estado «viable» significan aprobación técnica, derechos sobre el suelo o cumplimiento cubano.</strong></p>
         </section>
-        <footer class="page-footer"><span>ARQ GEN · WEB EXPERIMENTAL v0.21 · NÚCLEO RUST v0.16</span><span>Datos locales. Decisiones trazables. Revisión humana.</span></footer>
+        <footer class="page-footer"><span>ARQ GEN · WEB EXPERIMENTAL v0.22 · NÚCLEO RUST v0.17</span><span>Datos locales. Decisiones trazables. Revisión humana.</span></footer>
       </div>
     </main>
   </div>

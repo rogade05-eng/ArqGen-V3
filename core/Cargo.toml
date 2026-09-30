@@ -1,6 +1,6 @@
 [package]
 name = "arqgen-core"
-version = "0.16.0"
+version = "0.17.0"
 edition = "2021"
 license = "LGPL-2.1-only"
 description = "Núcleo offline del primer corte de ARQ GEN"
@@ -8,6 +8,17 @@ description = "Núcleo offline del primer corte de ARQ GEN"
 [lib]
 name = "arqgen_core"
 crate-type = ["rlib", "cdylib"]
+
+# An independent, versioned endpoint; neither the v8 request nor its output
+# is modified. The browser/WASM and CLI use the same default feature.
+[features]
+default = ["declared-vertical-v1"]
+declared-vertical-v1 = []
+
+[[bin]]
+name = "arqgen-vertical"
+path = "src/bin/arqgen-vertical.rs"
+required-features = ["declared-vertical-v1"]
 
 [[bin]]
 name = "arqgen"

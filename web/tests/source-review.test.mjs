@@ -253,7 +253,8 @@ test('web shell exposes the same not-evaluated scope and provenance without fetc
   assert.match(client, /reflectPlotFields\(\)/);
   assert.match(client, /site-plot-summary/);
   assert.match(client, /site-approach-summary/);
-  assert.match(html, /MVP-0\.20[\s\S]*Web 0\.21/);
+  assert.match(html, /Motor v8[\s\S]*Web 0\.22/);
+  assert.match(html, /cotas Z supuestas optativas/);
   assert.match(html, /Trazado frontal elegido/);
   assert.match(client, /reflectReservationFields\(\)/);
   assert.match(client, /site-reservation-summary/);

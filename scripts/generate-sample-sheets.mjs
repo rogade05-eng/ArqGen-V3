@@ -12,8 +12,8 @@ import { buildDrawingPackage } from '../web/src/drawing-package.js';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const wasm = await readFile(join(root, 'web/public/core.wasm'));
 const sha = createHash('sha256').update(wasm).digest('hex');
-assert.equal(sha, 'fe95bb201e1bcb92574e09bc196670062fdc75da3b13502f7e2cb56dc6ba0874',
-  'El fixture requiere el WASM Rust v8 versionado; reconstruir/revalidar antes de regenerarlo.');
+assert.equal(sha, '4d2cde571b6706b6beafa7f25bf9f1fa18dd90951cf3e4ceacea4dd6c0b7ed01',
+  'El fixture requiere el WASM Rust v8 + Z versionado; reconstruir/revalidar antes de regenerarlo.');
 const input = JSON.parse(await readFile(join(root, 'examples/rectangular.json'), 'utf8'));
 input.rules = JSON.parse(await readFile(join(root, 'knowledge/generic-house.json'), 'utf8'));
 const { instance } = await WebAssembly.instantiate(wasm);

@@ -4,7 +4,7 @@ import sources from '../../knowledge/source-manifest.json';
 import { reviewSanitaryScope, describeDeclaredContext } from './source-review.js';
 import { readBriefForm, writeBriefForm } from './brief.js';
 import { archiveScenario, comparisonKey, comparisonLimit, comparisonReport, hypothesisFields } from './comparison.js';
-import { maxArchiveBytes, parseArchiveText, verifyArchive } from './archive.js';
+import { maxArchiveBytes, parseArchiveText, sameJson, verifyArchive } from './archive.js';
 import { conceptualReport } from './report.js';
 import { snapshotWorkspace, verifyWorkspace, saveLocalWorkspace, readLocalWorkspace, removeLocalWorkspace } from './workspace.js';
 import { portfolioLimit, maxPortfolioBytes, newProject, revisedProject, listProjects, readProject,
@@ -13,6 +13,7 @@ import { createCheckpoints } from './checkpoints.js';
 import { loadCore, callCore } from './core-client.js';
 import { makeExplorationArchive, verifyExplorationArchive, explorationLimit } from './exploration.js';
 import { buildDrawingPackage } from './drawing-package.js';
+import { makeVerticalRequest, makeVerticalArchive, verifyVerticalArchive } from './vertical.js';
 
 const el = (id) => document.getElementById(id);
 const form = el('brief-form');
@@ -28,6 +29,8 @@ let selectionIndex = 0;
 let stale = false;
 let revision = 0;
 let selectedRoom = null;
+let verticalRecord = null; // separate, unsaved v1 heights; never alters the v8 run or A3 ZIP
+let verticalImportSequence = 0;
 let portfolioEntries = [];
 let activeProject = null; // {id, edit_token, name}; editing is never an automatic save.
 let portfolioDirty = false;
@@ -297,8 +300,73 @@ function renderChoice() {
   }
 }
 
+function clearVerticalResult() {
+  verticalRecord = null;
+  el('vertical-export').disabled = true;
+  el('vertical-model').hidden = true;
+  el('vertical-model').replaceChildren();
+  showFeedback('vertical-status', '');
+}
+
+function resetVerticalPanel() {
+  ++verticalImportSequence; // cancel an import if its candidate changed while reading
+  clearVerticalResult();
+  for (const id of ['vertical-floor', 'vertical-wall', 'vertical-entry']) el(id).value = '';
+  const sills = el('vertical-sills');
+  sills.replaceChildren();
+  el('vertical-panel').hidden = !run || stale;
+  if (!run || stale) return;
+  for (const room of run.alternatives[selectionIndex].rooms.filter((item) => item.window)) {
+    const label = document.createElement('label');
+    const input = document.createElement('input');
+    input.type = 'number';
+    input.step = 'any';
+    input.min = '0';
+    input.placeholder = 'Sin declarar';
+    input.dataset.roomId = room.id;
+    input.id = `vertical-sill-${room.id}`;
+    label.htmlFor = input.id;
+    label.append(document.createTextNode(`${room.label} · alféizar (m) · alto demo ${number(room.window.height, 2)} m`), input);
+    sills.append(label);
+  }
+}
+
+function renderVerticalModel(model) {
+  const host = el('vertical-model');
+  host.replaceChildren();
+  const level = model.levels[0];
+  const header = document.createElement('strong');
+  header.textContent = `Modelo ${model.format} · ${model.source.candidate_id} · huella v8 ${model.source.input_hash}`;
+  const summary = document.createElement('p');
+  summary.textContent = `L0: piso Z=${number(level.floor_z_m, 2)} m · coronación Z=${number(level.wall_top_z_m, 2)} m (referencia local NO levantada). Identidad de hipótesis: ${model.model_hash}; no es firma.`;
+  const table = document.createElement('table');
+  const head = document.createElement('thead');
+  const tr = document.createElement('tr');
+  for (const title of ['Hueco 2D de Rust', 'Inferior · Z m', 'Superior · Z m', 'Procedencia de altura']) {
+    const th = document.createElement('th'); th.textContent = title; tr.append(th);
+  }
+  head.append(tr);
+  const body = document.createElement('tbody');
+  for (const opening of level.openings) {
+    const row = document.createElement('tr');
+    for (const value of [opening.room_id || 'Entrada principal',
+      number(opening.bottom_z_m, 2), number(opening.top_z_m, 2),
+      opening.height_source === 'v8_demo_nominal_window_height' ? 'Ventana demo + alféizar supuesto' : 'Acceso supuesto']) {
+      const td = document.createElement('td'); td.textContent = value; row.append(td);
+    }
+    body.append(row);
+  }
+  table.append(head, body);
+  const warning = document.createElement('p');
+  warning.textContent = model.notice;
+  host.append(header, summary, table, warning);
+  host.hidden = false;
+}
+
 function renderOption(index) {
+  const different = selectionIndex !== index;
   selectionIndex = index;
+  if (different) resetVerticalPanel();
   selectedRoom = null;
   const alt = run.alternatives[index];
   for (const button of el('alternatives').children) {
@@ -332,7 +400,7 @@ function renderOption(index) {
 function renderRun(result, input) {
   run = result;
   runInput = structuredClone(input);
-  selectionIndex = 0;
+  selectionIndex = -1; // renderOption(0) initializes a fresh set of Z fields
   stale = false;
   el('engine-state').hidden = true;
   el('empty-view').hidden = true;
@@ -395,7 +463,12 @@ function renderRun(result, input) {
 function setActionEnabled(enabled) {
   for (const id of ['approve', 'export-json', 'export-svg', 'export-drawings', 'export-report']) el(id).disabled = !enabled;
   el('drawing-preview').hidden = !enabled;
-  if (!enabled) el('drawing-preview-grid').replaceChildren();
+  el('vertical-panel').hidden = !enabled || typeof engine?.arq_vertical !== 'function';
+  if (!enabled) {
+    el('drawing-preview-grid').replaceChildren();
+    resetVerticalPanel();
+    el('vertical-panel').hidden = true;
+  }
 }
 
 function renderDrawingPreview() {
@@ -703,6 +776,94 @@ function showFeedback(id, message, failed = false) {
 }
 const showImportFeedback = (message, failed = false) => showFeedback('import-feedback', message, failed);
 const showLocalFeedback = (message, failed = false) => showFeedback('local-feedback', message, failed);
+
+function invokeVertical(request) { return callCore(engine, 'arq_vertical', request); }
+
+function readVerticalHeights() {
+  const declaredNumber = (input, title) => {
+    if (input.value.trim() === '' || !Number.isFinite(input.valueAsNumber)) {
+      throw new Error(`Declara ${title} como número de metros; no se asigna una altura por defecto.`);
+    }
+    return input.valueAsNumber;
+  };
+  const sills = {};
+  for (const input of el('vertical-sills').querySelectorAll('input[data-room-id]')) {
+    sills[input.dataset.roomId] = declaredNumber(input, `el alféizar de ${input.dataset.roomId}`);
+  }
+  return {
+    floor_z_m: declaredNumber(el('vertical-floor'), 'la cota local del piso L0'),
+    wall_top_z_m: declaredNumber(el('vertical-wall'), 'la coronación del muro'),
+    entry_head_above_floor_m: declaredNumber(el('vertical-entry'), 'la cabeza del acceso sobre el piso'),
+    window_sill_above_floor_m: sills,
+  };
+}
+
+function verifyCurrentVertical(request, model) {
+  if (!run || !runInput || stale ||
+      !sameJson(request.input, runInput) ||
+      request.candidate_id !== run.alternatives[selectionIndex].id ||
+      model.source.input_hash !== run.input_hash) {
+    throw new Error('El archivo/modelo no corresponde a la corrida y alternativa vigentes. Abre primero el origen v8 y selecciona esa alternativa.');
+  }
+}
+
+function generateVertical() {
+  ++verticalImportSequence;
+  clearVerticalResult();
+  if (!engine || !run || !runInput || stale) return;
+  try {
+    const request = makeVerticalRequest(runInput, run, selectionIndex, readVerticalHeights());
+    const model = invokeVertical(request); // new, versioned Rust/WASM endpoint; no JS Z inference
+    makeVerticalArchive(request, model); // must be complete, typed, and for this candidate
+    verifyCurrentVertical(request, model);
+    verticalRecord = { request, model };
+    renderVerticalModel(model);
+    el('vertical-export').disabled = false;
+    showFeedback('vertical-status', 'Rust vinculó 1 planta y los huecos existentes a tus cotas declaradas. Descarga ambos: solicitud y modelo. NO APTO PARA OBRA.');
+  } catch (error) {
+    showFeedback('vertical-status', `No se modelaron cotas: ${error.message}`, true);
+  }
+}
+
+async function importVerticalFile(file) {
+  if (!file) return;
+  const sequence = ++verticalImportSequence;
+  const startingRevision = revision;
+  const candidateId = run?.alternatives[selectionIndex]?.id;
+  clearVerticalResult();
+  showFeedback('vertical-status', 'Leyendo y recalculando el modelo vertical completo con Rust local…');
+  try {
+    if (!engine || !run || !runInput || stale) throw new Error('Genera primero el origen v8 de este archivo.');
+    if (!file.size || file.size > maxArchiveBytes) throw new Error('Archivo vacío o mayor de 8 MiB.');
+    const data = await file.arrayBuffer();
+    if (sequence !== verticalImportSequence || startingRevision !== revision ||
+        candidateId !== run?.alternatives[selectionIndex]?.id || stale) {
+      throw new Error('La alternativa cambió mientras se leía el archivo.');
+    }
+    const doc = parseArchiveText(new TextDecoder('utf-8', { fatal: true }).decode(data));
+    const verified = verifyVerticalArchive(doc, knowledge, invokeVertical);
+    if (sequence !== verticalImportSequence || startingRevision !== revision ||
+        candidateId !== run?.alternatives[selectionIndex]?.id || stale) {
+      throw new Error('La alternativa cambió durante la verificación.');
+    }
+    verifyCurrentVertical(verified.request, verified.model);
+    const heights = verified.request.declared_vertical;
+    el('vertical-floor').value = String(heights.floor_z_m);
+    el('vertical-wall').value = String(heights.wall_top_z_m);
+    el('vertical-entry').value = String(heights.entry_head_above_floor_m);
+    for (const input of el('vertical-sills').querySelectorAll('input[data-room-id]')) {
+      input.value = String(heights.window_sill_above_floor_m[input.dataset.roomId]);
+    }
+    verticalRecord = verified;
+    el('vertical-export').disabled = false;
+    renderVerticalModel(verified.model);
+    showFeedback('vertical-status', 'Modelo importado tras replay íntegro de Rust; no se modificó el encargo v8 ni la cartera. NO APTO PARA OBRA.');
+  } catch (error) {
+    if (sequence === verticalImportSequence && !stale) {
+      showFeedback('vertical-status', `No se abrió el modelo vertical: ${error.message}`, true);
+    }
+  } finally { if (sequence === verticalImportSequence) el('vertical-file').value = ''; }
+}
 
 function renderExploration() {
   el('explore-start').disabled = !engine || !evaluated || stale || exploreBusy;
@@ -1318,6 +1479,29 @@ el('export-svg').addEventListener('click', () => {
   if (run && !stale) download(run.alternatives[selectionIndex].svg, 'image/svg+xml;charset=utf-8', `arqgen-${run.alternatives[selectionIndex].id}.svg`);
 });
 el('drawing-preview').addEventListener('toggle', renderDrawingPreview);
+el('vertical-panel').addEventListener('input', (event) => {
+  if (!(event.target instanceof HTMLInputElement) || event.target.type === 'file') return;
+  ++verticalImportSequence;
+  clearVerticalResult();
+  showFeedback('vertical-status', 'Cotas modificadas: verifica de nuevo con Rust antes de descargar. El encargo v8 no cambió.');
+});
+el('vertical-generate').addEventListener('click', generateVertical);
+el('vertical-export').addEventListener('click', () => {
+  if (!verticalRecord || !run || !runInput || stale) return;
+  try {
+    const archive = makeVerticalArchive(verticalRecord.request, verticalRecord.model);
+    const verified = verifyVerticalArchive(archive, knowledge, invokeVertical); // replay again at export
+    verifyCurrentVertical(verified.request, verified.model);
+    download(JSON.stringify(archive, null, 2), 'application/json;charset=utf-8',
+      `arqgen-cotas-L0-CONCEPTUAL-${archive.request.candidate_id}.json`);
+    showFeedback('vertical-status', 'JSON vertical descargado con origen v8 y cotas explícitas; se recalculó con Rust. No se incorpora al ZIP A3.');
+  } catch (error) {
+    clearVerticalResult();
+    showFeedback('vertical-status', `No se exportaron las cotas: ${error.message}`, true);
+  }
+});
+el('vertical-import').addEventListener('click', () => el('vertical-file').click());
+el('vertical-file').addEventListener('change', (event) => { void importVerticalFile(event.target.files?.[0]); });
 el('export-drawings').addEventListener('click', () => {
   if (!run || stale || !runInput) return;
   try {

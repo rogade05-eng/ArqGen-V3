@@ -264,6 +264,27 @@ h1 em { color: #638a72; font-weight: 400; }
 .action-buttons { display: flex; flex-wrap: wrap; gap: 7px; }
 .drawing-package-note { margin: 10px 0 0; padding: 8px 11px; background: #f4f7f4; border-left: 2px solid #80a99a; color: #5a746d; font-size: 10px; line-height: 1.5; }
 .drawing-package-note strong { color: #8a563a; }
+.vertical-panel { margin-top: 16px; border: 1px solid #cadbd2; border-radius: 8px; background: #f5f9f6; }
+.vertical-panel summary { cursor: pointer; padding: 13px 15px; font-size: 12px; color: #315c4c; font-weight: 750; }
+.vertical-panel summary:focus-visible { outline: 2px solid #5b896b; outline-offset: 2px; }
+.vertical-body { padding: 2px 16px 16px; }
+.vertical-body > p { color: #60786a; font-size: 11px; line-height: 1.6; margin: 4px 0 12px; }
+.vertical-body > p strong { color: #8c5937; }
+.vertical-fields, .vertical-sills { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px 12px; margin: 11px 0 16px; }
+.vertical-fields label, .vertical-sills label { display: block; font-size: 11px; color: #406351; font-weight: 680; line-height: 1.5; }
+.vertical-fields input, .vertical-sills input { width: 100%; height: 36px; margin-top: 6px; padding: 0 10px; border: 1px solid #cbded2; border-radius: 5px; background: #fff; color: #244c39; }
+.vertical-fields input:focus, .vertical-sills input:focus { outline: 2px solid #6e9a7b; outline-offset: 1px; }
+.vertical-sills { padding: 13px; border: 1px solid #dfebe0; border-radius: 6px; background: #fff; }
+.vertical-actions { display: flex; flex-wrap: wrap; gap: 9px; align-items: center; }
+.vertical-actions button { padding: 9px 11px; border: 1px solid #79a38d; border-radius: 5px; background: #e4f0e8; color: #285740; font-size: 11px; font-weight: 730; }
+.vertical-actions button:hover:not(:disabled) { background: #d0e6d7; }
+.vertical-actions #vertical-generate { background: #356b54; color: #fff; }
+.vertical-model { margin-top: 15px; overflow-x: auto; font-size: 11px; color: #305242; }
+.vertical-model > strong { display: block; margin-bottom: 9px; }
+.vertical-model p { margin: 8px 0; line-height: 1.5; }
+.vertical-model table { width: 100%; border-collapse: collapse; min-width: 420px; }
+.vertical-model th, .vertical-model td { padding: 7px 9px; border-bottom: 1px solid #dce9df; text-align: left; }
+.vertical-model th { background: #e9f2ea; font-weight: 750; }
 .ghost-button, .approve-button { border-radius: 6px; height: 34px; padding: 0 11px; font-size: 10px; font-weight: 700; white-space: nowrap; }
 .ghost-button { background: #fff; border: 1px solid #d9e6d9; color: #4c7860; }
 .ghost-button:hover { background: #f0f7f0; }

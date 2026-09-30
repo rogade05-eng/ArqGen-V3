@@ -12,6 +12,7 @@ import { NativeWebDriver } from './native/webdriver.mjs';
 import { buildArchives } from './webview2.native.mjs';
 import { callCore } from '../src/core-client.js';
 import { verifyExplorationArchive } from '../src/exploration.js';
+import { verifyVerticalArchive } from '../src/vertical.js';
 
 test('native QA transport requires loopback, W3C session, native element actions and explicit teardown', async () => {
   assert.throws(() => new NativeWebDriver('https://example.com'), /localhost/);
@@ -60,10 +61,12 @@ test('native QA fixture uses real WASM and fails closed on a forged SVG', async 
   try {
     // A local fixture test can reuse public WASM as "bundle". The real
     // Windows invocation instead *requires* dist/web/core.wasm from Tauri build.
-    const { valid, forged } = await buildArchives(dir, wasmPath);
-    const [good, bad, knowledge, bytes] = await Promise.all([
+    const { valid, forged, verticalValid, verticalForged } = await buildArchives(dir, wasmPath);
+    const [good, bad, goodZ, badZ, knowledge, bytes] = await Promise.all([
       readFile(valid, 'utf8').then(JSON.parse),
       readFile(forged, 'utf8').then(JSON.parse),
+      readFile(verticalValid, 'utf8').then(JSON.parse),
+      readFile(verticalForged, 'utf8').then(JSON.parse),
       readFile(fileURLToPath(new URL('../../knowledge/generic-house.json', import.meta.url)), 'utf8').then(JSON.parse),
       readFile(wasmPath),
     ]);
@@ -71,6 +74,9 @@ test('native QA fixture uses real WASM and fails closed on a forged SVG', async 
     const replay = (input, seed_count) => callCore(instance.exports, 'arq_explore', { input, seed_count });
     assert.equal(verifyExplorationArchive(good, knowledge, replay).result.generated, 96);
     assert.throws(() => verifyExplorationArchive(bad, knowledge, replay), /no coincide íntegramente/);
+    const vertical = (request) => callCore(instance.exports, 'arq_vertical', request);
+    assert.equal(verifyVerticalArchive(goodZ, knowledge, vertical).model.levels[0].openings.length, 8);
+    assert.throws(() => verifyVerticalArchive(badZ, knowledge, vertical), /difiere del replay íntegro/);
   } finally { await rm(dir, { recursive: true, force: true }); }
 });
 

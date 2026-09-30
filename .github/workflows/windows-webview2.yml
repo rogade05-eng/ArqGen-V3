@@ -109,8 +109,8 @@ jobs:
       - name: Downloadable Windows EXE ZIP (unsigned prototype; WebView2 not included)
         uses: actions/upload-artifact@v4
         with:
-          name: ARQ-GEN-Windows-x64-0.21.0
-          path: artifacts/ARQ-GEN-Windows-x64-0.21.0.zip
+          name: ARQ-GEN-Windows-x64-0.22.0
+          path: artifacts/ARQ-GEN-Windows-x64-0.22.0.zip
           if-no-files-found: error
           retention-days: 7
       - name: Produce NSIS offlineInstaller candidate (build only; not installation QA)

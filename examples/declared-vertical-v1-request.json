@@ -1,0 +1,184 @@
+{
+  "format": "arqgen-declared-vertical-request-v1",
+  "typology": "single_family_house",
+  "input": {
+    "request_schema": "arqgen-brief-v8",
+    "site": {
+      "width": 18.0,
+      "depth": 22.0,
+      "front_orientation": "S",
+      "plot_outline": {
+        "provenance": "user_sketch_unverified",
+        "shape": "rectangle",
+        "rear_notches": []
+      },
+      "front_approach": {
+        "provenance": "user_sketch_unverified",
+        "shape": "straight_front_strip",
+        "width": 1.2,
+        "front_x": null,
+        "turn_y": null
+      },
+      "reservation_provenance": "user_sketch_unverified",
+      "reserved_areas": []
+    },
+    "program": {
+      "bedrooms": 3,
+      "bathrooms": 2,
+      "target_built_area": 95.0
+    },
+    "project_context": {
+      "jurisdiction": "unreported",
+      "housing_class": "unreported",
+      "occupants": null,
+      "accessibility_needs": "unreported",
+      "provenance": "self_reported_unverified"
+    },
+    "seed": 42,
+    "rules": {
+      "id": "generic_house_demo",
+      "version": "0.8.0",
+      "regulatory_status": "illustrative_not_certified",
+      "setbacks": {
+        "front": 3.0,
+        "rear": 2.0,
+        "left": 2.0,
+        "right": 2.0
+      },
+      "max_coverage": 0.55,
+      "max_far": 0.7,
+      "corridor": {
+        "min_width": 1.1,
+        "soft_max_ratio": 0.15
+      },
+      "doors": {
+        "main": 0.9,
+        "room": 0.8,
+        "bathroom": 0.7
+      },
+      "walls": {
+        "exterior": 0.18,
+        "partition": 0.12
+      },
+      "openings": {
+        "corner_clearance": 0.15,
+        "swing_clearance": 0.1
+      },
+      "max_egress_distance": 25.0,
+      "window_height": 1.2,
+      "spaces": {
+        "living_dining": {
+          "area_min": 16.0,
+          "area_pref": 20.0,
+          "area_max": 38.0,
+          "min_width": 3.0,
+          "min_depth": 3.0,
+          "window_ratio": 0.1
+        },
+        "kitchen": {
+          "area_min": 7.0,
+          "area_pref": 10.0,
+          "area_max": 20.0,
+          "min_width": 2.4,
+          "min_depth": 2.4,
+          "window_ratio": 0.1
+        },
+        "bedroom": {
+          "area_min": 9.0,
+          "area_pref": 11.0,
+          "area_max": 20.0,
+          "min_width": 2.7,
+          "min_depth": 2.7,
+          "window_ratio": 0.1
+        },
+        "bathroom": {
+          "area_min": 3.0,
+          "area_pref": 4.5,
+          "area_max": 10.0,
+          "min_width": 1.8,
+          "min_depth": 1.8,
+          "window_ratio": 0.05
+        }
+      },
+      "furnishings": {
+        "min_aisle": 0.55,
+        "sofa": {
+          "width": 1.8,
+          "depth": 0.8
+        },
+        "dining_table": {
+          "width": 1.2,
+          "depth": 0.75
+        },
+        "counter": {
+          "width": 1.4,
+          "depth": 0.6
+        },
+        "refrigerator": {
+          "width": 0.6,
+          "depth": 0.65
+        },
+        "bed": {
+          "width": 1.35,
+          "depth": 1.9
+        },
+        "shower": {
+          "width": 0.85,
+          "depth": 0.85
+        },
+        "toilet": {
+          "width": 0.65,
+          "depth": 0.7
+        },
+        "basin": {
+          "width": 0.5,
+          "depth": 0.42
+        }
+      },
+      "bath_exhaust": {
+        "outlet_span": 0.16,
+        "route_band": 0.16,
+        "fixture_gap": 0.02,
+        "max_run": 3.0
+      },
+      "bath_airflow": {
+        "assumed_ceiling_height": 2.6,
+        "target_ach": 4.0,
+        "fan_free_air_rating": 120.0,
+        "door_undercut": 0.025,
+        "max_transfer_velocity": 1.6,
+        "duct_height": 0.16,
+        "duct_bottom": 2.3,
+        "min_headroom": 2.1,
+        "max_duct_velocity": 2.0
+      },
+      "bath_pressure": {
+        "fan_reference_pressure_pa": 60.0,
+        "fan_reference_flow_m3h": 90.0,
+        "assumed_air_density_kg_m3": 1.2,
+        "assumed_darcy_factor": 0.04,
+        "assumed_bend_count": 2,
+        "assumed_bend_k": 1.5,
+        "assumed_outlet_k": 2.0,
+        "assumed_reserve_pa": 20.0
+      }
+    }
+  },
+  "candidate_id": "cand-ab3376d8fef08f3b-22",
+  "declared_vertical": {
+    "datum": "assumed_local_datum_not_surveyed",
+    "height_provenance": "illustrative_assumption_not_measured",
+    "floor_z_m": 0.0,
+    "wall_top_z_m": 3.1,
+    "entry_head_above_floor_m": 2.15,
+    "window_sill_above_floor_m": {
+      "living-dining": 0.8,
+      "kitchen": 0.95,
+      "bedroom-1": 0.9,
+      "bedroom-2": 0.9,
+      "bedroom-3": 0.9,
+      "bathroom-1": 1.4,
+      "bathroom-2": 1.4
+    }
+  }
+}

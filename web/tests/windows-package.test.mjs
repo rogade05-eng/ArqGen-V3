@@ -51,10 +51,10 @@ test('Windows ZIP preserves bytes and includes a directory, checksum and prototy
     if (process.platform !== 'win32') {
       const files = spawnSync('unzip', ['-Z1', zipPath], { encoding: 'utf8' });
       assert.equal(files.status, 0, files.stderr);
-      assert.match(files.stdout, /ARQ-GEN-Windows-x64-0\.21\.0\/arqgen-desktop\.exe/);
+      assert.match(files.stdout, /ARQ-GEN-Windows-x64-0\.22\.0\/arqgen-desktop\.exe/);
       assert.match(files.stdout, /SHA256SUMS\.txt/);
       assert.match(files.stdout, /LEEME-ANTES-DE-USAR\.txt/);
-      const doc = spawnSync('unzip', ['-p', zipPath, 'ARQ-GEN-Windows-x64-0.21.0/LEEME-ANTES-DE-USAR.txt'], { encoding: 'utf8' });
+      const doc = spawnSync('unzip', ['-p', zipPath, 'ARQ-GEN-Windows-x64-0.22.0/LEEME-ANTES-DE-USAR.txt'], { encoding: 'utf8' });
       assert.match(doc.stdout, /NO APTO PARA OBRA/);
       assert.match(doc.stdout, /no un instalador/);
     }
