@@ -31,3 +31,25 @@ test('desktop shell bundles this same offline web app with no granted native IPC
   assert.doesNotMatch(main, /invoke_handler|\.plugin\(/);
   assert.match(main, /tauri::Builder::default\(\)/);
 });
+
+test('el shell fija las versiones transitivas probadas por Tauri 2.11.5', async () => {
+  // Sin Cargo.lock versionado, una resolución nueva elige versiones
+  // incompatibles y el build de Windows falla. Estas son las versiones del
+  // árbol probado por el repositorio de Tauri en tauri-v2.11.5.
+  const manifest = await readFile(resolve(tauri, 'Cargo.toml'), 'utf8');
+  const expected = {
+    tauri: '2.11.5',
+    'tauri-build': '2.6.3',
+    muda: '0.19.1',
+    tao: '0.35.0',
+    wry: '0.55.0',
+    'tauri-runtime': '2.11.3',
+    'tauri-runtime-wry': '2.11.4',
+    'tauri-macros': '2.6.3',
+    'tauri-utils': '2.9.3',
+  };
+  for (const [name, version] of Object.entries(expected)) {
+    assert.match(manifest, new RegExp(`^${name} = \\{ version = "=${version.replace(/\./g, '\\.')}"`,
+      'm'), `Falta el pin exacto de ${name} en Cargo.toml`);
+  }
+});

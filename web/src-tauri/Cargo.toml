@@ -15,3 +15,18 @@ tauri-build = { version = "=2.6.3", features = [] }
 
 [dependencies]
 tauri = { version = "=2.11.5", features = [] }
+
+# tauri 2.11.5 no publica su Cargo.lock. Sin estos pines, una resolución nueva
+# elige versiones incompatibles de su propio árbol y el shell no compila: el
+# build de Windows falló con `UnexpectedMenuKind` (macro de muda contra
+# tauri::Error) y con `Option<Monitor>` frente a `Result<_, Error>`. Son las
+# versiones probadas por el repositorio de Tauri en la etiqueta tauri-v2.11.5.
+# No se usan desde el código: fijan la resolución hasta poder versionar un
+# Cargo.lock completo generado y auditado con acceso a crates.io.
+muda = { version = "=0.19.1", default-features = false }
+tao = { version = "=0.35.0", default-features = false }
+wry = { version = "=0.55.0", default-features = false }
+tauri-runtime = { version = "=2.11.3", default-features = false }
+tauri-runtime-wry = { version = "=2.11.4", default-features = false }
+tauri-macros = { version = "=2.6.3", default-features = false }
+tauri-utils = { version = "=2.9.3", default-features = false }
