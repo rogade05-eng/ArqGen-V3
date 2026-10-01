@@ -1,8 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
-import { dirname, resolve } from 'node:path';
+import { dirname, join, resolve } from 'node:path';
+import { tmpdir } from 'node:os';
 import { unzipSync } from 'fflate';
 import { callCore } from '../src/core-client.js';
 import { buildDrawingPackage, drawingPackageFormat } from '../src/drawing-package.js';
@@ -103,16 +104,32 @@ test('A3 conceptual ZIP: cuatro vistas y envolvente 2D del MISMO candidato con r
   assert.notEqual(second.manifest.candidate_id, first.manifest.candidate_id);
 });
 
-test('el ejemplo entregado en el repositorio coincide byte a byte con el WASM versionado', async () => {
+// El fin de línea no forma parte del contrato entregado: `.gitattributes`
+// extrae el texto con LF, pero un clon con `autocrlf=true` (Windows) puede
+// traer CRLF y la confirmación debe verificar igual. El ZIP sigue byte a byte.
+const fixtureText = async (file) => (await readFile(file, 'utf8')).replace(/\r\n/g, '\n');
+
+test('el ejemplo entregado en el repositorio coincide con el WASM versionado', async () => {
   const brief = input();
   const pkg = buildDrawingPackage(brief, generate(brief), 0);
   const directory = resolve(root, 'examples/laminas-conceptuales');
   assert.deepEqual(Buffer.from(pkg.bytes), await readFile(resolve(directory, 'muestra-vivienda-A3.zip')));
   for (const sheet of pkg.sheets) {
-    assert.equal(sheet.svg, await readFile(resolve(directory, sheet.filename), 'utf8'));
+    assert.equal(sheet.svg, await fixtureText(resolve(directory, sheet.filename)));
   }
   assert.equal(JSON.stringify(pkg.envelope, null, 2),
-    await readFile(resolve(directory, 'nivel-0-2d.json'), 'utf8'));
+    await fixtureText(resolve(directory, 'nivel-0-2d.json')));
+});
+
+test('la comparación de ejemplos neutraliza CRLF sin alterar el texto LF', async () => {
+  const lf = JSON.stringify(buildDrawingPackage(input(), generate(input()), 0).envelope, null, 2);
+  assert.ok(lf.includes('\n') && !lf.includes('\r'), 'La salida generada es LF con varias líneas.');
+  const temp = await mkdtemp(join(tmpdir(), 'arqgen-crlf-'));
+  const copy = join(temp, 'copia-en-crlf.json');
+  try {
+    await writeFile(copy, lf.replace(/\n/g, '\r\n'));
+    assert.equal(await fixtureText(copy), lf, 'Un archivo CRLF se lee igual que el texto LF generado.');
+  } finally { await rm(temp, { recursive: true, force: true }); }
 });
 
 test('cotas, huella y norte se derivan de la geometría incluso con dos recortes', () => {

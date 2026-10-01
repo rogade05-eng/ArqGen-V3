@@ -1,0 +1,15 @@
+# Los ejemplos versionados se comparan con la salida generada (pruebas de Node
+# y de Rust). Para que la misma confirmación se verifique en cualquier sistema,
+# el texto se extrae siempre con LF, también en Windows, donde el `autocrlf`
+# del clon puede convertir a CRLF.
+* text=auto eol=lf
+
+# Artefactos binarios: nunca convertir.
+*.zip binary
+*.png binary
+*.wasm binary
+*.ico binary
+*.exe binary
+
+# Documento histórico almacenado con CRLF a propósito; se deja intacto.
+"ARQ GEN TAURI.txt" -text
