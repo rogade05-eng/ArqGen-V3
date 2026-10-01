@@ -1,7 +1,8 @@
 # The native test is deliberately NOT the Chromium/Linux suite. It launches the
 # Tauri debug .exe through tauri-driver/msedgedriver and fails without WebView2.
 # After the smoke it compiles and ZIPs the REAL release .exe (unsigned prototype).
-# Requires Actions access to this repository; no run has been observed locally.
+# Requires Actions access to this repository. Runs have been observed through the
+# checks API; native WebView2 has NOT passed yet (failures stop before the smoke).
 name: Windows Tauri / WebView2 native QA
 
 on:
@@ -46,15 +47,34 @@ jobs:
           npm --version
           npm ci --prefix web
           if ($LASTEXITCODE -ne 0) { throw 'npm ci failed' }
+      # Logs of this repository's runs are not always retrievable from every
+      # environment; every gate therefore republishes the failing tail as an
+      # ::error:: annotation so the cause is visible through the checks API.
       - name: Core and web regression gates (NOT native QA)
         shell: pwsh
         run: |
-          cargo fmt --all -- --check
-          if ($LASTEXITCODE -ne 0) { throw 'Rust formatting failed' }
-          cargo test --locked --workspace
-          if ($LASTEXITCODE -ne 0) { throw 'Rust tests failed' }
-          npm test --prefix web
-          if ($LASTEXITCODE -ne 0) { throw 'Web tests failed' }
+          $gates = @(
+            @{ name = 'cargo fmt --all -- --check'; file = 'cargo'; args = @('fmt', '--all', '--', '--check') },
+            @{ name = 'cargo test --locked --workspace'; file = 'cargo'; args = @('test', '--locked', '--workspace') },
+            @{ name = 'npm test --prefix web'; file = 'npm'; args = @('test', '--prefix', 'web') }
+          )
+          $failure = $null
+          foreach ($gate in $gates) {
+            Write-Host "::group::gate $($gate.name)"
+            $log = Join-Path $env:RUNNER_TEMP ("gate-" + [Guid]::NewGuid().ToString('N') + '.log')
+            & $gate.file @($gate.args) 2>&1 | Tee-Object -FilePath $log
+            $code = $LASTEXITCODE
+            Write-Host '::endgroup::'
+            if ($code -ne 0) {
+              $tail = (Get-Content -LiteralPath $log -Tail 25) -join "`n"
+              $tail = $tail -replace '%', '%25' -replace "`r", '' -replace "`n", '%0A'
+              if ($tail.Length -gt 3000) { $tail = $tail.Substring($tail.Length - 3000) }
+              Write-Host "::error title=Gate failed ($($gate.name)) exit $code::$tail"
+              $failure = $gate.name
+              break
+            }
+          }
+          if ($failure) { throw "Regression gate failed: $failure (tail published as annotation)" }
       - name: Build the actual Windows Tauri app (debug, no installer)
         shell: pwsh
         run: |
