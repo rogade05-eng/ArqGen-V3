@@ -113,7 +113,9 @@ jobs:
           try {
             & $script -Name 'tauri-driver-install' -Command 'cargo install tauri-driver --version 2.0.6 --locked'
             if ($LASTEXITCODE -ne 0) { throw 'tauri-driver installation failed' }
-            & $script -Name 'tauri-driver-version' -Command 'tauri-driver --version'
+            # `tauri-driver` no acepta --version: se comprueba que el binario
+            # responda con su ayuda (código 0) en lugar de forzar una bandera.
+            & $script -Name 'tauri-driver-usable' -Command 'tauri-driver --help'
             if ($LASTEXITCODE -ne 0) { throw 'tauri-driver is not executable' }
             # Pinned source; at runtime this tool downloads the driver
             # matching the installed *WebView2 runtime* from Microsoft's server.

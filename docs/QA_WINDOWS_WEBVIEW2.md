@@ -40,6 +40,7 @@ cargo test --locked --workspace
 npm test --prefix web
 npm run tauri --prefix web -- build --debug --no-bundle
 cargo install tauri-driver --version 2.0.6 --locked
+tauri-driver --help   # `tauri-driver` no acepta --version; la ayuda basta como comprobación
 cargo install --git https://github.com/chippers/msedgedriver-tool --rev 8c4b34f51b45f5cf08013366d703de464ab871d1 --locked
 $folder = Join-Path $env:TEMP 'arqgen-native-driver'
 New-Item -ItemType Directory -Force $folder | Out-Null
