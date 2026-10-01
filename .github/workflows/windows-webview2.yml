@@ -66,8 +66,13 @@ jobs:
             $code = $LASTEXITCODE
             Write-Host '::endgroup::'
             if ($code -ne 0) {
+              $escape = { param($text) ($text -replace '%', '%25' -replace "`r", '' -replace "`n", '%0A') }
+              $details = (Select-String -LiteralPath $log -Pattern '^not ok |^\s*(error|expected|actual|operator|code|message):' |
+                Select-Object -First 25 | ForEach-Object { $_.Line.Trim() }) -join "`n"
+              if ($details.Length -gt 2500) { $details = $details.Substring(0, 2500) }
+              if ($details) { Write-Host "::error title=Failures in $($gate.name)::$(& $escape $details)" }
               $tail = (Get-Content -LiteralPath $log -Tail 25) -join "`n"
-              $tail = $tail -replace '%', '%25' -replace "`r", '' -replace "`n", '%0A'
+              $tail = & $escape $tail
               if ($tail.Length -gt 3000) { $tail = $tail.Substring($tail.Length - 3000) }
               Write-Host "::error title=Gate failed ($($gate.name)) exit $code::$tail"
               $failure = $gate.name
