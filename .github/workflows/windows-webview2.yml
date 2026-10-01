@@ -67,7 +67,16 @@ jobs:
             Write-Host '::endgroup::'
             if ($code -ne 0) {
               $escape = { param($text) ($text -replace '%', '%25' -replace "`r", '' -replace "`n", '%0A') }
-              $details = (Select-String -LiteralPath $log -Pattern '^not ok |^\s*(error|expected|actual|operator|code|message):' |
+              $lines = @(Get-Content -LiteralPath $log)
+              $index = ($lines | Select-String -Pattern '^\s*not ok \d+ - ' | Select-Object -First 1)
+              if ($index) {
+                $start = [Math]::Max(0, $index.LineNumber - 1)
+                $stop = [Math]::Min($lines.Count - 1, $start + 45)
+                $block = ($lines[$start..$stop] | ForEach-Object { $_.Trim() }) -join "`n"
+                if ($block.Length -gt 4000) { $block = $block.Substring(0, 4000) }
+                Write-Host "::error title=Failing test detail::$(& $escape $block)"
+              }
+              $details = (Select-String -LiteralPath $log -Pattern '^not ok |^\s*(error|operator|code):' |
                 Select-Object -First 25 | ForEach-Object { $_.Line.Trim() }) -join "`n"
               if ($details.Length -gt 2500) { $details = $details.Substring(0, 2500) }
               if ($details) { Write-Host "::error title=Failures in $($gate.name)::$(& $escape $details)" }
