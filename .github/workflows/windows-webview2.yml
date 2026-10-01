@@ -92,7 +92,8 @@ jobs:
       - name: Build the actual Windows Tauri app (debug, no installer)
         shell: pwsh
         run: |
-          npm run tauri --prefix web -- build --debug --no-bundle
+          $script = Join-Path $env:GITHUB_WORKSPACE 'scripts/run-with-annotation.ps1'
+          & $script -Name 'windows-tauri-debug-build' -TailLines 40 -Command 'npm run tauri --prefix web -- build --debug --no-bundle'
           if ($LASTEXITCODE -ne 0) { throw 'Windows Tauri build failed' }
           $app = Join-Path $env:GITHUB_WORKSPACE 'web/src-tauri/target/debug/arqgen-desktop.exe'
           if (!(Test-Path $app)) { throw "Missing Tauri executable: $app" }
@@ -101,19 +102,20 @@ jobs:
       - name: Install native WebView2 drivers (no plugin/IPC in app)
         shell: pwsh
         run: |
-          cargo install tauri-driver --version 2.0.6 --locked
+          $script = Join-Path $env:GITHUB_WORKSPACE 'scripts/run-with-annotation.ps1'
+          & $script -Name 'tauri-driver-install' -Command 'cargo install tauri-driver --version 2.0.6 --locked'
           if ($LASTEXITCODE -ne 0) { throw 'tauri-driver installation failed' }
           tauri-driver --version
           if ($LASTEXITCODE -ne 0) { throw 'tauri-driver is not executable' }
           # Pinned source; at runtime this tool downloads the driver
           # matching the installed *WebView2 runtime* from Microsoft's server.
-          cargo install --git https://github.com/chippers/msedgedriver-tool --rev 8c4b34f51b45f5cf08013366d703de464ab871d1 --locked
+          & $script -Name 'msedgedriver-tool-install' -Command 'cargo install --git https://github.com/chippers/msedgedriver-tool --rev 8c4b34f51b45f5cf08013366d703de464ab871d1 --locked'
           if ($LASTEXITCODE -ne 0) { throw 'msedgedriver-tool installation failed' }
           $folder = Join-Path $env:RUNNER_TEMP 'arqgen-edge-driver'
           New-Item -ItemType Directory -Force -Path $folder | Out-Null
           Push-Location $folder
           try {
-            msedgedriver-tool
+            & $script -Name 'msedgedriver-download' -Command 'msedgedriver-tool'
             if ($LASTEXITCODE -ne 0) { throw 'No compatible WebView2 driver was downloaded' }
             $edge = Join-Path $folder 'msedgedriver.exe'
             if (!(Test-Path $edge)) { throw "Missing EdgeDriver: $edge" }
@@ -125,12 +127,14 @@ jobs:
       - name: Smoke the REAL Tauri .exe in Edge WebView2
         shell: pwsh
         run: |
-          npm run test:webview2 --prefix web
+          $script = Join-Path $env:GITHUB_WORKSPACE 'scripts/run-with-annotation.ps1'
+          & $script -Name 'native-webview2-smoke' -TailLines 40 -Command 'npm run test:webview2 --prefix web'
           if ($LASTEXITCODE -ne 0) { throw 'Native WebView2 smoke FAILED' }
       - name: Compile release Windows GUI executable (without installer)
         shell: pwsh
         run: |
-          npm run tauri --prefix web -- build --no-bundle
+          $script = Join-Path $env:GITHUB_WORKSPACE 'scripts/run-with-annotation.ps1'
+          & $script -Name 'windows-tauri-release-build' -TailLines 40 -Command 'npm run tauri --prefix web -- build --no-bundle'
           if ($LASTEXITCODE -ne 0) { throw 'Release Windows .exe build failed' }
           $app = Join-Path $env:GITHUB_WORKSPACE 'web/src-tauri/target/release/arqgen-desktop.exe'
           if (!(Test-Path $app)) { throw "Missing release executable: $app" }
@@ -138,7 +142,8 @@ jobs:
       - name: Create and verify ZIP containing the actual release .exe
         shell: pwsh
         run: |
-          node scripts/package-windows.mjs
+          $script = Join-Path $env:GITHUB_WORKSPACE 'scripts/run-with-annotation.ps1'
+          & $script -Name 'windows-exe-zip' -Command 'node scripts/package-windows.mjs'
           if ($LASTEXITCODE -ne 0) { throw 'Release executable ZIP failed validation' }
       - name: Downloadable Windows EXE ZIP (unsigned prototype; WebView2 not included)
         uses: actions/upload-artifact@v4
@@ -150,7 +155,8 @@ jobs:
       - name: Produce NSIS offlineInstaller candidate (build only; not installation QA)
         shell: pwsh
         run: |
-          npm run tauri --prefix web -- build --bundles nsis
+          $script = Join-Path $env:GITHUB_WORKSPACE 'scripts/run-with-annotation.ps1'
+          & $script -Name 'windows-nsis-build' -TailLines 40 -Command 'npm run tauri --prefix web -- build --bundles nsis'
           if ($LASTEXITCODE -ne 0) { throw 'NSIS build failed' }
           $installers = @(Get-ChildItem 'web/src-tauri/target/release/bundle/nsis/*.exe' -ErrorAction SilentlyContinue)
           if ($installers.Count -lt 1) { throw 'NSIS installer not produced' }
