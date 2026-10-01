@@ -97,6 +97,9 @@ jobs:
           # compilación Rust del shell no deben confundirse en los diagnósticos.
           & $script -Name 'windows-web-build' -TailLines 40 -Command 'npm run build --prefix web'
           if ($LASTEXITCODE -ne 0) { throw 'Offline web build failed' }
+          # Publica la versión del CLI: si el binario Windows de @tauri-apps/cli
+          # no existiera, el fallo se vería aquí antes del build.
+          & $script -Name 'windows-tauri-cli-version' -Command 'npm run tauri --prefix web -- --version'
           & $script -Name 'windows-tauri-debug-build' -TailLines 40 -Command 'npm run tauri --prefix web -- build --debug --no-bundle --verbose'
           if ($LASTEXITCODE -ne 0) { throw 'Windows Tauri build failed' }
           $app = Join-Path $env:GITHUB_WORKSPACE 'web/src-tauri/target/debug/arqgen-desktop.exe'
