@@ -93,7 +93,11 @@ jobs:
         shell: pwsh
         run: |
           $script = Join-Path $env:GITHUB_WORKSPACE 'scripts/run-with-annotation.ps1'
-          & $script -Name 'windows-tauri-debug-build' -TailLines 40 -Command 'npm run tauri --prefix web -- build --debug --no-bundle'
+          # Separado del CLI de Tauri para atribuir el fallo: compuerta web y
+          # compilación Rust del shell no deben confundirse en los diagnósticos.
+          & $script -Name 'windows-web-build' -TailLines 40 -Command 'npm run build --prefix web'
+          if ($LASTEXITCODE -ne 0) { throw 'Offline web build failed' }
+          & $script -Name 'windows-tauri-debug-build' -TailLines 40 -Command 'npm run tauri --prefix web -- build --debug --no-bundle --verbose'
           if ($LASTEXITCODE -ne 0) { throw 'Windows Tauri build failed' }
           $app = Join-Path $env:GITHUB_WORKSPACE 'web/src-tauri/target/debug/arqgen-desktop.exe'
           if (!(Test-Path $app)) { throw "Missing Tauri executable: $app" }
