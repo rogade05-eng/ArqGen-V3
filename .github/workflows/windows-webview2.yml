@@ -110,33 +110,49 @@ jobs:
         shell: pwsh
         run: |
           $script = Join-Path $env:GITHUB_WORKSPACE 'scripts/run-with-annotation.ps1'
-          & $script -Name 'tauri-driver-install' -Command 'cargo install tauri-driver --version 2.0.6 --locked'
-          if ($LASTEXITCODE -ne 0) { throw 'tauri-driver installation failed' }
-          tauri-driver --version
-          if ($LASTEXITCODE -ne 0) { throw 'tauri-driver is not executable' }
-          # Pinned source; at runtime this tool downloads the driver
-          # matching the installed *WebView2 runtime* from Microsoft's server.
-          & $script -Name 'msedgedriver-tool-install' -Command 'cargo install --git https://github.com/chippers/msedgedriver-tool --rev 8c4b34f51b45f5cf08013366d703de464ab871d1 --locked'
-          if ($LASTEXITCODE -ne 0) { throw 'msedgedriver-tool installation failed' }
-          $folder = Join-Path $env:RUNNER_TEMP 'arqgen-edge-driver'
-          New-Item -ItemType Directory -Force -Path $folder | Out-Null
-          Push-Location $folder
           try {
-            & $script -Name 'msedgedriver-download' -Command 'msedgedriver-tool'
-            if ($LASTEXITCODE -ne 0) { throw 'No compatible WebView2 driver was downloaded' }
-            $edge = Join-Path $folder 'msedgedriver.exe'
-            if (!(Test-Path $edge)) { throw "Missing EdgeDriver: $edge" }
-            & $edge --version
-            if ($LASTEXITCODE -ne 0) { throw 'EdgeDriver is not executable' }
-            "ARQGEN_EDGEDRIVER=$edge" >> $env:GITHUB_ENV
-            "ARQGEN_TAURI_DRIVER=$((Get-Command tauri-driver).Source)" >> $env:GITHUB_ENV
-          } finally { Pop-Location }
+            & $script -Name 'tauri-driver-install' -Command 'cargo install tauri-driver --version 2.0.6 --locked'
+            if ($LASTEXITCODE -ne 0) { throw 'tauri-driver installation failed' }
+            & $script -Name 'tauri-driver-version' -Command 'tauri-driver --version'
+            if ($LASTEXITCODE -ne 0) { throw 'tauri-driver is not executable' }
+            # Pinned source; at runtime this tool downloads the driver
+            # matching the installed *WebView2 runtime* from Microsoft's server.
+            & $script -Name 'msedgedriver-tool-install' -Command 'cargo install --git https://github.com/chippers/msedgedriver-tool --rev 8c4b34f51b45f5cf08013366d703de464ab871d1 --locked'
+            if ($LASTEXITCODE -ne 0) { throw 'msedgedriver-tool installation failed' }
+            $folder = Join-Path $env:RUNNER_TEMP 'arqgen-edge-driver'
+            New-Item -ItemType Directory -Force -Path $folder | Out-Null
+            Push-Location $folder
+            try {
+              & $script -Name 'msedgedriver-download' -Command 'msedgedriver-tool'
+              if ($LASTEXITCODE -ne 0) { throw 'No compatible WebView2 driver was downloaded' }
+              $edge = Join-Path $folder 'msedgedriver.exe'
+              if (!(Test-Path $edge)) { throw "Missing EdgeDriver: $edge" }
+              & $script -Name 'msedgedriver-version' -Command ('"{0}" --version' -f $edge)
+              if ($LASTEXITCODE -ne 0) { throw 'EdgeDriver is not executable' }
+              "ARQGEN_EDGEDRIVER=$edge" >> $env:GITHUB_ENV
+              "ARQGEN_TAURI_DRIVER=$((Get-Command tauri-driver).Source)" >> $env:GITHUB_ENV
+            } finally { Pop-Location }
+          } catch {
+            $message = ($_ | Out-String)
+            $message = $message -replace '%', '%25' -replace "`r", '' -replace "`n", '%0A'
+            if ($message.Length -gt 2500) { $message = $message.Substring(0, 2500) }
+            Write-Host "::error title=WebView2 driver setup failed::$message"
+            throw
+          }
       - name: Smoke the REAL Tauri .exe in Edge WebView2
         shell: pwsh
         run: |
           $script = Join-Path $env:GITHUB_WORKSPACE 'scripts/run-with-annotation.ps1'
-          & $script -Name 'native-webview2-smoke' -TailLines 40 -Command 'npm run test:webview2 --prefix web'
-          if ($LASTEXITCODE -ne 0) { throw 'Native WebView2 smoke FAILED' }
+          try {
+            & $script -Name 'native-webview2-smoke' -TailLines 40 -Command 'npm run test:webview2 --prefix web'
+            if ($LASTEXITCODE -ne 0) { throw 'Native WebView2 smoke FAILED' }
+          } catch {
+            $message = ($_ | Out-String)
+            $message = $message -replace '%', '%25' -replace "`r", '' -replace "`n", '%0A'
+            if ($message.Length -gt 2000) { $message = $message.Substring(0, 2000) }
+            Write-Host "::error title=Native WebView2 smoke step failed::$message"
+            throw
+          }
       - name: Compile release Windows GUI executable (without installer)
         shell: pwsh
         run: |
