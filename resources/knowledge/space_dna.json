@@ -1,0 +1,4138 @@
+{
+ "format": "ARQ_GEN_SPACE_DNA",
+ "version": "2.2+v3.44.0",
+ "source": "ARQ GEN — conocimiento técnico base (dimensiones: Neufert, «El arte de proyectar en arquitectura»)",
+ "space_types": [
+  {
+   "space_type": "LIVING_ROOM",
+   "name_es": "Sala",
+   "minimum_area": 9.0,
+   "preferred_area": 20.0,
+   "minimum_width": 2.7,
+   "height": 2.7,
+   "occupancy": 4.0,
+   "privacy": 1,
+   "daylight": true,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 4,
+   "accessibility": true,
+   "emergency_access": false,
+   "preferred_adjacencies": [
+    "KITCHEN",
+    "CORRIDOR",
+    "ENTRANCE"
+   ],
+   "functional_relationships": [
+    "KITCHEN",
+    "CORRIDOR"
+   ],
+   "neufert": {
+    "puerta_m": 0.9,
+    "ventana_ratio_min": 0.125,
+    "ref": "sofá 2,10 × 0,90 m; mesa a 0,75 m",
+    "nota": "Sala: 1,5 m2 por persona sentada; la ventana suma al menos 1/8 del suelo; pasillo de paso 0,60-0,75 m."
+   },
+   "metadata": {
+    "v343": "mínimo de vivienda social: 9 m2 con lado de 2.70 m (antes 12 m2: inflaba las casas pequeñas)"
+   }
+  },
+  {
+   "space_type": "KITCHEN",
+   "name_es": "Cocina",
+   "minimum_area": 6.0,
+   "preferred_area": 10.0,
+   "minimum_width": 1.8,
+   "height": 2.7,
+   "occupancy": 3.0,
+   "privacy": 2,
+   "daylight": true,
+   "ventilation": true,
+   "wet_zone": true,
+   "requires_water": true,
+   "requires_drainage": true,
+   "requires_ventilation": true,
+   "noise_level": 5,
+   "accessibility": true,
+   "emergency_access": false,
+   "preferred_adjacencies": [
+    "LIVING_ROOM",
+    "DINING_ROOM",
+    "SERVICE_YARD"
+   ],
+   "functional_relationships": [
+    "LIVING_ROOM",
+    "SERVICE_YARD"
+   ],
+   "neufert": {
+    "puerta_m": 0.9,
+    "ventana_ratio_min": 0.125,
+    "ref": "módulo 0,60 m de fondo, altura de trabajo 0,90 m",
+    "nota": "Cocina: triángulo nevera-fregadero-cocina de 4,0-7,0 m; pasillo de 1,20 m (1,50 m para dos personas)."
+   }
+  },
+  {
+   "space_type": "BEDROOM",
+   "name_es": "Dormitorio",
+   "minimum_area": 9.0,
+   "preferred_area": 14.0,
+   "minimum_width": 2.7,
+   "height": 2.7,
+   "occupancy": 2.0,
+   "privacy": 4,
+   "daylight": true,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 2,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "CORRIDOR",
+    "BATHROOM"
+   ],
+   "functional_relationships": [
+    "BATHROOM",
+    "CORRIDOR"
+   ],
+   "neufert": {
+    "puerta_m": 0.8,
+    "ventana_ratio_min": 0.125,
+    "ref": "cama individual 0,90 × 2,00 m; matrimonio 1,35-1,60 × 2,00",
+    "nota": "Dormitorio: 0,60 m de paso a cada lado de la cama y 0,90 m al pie; armario de 0,60 m de fondo."
+   }
+  },
+  {
+   "space_type": "BATHROOM",
+   "name_es": "Baño",
+   "minimum_area": 2.5,
+   "preferred_area": 4.5,
+   "minimum_width": 1.2,
+   "height": 2.5,
+   "occupancy": 1.0,
+   "privacy": 5,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": true,
+   "requires_water": true,
+   "requires_drainage": true,
+   "requires_ventilation": true,
+   "noise_level": 1,
+   "accessibility": true,
+   "emergency_access": false,
+   "preferred_adjacencies": [
+    "BEDROOM",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "BEDROOM",
+    "CORRIDOR"
+   ],
+   "neufert": {
+    "puerta_m": 0.8,
+    "ref": "zona WC 0,80 × 1,20 m; ducha 0,90 × 0,90 m; bañera 1,70 × 0,75",
+    "nota": "Baño: completo con ducha 4,0 m2 (confort 5,5); frente de WC 0,60 m; accesible: giro de 1,50 m + barras."
+   }
+  },
+  {
+   "space_type": "CORRIDOR",
+   "name_es": "Pasillo",
+   "minimum_area": 2.0,
+   "minimum_width": 1.2,
+   "height": 2.5,
+   "privacy": 2,
+   "daylight": false,
+   "ventilation": false,
+   "wet_zone": false,
+   "noise_level": 3,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "BEDROOM",
+    "BATHROOM",
+    "LIVING_ROOM",
+    "KITCHEN"
+   ],
+   "functional_relationships": [
+    "ENTRANCE"
+   ],
+   "neufert": {
+    "puerta_m": 0.0,
+    "ref": "una persona 0,70 m; dos 1,20 m; tres 1,80 m",
+    "nota": "Pasillo: vivienda 1,0-1,2 m; escuelas y salud con camillas 2,4 m; con puertas enfrentadas, suma la hoja."
+   }
+  },
+  {
+   "space_type": "DINING_ROOM",
+   "name_es": "Comedor",
+   "minimum_area": 6.0,
+   "preferred_area": 12.0,
+   "minimum_width": 2.4,
+   "height": 2.7,
+   "occupancy": 4.0,
+   "privacy": 1,
+   "daylight": true,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 4,
+   "accessibility": true,
+   "emergency_access": false,
+   "preferred_adjacencies": [
+    "KITCHEN",
+    "LIVING_ROOM",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "KITCHEN",
+    "LIVING_ROOM"
+   ],
+   "neufert": {
+    "puerta_m": 0.9,
+    "ventana_ratio_min": 0.125,
+    "ref": "mesa 4p 0,80 × 0,80 m (6p 0,80 × 1,40) a 0,75 m de altura",
+    "nota": "Comedor: 0,60 m por comensal en mesa y 0,90 m entre mesas (1,50 m la fila de servicio)."
+   },
+   "metadata": {
+    "v343": "mínimo de vivienda social: 6 m2 (antes 8 m2)"
+   }
+  },
+  {
+   "space_type": "ENTRANCE",
+   "name_es": "Entrada / Hall",
+   "minimum_area": 3.0,
+   "preferred_area": 6.0,
+   "minimum_width": 1.5,
+   "height": 2.7,
+   "occupancy": 2.0,
+   "privacy": 0,
+   "daylight": true,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 3,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "LIVING_ROOM",
+    "CORRIDOR",
+    "OFFICE"
+   ],
+   "functional_relationships": [
+    "CORRIDOR"
+   ],
+   "neufert": {
+    "puerta_m": 1.0,
+    "ventana_ratio_min": 0.125,
+    "ref": "puerta principal de 1,00 m; umbral con vestidor 1,80 m",
+    "nota": "Entrada: puerta de 1,00-1,20 m; el vestíbulo deja espacio de giro y antesala de armarios."
+   }
+  },
+  {
+   "space_type": "STOREROOM",
+   "name_es": "Depósito",
+   "minimum_area": 1.5,
+   "preferred_area": 4.0,
+   "minimum_width": 1.0,
+   "height": 2.5,
+   "occupancy": 0.0,
+   "privacy": 4,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 1,
+   "accessibility": false,
+   "emergency_access": false,
+   "preferred_adjacencies": [
+    "CORRIDOR",
+    "KITCHEN"
+   ],
+   "functional_relationships": [
+    "CORRIDOR"
+   ],
+   "neufert": {
+    "puerta_m": 0.8,
+    "ref": "estanterías de 0,30-0,40 m de fondo",
+    "nota": "Depósito: pasillo de carga 0,75-0,90 m; altura libre hasta 3,00 m para estanterías altas."
+   }
+  },
+  {
+   "space_type": "OFFICE",
+   "name_es": "Oficina",
+   "minimum_area": 6.0,
+   "preferred_area": 12.0,
+   "minimum_width": 2.4,
+   "height": 2.7,
+   "occupancy": 4.0,
+   "privacy": 3,
+   "daylight": true,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 3,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "CORRIDOR",
+    "RECEPTION"
+   ],
+   "functional_relationships": [
+    "RECEPTION"
+   ],
+   "neufert": {
+    "puerta_m": 0.9,
+    "ventana_ratio_min": 0.125,
+    "ref": "escritorio 1,40 × 0,70 m a 0,75 m de altura",
+    "nota": "Oficina: 1,20 m detrás del escritorio sentado; 8-12 m2 por puesto en diáfano; ventana 1/8 del suelo."
+   }
+  },
+  {
+   "space_type": "CLASSROOM",
+   "name_es": "Aula",
+   "minimum_area": 30.0,
+   "preferred_area": 42.0,
+   "minimum_width": 5.0,
+   "height": 2.9,
+   "occupancy": 2.0,
+   "privacy": 2,
+   "daylight": true,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 5,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "CORRIDOR",
+    "CLASSROOM",
+    "BATHROOM"
+   ],
+   "functional_relationships": [
+    "CORRIDOR",
+    "DINING_ROOM"
+   ],
+   "neufert": {
+    "puerta_m": 1.0,
+    "ventana_ratio_min": 0.125,
+    "ref": "pupitre doble 1,40 × 0,40 m; filas con 0,60 m de paso",
+    "nota": "Aula: 2,0 m2 por alumno; fondo máximo 7,5 m para que la luz llegue a la última fila; altura 3,00 m."
+   }
+  },
+  {
+   "space_type": "CONSULTATION_ROOM",
+   "name_es": "Sala de consulta",
+   "minimum_area": 9.0,
+   "preferred_area": 12.0,
+   "minimum_width": 2.8,
+   "height": 2.8,
+   "occupancy": 6.0,
+   "privacy": 5,
+   "daylight": true,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 1,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "WAITING_ROOM",
+    "CORRIDOR",
+    "BATHROOM"
+   ],
+   "functional_relationships": [
+    "WAITING_ROOM"
+   ],
+   "neufert": {
+    "puerta_m": 1.0,
+    "ventana_ratio_min": 0.125,
+    "ref": "cuerpo con camilla 0,70 × 2,00 m y 0,80 m de paso",
+    "nota": "Consultorio: 10-12 m2 con zona de exploración de 2,20 × 2,20 m; puerta de 1,00 m."
+   }
+  },
+  {
+   "space_type": "WAITING_ROOM",
+   "name_es": "Sala de espera",
+   "minimum_area": 10.0,
+   "preferred_area": 16.0,
+   "minimum_width": 3.0,
+   "height": 2.8,
+   "occupancy": 2.5,
+   "privacy": 1,
+   "daylight": true,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 4,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "ENTRANCE",
+    "CONSULTATION_ROOM",
+    "EMERGENCY_ROOM",
+    "PHARMACY"
+   ],
+   "functional_relationships": [
+    "CONSULTATION_ROOM",
+    "EMERGENCY_ROOM"
+   ],
+   "neufert": {
+    "puerta_m": 1.0,
+    "ventana_ratio_min": 0.125,
+    "ref": "fila de asientos con 0,45 m por silla",
+    "nota": "Espera: 1,2-1,5 m2 por persona sentada en fila; pasillo libre de 1,50 m hacia los consultorios."
+   }
+  },
+  {
+   "space_type": "MULTIUSE_HALL",
+   "name_es": "Sala multiuso",
+   "minimum_area": 40.0,
+   "preferred_area": 60.0,
+   "minimum_width": 6.0,
+   "height": 3.2,
+   "occupancy": 1.5,
+   "privacy": 1,
+   "daylight": true,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 7,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "ENTRANCE",
+    "CORRIDOR",
+    "BATHROOM"
+   ],
+   "functional_relationships": [
+    "ENTRANCE"
+   ],
+   "neufert": {
+    "puerta_m": 1.6,
+    "ventana_ratio_min": 0.125,
+    "ref": "puertas dobles de 2 × 0,80 m; altura 3,20 m",
+    "nota": "Sala multiuso: salidas dobles con apertura hacia fuera; 1,0-1,5 m2 por persona según actividad."
+   }
+  },
+  {
+   "space_type": "EMERGENCY_ROOM",
+   "name_es": "Urgencias / triage",
+   "minimum_area": 18.0,
+   "preferred_area": 24.0,
+   "minimum_width": 3.6,
+   "height": 2.8,
+   "occupancy": 5.0,
+   "privacy": 3,
+   "daylight": true,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 5,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "ENTRANCE",
+    "WAITING_ROOM",
+    "IMAGING_ROOM",
+    "OPERATING_ROOM"
+   ],
+   "functional_relationships": [
+    "IMAGING_ROOM",
+    "OPERATING_ROOM"
+   ],
+   "metadata": {
+    "ambulancia": "acceso directo y señalizado desde el exterior",
+    "pasillo_m": 2.4
+   },
+   "neufert": {
+    "puerta_m": 1.2,
+    "ventana_ratio_min": 0.125,
+    "ref": "box de 12-16 m2 con camilla 0,70 × 2,00 m",
+    "nota": "Urgencias: box de 14 m2 con camilla y 1,00-1,20 m de paso perimetral; acceso de ambulancia cubierto."
+   }
+  },
+  {
+   "space_type": "OPERATING_ROOM",
+   "name_es": "Quirófano",
+   "minimum_area": 36.0,
+   "preferred_area": 42.0,
+   "minimum_width": 5.5,
+   "height": 3.0,
+   "occupancy": 8.0,
+   "privacy": 5,
+   "daylight": false,
+   "ventilation": false,
+   "wet_zone": true,
+   "requires_water": true,
+   "requires_drainage": true,
+   "requires_ventilation": true,
+   "noise_level": 1,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "STERILIZATION_ROOM",
+    "EMERGENCY_ROOM",
+    "NURSE_STATION"
+   ],
+   "functional_relationships": [
+    "STERILIZATION_ROOM"
+   ],
+   "metadata": {
+    "requiere_hvac": true,
+    "presion": "positiva",
+    "cambios_aire_h": 20,
+    "oxigeno_medicinal": true,
+    "pasillo_m": 2.4
+   },
+   "neufert": {
+    "puerta_m": 1.2,
+    "ref": "mesa quirúrgica 2,10 × 0,55 m; panel de equipos",
+    "nota": "Quirófano: 36-42 m2 y 3,00 m de altura; mesa centrada con giro de 2,20 m; puerta de camilla 1,20 m."
+   }
+  },
+  {
+   "space_type": "STERILIZATION_ROOM",
+   "name_es": "Esterilización",
+   "minimum_area": 12.0,
+   "preferred_area": 18.0,
+   "minimum_width": 3.0,
+   "height": 2.8,
+   "occupancy": 2.0,
+   "privacy": 3,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": true,
+   "requires_water": true,
+   "requires_drainage": true,
+   "requires_ventilation": true,
+   "noise_level": 5,
+   "accessibility": true,
+   "emergency_access": false,
+   "preferred_adjacencies": [
+    "OPERATING_ROOM",
+    "LABORATORY"
+   ],
+   "functional_relationships": [
+    "OPERATING_ROOM"
+   ],
+   "metadata": {
+    "requiere_hvac": true,
+    "extraccion_forzada": true,
+    "pasillo_m": 2.0
+   },
+   "neufert": {
+    "puerta_m": 1.2,
+    "ref": "línea sucia-limpia en un sentido; autoclave con frente 0,80",
+    "nota": "Esterilización: 12-18 m2; separación sucio/limpio con mesadas de 0,75 m de fondo y paso de 1,20 m."
+   }
+  },
+  {
+   "space_type": "WARD",
+   "name_es": "Sala de hospitalización",
+   "minimum_area": 28.0,
+   "preferred_area": 32.0,
+   "minimum_width": 4.2,
+   "height": 2.9,
+   "occupancy": 6.0,
+   "privacy": 3,
+   "daylight": true,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 2,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "NURSE_STATION",
+    "BATHROOM",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "NURSE_STATION"
+   ],
+   "metadata": {
+    "camas": 4,
+    "cama_espacio_m2": 7.0,
+    "pasillo_m": 2.4
+   },
+   "neufert": {
+    "puerta_m": 1.2,
+    "ventana_ratio_min": 0.125,
+    "ref": "cama hospitalaria 0,90 × 2,00 m; zona por cama 2,20 × 2,20",
+    "nota": "Hospitalización: 0,80 m entre camas y 1,50 m al pie (camilla); 7 m2 por cama; ventana con antepecho 1,00 m."
+   }
+  },
+  {
+   "space_type": "NURSE_STATION",
+   "name_es": "Estación de enfermería",
+   "minimum_area": 9.0,
+   "preferred_area": 12.0,
+   "minimum_width": 3.0,
+   "height": 2.8,
+   "occupancy": 3.0,
+   "privacy": 2,
+   "daylight": true,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 3,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "WARD",
+    "STOREROOM",
+    "CORRIDOR",
+    "OPERATING_ROOM"
+   ],
+   "functional_relationships": [
+    "WARD"
+   ],
+   "neufert": {
+    "puerta_m": 1.0,
+    "ref": "mostrador a 1,10 m de altura con paso interior de 0,90",
+    "nota": "Enfermería: dominio visual de la sala de camas y del acceso; 9-12 m2 con área de trabajo de pie."
+   }
+  },
+  {
+   "space_type": "LABORATORY",
+   "name_es": "Laboratorio clínico",
+   "minimum_area": 15.0,
+   "preferred_area": 24.0,
+   "minimum_width": 3.5,
+   "height": 2.9,
+   "occupancy": 4.0,
+   "privacy": 3,
+   "daylight": true,
+   "ventilation": true,
+   "wet_zone": true,
+   "requires_water": true,
+   "requires_drainage": true,
+   "requires_ventilation": true,
+   "noise_level": 4,
+   "accessibility": true,
+   "emergency_access": false,
+   "preferred_adjacencies": [
+    "EMERGENCY_ROOM",
+    "CONSULTATION_ROOM",
+    "STERILIZATION_ROOM"
+   ],
+   "functional_relationships": [
+    "EMERGENCY_ROOM"
+   ],
+   "metadata": {
+    "requiere_hvac": true,
+    "extraccion_forzada": true,
+    "pasillo_m": 1.8
+   },
+   "neufert": {
+    "puerta_m": 1.0,
+    "ref": "banco de 0,60-0,75 m de fondo con paso de 1,20-1,50 m",
+    "nota": "Laboratorio: bancos paralelos con pasos de 1,50 m; extracción forzada; grifería y vacío al banco."
+   }
+  },
+  {
+   "space_type": "IMAGING_ROOM",
+   "name_es": "Sala de imagenología (rayos X)",
+   "minimum_area": 20.0,
+   "preferred_area": 28.0,
+   "minimum_width": 4.0,
+   "height": 3.0,
+   "occupancy": 3.0,
+   "privacy": 5,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 1,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "EMERGENCY_ROOM",
+    "CONSULTATION_ROOM"
+   ],
+   "functional_relationships": [
+    "EMERGENCY_ROOM"
+   ],
+   "metadata": {
+    "radiacion": "barrera plomada en muros y puertas",
+    "pasillo_m": 2.4
+   },
+   "neufert": {
+    "puerta_m": 1.2,
+    "ref": "sala 24-30 m2 + cabina de mando de 10-12 m2 con visor",
+    "nota": "Imagenología: barrera plomada en muros y puerta de 1,20 m con plomo; control anejo con visor plomado."
+   }
+  },
+  {
+   "space_type": "PHARMACY",
+   "name_es": "Farmacia",
+   "minimum_area": 12.0,
+   "preferred_area": 16.0,
+   "minimum_width": 3.0,
+   "height": 2.8,
+   "occupancy": 3.0,
+   "privacy": 2,
+   "daylight": true,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 3,
+   "accessibility": true,
+   "emergency_access": false,
+   "preferred_adjacencies": [
+    "WAITING_ROOM",
+    "ENTRANCE",
+    "STOREROOM"
+   ],
+   "functional_relationships": [
+    "WAITING_ROOM"
+   ],
+   "neufert": {
+    "puerta_m": 1.0,
+    "ref": "mostrador de despacho con estantería trasera de 0,40",
+    "nota": "Farmacia: mostrador de 1,20 m de paso; dispensación separada del almacén con pasillo de reposición."
+   }
+  },
+  {
+   "space_type": "ROOM",
+   "name_es": "Local genérico",
+   "minimum_area": 6.0,
+   "preferred_area": 10.0,
+   "minimum_width": 1.8,
+   "height": 2.7,
+   "occupancy": 4.0,
+   "privacy": 2,
+   "daylight": true,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 3,
+   "accessibility": true,
+   "emergency_access": false,
+   "preferred_adjacencies": [
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "CORRIDOR"
+   ],
+   "neufert": {
+    "puerta_m": 0.9,
+    "ventana_ratio_min": 0.125,
+    "ref": "local genérico: 0,75 m de paso entre muebles",
+    "nota": "Local genérico: aplica el paso humano de Neufert (0,60 m por persona) y ventana de 1/8 del suelo."
+   }
+  },
+  {
+   "space_type": "LAVATORY",
+   "name_es": "Aseo (solo WC + lavabo)",
+   "minimum_area": 1.5,
+   "preferred_area": 2.5,
+   "minimum_width": 0.9,
+   "height": 2.4,
+   "occupancy": 1.0,
+   "privacy": 5,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": true,
+   "requires_water": true,
+   "requires_drainage": true,
+   "requires_ventilation": true,
+   "noise_level": 1,
+   "accessibility": true,
+   "emergency_access": false,
+   "preferred_adjacencies": [
+    "CORRIDOR",
+    "CLASSROOM",
+    "OFFICE"
+   ],
+   "functional_relationships": [
+    "CORRIDOR"
+   ],
+   "neufert": {
+    "puerta_m": 0.8,
+    "ref": "zona WC 0,80 × 1,20 m; lavabo de 0,60 m de ancho",
+    "nota": "Aseo reducido 1,00 × 0,80 m; frente de WC 0,60 m; accesible con giro de 1,50 m y barras."
+   }
+  },
+  {
+   "space_type": "ICU",
+   "name_es": "UCI (cuidados intensivos)",
+   "minimum_area": 18.0,
+   "preferred_area": 36.0,
+   "minimum_width": 4.2,
+   "height": 3.0,
+   "occupancy": 4.0,
+   "privacy": 5,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": true,
+   "requires_water": true,
+   "requires_drainage": true,
+   "requires_ventilation": true,
+   "noise_level": 1,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "OPERATING_ROOM",
+    "WARD",
+    "NURSE_STATION",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "NURSE_STATION",
+    "OPERATING_ROOM"
+   ],
+   "metadata": {
+    "requiere_hvac": true,
+    "presion": "negativa",
+    "oxigeno_medicinal": true,
+    "camas": 2,
+    "cama_espacio_m2": 18.0,
+    "pasillo_m": 2.4
+   },
+   "neufert": {
+    "puerta_m": 1.2,
+    "ref": "18 m2 por cama; cabecera con columnas de gases",
+    "nota": "UCI: 18 m2 por cama con anillo de servicio completo y vista directa de enfermería; puerta de 1,20 m."
+   }
+  },
+  {
+   "space_type": "DINING_HALL",
+   "name_es": "Comedor colectivo",
+   "minimum_area": 30.0,
+   "preferred_area": 60.0,
+   "minimum_width": 6.0,
+   "height": 3.0,
+   "occupancy": 1.5,
+   "privacy": 1,
+   "daylight": true,
+   "ventilation": true,
+   "wet_zone": false,
+   "requires_water": true,
+   "requires_drainage": true,
+   "noise_level": 6,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "KITCHEN_INSTITUTIONAL",
+    "ENTRANCE",
+    "CORRIDOR",
+    "LAVATORY"
+   ],
+   "functional_relationships": [
+    "KITCHEN_INSTITUTIONAL"
+   ],
+   "neufert": {
+    "puerta_m": 1.2,
+    "ref": "1,5 m2 por comensal; mesa 4p 0,80 × 0,80 m",
+    "nota": "Comedor colectivo: 1,5 m2/comensal en sala; 0,90 m entre mesas y 1,50 m la fila de servicio."
+   }
+  },
+  {
+   "space_type": "KITCHEN_INSTITUTIONAL",
+   "name_es": "Cocina institucional",
+   "minimum_area": 12.0,
+   "preferred_area": 24.0,
+   "minimum_width": 3.0,
+   "height": 2.8,
+   "occupancy": 4.0,
+   "privacy": 3,
+   "daylight": true,
+   "ventilation": true,
+   "wet_zone": true,
+   "requires_water": true,
+   "requires_drainage": true,
+   "requires_ventilation": true,
+   "noise_level": 5,
+   "accessibility": false,
+   "emergency_access": false,
+   "preferred_adjacencies": [
+    "DINING_HALL",
+    "STOREROOM",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "DINING_HALL",
+    "STOREROOM"
+   ],
+   "neufert": {
+    "puerta_m": 1.2,
+    "ref": "0,3 m2 por comensal; cadena recepción-cocción-reparto",
+    "nota": "Cocina institucional: cadena fría-caliente-reparto-lavado sin cruces; pasillos de 1,20-1,50 m."
+   }
+  },
+  {
+   "space_type": "LIBRARY",
+   "name_es": "Biblioteca / sala de lectura",
+   "minimum_area": 20.0,
+   "preferred_area": 40.0,
+   "minimum_width": 4.0,
+   "height": 2.9,
+   "occupancy": 2.5,
+   "privacy": 2,
+   "daylight": true,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 0,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "CORRIDOR",
+    "ENTRANCE",
+    "OFFICE"
+   ],
+   "functional_relationships": [
+    "CORRIDOR"
+   ],
+   "neufert": {
+    "puerta_m": 1.0,
+    "ventana_ratio_min": 0.125,
+    "ref": "estanterías de 0,35 m de fondo; pasillos de 0,75-0,90",
+    "nota": "Biblioteca: pasillos entre estanterías de 0,75 m (1,20 m accesible); mesas de lectura con 1,20 m detrás del lector sentado."
+   }
+  },
+  {
+   "space_type": "PARKING",
+   "name_es": "Estacionamiento (cubierta)",
+   "minimum_area": 12.5,
+   "preferred_area": 25.0,
+   "minimum_width": 2.5,
+   "height": 2.2,
+   "occupancy": 0.0,
+   "privacy": 0,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 6,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "ENTRANCE",
+    "CORRIDOR",
+    "ROOM"
+   ],
+   "functional_relationships": [
+    "ENTRANCE"
+   ],
+   "neufert": {
+    "puerta_m": 0.0,
+    "ref": "plaza 2,50 × 5,00 m; accesible 3,50 × 5,00 m",
+    "nota": "Estacionamiento: pasillo de maniobra de 6,00 m en 90°; altura libre 2,20 m; plaza accesible 3,50 m."
+   }
+  },
+  {
+   "space_type": "CT_ROOM",
+   "name_es": "Tomografía (TAC)",
+   "minimum_area": 28.0,
+   "preferred_area": 36.0,
+   "minimum_width": 5.0,
+   "height": 3.0,
+   "occupancy": 3.0,
+   "privacy": 5,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 1,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "EMERGENCY_ROOM",
+    "WAITING_ROOM",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "EMERGENCY_ROOM"
+   ],
+   "metadata": {
+    "radiacion": "barrera plomada en muros, puerta y visor",
+    "requiere_hvac": true,
+    "camilla": true,
+    "pasillo_m": 2.4
+   },
+   "neufert": {
+    "puerta_m": 1.2,
+    "ref": "sala del equipo 28-36 m2 + cabina de mando con visor plomado; mesa de exploración 2,20 × 0,80 m",
+    "nota": "Tomografía: blindaje de plomo calculado por el físico; puerta de camilla 1,20 m y control anejo."
+   }
+  },
+  {
+   "space_type": "FLUOROSCOPY_ROOM",
+   "name_es": "Fluoroscopio",
+   "minimum_area": 24.0,
+   "preferred_area": 30.0,
+   "minimum_width": 4.5,
+   "height": 3.0,
+   "occupancy": 4.0,
+   "privacy": 5,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": true,
+   "noise_level": 1,
+   "accessibility": true,
+   "emergency_access": true,
+   "requires_water": true,
+   "requires_drainage": true,
+   "preferred_adjacencies": [
+    "EMERGENCY_ROOM",
+    "IMAGING_ROOM",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "EMERGENCY_ROOM"
+   ],
+   "metadata": {
+    "radiacion": "barrera plomada en muros y puerta",
+    "requiere_hvac": true,
+    "camilla": true,
+    "pasillo_m": 2.4
+   },
+   "neufert": {
+    "puerta_m": 1.2,
+    "ref": "sala 24-30 m2 con arco en C y mesa de exploración; cabina de mando con visor",
+    "nota": "Fluoroscopio: sala con desagüe para exploraciones; puerta de camilla 1,20 m y control anejo."
+   }
+  },
+  {
+   "space_type": "ANATOMY_PATHOLOGY",
+   "name_es": "Anatomía patológica",
+   "minimum_area": 24.0,
+   "preferred_area": 36.0,
+   "minimum_width": 4.0,
+   "height": 3.0,
+   "occupancy": 4.0,
+   "privacy": 5,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": true,
+   "noise_level": 2,
+   "accessibility": true,
+   "emergency_access": false,
+   "requires_water": true,
+   "requires_drainage": true,
+   "requires_ventilation": true,
+   "preferred_adjacencies": [
+    "MORGUE",
+    "LABORATORY",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "MORGUE"
+   ],
+   "metadata": {
+    "extraccion": "extractor independiente (formaldehído)",
+    "requiere_hvac": true,
+    "suelo_lavable": true,
+    "pasillo_m": 2.0
+   },
+   "neufert": {
+    "puerta_m": 1.2,
+    "ref": "mesa de necropsias 2,10 × 0,80 m; bancos de histología con foso; cámara de fijación",
+    "nota": "Anatomía patológica: sala de necropsias junto a la morgue con circuito limpio/sucio y extracción propia."
+   }
+  },
+  {
+   "space_type": "MORGUE",
+   "name_es": "Morgue (depósito de cadáveres)",
+   "minimum_area": 12.0,
+   "preferred_area": 20.0,
+   "minimum_width": 3.0,
+   "height": 2.8,
+   "occupancy": 2.0,
+   "privacy": 5,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": true,
+   "noise_level": 1,
+   "accessibility": true,
+   "emergency_access": false,
+   "requires_water": true,
+   "requires_drainage": true,
+   "requires_ventilation": true,
+   "preferred_adjacencies": [
+    "ANATOMY_PATHOLOGY",
+    "STOREROOM",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "ANATOMY_PATHOLOGY"
+   ],
+   "metadata": {
+    "friocamara": "2-4 °C; cámara con puertas metálicas",
+    "extraccion": "extractor independiente",
+    "suelo_lavable": true,
+    "pasillo_m": 2.0
+   },
+   "neufert": {
+    "puerta_m": 1.2,
+    "ref": "módulo de cámara 0,90 × 2,10 m por cuerpo; mesa de autopsias 2,00 × 0,75 m; puerta de camilla 1,20 m",
+    "nota": "Morgue: acceso directo desde exterior para el traslado; circuito separado del público."
+   }
+  },
+  {
+   "space_type": "PROGRESSIVE_CARE",
+   "name_es": "Cuidados progresivos",
+   "minimum_area": 24.0,
+   "preferred_area": 32.0,
+   "minimum_width": 3.6,
+   "height": 2.9,
+   "occupancy": 4.0,
+   "privacy": 4,
+   "daylight": true,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 2,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "ICU",
+    "NURSE_STATION",
+    "WARD",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "ICU",
+    "NURSE_STATION"
+   ],
+   "metadata": {
+    "camas": 2,
+    "cama_espacio_m2": 12.0,
+    "requiere_hvac": true,
+    "oxigeno_medicinal": true,
+    "pasillo_m": 2.4
+   },
+   "neufert": {
+    "puerta_m": 1.2,
+    "ref": "12 m2 por cama monitorizada; anillo de servicio con columna de gases; paso de camilla 1,20 m",
+    "nota": "Cuidados progresivos: nivel intermedio entre UCI y sala; vista directa de la estación de enfermería."
+   }
+  },
+  {
+   "space_type": "MICROBIOLOGY_LAB",
+   "name_es": "Laboratorio de microbiología",
+   "minimum_area": 16.0,
+   "preferred_area": 24.0,
+   "minimum_width": 3.2,
+   "height": 2.9,
+   "occupancy": 4.0,
+   "privacy": 4,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": true,
+   "noise_level": 3,
+   "accessibility": true,
+   "emergency_access": false,
+   "requires_water": true,
+   "requires_drainage": true,
+   "requires_ventilation": true,
+   "preferred_adjacencies": [
+    "LABORATORY",
+    "STERILIZATION_ROOM",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "LABORATORY"
+   ],
+   "metadata": {
+    "biosafety": "cabina de bioseguridad clase II (flujo laminar); presión negativa",
+    "requiere_hvac": true,
+    "suelo_lavable": true,
+    "pasillo_m": 1.8
+   },
+   "neufert": {
+    "puerta_m": 1.0,
+    "ref": "banco de trabajo 0,75 m de fondo; cabina de flujo laminar 1,20 × 0,75 m; estufas de cultivo",
+    "nota": "Microbiología: presión negativa con extracción por filtro HEPA y zona de siembra separada."
+   }
+  },
+  {
+   "space_type": "SERVER_ROOM",
+   "name_es": "Nodo informático",
+   "minimum_area": 8.0,
+   "preferred_area": 12.0,
+   "minimum_width": 2.5,
+   "height": 2.7,
+   "occupancy": 1.0,
+   "privacy": 5,
+   "daylight": false,
+   "ventilation": false,
+   "wet_zone": false,
+   "noise_level": 3,
+   "accessibility": false,
+   "emergency_access": false,
+   "preferred_adjacencies": [
+    "OFFICE",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "OFFICE"
+   ],
+   "metadata": {
+    "requiere_hvac": true,
+    "presion": "positiva",
+    "sai": "SAI 24/7 y clima de precisión",
+    "suelo_tecnico": true,
+    "pasillo_m": 1.5
+   },
+   "neufert": {
+    "puerta_m": 1.0,
+    "ref": "rack 0,60 × 1,00 × 2,00 m; pasillo de servicio 1,00 m; carga admisible del forjado",
+    "nota": "Nodo informático: clima de precisión 24/7, SAI y detección de incendios por gas; sin ventanas."
+   }
+  },
+  {
+   "space_type": "WASTE_ROOM",
+   "name_es": "Local PGD (gestión de desechos)",
+   "minimum_area": 6.0,
+   "preferred_area": 10.0,
+   "minimum_width": 2.2,
+   "height": 2.5,
+   "occupancy": 1.0,
+   "privacy": 5,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": true,
+   "noise_level": 2,
+   "accessibility": true,
+   "emergency_access": false,
+   "requires_water": true,
+   "requires_drainage": true,
+   "requires_ventilation": true,
+   "preferred_adjacencies": [
+    "WAREHOUSE",
+    "STOREROOM",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "WAREHOUSE"
+   ],
+   "metadata": {
+    "extraccion": "extractor independiente",
+    "suelo_lavable": true,
+    "segregacion": "contenedores por tipo de desecho (común, sanitario riesgo, punzantes)",
+    "pasillo_m": 1.8
+   },
+   "neufert": {
+    "puerta_m": 1.2,
+    "ref": "contenedor 0,80 × 1,20 m; hueco de carga a la calle; sumidero con rejilla",
+    "nota": "PGD: segregación por tipo de desecho, ruta de retirada sin cruces con circuitos limpios."
+   }
+  },
+  {
+   "space_type": "WAREHOUSE",
+   "name_es": "Almacén",
+   "minimum_area": 10.0,
+   "preferred_area": 20.0,
+   "minimum_width": 2.5,
+   "height": 2.7,
+   "occupancy": 2.0,
+   "privacy": 4,
+   "daylight": false,
+   "ventilation": false,
+   "wet_zone": false,
+   "noise_level": 3,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "STOREROOM",
+    "WASTE_ROOM",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "STOREROOM"
+   ],
+   "metadata": {
+    "carga_mercancias": true,
+    "pasillo_m": 2.0
+   },
+   "neufert": {
+    "puerta_m": 1.5,
+    "ref": "estantería de 0,90 m de fondo; pasillo de carretilla 1,80 m; puerta de carga 1,50 m",
+    "nota": "Almacén: pasillos por tipo de carrito o carretilla; estanterías con pasillo de reparto 1,00 m."
+   }
+  },
+  {
+   "space_type": "AUTOPSY_ROOM",
+   "name_es": "Sala de autopsias",
+   "minimum_area": 20.0,
+   "preferred_area": 30.0,
+   "minimum_width": 5.0,
+   "height": 2.8,
+   "occupancy": null,
+   "privacy": 4,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": true,
+   "noise_level": 2,
+   "accessibility": false,
+   "emergency_access": true,
+   "requires_water": true,
+   "requires_drainage": true,
+   "requires_ventilation": true,
+   "preferred_adjacencies": [
+    "MORGUE",
+    "ANATOMY_PATHOLOGY",
+    "CORRIDOR",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "MORGUE",
+    "ANATOMY_PATHOLOGY",
+    "CORRIDOR"
+   ],
+   "metadata": {
+    "especialidad_salud": true,
+    "pasillo_m": 2.0,
+    "presion": "negativa respecto a áreas limpias",
+    "extraccion": "directa al exterior; control de olores y aerosoles",
+    "drenaje_piso": true,
+    "suelo_lavable": true,
+    "superficie_min_m2": 20.0,
+    "superficie_rec_m2": 35.0,
+    "cota_tipica": "5.00 x 6.00 m"
+   },
+   "neufert": {
+    "puerta_m": 1.2,
+    "ref": "mesa de autopsia 2,00 x 0,80 m; puerta de carro 1,20 m (REC 1,40-1,60); altura REC 2,70-3,00 m",
+    "nota": "mesa de autopsia 2,00 x 0,80 m; puerta de carro 1,20 m (REC 1,40-1,60); altura REC 2,70-3,00 m"
+   }
+  },
+  {
+   "space_type": "PREOP_ROOM",
+   "name_es": "Preoperatorio",
+   "minimum_area": 10.5,
+   "preferred_area": 12.0,
+   "minimum_width": 3.0,
+   "height": 2.8,
+   "occupancy": null,
+   "privacy": 3,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 2,
+   "accessibility": false,
+   "emergency_access": true,
+   "requires_water": false,
+   "requires_drainage": false,
+   "requires_ventilation": true,
+   "preferred_adjacencies": [
+    "OPERATING_ROOM",
+    "STERILIZATION_ROOM",
+    "NURSE_STATION",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "OPERATING_ROOM",
+    "STERILIZATION_ROOM",
+    "NURSE_STATION"
+   ],
+   "metadata": {
+    "especialidad_salud": true,
+    "pasillo_m": 1.8,
+    "gases": "oxígeno y aire medicinal según procedimiento",
+    "monitorizacion": true,
+    "superficie_min_m2": 10.5,
+    "superficie_rec_m2": 12.0,
+    "cota_tipica": "3.00 x 3.50 m por puesto"
+   },
+   "neufert": {
+    "puerta_m": 1.2,
+    "ref": "8-10 m2/puesto (REC 10-12); separación entre puestos 1,20 m",
+    "nota": "8-10 m2/puesto (REC 10-12); separación entre puestos 1,20 m"
+   }
+  },
+  {
+   "space_type": "RECOVERY_ROOM",
+   "name_es": "Recuperación postanestésica (URPA)",
+   "minimum_area": 9.0,
+   "preferred_area": 12.0,
+   "minimum_width": 3.0,
+   "height": 2.8,
+   "occupancy": null,
+   "privacy": 3,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 2,
+   "accessibility": false,
+   "emergency_access": true,
+   "requires_water": false,
+   "requires_drainage": false,
+   "requires_ventilation": true,
+   "preferred_adjacencies": [
+    "OPERATING_ROOM",
+    "NURSE_STATION",
+    "ICU",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "OPERATING_ROOM",
+    "NURSE_STATION",
+    "ICU"
+   ],
+   "metadata": {
+    "especialidad_salud": true,
+    "pasillo_m": 2.4,
+    "gases": "oxígeno, aire medicinal y vacío según procedimiento",
+    "monitorizacion": true,
+    "llamada": true,
+    "superficie_min_m2": 9.0,
+    "superficie_rec_m2": 12.0
+   },
+   "neufert": {
+    "puerta_m": 1.2,
+    "ref": "Puesto PACU: 9 m2 (REC 10-12/puesto); pasillo REC 2,40 m",
+    "nota": "Puesto PACU: 9 m2 (REC 10-12/puesto); pasillo REC 2,40 m"
+   }
+  },
+  {
+   "space_type": "MRI_ROOM",
+   "name_es": "Resonancia magnética",
+   "minimum_area": 30.0,
+   "preferred_area": 45.0,
+   "minimum_width": 5.5,
+   "height": 3.0,
+   "occupancy": null,
+   "privacy": 4,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 2,
+   "accessibility": false,
+   "emergency_access": true,
+   "requires_water": false,
+   "requires_drainage": false,
+   "requires_ventilation": true,
+   "preferred_adjacencies": [
+    "CT_ROOM",
+    "IMAGING_ROOM",
+    "WAITING_ROOM",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "CT_ROOM",
+    "IMAGING_ROOM",
+    "WAITING_ROOM"
+   ],
+   "metadata": {
+    "especialidad_salud": true,
+    "pasillo_m": 2.4,
+    "radiacion": "RF: blindaje EQ según fabricante",
+    "zonas_seguridad": "sistema de cuatro zonas y política magnética",
+    "hvac": "EQ según fabricante (disipación térmica)",
+    "superficie_min_m2": 30.0,
+    "superficie_rec_m2": 50.0
+   },
+   "neufert": {
+    "puerta_m": 1.2,
+    "ref": "sala de equipo 30-40 m2 (REC 40-50 según fabricante); control 10-15 m2",
+    "nota": "sala de equipo 30-40 m2 (REC 40-50 según fabricante); control 10-15 m2"
+   }
+  },
+  {
+   "space_type": "ULTRASOUND_ROOM",
+   "name_es": "Sala de ecografía",
+   "minimum_area": 12.0,
+   "preferred_area": 16.0,
+   "minimum_width": 3.5,
+   "height": 2.7,
+   "occupancy": null,
+   "privacy": 3,
+   "daylight": true,
+   "ventilation": false,
+   "wet_zone": false,
+   "noise_level": 2,
+   "accessibility": true,
+   "emergency_access": true,
+   "requires_water": false,
+   "requires_drainage": false,
+   "requires_ventilation": false,
+   "preferred_adjacencies": [
+    "CONSULTATION_ROOM",
+    "WAITING_ROOM",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "CONSULTATION_ROOM",
+    "WAITING_ROOM"
+   ],
+   "metadata": {
+    "especialidad_salud": true,
+    "pasillo_m": 1.8,
+    "superficie_min_m2": 12.0,
+    "superficie_rec_m2": 18.0,
+    "cota_tipica": "3.50 x 4.00 m"
+   },
+   "neufert": {
+    "puerta_m": 0.9,
+    "ref": "12 m2 (REC 14-18); obstétrica/procedimientos REC 16-20 m2",
+    "nota": "12 m2 (REC 14-18); obstétrica/procedimientos REC 16-20 m2"
+   }
+  },
+  {
+   "space_type": "ICU_PEDIATRIC",
+   "name_es": "UCI pediátrica",
+   "minimum_area": 16.0,
+   "preferred_area": 22.0,
+   "minimum_width": 4.0,
+   "height": 2.8,
+   "occupancy": null,
+   "privacy": 4,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": true,
+   "noise_level": 2,
+   "accessibility": false,
+   "emergency_access": true,
+   "requires_water": true,
+   "requires_drainage": true,
+   "requires_ventilation": true,
+   "preferred_adjacencies": [
+    "ICU",
+    "NURSE_STATION",
+    "PEDIATRICS",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "ICU",
+    "NURSE_STATION",
+    "PEDIATRICS"
+   ],
+   "metadata": {
+    "especialidad_salud": true,
+    "pasillo_m": 2.4,
+    "camas": "REC 16-22 m2 por puesto",
+    "trabajo_lateral_m": 1.5,
+    "visitante_m": 1.2,
+    "gases": "oxígeno, aire medicinal y vacío por puesto",
+    "superficie_min_m2": 16.0,
+    "superficie_rec_m2": 22.0
+   },
+   "neufert": {
+    "puerta_m": 1.2,
+    "ref": "puesto REC 16-22 m2; habitación individual REC 18-24 m2",
+    "nota": "puesto REC 16-22 m2; habitación individual REC 18-24 m2"
+   }
+  },
+  {
+   "space_type": "NICU",
+   "name_es": "UCI neonatal",
+   "minimum_area": 12.0,
+   "preferred_area": 16.0,
+   "minimum_width": 3.5,
+   "height": 2.8,
+   "occupancy": null,
+   "privacy": 4,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": true,
+   "noise_level": 2,
+   "accessibility": false,
+   "emergency_access": true,
+   "requires_water": true,
+   "requires_drainage": true,
+   "requires_ventilation": true,
+   "preferred_adjacencies": [
+    "NEONATOLOGY",
+    "DELIVERY_ROOM",
+    "NURSE_STATION",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "NEONATOLOGY",
+    "DELIVERY_ROOM",
+    "NURSE_STATION"
+   ],
+   "metadata": {
+    "especialidad_salud": true,
+    "pasillo_m": 2.4,
+    "incubadoras": "REC 12-16 m2 por incubadora",
+    "trabajo_m": "1.20-1.50 alrededor del equipo",
+    "gases": "oxígeno y aire medicinal por puesto",
+    "superficie_min_m2": 12.0,
+    "superficie_rec_m2": 16.0
+   },
+   "neufert": {
+    "puerta_m": 1.2,
+    "ref": "puesto abierto REC 12-16 m2 por incubadora; individual REC 16-20",
+    "nota": "puesto abierto REC 12-16 m2 por incubadora; individual REC 16-20"
+   }
+  },
+  {
+   "space_type": "ISOLATION_ROOM",
+   "name_es": "Aislamiento de pacientes",
+   "minimum_area": 12.0,
+   "preferred_area": 18.0,
+   "minimum_width": 3.0,
+   "height": 2.8,
+   "occupancy": null,
+   "privacy": 5,
+   "daylight": true,
+   "ventilation": true,
+   "wet_zone": true,
+   "noise_level": 2,
+   "accessibility": false,
+   "emergency_access": true,
+   "requires_water": true,
+   "requires_drainage": true,
+   "requires_ventilation": true,
+   "preferred_adjacencies": [
+    "ICU",
+    "WARD",
+    "BATHROOM",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "ICU",
+    "WARD",
+    "BATHROOM"
+   ],
+   "metadata": {
+    "especialidad_salud": true,
+    "pasillo_m": 2.4,
+    "presion": "según modelo de aislamiento (HVAC)",
+    "antecamara": "MIN 4 m2 (REC 5-6)",
+    "camas": "1",
+    "superficie_min_m2": 12.0,
+    "superficie_rec_m2": 20.0
+   },
+   "neufert": {
+    "puerta_m": 1.2,
+    "ref": "habitación REC 16-20 m2 + antecámara; puerta 1,10-1,20 m para cama",
+    "nota": "habitación REC 16-20 m2 + antecámara; puerta 1,10-1,20 m para cama"
+   }
+  },
+  {
+   "space_type": "MOLECULAR_BIOLOGY_LAB",
+   "name_es": "Laboratorio de biología molecular",
+   "minimum_area": 12.0,
+   "preferred_area": 18.0,
+   "minimum_width": 3.5,
+   "height": 2.8,
+   "occupancy": null,
+   "privacy": 4,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": true,
+   "noise_level": 2,
+   "accessibility": false,
+   "emergency_access": true,
+   "requires_water": true,
+   "requires_drainage": true,
+   "requires_ventilation": true,
+   "preferred_adjacencies": [
+    "MICROBIOLOGY_LAB",
+    "LABORATORY",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "MICROBIOLOGY_LAB",
+    "LABORATORY"
+   ],
+   "metadata": {
+    "especialidad_salud": true,
+    "pasillo_m": 1.5,
+    "biosafety": "cabina clase II; extracción localizada",
+    "flujo": "unidireccional preparación-extracción-amplificación-análisis",
+    "superficie_min_m2": 12.0,
+    "superficie_rec_m2": 18.0
+   },
+   "neufert": {
+    "puerta_m": 0.9,
+    "ref": "áreas de 12-18 m2 con pasillos 1,20-1,50 m; evitar contaminación cruzada",
+    "nota": "áreas de 12-18 m2 con pasillos 1,20-1,50 m; evitar contaminación cruzada"
+   }
+  },
+  {
+   "space_type": "BLOOD_BANK",
+   "name_es": "Banco de sangre",
+   "minimum_area": 12.0,
+   "preferred_area": 20.0,
+   "minimum_width": 3.5,
+   "height": 2.8,
+   "occupancy": null,
+   "privacy": 4,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": true,
+   "noise_level": 2,
+   "accessibility": false,
+   "emergency_access": true,
+   "requires_water": true,
+   "requires_drainage": true,
+   "requires_ventilation": true,
+   "preferred_adjacencies": [
+    "LABORATORY",
+    "STERILIZATION_ROOM",
+    "EMERGENCY_ROOM",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "LABORATORY",
+    "STERILIZATION_ROOM",
+    "EMERGENCY_ROOM"
+   ],
+   "metadata": {
+    "especialidad_salud": true,
+    "pasillo_m": 1.8,
+    "refrigeracion": "almacén refrigerado EQ según capacidad",
+    "donacion_m2": "6-8 por puesto",
+    "superficie_min_m2": 12.0,
+    "superficie_rec_m2": 25.0
+   },
+   "neufert": {
+    "puerta_m": 1.2,
+    "ref": "procesamiento e inmunohematología 15-25 m2; circulación 1,50-1,80 m",
+    "nota": "procesamiento e inmunohematología 15-25 m2; circulación 1,50-1,80 m"
+   }
+  },
+  {
+   "space_type": "SAMPLE_COLLECTION",
+   "name_es": "Toma de muestras",
+   "minimum_area": 8.0,
+   "preferred_area": 12.0,
+   "minimum_width": 3.0,
+   "height": 2.7,
+   "occupancy": null,
+   "privacy": 2,
+   "daylight": true,
+   "ventilation": false,
+   "wet_zone": true,
+   "noise_level": 2,
+   "accessibility": true,
+   "emergency_access": true,
+   "requires_water": true,
+   "requires_drainage": true,
+   "requires_ventilation": false,
+   "preferred_adjacencies": [
+    "LABORATORY",
+    "WAITING_ROOM",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "LABORATORY",
+    "WAITING_ROOM"
+   ],
+   "metadata": {
+    "especialidad_salud": true,
+    "pasillo_m": 1.5,
+    "superficie_min_m2": 8.0,
+    "superficie_rec_m2": 10.0
+   },
+   "neufert": {
+    "puerta_m": 0.9,
+    "ref": "8-10 m2 por puesto; contigua a laboratorio y sala de espera",
+    "nota": "8-10 m2 por puesto; contigua a laboratorio y sala de espera"
+   }
+  },
+  {
+   "space_type": "PROCEDURE_ROOM",
+   "name_es": "Sala de procedimientos",
+   "minimum_area": 12.0,
+   "preferred_area": 18.0,
+   "minimum_width": 3.5,
+   "height": 2.8,
+   "occupancy": null,
+   "privacy": 3,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": true,
+   "noise_level": 2,
+   "accessibility": false,
+   "emergency_access": true,
+   "requires_water": true,
+   "requires_drainage": true,
+   "requires_ventilation": true,
+   "preferred_adjacencies": [
+    "CONSULTATION_ROOM",
+    "STERILIZATION_ROOM",
+    "RECOVERY_ROOM",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "CONSULTATION_ROOM",
+    "STERILIZATION_ROOM",
+    "RECOVERY_ROOM"
+   ],
+   "metadata": {
+    "especialidad_salud": true,
+    "pasillo_m": 2.0,
+    "superficie_min_m2": 12.0,
+    "superficie_rec_m2": 18.0,
+    "nota": "con anestesia/equipos REC 18-25 m2"
+   },
+   "neufert": {
+    "puerta_m": 1.2,
+    "ref": "12 m2 (REC 14-18); puerta 1,20 m",
+    "nota": "12 m2 (REC 14-18); puerta 1,20 m"
+   }
+  },
+  {
+   "space_type": "ENDOSCOPY_ROOM",
+   "name_es": "Sala de endoscopia",
+   "minimum_area": 18.0,
+   "preferred_area": 25.0,
+   "minimum_width": 4.0,
+   "height": 2.8,
+   "occupancy": null,
+   "privacy": 3,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": true,
+   "noise_level": 2,
+   "accessibility": false,
+   "emergency_access": true,
+   "requires_water": true,
+   "requires_drainage": true,
+   "requires_ventilation": true,
+   "preferred_adjacencies": [
+    "PROCEDURE_ROOM",
+    "STERILIZATION_ROOM",
+    "RECOVERY_ROOM",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "PROCEDURE_ROOM",
+    "STERILIZATION_ROOM",
+    "RECOVERY_ROOM"
+   ],
+   "metadata": {
+    "especialidad_salud": true,
+    "pasillo_m": 2.0,
+    "lavado": "procesamiento de endoscopios 15-25 m2",
+    "superficie_min_m2": 18.0,
+    "superficie_rec_m2": 25.0
+   },
+   "neufert": {
+    "puerta_m": 1.2,
+    "ref": "sala de procedimiento MIN 18 m2 (REC 20-25); preparación 10-12 m2",
+    "nota": "sala de procedimiento MIN 18 m2 (REC 20-25); preparación 10-12 m2"
+   }
+  },
+  {
+   "space_type": "DIALYSIS_ROOM",
+   "name_es": "Hemodiálisis",
+   "minimum_area": 12.0,
+   "preferred_area": 20.0,
+   "minimum_width": 3.5,
+   "height": 2.8,
+   "occupancy": null,
+   "privacy": 3,
+   "daylight": true,
+   "ventilation": true,
+   "wet_zone": true,
+   "noise_level": 2,
+   "accessibility": true,
+   "emergency_access": true,
+   "requires_water": true,
+   "requires_drainage": true,
+   "requires_ventilation": true,
+   "preferred_adjacencies": [
+    "NURSE_STATION",
+    "LABORATORY",
+    "WARD",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "NURSE_STATION",
+    "LABORATORY",
+    "WARD"
+   ],
+   "metadata": {
+    "especialidad_salud": true,
+    "pasillo_m": 2.0,
+    "puestos": "REC 8-12 m2 por puesto",
+    "agua": "tratamiento de agua EQ por número de puestos",
+    "gases": "oxígeno por puesto",
+    "superficie_min_m2": 12.0,
+    "superficie_rec_m2": 16.0
+   },
+   "neufert": {
+    "puerta_m": 1.2,
+    "ref": "puesto REC 8-12 m2; aislada REC 12-16 m2; circulación 1,50-2,40 m",
+    "nota": "puesto REC 8-12 m2; aislada REC 12-16 m2; circulación 1,50-2,40 m"
+   }
+  },
+  {
+   "space_type": "STERILE_PHARMACY",
+   "name_es": "Farmacia de preparación estéril",
+   "minimum_area": 10.0,
+   "preferred_area": 18.0,
+   "minimum_width": 3.0,
+   "height": 2.8,
+   "occupancy": null,
+   "privacy": 4,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": true,
+   "noise_level": 2,
+   "accessibility": false,
+   "emergency_access": true,
+   "requires_water": true,
+   "requires_drainage": true,
+   "requires_ventilation": true,
+   "preferred_adjacencies": [
+    "PHARMACY",
+    "STERILIZATION_ROOM",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "PHARMACY",
+    "STERILIZATION_ROOM"
+   ],
+   "metadata": {
+    "especialidad_salud": true,
+    "pasillo_m": 1.5,
+    "presion": "positiva según norma farmacéutica",
+    "esclusas": "4-8 m2 según sistema",
+    "superficie_min_m2": 10.0,
+    "superficie_rec_m2": 20.0
+   },
+   "neufert": {
+    "puerta_m": 0.9,
+    "ref": "anteárea 6-10 m2; preparación 12-20 m2; según clasificación y flujo",
+    "nota": "anteárea 6-10 m2; preparación 12-20 m2; según clasificación y flujo"
+   }
+  },
+  {
+   "space_type": "REHABILITATION",
+   "name_es": "Rehabilitación / fisioterapia",
+   "minimum_area": 20.0,
+   "preferred_area": 40.0,
+   "minimum_width": 4.0,
+   "height": 2.8,
+   "occupancy": null,
+   "privacy": 2,
+   "daylight": true,
+   "ventilation": true,
+   "wet_zone": true,
+   "noise_level": 2,
+   "accessibility": true,
+   "emergency_access": true,
+   "requires_water": true,
+   "requires_drainage": true,
+   "requires_ventilation": true,
+   "preferred_adjacencies": [
+    "WARD",
+    "CONSULTATION_ROOM",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "WARD",
+    "CONSULTATION_ROOM"
+   ],
+   "metadata": {
+    "especialidad_salud": true,
+    "pasillo_m": 1.8,
+    "superficie_min_m2": 20.0,
+    "superficie_rec_m2": 60.0,
+    "nota": "gimnasio MIN 40 m2 (REC 60-100); cabina 8-12 m2"
+   },
+   "neufert": {
+    "puerta_m": 0.9,
+    "ref": "gimnasio MIN 40 m2; mecanoterapia 20-40; electroterapia 10-20",
+    "nota": "gimnasio MIN 40 m2; mecanoterapia 20-40; electroterapia 10-20"
+   }
+  },
+  {
+   "space_type": "HYDROTHERAPY",
+   "name_es": "Hidroterapia",
+   "minimum_area": 20.0,
+   "preferred_area": 40.0,
+   "minimum_width": 4.0,
+   "height": 3.0,
+   "occupancy": null,
+   "privacy": 2,
+   "daylight": true,
+   "ventilation": true,
+   "wet_zone": true,
+   "noise_level": 2,
+   "accessibility": true,
+   "emergency_access": true,
+   "requires_water": true,
+   "requires_drainage": true,
+   "requires_ventilation": true,
+   "preferred_adjacencies": [
+    "REHABILITATION",
+    "BATHROOM",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "REHABILITATION",
+    "BATHROOM"
+   ],
+   "metadata": {
+    "especialidad_salud": true,
+    "pasillo_m": 2.0,
+    "vaso": "EQ; prever vestuarios y equipos",
+    "superficie_min_m2": 20.0,
+    "superficie_rec_m2": 40.0
+   },
+   "neufert": {
+    "puerta_m": 1.2,
+    "ref": "EQ: dimensionar vaso, circulación, vestuarios y equipos",
+    "nota": "EQ: dimensionar vaso, circulación, vestuarios y equipos"
+   }
+  },
+  {
+   "space_type": "DELIVERY_ROOM",
+   "name_es": "Obstetricia / sala de partos",
+   "minimum_area": 20.0,
+   "preferred_area": 30.0,
+   "minimum_width": 4.5,
+   "height": 2.8,
+   "occupancy": null,
+   "privacy": 4,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": true,
+   "noise_level": 2,
+   "accessibility": false,
+   "emergency_access": true,
+   "requires_water": true,
+   "requires_drainage": true,
+   "requires_ventilation": true,
+   "preferred_adjacencies": [
+    "NEONATOLOGY",
+    "NICU",
+    "OPERATING_ROOM",
+    "NURSE_STATION",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "NEONATOLOGY",
+    "NICU",
+    "OPERATING_ROOM",
+    "NURSE_STATION"
+   ],
+   "metadata": {
+    "especialidad_salud": true,
+    "pasillo_m": 2.4,
+    "gases": "oxígeno, aire medicinal y vacío",
+    "reanimacion_neonatal": "8-12 m2 contigua",
+    "superficie_min_m2": 20.0,
+    "superficie_rec_m2": 30.0
+   },
+   "neufert": {
+    "puerta_m": 1.4,
+    "ref": "sala de parto REC 20-30 m2; con equipamiento complejo REC 25-35",
+    "nota": "sala de parto REC 20-30 m2; con equipamiento complejo REC 25-35"
+   }
+  },
+  {
+   "space_type": "NEONATOLOGY",
+   "name_es": "Neonatología",
+   "minimum_area": 12.0,
+   "preferred_area": 16.0,
+   "minimum_width": 3.5,
+   "height": 2.8,
+   "occupancy": null,
+   "privacy": 4,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": true,
+   "noise_level": 2,
+   "accessibility": false,
+   "emergency_access": true,
+   "requires_water": true,
+   "requires_drainage": true,
+   "requires_ventilation": true,
+   "preferred_adjacencies": [
+    "NICU",
+    "DELIVERY_ROOM",
+    "NURSE_STATION",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "NICU",
+    "DELIVERY_ROOM",
+    "NURSE_STATION"
+   ],
+   "metadata": {
+    "especialidad_salud": true,
+    "pasillo_m": 2.4,
+    "incubadoras": "REC 12-16 m2 por puesto",
+    "trabajo_m": "1.20-1.50 alrededor de incubadora",
+    "superficie_min_m2": 12.0,
+    "superficie_rec_m2": 16.0
+   },
+   "neufert": {
+    "puerta_m": 1.2,
+    "ref": "puesto REC 12-16 m2; habitación individual REC 16-20 m2",
+    "nota": "puesto REC 12-16 m2; habitación individual REC 16-20 m2"
+   }
+  },
+  {
+   "space_type": "PEDIATRICS",
+   "name_es": "Pediatría (hospitalización)",
+   "minimum_area": 12.0,
+   "preferred_area": 20.0,
+   "minimum_width": 3.5,
+   "height": 2.8,
+   "occupancy": null,
+   "privacy": 3,
+   "daylight": true,
+   "ventilation": true,
+   "wet_zone": true,
+   "noise_level": 2,
+   "accessibility": true,
+   "emergency_access": true,
+   "requires_water": true,
+   "requires_drainage": true,
+   "requires_ventilation": true,
+   "preferred_adjacencies": [
+    "ICU_PEDIATRIC",
+    "NURSE_STATION",
+    "WAITING_ROOM",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "ICU_PEDIATRIC",
+    "NURSE_STATION",
+    "WAITING_ROOM"
+   ],
+   "metadata": {
+    "especialidad_salud": true,
+    "pasillo_m": 2.4,
+    "juego": "1.5-2.5 m2 por niño",
+    "camas": "REC 16-20 m2 habitación individual",
+    "superficie_min_m2": 12.0,
+    "superficie_rec_m2": 20.0
+   },
+   "neufert": {
+    "puerta_m": 1.2,
+    "ref": "individual REC 16-20 m2; con acompañante REC 20-24 m2",
+    "nota": "individual REC 16-20 m2; con acompañante REC 20-24 m2"
+   }
+  },
+  {
+   "space_type": "DENTISTRY",
+   "name_es": "Odontología hospitalaria",
+   "minimum_area": 9.0,
+   "preferred_area": 12.0,
+   "minimum_width": 3.0,
+   "height": 2.7,
+   "occupancy": null,
+   "privacy": 2,
+   "daylight": true,
+   "ventilation": false,
+   "wet_zone": true,
+   "noise_level": 2,
+   "accessibility": true,
+   "emergency_access": true,
+   "requires_water": true,
+   "requires_drainage": true,
+   "requires_ventilation": false,
+   "preferred_adjacencies": [
+    "CONSULTATION_ROOM",
+    "WAITING_ROOM",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "CONSULTATION_ROOM",
+    "WAITING_ROOM"
+   ],
+   "metadata": {
+    "especialidad_salud": true,
+    "pasillo_m": 1.5,
+    "superficie_min_m2": 9.0,
+    "superficie_rec_m2": 12.0,
+    "cota_tipica": "3.00 x 3.50 m"
+   },
+   "neufert": {
+    "puerta_m": 0.9,
+    "ref": "box dental MIN 9 m2 (REC 10-12); circulación 1,20-1,50 m",
+    "nota": "box dental MIN 9 m2 (REC 10-12); circulación 1,20-1,50 m"
+   }
+  },
+  {
+   "space_type": "OPHTHALMOLOGY",
+   "name_es": "Oftalmología",
+   "minimum_area": 10.0,
+   "preferred_area": 14.0,
+   "minimum_width": 3.0,
+   "height": 2.7,
+   "occupancy": null,
+   "privacy": 3,
+   "daylight": true,
+   "ventilation": false,
+   "wet_zone": false,
+   "noise_level": 2,
+   "accessibility": true,
+   "emergency_access": true,
+   "requires_water": false,
+   "requires_drainage": false,
+   "requires_ventilation": false,
+   "preferred_adjacencies": [
+    "CONSULTATION_ROOM",
+    "WAITING_ROOM",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "CONSULTATION_ROOM",
+    "WAITING_ROOM"
+   ],
+   "metadata": {
+    "especialidad_salud": true,
+    "pasillo_m": 1.5,
+    "control_luz": "pruebas con oscurecimiento 12-16 m2",
+    "superficie_min_m2": 10.0,
+    "superficie_rec_m2": 16.0
+   },
+   "neufert": {
+    "puerta_m": 0.9,
+    "ref": "consulta 10-12 m2; exploración y pruebas 12-16 m2",
+    "nota": "consulta 10-12 m2; exploración y pruebas 12-16 m2"
+   }
+  },
+  {
+   "space_type": "DERMATOLOGY",
+   "name_es": "Dermatología",
+   "minimum_area": 10.0,
+   "preferred_area": 14.0,
+   "minimum_width": 3.0,
+   "height": 2.7,
+   "occupancy": null,
+   "privacy": 2,
+   "daylight": true,
+   "ventilation": false,
+   "wet_zone": true,
+   "noise_level": 2,
+   "accessibility": true,
+   "emergency_access": true,
+   "requires_water": true,
+   "requires_drainage": true,
+   "requires_ventilation": false,
+   "preferred_adjacencies": [
+    "CONSULTATION_ROOM",
+    "WAITING_ROOM",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "CONSULTATION_ROOM",
+    "WAITING_ROOM"
+   ],
+   "metadata": {
+    "especialidad_salud": true,
+    "pasillo_m": 1.5,
+    "superficie_min_m2": 10.0,
+    "superficie_rec_m2": 14.0
+   },
+   "neufert": {
+    "puerta_m": 0.9,
+    "ref": "consulta con exploración; luz y ventilación compatibles",
+    "nota": "consulta con exploración; luz y ventilación compatibles"
+   }
+  },
+  {
+   "space_type": "CARDIOLOGY",
+   "name_es": "Cardiología / pruebas funcionales",
+   "minimum_area": 8.0,
+   "preferred_area": 15.0,
+   "minimum_width": 3.0,
+   "height": 2.7,
+   "occupancy": null,
+   "privacy": 2,
+   "daylight": true,
+   "ventilation": false,
+   "wet_zone": false,
+   "noise_level": 2,
+   "accessibility": true,
+   "emergency_access": true,
+   "requires_water": false,
+   "requires_drainage": false,
+   "requires_ventilation": false,
+   "preferred_adjacencies": [
+    "CATH_LAB",
+    "CONSULTATION_ROOM",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "CATH_LAB",
+    "CONSULTATION_ROOM"
+   ],
+   "metadata": {
+    "especialidad_salud": true,
+    "pasillo_m": 1.8,
+    "pruebas": "ECG 8-10; ecocardiografía 12-16; esfuerzo 15-20 m2",
+    "superficie_min_m2": 8.0,
+    "superficie_rec_m2": 15.0
+   },
+   "neufert": {
+    "puerta_m": 0.9,
+    "ref": "ECG 8-10 m2; prueba de esfuerzo 15-20 m2; recuperación 8-10/puesto",
+    "nota": "ECG 8-10 m2; prueba de esfuerzo 15-20 m2; recuperación 8-10/puesto"
+   }
+  },
+  {
+   "space_type": "CATH_LAB",
+   "name_es": "Hemodinamia",
+   "minimum_area": 25.0,
+   "preferred_area": 40.0,
+   "minimum_width": 5.0,
+   "height": 3.0,
+   "occupancy": null,
+   "privacy": 4,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": true,
+   "noise_level": 2,
+   "accessibility": false,
+   "emergency_access": true,
+   "requires_water": true,
+   "requires_drainage": true,
+   "requires_ventilation": true,
+   "preferred_adjacencies": [
+    "CARDIOLOGY",
+    "ICU",
+    "RECOVERY_ROOM",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "CARDIOLOGY",
+    "ICU",
+    "RECOVERY_ROOM"
+   ],
+   "metadata": {
+    "especialidad_salud": true,
+    "pasillo_m": 2.4,
+    "radiacion": "blindaje por cálculo según equipo (IAEA)",
+    "gases": "oxígeno, aire medicinal y vacío",
+    "superficie_min_m2": 25.0,
+    "superficie_rec_m2": 50.0
+   },
+   "neufert": {
+    "puerta_m": 1.4,
+    "ref": "sala REC 35-50 m2; control 10-15 m2; blindaje por cálculo",
+    "nota": "sala REC 35-50 m2; control 10-15 m2; blindaje por cálculo"
+   }
+  },
+  {
+   "space_type": "NUCLEAR_MEDICINE",
+   "name_es": "Medicina nuclear",
+   "minimum_area": 25.0,
+   "preferred_area": 40.0,
+   "minimum_width": 5.0,
+   "height": 3.0,
+   "occupancy": null,
+   "privacy": 4,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": true,
+   "noise_level": 2,
+   "accessibility": false,
+   "emergency_access": true,
+   "requires_water": true,
+   "requires_drainage": true,
+   "requires_ventilation": true,
+   "preferred_adjacencies": [
+    "CT_ROOM",
+    "IMAGING_ROOM",
+    "WASTE_ROOM",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "CT_ROOM",
+    "IMAGING_ROOM",
+    "WASTE_ROOM"
+   ],
+   "metadata": {
+    "especialidad_salud": true,
+    "pasillo_m": 2.4,
+    "radiacion": "blindaje y control de radioisótopos EQ y normativa",
+    "almacen_isotopos": "EQ y normativa",
+    "superficie_min_m2": 25.0,
+    "superficie_rec_m2": 40.0
+   },
+   "neufert": {
+    "puerta_m": 1.2,
+    "ref": "gammacámara 30-40 m2; control 8-12; espera controlada 10-20 m2",
+    "nota": "gammacámara 30-40 m2; control 8-12; espera controlada 10-20 m2"
+   }
+  },
+  {
+   "space_type": "FORENSIC_PATHOLOGY",
+   "name_es": "Anatomía patológica forense",
+   "minimum_area": 12.0,
+   "preferred_area": 18.0,
+   "minimum_width": 3.5,
+   "height": 2.8,
+   "occupancy": null,
+   "privacy": 4,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": true,
+   "noise_level": 2,
+   "accessibility": false,
+   "emergency_access": true,
+   "requires_water": true,
+   "requires_drainage": true,
+   "requires_ventilation": true,
+   "preferred_adjacencies": [
+    "MORGUE",
+    "AUTOPSY_ROOM",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "MORGUE",
+    "AUTOPSY_ROOM"
+   ],
+   "metadata": {
+    "especialidad_salud": true,
+    "pasillo_m": 2.0,
+    "biosafety": "cabina clase II",
+    "superficie_min_m2": 12.0,
+    "superficie_rec_m2": 18.0
+   },
+   "neufert": {
+    "puerta_m": 1.2,
+    "ref": "conexión controlada con morgue/autopsias; circuito de residuos independiente",
+    "nota": "conexión controlada con morgue/autopsias; circuito de residuos independiente"
+   }
+  },
+  {
+   "space_type": "MEDICAL_GAS_PLANT",
+   "name_es": "Central de gases medicinales",
+   "minimum_area": 12.0,
+   "preferred_area": 20.0,
+   "minimum_width": 3.0,
+   "height": 2.8,
+   "occupancy": null,
+   "privacy": 4,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 2,
+   "accessibility": false,
+   "emergency_access": true,
+   "requires_water": false,
+   "requires_drainage": false,
+   "requires_ventilation": true,
+   "preferred_adjacencies": [
+    "ELECTRICAL_ROOM",
+    "CORRIDOR",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "ELECTRICAL_ROOM",
+    "CORRIDOR"
+   ],
+   "metadata": {
+    "especialidad_salud": true,
+    "pasillo_m": 1.5,
+    "gases": "fuentes y bancos EQ según capacidad",
+    "mantenimiento": "prever sustitución de cilindros",
+    "ventilacion": "permanente según norma de gases",
+    "superficie_min_m2": 12.0,
+    "superficie_rec_m2": 20.0
+   },
+   "neufert": {
+    "puerta_m": 1.2,
+    "ref": "EQ según fuentes y tanques; pasillo de mantenimiento MIN 1,20 m",
+    "nota": "EQ según fuentes y tanques; pasillo de mantenimiento MIN 1,20 m"
+   }
+  },
+  {
+   "space_type": "ELECTRICAL_ROOM",
+   "name_es": "Cuarto eléctrico hospitalario",
+   "minimum_area": 12.0,
+   "preferred_area": 20.0,
+   "minimum_width": 3.0,
+   "height": 2.8,
+   "occupancy": null,
+   "privacy": 4,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 2,
+   "accessibility": false,
+   "emergency_access": true,
+   "requires_water": false,
+   "requires_drainage": false,
+   "requires_ventilation": true,
+   "preferred_adjacencies": [
+    "GENERATOR_ROOM",
+    "UPS_ROOM",
+    "CORRIDOR",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "GENERATOR_ROOM",
+    "UPS_ROOM",
+    "CORRIDOR"
+   ],
+   "metadata": {
+    "especialidad_salud": true,
+    "pasillo_m": 1.5,
+    "tableros": "frente de operación conforme a norma eléctrica",
+    "prohibido": "agua sobre tableros, combustibles, almacenaje ajeno",
+    "superficie_min_m2": 12.0,
+    "superficie_rec_m2": 40.0
+   },
+   "neufert": {
+    "puerta_m": 1.0,
+    "ref": "sectorial 12-20 m2; principal 20-40 m2 según carga",
+    "nota": "sectorial 12-20 m2; principal 20-40 m2 según carga"
+   }
+  },
+  {
+   "space_type": "GENERATOR_ROOM",
+   "name_es": "Grupo electrógeno",
+   "minimum_area": 20.0,
+   "preferred_area": 40.0,
+   "minimum_width": 4.0,
+   "height": 3.0,
+   "occupancy": null,
+   "privacy": 4,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 2,
+   "accessibility": false,
+   "emergency_access": true,
+   "requires_water": false,
+   "requires_drainage": false,
+   "requires_ventilation": true,
+   "preferred_adjacencies": [
+    "ELECTRICAL_ROOM",
+    "CORRIDOR",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "ELECTRICAL_ROOM",
+    "CORRIDOR"
+   ],
+   "metadata": {
+    "especialidad_salud": true,
+    "pasillo_m": 1.5,
+    "ventilacion": "renovación y escape a exterior",
+    "combustible": "depósito y contención según norma",
+    "vibraciones": "aislamiento estructural",
+    "superficie_min_m2": 20.0,
+    "superficie_rec_m2": 40.0
+   },
+   "neufert": {
+    "puerta_m": 1.4,
+    "ref": "EQ según potencia; prever mantenimiento, escape y transferencia",
+    "nota": "EQ según potencia; prever mantenimiento, escape y transferencia"
+   }
+  },
+  {
+   "space_type": "UPS_ROOM",
+   "name_es": "UPS hospitalario",
+   "minimum_area": 12.0,
+   "preferred_area": 20.0,
+   "minimum_width": 3.0,
+   "height": 2.8,
+   "occupancy": null,
+   "privacy": 4,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 2,
+   "accessibility": false,
+   "emergency_access": true,
+   "requires_water": false,
+   "requires_drainage": false,
+   "requires_ventilation": true,
+   "preferred_adjacencies": [
+    "ELECTRICAL_ROOM",
+    "SERVER_ROOM",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "ELECTRICAL_ROOM",
+    "SERVER_ROOM"
+   ],
+   "metadata": {
+    "especialidad_salud": true,
+    "pasillo_m": 1.5,
+    "baterias": "espacio frontal/lateral y ventilación",
+    "superficie_min_m2": 12.0,
+    "superficie_rec_m2": 20.0
+   },
+   "neufert": {
+    "puerta_m": 1.0,
+    "ref": "EQ según potencia y baterías; prever ampliación",
+    "nota": "EQ según potencia y baterías; prever ampliación"
+   }
+  },
+  {
+   "space_type": "PUMP_ROOM",
+   "name_es": "Cuarto de bombas",
+   "minimum_area": 12.0,
+   "preferred_area": 20.0,
+   "minimum_width": 3.0,
+   "height": 2.8,
+   "occupancy": null,
+   "privacy": 3,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": true,
+   "noise_level": 2,
+   "accessibility": false,
+   "emergency_access": true,
+   "requires_water": true,
+   "requires_drainage": true,
+   "requires_ventilation": true,
+   "preferred_adjacencies": [
+    "ELECTRICAL_ROOM",
+    "CORRIDOR",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "ELECTRICAL_ROOM",
+    "CORRIDOR"
+   ],
+   "metadata": {
+    "especialidad_salud": true,
+    "pasillo_m": 1.5,
+    "pasillo_tecnico": "MIN 1.20 m (REC 1.50)",
+    "superficie_min_m2": 12.0,
+    "superficie_rec_m2": 30.0
+   },
+   "neufert": {
+    "puerta_m": 1.0,
+    "ref": "12-15 m2 preliminar (REC 15-30 hospitalario); pasillo técnico 1,20-1,50 m",
+    "nota": "12-15 m2 preliminar (REC 15-30 hospitalario); pasillo técnico 1,20-1,50 m"
+   }
+  },
+  {
+   "space_type": "LAUNDRY",
+   "name_es": "Lavandería hospitalaria",
+   "minimum_area": 20.0,
+   "preferred_area": 40.0,
+   "minimum_width": 4.0,
+   "height": 2.8,
+   "occupancy": null,
+   "privacy": 2,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": true,
+   "noise_level": 2,
+   "accessibility": false,
+   "emergency_access": true,
+   "requires_water": true,
+   "requires_drainage": true,
+   "requires_ventilation": true,
+   "preferred_adjacencies": [
+    "SOILED_LINEN",
+    "CLEAN_LINEN",
+    "WASTE_ROOM",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "SOILED_LINEN",
+    "CLEAN_LINEN",
+    "WASTE_ROOM"
+   ],
+   "metadata": {
+    "especialidad_salud": true,
+    "pasillo_m": 2.0,
+    "flujo": "sucio-clasificación-lavado-secado-planchado-limpio",
+    "carros": "circulación 1.50-2.40 m",
+    "superficie_min_m2": 20.0,
+    "superficie_rec_m2": 40.0
+   },
+   "neufert": {
+    "puerta_m": 1.4,
+    "ref": "lavado 20-40 m2; recepción sucia y secado 15-25 m2",
+    "nota": "lavado 20-40 m2; recepción sucia y secado 15-25 m2"
+   }
+  },
+  {
+   "space_type": "CLEAN_LINEN",
+   "name_es": "Ropa limpia",
+   "minimum_area": 10.0,
+   "preferred_area": 20.0,
+   "minimum_width": 3.0,
+   "height": 2.8,
+   "occupancy": null,
+   "privacy": 2,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 2,
+   "accessibility": false,
+   "emergency_access": true,
+   "requires_water": false,
+   "requires_drainage": false,
+   "requires_ventilation": true,
+   "preferred_adjacencies": [
+    "LAUNDRY",
+    "WARD",
+    "CORRIDOR",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "LAUNDRY",
+    "WARD",
+    "CORRIDOR"
+   ],
+   "metadata": {
+    "especialidad_salud": true,
+    "pasillo_m": 2.0,
+    "superficie_min_m2": 10.0,
+    "superficie_rec_m2": 20.0
+   },
+   "neufert": {
+    "puerta_m": 1.2,
+    "ref": "separada de ropa sucia y residuos; estanterías lavables",
+    "nota": "separada de ropa sucia y residuos; estanterías lavables"
+   }
+  },
+  {
+   "space_type": "SOILED_LINEN",
+   "name_es": "Ropa sucia",
+   "minimum_area": 10.0,
+   "preferred_area": 15.0,
+   "minimum_width": 3.0,
+   "height": 2.8,
+   "occupancy": null,
+   "privacy": 2,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": true,
+   "noise_level": 2,
+   "accessibility": false,
+   "emergency_access": true,
+   "requires_water": true,
+   "requires_drainage": true,
+   "requires_ventilation": true,
+   "preferred_adjacencies": [
+    "LAUNDRY",
+    "WASTE_ROOM",
+    "CORRIDOR",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "LAUNDRY",
+    "WASTE_ROOM",
+    "CORRIDOR"
+   ],
+   "metadata": {
+    "especialidad_salud": true,
+    "pasillo_m": 2.0,
+    "superficie_min_m2": 10.0,
+    "superficie_rec_m2": 15.0
+   },
+   "neufert": {
+    "puerta_m": 1.2,
+    "ref": "acceso desde circulación de servicio; lavable y ventilada",
+    "nota": "acceso desde circulación de servicio; lavable y ventilada"
+   }
+  },
+  {
+   "space_type": "CLEANING_ROOM",
+   "name_es": "Cuarto de limpieza",
+   "minimum_area": 3.0,
+   "preferred_area": 5.0,
+   "minimum_width": 2.0,
+   "height": 2.7,
+   "occupancy": null,
+   "privacy": 1,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": true,
+   "noise_level": 2,
+   "accessibility": false,
+   "emergency_access": true,
+   "requires_water": true,
+   "requires_drainage": true,
+   "requires_ventilation": true,
+   "preferred_adjacencies": [
+    "BATHROOM",
+    "CORRIDOR",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "BATHROOM",
+    "CORRIDOR"
+   ],
+   "metadata": {
+    "especialidad_salud": true,
+    "pasillo_m": 1.5,
+    "fregadero": true,
+    "drenaje": true,
+    "superficie_min_m2": 3.0,
+    "superficie_rec_m2": 6.0,
+    "cota_tipica": "2.00 x 2.50 m"
+   },
+   "neufert": {
+    "puerta_m": 0.9,
+    "ref": "MIN 3 m2 (REC 4-6); fregadero, cubos, productos y ventilación",
+    "nota": "MIN 3 m2 (REC 4-6); fregadero, cubos, productos y ventilación"
+   }
+  },
+  {
+   "space_type": "ADMINISTRATION",
+   "name_es": "Administración hospitalaria",
+   "minimum_area": 9.0,
+   "preferred_area": 12.0,
+   "minimum_width": 3.0,
+   "height": 2.7,
+   "occupancy": null,
+   "privacy": 2,
+   "daylight": true,
+   "ventilation": false,
+   "wet_zone": false,
+   "noise_level": 2,
+   "accessibility": true,
+   "emergency_access": true,
+   "requires_water": false,
+   "requires_drainage": false,
+   "requires_ventilation": false,
+   "preferred_adjacencies": [
+    "ENTRANCE",
+    "WAITING_ROOM",
+    "ARCHIVO",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "ENTRANCE",
+    "WAITING_ROOM",
+    "ARCHIVO"
+   ],
+   "metadata": {
+    "especialidad_salud": true,
+    "pasillo_m": 1.8,
+    "superficie_min_m2": 9.0,
+    "superficie_rec_m2": 12.0
+   },
+   "neufert": {
+    "puerta_m": 0.9,
+    "ref": "puestos de trabajo convencionales; luz natural preferible",
+    "nota": "puestos de trabajo convencionales; luz natural preferible"
+   }
+  },
+  {
+   "space_type": "CLINICAL_ARCHIVE",
+   "name_es": "Archivo clínico",
+   "minimum_area": 10.0,
+   "preferred_area": 20.0,
+   "minimum_width": 3.0,
+   "height": 2.7,
+   "occupancy": null,
+   "privacy": 3,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 2,
+   "accessibility": false,
+   "emergency_access": true,
+   "requires_water": false,
+   "requires_drainage": false,
+   "requires_ventilation": true,
+   "preferred_adjacencies": [
+    "ADMINISTRATION",
+    "CORRIDOR",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "ADMINISTRATION",
+    "CORRIDOR"
+   ],
+   "metadata": {
+    "especialidad_salud": true,
+    "pasillo_m": 1.5,
+    "carga": "archivo móvil EQ según fondo documental",
+    "superficie_min_m2": 10.0,
+    "superficie_rec_m2": 20.0
+   },
+   "neufert": {
+    "puerta_m": 0.9,
+    "ref": "según fondo documental y sistema; acceso controlado",
+    "nota": "según fondo documental y sistema; acceso controlado"
+   }
+  },
+  {
+   "space_type": "ADMISSION",
+   "name_es": "Admisión",
+   "minimum_area": 8.0,
+   "preferred_area": 12.0,
+   "minimum_width": 3.0,
+   "height": 2.7,
+   "occupancy": null,
+   "privacy": 1,
+   "daylight": true,
+   "ventilation": false,
+   "wet_zone": false,
+   "noise_level": 2,
+   "accessibility": true,
+   "emergency_access": true,
+   "requires_water": false,
+   "requires_drainage": false,
+   "requires_ventilation": false,
+   "preferred_adjacencies": [
+    "ENTRANCE",
+    "WAITING_ROOM",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "ENTRANCE",
+    "WAITING_ROOM"
+   ],
+   "metadata": {
+    "especialidad_salud": true,
+    "pasillo_m": 1.8,
+    "puesto": "4-6 m2 por estación",
+    "mostrador": "profundidad 0.60-0.75 m",
+    "superficie_min_m2": 8.0,
+    "superficie_rec_m2": 12.0
+   },
+   "neufert": {
+    "puerta_m": 0.9,
+    "ref": "4-6 m2 por estación; circulación 1,50-1,80 m",
+    "nota": "4-6 m2 por estación; circulación 1,50-1,80 m"
+   }
+  },
+  {
+   "space_type": "STERILE_STORE",
+   "name_es": "Almacén estéril",
+   "minimum_area": 15.0,
+   "preferred_area": 30.0,
+   "minimum_width": 3.5,
+   "height": 2.8,
+   "occupancy": null,
+   "privacy": 3,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 2,
+   "accessibility": false,
+   "emergency_access": true,
+   "requires_water": false,
+   "requires_drainage": false,
+   "requires_ventilation": true,
+   "preferred_adjacencies": [
+    "STERILIZATION_ROOM",
+    "OPERATING_ROOM",
+    "WAREHOUSE",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "STERILIZATION_ROOM",
+    "OPERATING_ROOM",
+    "WAREHOUSE"
+   ],
+   "metadata": {
+    "especialidad_salud": true,
+    "pasillo_m": 1.5,
+    "superficie_min_m2": 15.0,
+    "superficie_rec_m2": 40.0,
+    "transferencia": "1.50-1.80 m"
+   },
+   "neufert": {
+    "puerta_m": 1.2,
+    "ref": "MIN 15 m2 (REC 20-40); contiguo a esterilización y quirófanos",
+    "nota": "MIN 15 m2 (REC 20-40); contiguo a esterilización y quirófanos"
+   }
+  },
+  {
+   "space_type": "GALLERY",
+   "name_es": "Galería comercial",
+   "minimum_area": 12.0,
+   "preferred_area": 30.0,
+   "minimum_width": 3.0,
+   "height": 3.2,
+   "occupancy": 8.0,
+   "privacy": 1,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 4,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "ENTRANCE",
+    "VESTIBULE",
+    "RETAIL_LOCAL",
+    "BATHROOM",
+    "CORE"
+   ],
+   "functional_relationships": [
+    "RETAIL_LOCAL",
+    "ENTRANCE"
+   ],
+   "neufert": {
+    "puerta_m": 0.9,
+    "ref": "ancho mínimo de diseño 3.00 m; recomendado 4.00-6.00 m",
+    "nota": "Galería: recorrido libre >= 2.40 m con mobiliario y >= 3.00 m en zonas de alta concentración; altura libre 2.70 m mínimo (§6)."
+   }
+  },
+  {
+   "space_type": "RETAIL_LOCAL",
+   "name_es": "Local comercial",
+   "minimum_area": 15.0,
+   "preferred_area": 60.0,
+   "minimum_width": 3.0,
+   "height": 3.5,
+   "occupancy": 6.0,
+   "privacy": 2,
+   "daylight": true,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 4,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "GALLERY",
+    "VESTIBULE",
+    "WAREHOUSE",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "GALLERY",
+    "WAREHOUSE"
+   ],
+   "neufert": {
+    "puerta_m": 0.9,
+    "ref": "local pequeño 15-40 m2 (frente 3.00-5.00 m); mediano 40-100 m2; grande 100-500 m2",
+    "nota": "Local: superficie 15-40 / 40-100 / 100-500 m2; altura libre 3.00-4.00 m (3.50-5.00 con equipos); escaparate 2.00-10.00 m de ancho sin reducir circulación (§7/§8)."
+   }
+  },
+  {
+   "space_type": "TIENDA_ANCLA",
+   "name_es": "Tienda ancla",
+   "minimum_area": 500.0,
+   "preferred_area": 1500.0,
+   "minimum_width": 12.0,
+   "height": 4.0,
+   "occupancy": 60.0,
+   "privacy": 2,
+   "daylight": true,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 4,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "GALLERY",
+    "PARKING",
+    "WAREHOUSE",
+    "LOADING_DOCK"
+   ],
+   "functional_relationships": [
+    "GALLERY",
+    "LOADING_DOCK",
+    "WAREHOUSE"
+   ],
+   "neufert": {
+    "puerta_m": 0.9,
+    "ref": "500-5000 m2 o más; se calcula individualmente",
+    "nota": "Ancla: 500-5000 m2; almacén propio 5-10% y carga y descarga dedicada sin cruzar al público (§7/§29/§78)."
+   }
+  },
+  {
+   "space_type": "OPEN_OFFICE",
+   "name_es": "Planta abierta de oficinas",
+   "minimum_area": 20.0,
+   "preferred_area": 60.0,
+   "minimum_width": 3.6,
+   "height": 2.7,
+   "occupancy": 6.0,
+   "privacy": 1,
+   "daylight": true,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 3,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "CORRIDOR",
+    "MEETING_ROOM",
+    "BATHROOM",
+    "RECEPTION"
+   ],
+   "functional_relationships": [
+    "CORRIDOR",
+    "MEETING_ROOM"
+   ],
+   "neufert": {
+    "puerta_m": 0.9,
+    "ref": "8-12 m2/puesto (alta densidad 6-8; confortable 10-14)",
+    "nota": "Planta abierta: módulo de trabajo 1.20/1.40/1.50 m, separación entre puestos 1.20-1.80 m, pasillo principal 1.20-1.80 m y secundario 0.90-1.20 m (§11)."
+   }
+  },
+  {
+   "space_type": "COWORKING",
+   "name_es": "Coworking",
+   "minimum_area": 12.0,
+   "preferred_area": 40.0,
+   "minimum_width": 3.0,
+   "height": 2.7,
+   "occupancy": 5.0,
+   "privacy": 1,
+   "daylight": true,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 3,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "RECEPTION",
+    "MEETING_ROOM",
+    "BATHROOM",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "MEETING_ROOM",
+    "RECEPTION"
+   ],
+   "neufert": {
+    "puerta_m": 0.9,
+    "ref": "puesto individual 4-8 m2 (confortable 6-10 m2)",
+    "nota": "Coworking: 6-12 m2 por usuario del §88, cabina individual 2.00-4.00 m2 y salas 8-12 / 12-25 / 25-60 m2 (§12)."
+   }
+  },
+  {
+   "space_type": "MEETING_ROOM",
+   "name_es": "Sala de reuniones",
+   "minimum_area": 8.0,
+   "preferred_area": 14.0,
+   "minimum_width": 2.6,
+   "height": 2.7,
+   "occupancy": 6.0,
+   "privacy": 3,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 3,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "RECEPTION",
+    "CORRIDOR",
+    "OFFICE",
+    "OPEN_OFFICE"
+   ],
+   "functional_relationships": [
+    "CORRIDOR",
+    "RECEPTION"
+   ],
+   "neufert": {
+    "puerta_m": 0.9,
+    "ref": "sala 4 personas 8-10 m2; 8 personas 14-18 m2; 20-30 personas 40-60 m2",
+    "nota": "Reuniones: superficie por nº de personas (4p 8-10 m2 ... 20-30p 40-60 m2), ancho 3.00-6.00 m y puerta 0.90-1.00 m (§13/§40)."
+   }
+  },
+  {
+   "space_type": "CONFERENCE_ROOM",
+   "name_es": "Sala de conferencias",
+   "minimum_area": 30.0,
+   "preferred_area": 80.0,
+   "minimum_width": 5.0,
+   "height": 3.0,
+   "occupancy": 25.0,
+   "privacy": 2,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 3,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "RECEPTION",
+    "CORRIDOR",
+    "VESTIBULE"
+   ],
+   "functional_relationships": [
+    "CORRIDOR",
+    "RECEPTION"
+   ],
+   "neufert": {
+    "puerta_m": 1.0,
+    "ref": "1.00-1.50 m2/persona",
+    "nota": "Conferencias: 1.00-1.50 m2 por persona, altura 3.00-4.50 m, pasillo principal 1.20-1.80 m y secundario 0.90-1.20 m (§14)."
+   }
+  },
+  {
+   "space_type": "VESTIBULE",
+   "name_es": "Vestíbulo",
+   "minimum_area": 16.0,
+   "preferred_area": 32.0,
+   "minimum_width": 4.0,
+   "height": 3.5,
+   "occupancy": 10.0,
+   "privacy": 1,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 3,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "ENTRANCE",
+    "GALLERY",
+    "RECEPTION",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "ENTRANCE",
+    "GALLERY"
+   ],
+   "neufert": {
+    "puerta_m": 1.2,
+    "ref": "vestíbulo 4.00-8.00 m de profundidad y ancho",
+    "nota": "Vestíbulo: 4.00-8.00 x 4.00-8.00 m con altura 3.50-5.00 m; puerta principal doble 1.80-2.40 m (§3/§5)."
+   }
+  },
+  {
+   "space_type": "CAFETERIA",
+   "name_es": "Cafetería",
+   "minimum_area": 20.0,
+   "preferred_area": 50.0,
+   "minimum_width": 3.6,
+   "height": 2.7,
+   "occupancy": 15.0,
+   "privacy": 1,
+   "daylight": true,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 3,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "CORRIDOR",
+    "KITCHEN_INSTITUTIONAL",
+    "COMMERCIAL_KITCHEN",
+    "WAITING_ROOM"
+   ],
+   "functional_relationships": [
+    "COMMERCIAL_KITCHEN"
+   ],
+   "neufert": {
+    "puerta_m": 0.9,
+    "ref": "1.20-2.00 m2/persona",
+    "nota": "Cafetería: 1.20-2.00 m2 por persona, mesas de 0.70-0.90 m de profundidad y pasillos de 1.20-1.50 m (§28)."
+   }
+  },
+  {
+   "space_type": "RESTAURANT",
+   "name_es": "Restaurante",
+   "minimum_area": 40.0,
+   "preferred_area": 100.0,
+   "minimum_width": 4.0,
+   "height": 2.7,
+   "occupancy": 25.0,
+   "privacy": 1,
+   "daylight": true,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 4,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "GALLERY",
+    "COMMERCIAL_KITCHEN",
+    "BATHROOM",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "COMMERCIAL_KITCHEN",
+    "GALLERY"
+   ],
+   "neufert": {
+    "puerta_m": 0.9,
+    "ref": "comedor 1.20-1.80 m2/persona",
+    "nota": "Restaurante: comedor 1.20-1.80 m2 por persona con cocina del 25-40% y almacén del 5-10%; circulación >= 1.20 m (§29)."
+   }
+  },
+  {
+   "space_type": "COMMERCIAL_KITCHEN",
+   "name_es": "Cocina comercial",
+   "minimum_area": 12.0,
+   "preferred_area": 30.0,
+   "minimum_width": 2.4,
+   "height": 2.7,
+   "occupancy": 6.0,
+   "privacy": 4,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": true,
+   "noise_level": 5,
+   "accessibility": false,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "RESTAURANT",
+    "CAFETERIA",
+    "STOREROOM",
+    "LOADING_DOCK",
+    "WASTE_ROOM"
+   ],
+   "functional_relationships": [
+    "RESTAURANT",
+    "STOREROOM"
+   ],
+   "neufert": {
+    "puerta_m": 1.0,
+    "ref": "pasillo de trabajo 1.20-1.50 m; dos líneas de equipos 1.50-1.80 m",
+    "nota": "Cocina comercial: altura 2.70-3.50 m con extracción, aire, drenaje, agua, electricidad, gas si corresponde, protección contra incendios y almacenamiento (§30)."
+   },
+   "requires_water": true,
+   "requires_drainage": true,
+   "requires_ventilation": true
+  },
+  {
+   "space_type": "DRESSING_ROOM",
+   "name_es": "Vestidor de personal",
+   "minimum_area": 6.0,
+   "preferred_area": 12.0,
+   "minimum_width": 2.0,
+   "height": 2.7,
+   "occupancy": 4.0,
+   "privacy": 4,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 2,
+   "accessibility": true,
+   "emergency_access": false,
+   "preferred_adjacencies": [
+    "BATHROOM",
+    "CORRIDOR",
+    "OPEN_OFFICE",
+    "OFFICE"
+   ],
+   "functional_relationships": [
+    "BATHROOM",
+    "CORRIDOR"
+   ],
+   "neufert": {
+    "puerta_m": 0.9,
+    "ref": "pasillo 1.20-1.50 m; locker 0.30-0.45 x 0.45-0.60 m",
+    "nota": "Vestidor: banco a 0.45-0.50 m de altura y 0.40-0.50 m de fondo; lockers de 0.30-0.45 m de ancho (§26)."
+   }
+  },
+  {
+   "space_type": "TELECOM_ROOM",
+   "name_es": "Cuarto de telecomunicaciones",
+   "minimum_area": 6.0,
+   "preferred_area": 10.0,
+   "minimum_width": 2.4,
+   "height": 2.7,
+   "occupancy": 2.0,
+   "privacy": 4,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 3,
+   "accessibility": false,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "CORRIDOR",
+    "SERVER_ROOM",
+    "ELECTRICAL_ROOM"
+   ],
+   "functional_relationships": [
+    "SERVER_ROOM",
+    "ELECTRICAL_ROOM"
+   ],
+   "neufert": {
+    "puerta_m": 0.9,
+    "ref": "6-15 m2 según cantidad de racks y mantenimiento",
+    "nota": "Telecomunicaciones: 6-15 m2; racks 19 pulgadas de 6-12 U, 18-27 U o 42 U con espacio frontal y lateral (§32/§55)."
+   },
+   "requires_cooling": true
+  },
+  {
+   "space_type": "HVAC_ROOM",
+   "name_es": "Cuarto de climatización",
+   "minimum_area": 10.0,
+   "preferred_area": 25.0,
+   "minimum_width": 3.0,
+   "height": 3.0,
+   "occupancy": 2.0,
+   "privacy": 4,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 5,
+   "accessibility": false,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "ELECTRICAL_ROOM",
+    "PUMP_ROOM",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "ELECTRICAL_ROOM",
+    "PUMP_ROOM"
+   ],
+   "neufert": {
+    "puerta_m": 1.0,
+    "ref": "según capacidad de equipos",
+    "nota": "Cuarto HVAC: superficie según equipamiento real con espacio de mantenimiento de 0.80-1.20 m y acceso >= 0.90 m (§32/§83/§84)."
+   },
+   "requires_cooling": true
+  },
+  {
+   "space_type": "LOADING_DOCK",
+   "name_es": "Carga y descarga",
+   "minimum_area": 9.0,
+   "preferred_area": 20.0,
+   "minimum_width": 3.0,
+   "height": 3.0,
+   "occupancy": 3.0,
+   "privacy": 4,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 4,
+   "accessibility": false,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "WAREHOUSE",
+    "TIENDA_ANCLA",
+    "PARKING",
+    "WASTE_ROOM"
+   ],
+   "functional_relationships": [
+    "WAREHOUSE",
+    "TIENDA_ANCLA"
+   ],
+   "neufert": {
+    "puerta_m": 1.2,
+    "ref": "andén 3.00-6.00 m de profundidad y 3.00-4.00 m por posición",
+    "nota": "Carga: andén a 1.00-1.30 m de altura, circulación de camiones 6.00-12.00 m y radio de giro 12-15 m; separado del público (§47/§78)."
+   }
+  },
+  {
+   "space_type": "BICYCLE_PARKING",
+   "name_es": "Estacionamiento de bicicletas",
+   "minimum_area": 4.0,
+   "preferred_area": 12.0,
+   "minimum_width": 2.0,
+   "height": 2.4,
+   "occupancy": 3.0,
+   "privacy": 1,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 1,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "ENTRANCE",
+    "PARKING",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "ENTRANCE"
+   ],
+   "neufert": {
+    "puerta_m": 0.9,
+    "ref": "espacio por bicicleta 0.60-0.80 x 1.80-2.00 m",
+    "nota": "Bicicletas: pasillo de 1.50-2.00 m y espacio por unidad de 0.60-0.80 m de ancho (§75)."
+   }
+  },
+  {
+   "space_type": "ATRIUM",
+   "name_es": "Atrio",
+   "minimum_area": 64.0,
+   "preferred_area": 150.0,
+   "minimum_width": 8.0,
+   "height": 6.0,
+   "occupancy": 20.0,
+   "privacy": 1,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 3,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "ENTRANCE",
+    "VESTIBULE",
+    "GALLERY",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "GALLERY",
+    "ENTRANCE"
+   ],
+   "neufert": {
+    "puerta_m": 1.2,
+    "ref": "atrio pequeño 8 x 8 m; medio 10 x 15 m; grande 15 x 20 m+",
+    "nota": "Atrio: altura 6-15 m; comprobar evacuación, humo, rociadores, iluminación, acústica y ventilación (§23)."
+   }
+  },
+  {
+   "space_type": "SECURITY_ROOM",
+   "name_es": "Sala de seguridad",
+   "minimum_area": 8.0,
+   "preferred_area": 15.0,
+   "minimum_width": 2.4,
+   "height": 2.7,
+   "occupancy": 2.0,
+   "privacy": 4,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 2,
+   "accessibility": false,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "ENTRANCE",
+    "VESTIBULE",
+    "CORRIDOR",
+    "ELECTRICAL_ROOM"
+   ],
+   "functional_relationships": [
+    "ENTRANCE",
+    "ELECTRICAL_ROOM"
+   ],
+   "neufert": {
+    "puerta_m": 0.9,
+    "ref": "8-20 m2 de cuarto técnico; CCTV por cálculo de cobertura",
+    "nota": "Seguridad: cuarto de 8-20 m2 con cámaras a 2.50-3.50 m en interiores y 3.00-5.00 m en exteriores; torniquete de 0.55-0.65 m con paso accesible >= 0.90 m (§32/§56/§57)."
+   }
+  },
+  {
+   "space_type": "AULA_INFANTIL",
+   "name_es": "Aula de educación infantil",
+   "minimum_area": 40.0,
+   "preferred_area": 50.0,
+   "minimum_width": 6.0,
+   "height": 2.8,
+   "occupancy": 20.0,
+   "privacy": 1,
+   "daylight": true,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 4,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "CORRIDOR",
+    "HIGIENE_CI",
+    "JUEGO_INTERIOR",
+    "BATHROOM"
+   ],
+   "functional_relationships": [
+    "HIGIENE_CI",
+    "JUEGO_EXTERIOR",
+    "DORMITORIO_COLETIVO"
+   ],
+   "neufert": {
+    "puerta_m": 0.9,
+    "ref": "2.0-3.0 m2 por niño; MIN 40 m2 (REC 45-60)",
+    "nota": "Aula infantil: 2.0-3.0 m2 por niño (20 niños: 40-60 m2); mobiliario proporcional a la edad y sin esquinas peligrosas, vidrios sin protección ni enchufes accesibles (§8/§89)."
+   }
+  },
+  {
+   "space_type": "SALA_CUNA",
+   "name_es": "Sala de cuna",
+   "minimum_area": 25.0,
+   "preferred_area": 40.0,
+   "minimum_width": 5.0,
+   "height": 2.8,
+   "occupancy": 12.0,
+   "privacy": 2,
+   "daylight": true,
+   "ventilation": true,
+   "wet_zone": true,
+   "noise_level": 3,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "HIGIENE_CI",
+    "CORRIDOR",
+    "AULA_INFANTIL"
+   ],
+   "functional_relationships": [
+    "HIGIENE_CI",
+    "AULA_INFANTIL"
+   ],
+   "neufert": {
+    "puerta_m": 0.9,
+    "ref": "2.5-4.0 m2 por niño; 10 niños: 25-40 m2",
+    "nota": "Sala de cuna: cunas de 0.60 x 1.20 m separadas 0.60-0.90 m con área libre >= 0.60 m; zonas de cunas, circulación, atención, almacenamiento e higiene (§10)."
+   },
+   "requires_water": true
+  },
+  {
+   "space_type": "DORMITORIO_COLETIVO",
+   "name_es": "Dormitorio colectivo",
+   "minimum_area": 16.0,
+   "preferred_area": 32.0,
+   "minimum_width": 4.0,
+   "height": 2.7,
+   "occupancy": 8.0,
+   "privacy": 3,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 2,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "BATHROOM",
+    "CORRIDOR",
+    "SALA_ESTUDIO",
+    "SALA_CONVIVENCIA"
+   ],
+   "functional_relationships": [
+    "BATHROOM",
+    "SALA_ESTUDIO"
+   ],
+   "neufert": {
+    "puerta_m": 0.9,
+    "ref": "4-6 m2 por persona (4p 16-24 m2 ... 10p 40-60 m2)",
+    "nota": "Dormitorio colectivo: 4-6 m2 por persona; camas separadas 0.60-0.90 m con pasillo 1.20-1.50 m, supervisión visual directa y lejos de zonas ruidosas (§11/§51/§90)."
+   }
+  },
+  {
+   "space_type": "JUEGO_INTERIOR",
+   "name_es": "Juego interior",
+   "minimum_area": 20.0,
+   "preferred_area": 40.0,
+   "minimum_width": 4.5,
+   "height": 2.7,
+   "occupancy": 12.0,
+   "privacy": 1,
+   "daylight": true,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 5,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "AULA_INFANTIL",
+    "CORRIDOR",
+    "VESTIBULE"
+   ],
+   "functional_relationships": [
+    "AULA_INFANTIL"
+   ],
+   "neufert": {
+    "puerta_m": 0.9,
+    "ref": "2.0-4.0 m2 por niño; altura >= 2.70 (preferida 3.00-3.50)",
+    "nota": "Juego interior: juego libre, psicomotor y grupal con almacenamiento de juguetes y supervisión (§12)."
+   }
+  },
+  {
+   "space_type": "JUEGO_EXTERIOR",
+   "name_es": "Juego exterior",
+   "minimum_area": 60.0,
+   "preferred_area": 120.0,
+   "minimum_width": 8.0,
+   "height": 0.0,
+   "occupancy": 20.0,
+   "privacy": 1,
+   "daylight": true,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 5,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "AULA_INFANTIL",
+    "PATIO"
+   ],
+   "functional_relationships": [
+    "AULA_INFANTIL",
+    "PATIO"
+   ],
+   "neufert": {
+    "puerta_m": 0.0,
+    "ref": "4-10 m2 por niño (recomendada 6-12 m2)",
+    "nota": "Juego exterior: dividido en juego tranquilo, activo, arena, agua, zona verde, sombreada y de transición; seguro, accesible y mantenido (§13, UNICEF)."
+   }
+  },
+  {
+   "space_type": "PATIO",
+   "name_es": "Patio escolar",
+   "minimum_area": 100.0,
+   "preferred_area": 300.0,
+   "minimum_width": 10.0,
+   "height": 0.0,
+   "occupancy": 60.0,
+   "privacy": 1,
+   "daylight": true,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 5,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "ENTRANCE",
+    "GYMNASIO",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "CORRIDOR",
+    "ENTRANCE"
+   ],
+   "neufert": {
+    "puerta_m": 0.0,
+    "ref": "2-5 m2 por alumno simultáneo (100-2000 m2)",
+    "nota": "Patio escolar: diferenciar recreación, circulación, formación, actos, deporte y juego; árboles de sombra a 2-5 m del edificio (§14/§67)."
+   }
+  },
+  {
+   "space_type": "SALA_PROFESORES",
+   "name_es": "Sala de profesores",
+   "minimum_area": 20.0,
+   "preferred_area": 35.0,
+   "minimum_width": 4.5,
+   "height": 2.7,
+   "occupancy": 10.0,
+   "privacy": 3,
+   "daylight": true,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 3,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "OFFICE",
+    "CORRIDOR",
+    "BATHROOM"
+   ],
+   "functional_relationships": [
+    "OFFICE",
+    "CORRIDOR"
+   ],
+   "neufert": {
+    "puerta_m": 0.9,
+    "ref": "1.5-2.5 m2 por persona simultánea (20-80 m2)",
+    "nota": "Sala de profesores: mesas, asientos, almacenamiento, casilleros, zona de descanso y datos (§21)."
+   }
+  },
+  {
+   "space_type": "LAB_COMPUTACION",
+   "name_es": "Laboratorio de computación",
+   "minimum_area": 50.0,
+   "preferred_area": 65.0,
+   "minimum_width": 6.0,
+   "height": 2.7,
+   "occupancy": 20.0,
+   "privacy": 2,
+   "daylight": true,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 3,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "CORRIDOR",
+    "CLASSROOM",
+    "STOREROOM"
+   ],
+   "functional_relationships": [
+    "CORRIDOR",
+    "STOREROOM"
+   ],
+   "neufert": {
+    "puerta_m": 0.9,
+    "ref": "1.5-2.5 m2 por alumno; puesto 0.60-0.80 m",
+    "nota": "Computación: puesto 0.60-0.80 x 0.60-0.80 m con separación 1.00-1.20 m, pasillo 1.20-1.50 m y puesto docente 1.20 x 0.70 m (§24)."
+   },
+   "requires_data": true
+  },
+  {
+   "space_type": "TALLER_TECNOLOGICO",
+   "name_es": "Taller tecnológico",
+   "minimum_area": 60.0,
+   "preferred_area": 90.0,
+   "minimum_width": 7.5,
+   "height": 3.5,
+   "occupancy": 15.0,
+   "privacy": 4,
+   "daylight": true,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 5,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "CORRIDOR",
+    "STOREROOM",
+    "DRESSING_ROOM"
+   ],
+   "functional_relationships": [
+    "STOREROOM",
+    "CORRIDOR"
+   ],
+   "neufert": {
+    "puerta_m": 1.0,
+    "ref": "60-250 m2; altura 3.50-5.00 m (maquinaria 4.00-6.00 m)",
+    "nota": "Taller: pasillo 1.20-1.80 m, zona de máquinas 1.50-2.00 m alrededor y almacenamiento independiente (§25)."
+   },
+   "requires_water": true,
+   "requires_drainage": true,
+   "requires_ventilation": true
+  },
+  {
+   "space_type": "SALA_ARTE",
+   "name_es": "Sala de arte",
+   "minimum_area": 50.0,
+   "preferred_area": 65.0,
+   "minimum_width": 6.0,
+   "height": 2.7,
+   "occupancy": 15.0,
+   "privacy": 2,
+   "daylight": true,
+   "ventilation": true,
+   "wet_zone": true,
+   "noise_level": 4,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "CORRIDOR",
+    "STOREROOM",
+    "BATHROOM"
+   ],
+   "functional_relationships": [
+    "CORRIDOR",
+    "STOREROOM"
+   ],
+   "neufert": {
+    "puerta_m": 0.9,
+    "ref": "50-80 m2 con lavaderos de 0.50-0.70 m",
+    "nota": "Arte: lavaderos 0.50-0.70 m, mesas de 0.60-0.80 m de fondo, circulación 1.20-1.50 m y almacenamiento 6-15 m2 (§27)."
+   },
+   "requires_water": true,
+   "requires_drainage": true
+  },
+  {
+   "space_type": "SALA_MUSICA",
+   "name_es": "Sala de música",
+   "minimum_area": 50.0,
+   "preferred_area": 70.0,
+   "minimum_width": 6.0,
+   "height": 3.0,
+   "occupancy": 15.0,
+   "privacy": 2,
+   "daylight": true,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 5,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "CORRIDOR",
+    "STOREROOM",
+    "MULTIUSE_HALL"
+   ],
+   "functional_relationships": [
+    "CORRIDOR",
+    "MULTIUSE_HALL"
+   ],
+   "neufert": {
+    "puerta_m": 0.9,
+    "ref": "50-100 m2; altura 3.00-4.50 m",
+    "nota": "Música: tratamiento acústico contemplado y almacenamiento 6-15 m2; separada de aulas y dormitorios (§28/§90)."
+   }
+  },
+  {
+   "space_type": "GYMNASIO",
+   "name_es": "Gimnasio",
+   "minimum_area": 216.0,
+   "preferred_area": 360.0,
+   "minimum_width": 12.0,
+   "height": 6.0,
+   "occupancy": 40.0,
+   "privacy": 1,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 5,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "DRESSING_ROOM",
+    "BATHROOM",
+    "STOREROOM",
+    "PATIO"
+   ],
+   "functional_relationships": [
+    "DRESSING_ROOM",
+    "STOREROOM",
+    "PATIO"
+   ],
+   "neufert": {
+    "puerta_m": 1.2,
+    "ref": "12 x 18 / 15 x 24 / 18 x 30 m; altura 6-9 m",
+    "nota": "Gimnasio: auxiliar 20-50 m2 y almacén deportivo 15-40 m2; cancha multideportiva de 15 x 28 m con zonas de seguridad (§30-31)."
+   }
+  },
+  {
+   "space_type": "INFIRMARY",
+   "name_es": "Enfermería escolar",
+   "minimum_area": 12.0,
+   "preferred_area": 20.0,
+   "minimum_width": 3.6,
+   "height": 2.7,
+   "occupancy": 4.0,
+   "privacy": 3,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": true,
+   "noise_level": 2,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "WAITING_ROOM",
+    "BATHROOM",
+    "ISOLATION_ROOM",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "ISOLATION_ROOM",
+    "BATHROOM"
+   ],
+   "neufert": {
+    "puerta_m": 0.9,
+    "ref": "12-25 m2 (con observación 20-35 m2)",
+    "nota": "Enfermería escolar: camilla de 0.70-0.80 x 1.90-2.10 m con área libre >= 0.80 m, botiquín, lavamanos y baño próximo (§34/§60)."
+   },
+   "requires_water": true
+  },
+  {
+   "space_type": "SALA_ESTUDIO",
+   "name_es": "Sala de estudio",
+   "minimum_area": 20.0,
+   "preferred_area": 40.0,
+   "minimum_width": 4.5,
+   "height": 2.7,
+   "occupancy": 10.0,
+   "privacy": 3,
+   "daylight": true,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 2,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "DORMITORIO_COLETIVO",
+    "CORRIDOR",
+    "LIBRARY"
+   ],
+   "functional_relationships": [
+    "DORMITORIO_COLETIVO",
+    "LIBRARY"
+   ],
+   "neufert": {
+    "puerta_m": 0.9,
+    "ref": "1.5-2.5 m2 por persona (20-120 m2)",
+    "nota": "Estudio del albergue: acústicamente separada de las áreas recreativas (§54/§90)."
+   }
+  },
+  {
+   "space_type": "MONITORES",
+   "name_es": "Sala de monitores / educadores",
+   "minimum_area": 10.0,
+   "preferred_area": 18.0,
+   "minimum_width": 3.5,
+   "height": 2.7,
+   "occupancy": 4.0,
+   "privacy": 3,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 2,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "CORRIDOR",
+    "SECURITY_ROOM",
+    "SALA_CONVIVENCIA"
+   ],
+   "functional_relationships": [
+    "SECURITY_ROOM",
+    "SALA_CONVIVENCIA"
+   ],
+   "neufert": {
+    "puerta_m": 0.9,
+    "ref": "10-20 m2 (varios educadores 20-40 m2)",
+    "nota": "Monitores: debe permitir el control visual de las áreas comunes (§62)."
+   }
+  },
+  {
+   "space_type": "HIGIENE_CI",
+   "name_es": "Higiene de círculo infantil",
+   "minimum_area": 6.0,
+   "preferred_area": 10.0,
+   "minimum_width": 2.6,
+   "height": 2.7,
+   "occupancy": 6.0,
+   "privacy": 2,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": true,
+   "noise_level": 2,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "AULA_INFANTIL",
+    "SALA_CUNA",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "AULA_INFANTIL",
+    "SALA_CUNA"
+   ],
+   "neufert": {
+    "puerta_m": 0.9,
+    "ref": "zona de cambio 0.70-0.80 m de profundidad",
+    "nota": "Higiene CI: lavado de manos, cambio de pañales, inodoros infantiles, duchas, almacenamiento y ropa; mesa de cambio a 0.80-0.90 m y lavamanos infantil a 0.50-0.65 m de altura según edad (§42)."
+   },
+   "requires_water": true,
+   "requires_drainage": true
+  },
+  {
+   "space_type": "SALA_CONVIVENCIA",
+   "name_es": "Sala de convivencia",
+   "minimum_area": 20.0,
+   "preferred_area": 40.0,
+   "minimum_width": 4.5,
+   "height": 2.7,
+   "occupancy": 12.0,
+   "privacy": 1,
+   "daylight": true,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 4,
+   "accessibility": true,
+   "emergency_access": true,
+   "preferred_adjacencies": [
+    "DORMITORIO_COLETIVO",
+    "SALA_ESTUDIO",
+    "CORRIDOR",
+    "DINING_HALL"
+   ],
+   "functional_relationships": [
+    "DORMITORIO_COLETIVO",
+    "SALA_ESTUDIO"
+   ],
+   "neufert": {
+    "puerta_m": 0.9,
+    "ref": "1.5-3.0 m2 por persona simultánea",
+    "nota": "Convivencia: juegos, lectura, televisión, reuniones y estudio separados; patio, terraza y jardín como apoyo (§55/§63)."
+   }
+  },
+  {
+   "space_type": "FILTER",
+   "name_es": "Filtro sanitario",
+   "minimum_area": 3.0,
+   "preferred_area": 4.5,
+   "minimum_width": 1.5,
+   "height": 2.4,
+   "occupancy": 1.0,
+   "privacy": 3,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": true,
+   "noise_level": 1,
+   "accessibility": true,
+   "emergency_access": false,
+   "requires_water": true,
+   "requires_drainage": true,
+   "requires_ventilation": true,
+   "preferred_adjacencies": [
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "CORRIDOR"
+   ],
+   "metadata": {
+    "norma": "barrera sanitaria entre zonas de flujo distinto (servicios hospitalarios cubanos)"
+   },
+   "neufert": {
+    "puerta_m": 1.0,
+    "ref": "filtro/vestuario de paso 1.5-2.0 x 2.0-3.0 m",
+    "nota": "Local de transicion: se cierra la primera puerta antes de abrir la segunda."
+   }
+  },
+  {
+   "space_type": "LAVADERO",
+   "name_es": "Lavadero doméstico",
+   "minimum_area": 2.0,
+   "preferred_area": 4.0,
+   "minimum_width": 1.2,
+   "height": 2.7,
+   "occupancy": 1.0,
+   "privacy": 3,
+   "daylight": true,
+   "ventilation": true,
+   "wet_zone": true,
+   "noise_level": 1,
+   "accessibility": false,
+   "emergency_access": false,
+   "preferred_adjacencies": [
+    "KITCHEN",
+    "PATIO",
+    "LIVING_ROOM",
+    "STOREROOM"
+   ],
+   "functional_relationships": [
+    "KITCHEN",
+    "PATIO"
+   ],
+   "metadata": {
+    "ambito": "vivienda",
+    "nota": "Lavadero de vivienda: 1.20 x 1.70 m con fregadero doble y solería; NADA que ver con la lavandería hospitalaria (LAUNDRY, 20-40 m2 con carros)",
+    "neufert": {
+     "puerta_m": 0.8,
+     "ref": "lavadero doméstico 2-4 m2 junto a cocina o patio",
+     "nota": "2-4 m2"
+    }
+   }
+  },
+  {
+   "space_type": "VESTIDOR",
+   "name_es": "Vestidor (W.I.C)",
+   "minimum_area": 2.0,
+   "preferred_area": 4.0,
+   "minimum_width": 1.2,
+   "height": 2.7,
+   "occupancy": 1.0,
+   "privacy": 3,
+   "daylight": false,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 1,
+   "accessibility": true,
+   "emergency_access": false,
+   "preferred_adjacencies": [
+    "BEDROOM",
+    "BATHROOM",
+    "CORRIDOR"
+   ],
+   "functional_relationships": [
+    "BEDROOM",
+    "BATHROOM"
+   ],
+   "neufert": {
+    "puerta_m": 0.8,
+    "ref": "armario de paso 1.20-2.40 m de fondo 0.60 m por lado",
+    "nota": "Vestidor/W.I.C de vivienda: fondo util de armarios 0.60 m por lado; pasillo de despape 0.90-1.20 m; de 2.0 m2 (lineal) a 4.0 m2 (en U de dos lados)."
+   },
+   "metadata": {
+    "ambito": "vivienda",
+    "nota": "v3.44.0: vocabulario de vivienda completo (las villas de referencia llevan W.I.C/DRESS junto al dormitorio); el vestidor de PERSONAL es DRESSING_ROOM (6-12 m2) y no cambia"
+   }
+  },
+  {
+   "space_type": "PATIO_DOMESTICO",
+   "name_es": "Patio",
+   "minimum_area": 4.0,
+   "preferred_area": 9.0,
+   "minimum_width": 2.0,
+   "height": 0.0,
+   "occupancy": 2.0,
+   "privacy": 1,
+   "daylight": true,
+   "ventilation": true,
+   "wet_zone": false,
+   "noise_level": 2,
+   "accessibility": true,
+   "emergency_access": false,
+   "preferred_adjacencies": [
+    "KITCHEN",
+    "LIVING_ROOM",
+    "LAVADERO",
+    "DINING_ROOM"
+   ],
+   "functional_relationships": [
+    "KITCHEN",
+    "LIVING_ROOM"
+   ],
+   "metadata": {
+    "ambito": "vivienda",
+    "nota": "Patio de vivienda: 2.0 x 2.0 m minimo (4 m2) con 9 m2 preferibles para tender y plantas; NADA que ver con el patio escolar (PATIO, 100-300 m2 por alumnos simultaneos)",
+    "neufert": {
+     "puerta_m": 0.0,
+     "ref": "patio de servicio de vivienda 2-9 m2",
+     "nota": "Patio domestico: luz y ventilacion de las piezas humedas, tendedero y usos de servicio; de 2.0 m de lado minimo para que sirva como espacio exterior util (§ vivienda)."
+    }
+   }
+  }
+ ]
+}

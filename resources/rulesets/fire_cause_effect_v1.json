@@ -1,0 +1,68 @@
+{
+  "code": "fire_cause_effect_v1",
+  "name": "Matriz causa/efecto de incendios (reglas del spec 44)",
+  "description": "INPUT -> CONDITION -> ACTION -> OUTPUT -> DELAY. Reglas parametrizadas por datos; los códigos INPUT coinciden con los kinds de dispositivos (SMOKE_DETECTOR, HEAT_DETECTOR, BEAM_DETECTOR, CALL_POINT, FIRE_MODULE).",
+  "version": "1.0",
+  "rules": [
+    {
+      "code": "CE-001",
+      "when": "SMOKE_DETECTOR",
+      "condition": "",
+      "actions": [
+        {"action": "alarma", "output": "FIRE_PANEL", "delay_s": 0.0},
+        {"action": "senializacion", "output": "SOUNDER", "delay_s": 0.0},
+        {"action": "senializacion", "output": "STROBE", "delay_s": 0.0},
+        {"action": "evento_control", "output": "FIRE_MODULE", "delay_s": 5.0},
+        {"action": "registro", "output": "EVENT_LOG", "delay_s": 0.0}
+      ]
+    },
+    {
+      "code": "CE-002",
+      "when": "HEAT_DETECTOR",
+      "condition": "",
+      "actions": [
+        {"action": "alarma", "output": "FIRE_PANEL", "delay_s": 0.0},
+        {"action": "senializacion", "output": "SOUNDER", "delay_s": 0.0},
+        {"action": "registro", "output": "EVENT_LOG", "delay_s": 0.0}
+      ]
+    },
+    {
+      "code": "CE-003",
+      "when": "BEAM_DETECTOR",
+      "condition": "",
+      "actions": [
+        {"action": "alarma", "output": "FIRE_PANEL", "delay_s": 0.0},
+        {"action": "senializacion", "output": "SOUNDER", "delay_s": 0.0}
+      ]
+    },
+    {
+      "code": "CE-004",
+      "when": "CALL_POINT",
+      "condition": "",
+      "actions": [
+        {"action": "alarma", "output": "FIRE_PANEL", "delay_s": 0.0},
+        {"action": "senializacion", "output": "SOUNDER", "delay_s": 0.0},
+        {"action": "senializacion", "output": "STROBE", "delay_s": 0.0},
+        {"action": "registro", "output": "EVENT_LOG", "delay_s": 0.0}
+      ]
+    },
+    {
+      "code": "CE-005",
+      "when": "FIRE_MODULE",
+      "condition": "",
+      "actions": [
+        {"action": "evento_control", "output": "FIRE_PANEL", "delay_s": 0.0},
+        {"action": "registro", "output": "EVENT_LOG", "delay_s": 0.0}
+      ]
+    },
+    {
+      "code": "CE-006",
+      "when": "SMOKE_DETECTOR",
+      "condition": "night_mode",
+      "actions": [
+        {"action": "evento_control", "output": "ACCESS_CONTROLLER", "delay_s": 10.0},
+        {"action": "desbloqueo_evacuacion", "output": "LOCK", "delay_s": 10.0}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "format": "ARQ_GEN_NEUFERT_REGION",
+  "code": "mexico",
+  "nombre": "México",
+  "edicion": "edición mexicana",
+  "referencias": "Neufert (edición mexicana); Reglamento de Construcciones para la Ciudad de México (RCDF) y Normas Técnicas Complementarias; práctica del diseño en la República.",
+  "disclaimer": "Valores de referencia para proyectar; verifica siempre el reglamento de construcción de tu municipio.",
+  "criterio": "Clima templado con sismo: techos contenidos (2,40–2,70 m), mampostería confinada de block de 14 cm, rampas hasta 10 % en tramos cortos, cubierta plana de losa como espacio habitable.",
+  "overrides": {
+    "alturas_libres": {
+      "por_uso": {
+        "Vivienda": 2.4,
+        "Oficina": 2.5,
+        "Escuela primaria": 2.5,
+        "Círculo infantil": 2.5,
+        "Consultorio médico": 2.5,
+        "Policlínico": 2.7,
+        "Hospital": 2.7,
+        "Comedor social": 2.7,
+        "Centro comunitario": 2.7,
+        "Albergue": 2.4,
+        "Local comercial": 2.6
+      },
+      "vivienda_min_m": 2.3,
+      "nota": "Edición México: techos contenidos por clima templado y costo — 2,40 m en vivienda (mínimo 2,30 en cuartos auxiliares); la salud sube a 2,70 m para el plenum."
+    },
+    "muros_espesor": {
+      "por_tipologia": {
+        "Mampostería de bloque + losa de vigueta": {"exterior_m": 0.14, "interior_m": 0.1},
+        "Hormigón armado (monolítico)": {"exterior_m": 0.15, "interior_m": 0.12},
+        "Tierra (adobe o tapial)": {"exterior_m": 0.4, "interior_m": 0.3}
+      },
+      "nota": "Edición México: mampostería CONFINADA de block de 14 cm con castillos y dalas; el hormigón monolítico baja a 0,15 m con acero de refuerzo por sismo."
+    },
+    "rampas": {
+      "pendiente_max_porcentaje": 8,
+      "pendiente_corta_max_porcentaje": 10,
+      "nota": "Edición México: rampa al 8 % general y hasta 10 % en tramos cortos, con descansos; verificar el RCDF y la norma de accesibilidad vigente."
+    },
+    "ventanas": {
+      "ratio_luz_minimo": 0.125,
+      "ratio_luz_recomendado": 0.167,
+      "nota": "Edición México: la regla clásica del libro vale — 1/8 del suelo como mínimo y 1/6 como lo cómodo."
+    },
+    "cubiertas_pendiente": {
+      "plana_transitable_azotea": true,
+      "nota": "Edición México: la azotea plana de losa es costumbre (impermeabilizar al 1–2 % y prever tanque de agua y gas en azotea); la lámina de asfalto pide mínimo 5 %."
+    },
+    "estacionamiento": {
+      "plaza_estandar_m": "2.50x5.00",
+      "plaza_compacta_m": "2.30x4.50",
+      "nota": "Edición México: plaza estándar de 2,50 × 5,00 m; los reglamentos municipales suelen pedir entre el 5 y el 10 % de plazas accesibles."
+    }
+  }
+}

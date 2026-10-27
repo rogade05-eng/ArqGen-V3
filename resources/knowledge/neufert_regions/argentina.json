@@ -1,0 +1,50 @@
+{
+  "format": "ARQ_GEN_NEUFERT_REGION",
+  "code": "argentina",
+  "nombre": "Argentina",
+  "edicion": "adaptación argentina",
+  "referencias": "Neufert (adaptación argentina); IRAM-CIRSOC 251 accesibilidad; reglamentos municipales de fachada y línea municipal.",
+  "disclaimer": "Valores de referencia para proyectar; verifica siempre el código de edificación de tu municipio y las normas IRAM vigentes.",
+  "criterio": "Clima templado-frío con tradición de ladrillo: techos de 2,60 m, muro de ladrillo común de 0,18 m, rampas al 8 % (IRAM-CIRSOC 251), escaleras y antepechos sobrios.",
+  "overrides": {
+    "alturas_libres": {
+      "por_uso": {
+        "Vivienda": 2.6,
+        "Oficina": 2.6,
+        "Escuela primaria": 3.0,
+        "Círculo infantil": 2.8,
+        "Consultorio médico": 2.8,
+        "Policlínico": 3.0,
+        "Hospital": 3.0,
+        "Comedor social": 3.0,
+        "Centro comunitario": 3.0,
+        "Albergue": 2.6,
+        "Local comercial": 3.0
+      },
+      "vivienda_min_m": 2.4,
+      "nota": "Edición Argentina: 2,60 m de techo en vivienda y oficina (mínimo 2,40); los usos públicos conservan los 3,00 m del libro."
+    },
+    "muros_espesor": {
+      "por_tipologia": {
+        "Mampostería de bloque + losa de vigueta": {"exterior_m": 0.18, "interior_m": 0.12}
+      },
+      "nota": "Edición Argentina: el ladrillo común de 0,18 m (cerca de un ladrillo) sigue siendo el muro regional de referencia con revoque a ambos lados."
+    },
+    "rampas": {
+      "pendiente_max_porcentaje": 8,
+      "nota": "Edición Argentina: rampa al 8 % máximo (recomendado 6 %) según IRAM-CIRSOC 251, con descansos cada 0,75 m de desnivel."
+    },
+    "accesibilidad": {
+      "nota": "Edición Argentina: círculo de giro de 1,50 m, puertita de 0,90 m libres, pasamanos a 0,90 m y baño accesible de 2,20 × 2,40 m (IRAM-CIRSOC 251)."
+    },
+    "estacionamiento": {
+      "plaza_estandar_m": "2.50x5.00",
+      "plaza_compacta_m": "2.30x4.50",
+      "nota": "Edición Argentina: plaza de 2,50 × 5,00 m; con autos grandes del parque regional, el módulo de doble fila se mantiene en 16,00 m."
+    },
+    "cubiertas_pendiente": {
+      "teja_ceramica_grados": 32,
+      "nota": "Edición Argentina: teja criolla a 30–45 grados en el litoral y la Pampa; chapa acanalada al 15 % en el norte; la plana impermeabilizada en la ciudad."
+    }
+  }
+}

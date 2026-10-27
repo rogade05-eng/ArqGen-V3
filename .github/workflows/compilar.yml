@@ -1,0 +1,153 @@
+# ============================================================================
+#  ARQ GEN - COMPILACION AUTOMATICA EN GITHUB (CI)
+#  Espejo en la nube del pipeline local 03_COMPILAR.bat (scripts v1.6.4):
+#    1. PRUEBAS  : suite unittest (informativa, no bloquea)
+#    2. COMPILAR : PyInstaller con ARQ_GEN.spec (espejo del bat, vigila
+#                  tests/test_121_dwg_bundle.py)
+#    3. SELFTEST : el ejecutable pasa sus comprobaciones internas (96 checks)
+#  Resultado: artefacto ARQ_GEN_Windows_x64 descargable en la pagina del run
+#  y, si se empuja una etiqueta v* (p. ej. v3.47.0), un Release permanente.
+#
+#  Notas de diseno:
+#  - La suite completa (2.579 pruebas) corre en modo INFORMATIVO: si alguna
+#    falla en el entorno CI, no bloquea el ejecutable; el filtro de calidad
+#    que SI bloquea es el selftest del propio .exe (96 checks).
+#  - El exclusor de bindings Qt del spec es imprescindible: ezdxf importa
+#    ezdxf.addons.xqt (PySide6/PyQt5) y el runner tiene varios bindings
+#    preinstalados; el spec los excluye igual que 03_COMPILAR.bat.
+# ============================================================================
+
+name: Compilar ARQ GEN (Windows)
+
+on:
+  push:
+    branches: [main, master]
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      pruebas:
+        description: 'Ejecutar la suite de pruebas antes de compilar'
+        type: boolean
+        default: true
+
+concurrency:
+  group: compilar-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  compilar:
+    name: Compilar ARQ_GEN.exe
+    runs-on: windows-latest
+    timeout-minutes: 150
+    steps:
+      - name: Descargar el codigo del repositorio
+        uses: actions/checkout@v4
+
+      - name: Instalar Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: 'pip'
+
+      - name: Instalar dependencias (ezdxf, openpyxl, PyInstaller)
+        shell: pwsh
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt -r requirements-build.txt
+          python -m pip show pyinstaller ezdxf openpyxl
+
+      - name: 'Etapa 1 - Suite de pruebas (informativa, no bloquea)'
+        if: ${{ github.event_name != 'workflow_dispatch' || inputs.pruebas }}
+        continue-on-error: true
+        shell: pwsh
+        env:
+          PYTHONIOENCODING: utf-8
+        run: |
+          python -m unittest discover -s tests 2>&1 | Tee-Object -FilePath logs_pruebas_ci.txt
+          $rc = $LASTEXITCODE
+          "PRUEBAS_RC=$rc" >> $env:GITHUB_ENV
+          $resumen = (Select-String -Path logs_pruebas_ci.txt -Pattern '^(Ran |OK|FAILED)' |
+                       Select-Object -Last 3 | ForEach-Object { $_.Line }) -join ' | '
+          if (-not $resumen) { $resumen = 'sin resumen capturado' }
+          if ($rc -eq 0) {
+            "PRUEBAS_TXT=OK ($resumen)" >> $env:GITHUB_ENV
+          } else {
+            "PRUEBAS_TXT=CON FALLOS ($resumen)" >> $env:GITHUB_ENV
+          }
+
+      - name: 'Etapa 2 - Compilar con PyInstaller (ARQ_GEN.spec, modo onedir)'
+        shell: pwsh
+        run: python -m PyInstaller --noconfirm --clean ARQ_GEN.spec
+
+      - name: 'Etapa 3 - Verificar el ejecutable (selftest 96 checks + recursos)'
+        shell: pwsh
+        env:
+          PYTHONIOENCODING: utf-8
+        run: |
+          python compilar_bundle.py --verify-only --dist dist
+          if ($LASTEXITCODE -ne 0) {
+            throw "El selftest del ejecutable fallo. ARQ_GEN.exe no es fiable; revise el log de este paso."
+          }
+
+      - name: Empaquetar el ejecutable en ZIP
+        shell: pwsh
+        run: |
+          $exe = 'dist\ARQ_GEN\ARQ_GEN.exe'
+          if (-not (Test-Path $exe)) { throw "No se genero $exe" }
+          $mb = [math]::Round((Get-Item $exe).Length / 1MB, 1)
+          "EXE_MB=$mb" >> $env:GITHUB_ENV
+          Compress-Archive -Path 'dist\ARQ_GEN' -DestinationPath 'ARQ_GEN_Windows_x64.zip' -Force
+
+      - name: Subir el ejecutable (artefacto del run)
+        uses: actions/upload-artifact@v4
+        with:
+          name: ARQ_GEN_Windows_x64
+          path: ARQ_GEN_Windows_x64.zip
+          retention-days: 90
+          if-no-files-found: error
+
+      - name: Subir el log de pruebas (si se ejecutaron)
+        if: ${{ always() && hashFiles('logs_pruebas_ci.txt') != '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: logs_pruebas_ci
+          path: logs_pruebas_ci.txt
+          retention-days: 30
+          if-no-files-found: ignore
+
+      - name: Resumen del run
+        if: ${{ always() }}
+        shell: pwsh
+        run: |
+          $lineas = @()
+          $lineas += '## Compilacion ARQ GEN'
+          $lineas += ''
+          if ($env:EXE_MB) { $lineas += "- Ejecutable: **dist/ARQ_GEN/ARQ_GEN.exe generado y verificado ($($env:EXE_MB) MB)**" }
+          if ($env:PRUEBAS_TXT) { $lineas += "- Suite de pruebas: $($env:PRUEBAS_TXT)" }
+          $lineas += '- Descarga: seccion **Artifacts** de esta pagina -> ARQ_GEN_Windows_x64'
+          $lineas += '- Dentro del ZIP: carpeta ARQ_GEN con ARQ_GEN.exe (Windows 10/11 64 bits)'
+          Add-Content -Path $env:GITHUB_STEP_SUMMARY -Value ($lineas -join [Environment]::NewLine)
+
+  release:
+    name: Release permanente (solo etiquetas v*)
+    needs: compilar
+    if: ${{ startsWith(github.ref, 'refs/tags/v') }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Descargar el artefacto compilado
+        uses: actions/download-artifact@v4
+        with:
+          name: ARQ_GEN_Windows_x64
+
+      - name: Publicar el Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ARQ_GEN_Windows_x64.zip
+          body: |
+            Ejecutable de ARQ GEN compilado automaticamente por GitHub Actions.
+
+            - Descargar **ARQ_GEN_Windows_x64.zip**
+            - Descomprimir y ejecutar **ARQ_GEN/ARQ_GEN.exe** (Windows 10/11 64 bits)
+            - No requiere instalacion ni Python

@@ -1,0 +1,70 @@
+{
+  "code": "international_v1",
+  "jurisdiction": "Internacional",
+  "discipline": "ARCHITECTURE",
+  "version": "1.0",
+  "effective_date": "2026-01-01",
+  "source": "ARQ GEN — reglas base parametrizables",
+  "rules": [
+    {
+      "code": "ARQ-WALL-001",
+      "discipline": "ARCHITECTURE",
+      "category": "GEOMETRY",
+      "severity": "ERROR",
+      "expression": "thickness < min_thickness",
+      "message": "Espesor de muro por debajo del mínimo parametrizado",
+      "parameters": {"min_thickness": 0.1},
+      "source": "ARQ GEN",
+      "version": "1.0",
+      "applies_to": "WALL"
+    },
+    {
+      "code": "ARQ-WALL-002",
+      "discipline": "ARCHITECTURE",
+      "category": "GEOMETRY",
+      "severity": "WARNING",
+      "expression": "height > max_height",
+      "message": "Altura de muro mayor que la parametrizada: revise apoyos",
+      "parameters": {"max_height": 4.0},
+      "source": "ARQ GEN",
+      "version": "1.0",
+      "applies_to": "WALL"
+    },
+    {
+      "code": "ARQ-DOOR-001",
+      "discipline": "ARCHITECTURE",
+      "category": "ACCESSIBILITY",
+      "severity": "ERROR",
+      "expression": "width < min_width",
+      "message": "Ancho de puerta inferior al mínimo de accesibilidad",
+      "parameters": {"min_width": 0.75},
+      "source": "ARQ GEN",
+      "version": "1.0",
+      "applies_to": "DOOR"
+    },
+    {
+      "code": "ARQ-WIN-001",
+      "discipline": "ARCHITECTURE",
+      "category": "DAYLIGHT",
+      "severity": "WARNING",
+      "expression": "sill > max_sill",
+      "message": "Antepecho de ventana por encima del máximo recomendado",
+      "parameters": {"max_sill": 1.4},
+      "source": "ARQ GEN",
+      "version": "1.0",
+      "applies_to": "WINDOW"
+    },
+    {
+      "code": "ARQ-SPACE-001",
+      "discipline": "ARCHITECTURE",
+      "category": "AREA",
+      "severity": "WARNING",
+      "expression": "area < min_area",
+      "message": "Área del local por debajo del mínimo del ruleset",
+      "parameters": {"min_area": 2.0},
+      "source": "ARQ GEN",
+      "version": "1.0",
+      "applies_to": "SPACE"
+    }
+  ]
+}

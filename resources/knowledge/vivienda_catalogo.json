@@ -1,0 +1,2356 @@
+{
+ "format": "ARQ_GEN_VIVIENDA_CATALOGO",
+ "version": "1.1",
+ "source": "Catálogo maestro de viviendas v1.0 - especificación técnica programable (81 secciones: tipologías, sistemas, estilos, programa, relaciones, zonificación, validaciones y conflictos).",
+ "advertencia": "Las dimensiones arquitectónicas pueden proponerse automáticamente; las estructurales definitivas, cimentaciones, instalaciones eléctricas definitivas, gas e incendios quedan marcadas como REQUIERE_CALCULO_ESPECIALIZADO (sección 81 del catálogo).",
+ "principio_seguridad": {
+  "marca": "REQUIERE_CALCULO_ESPECIALIZADO",
+  "texto": "Las dimensiones arquitectónicas pueden ser propuestas automáticamente. Las dimensiones estructurales definitivas, cimentaciones, instalaciones eléctricas definitivas, instalaciones de gas, protección contra incendios y cualquier elemento sometido a cálculo normativo deben quedar identificados como: \"REQUIERE_CALCULO_ESPECIALIZADO\" El software podrá generar una solución preliminar, pero no deberá presentar automáticamente esa solución como proyecto estructural o ejecutivo definitivo."
+ },
+ "tipologias": [
+  {
+   "codigo": "VIV-01",
+   "nombre": "Vivienda unifamiliar aislada",
+   "clave": "aislada",
+   "etiqueta_gui": "Unifamiliar aislada",
+   "reglas": [
+    "UFA001: Verificar ocupación máxima de parcela.",
+    "UFA002: Verificar retiros.",
+    "UFA003: Verificar altura máxima.",
+    "UFA004: Verificar área libre.",
+    "UFA005: Verificar estacionamiento."
+   ],
+   "notas": [
+    "caracteristicas: Parcela independiente",
+    "caracteristicas: Retiro frontal",
+    "caracteristicas: Retiros laterales según normativa",
+    "caracteristicas: Retiro posterior",
+    "caracteristicas: Jardín",
+    "caracteristicas: Acceso peatonal",
+    "caracteristicas: Acceso vehicular",
+    "configuraciones: 1 planta",
+    "configuraciones: 2 plantas",
+    "configuraciones: 2 plantas + ático",
+    "configuraciones: 1 planta + semisótano",
+    "configuraciones: Vivienda con patio",
+    "configuraciones: Vivienda con piscina",
+    "ufa001: Verificar ocupación máxima de parcela",
+    "ufa002: Verificar retiros",
+    "ufa003: Verificar altura máxima",
+    "ufa004: Verificar área libre",
+    "ufa005: Verificar estacionamiento"
+   ]
+  },
+  {
+   "codigo": "VIV-02",
+   "nombre": "Vivienda unifamiliar pareada",
+   "clave": "pareada",
+   "etiqueta_gui": "Unifamiliar pareada",
+   "reglas": [],
+   "notas": [
+    "debe_verificarse: medianera",
+    "debe_verificarse: aislamiento acústico",
+    "debe_verificarse: protección contra incendio",
+    "debe_verificarse: estructura",
+    "debe_verificarse: instalaciones",
+    "debe_verificarse: privacidad",
+    "debe_verificarse: ventilación",
+    "debe_verificarse: iluminación natural",
+    "regla: No generar ventanas principales hacia la medianera salvo solución legal y",
+    "regla: constructivamente permitida"
+   ]
+  },
+  {
+   "codigo": "VIV-03",
+   "nombre": "Vivienda unifamiliar adosada",
+   "clave": "adosada",
+   "etiqueta_gui": "Unifamiliar adosada",
+   "reglas": [],
+   "notas": [
+    "caracteristicas: Una o dos fachadas principales",
+    "caracteristicas: Medianeras laterales",
+    "caracteristicas: Patio posterior",
+    "caracteristicas: Posible patio interior",
+    "caracteristicas: Aparcamiento frontal",
+    "el_programa_deberá_comprobar: ILUMINACION_NATURAL",
+    "el_programa_deberá_comprobar: VENTILACION",
+    "el_programa_deberá_comprobar: PRIVACIDAD",
+    "el_programa_deberá_comprobar: PATIOS",
+    "el_programa_deberá_comprobar: ALTURA",
+    "el_programa_deberá_comprobar: DENSIDAD",
+    "el_programa_deberá_comprobar: MEDIANERAS"
+   ]
+  },
+  {
+   "codigo": "VIV-04",
+   "nombre": "Vivienda en hilera",
+   "clave": "hilera",
+   "etiqueta_gui": "Unifamiliar en hilera",
+   "reglas": [],
+   "notas": [
+    "caracteristicas: Una o dos fachadas principales",
+    "caracteristicas: Medianeras laterales",
+    "caracteristicas: Patio posterior",
+    "caracteristicas: Posible patio interior",
+    "caracteristicas: Aparcamiento frontal",
+    "el_programa_deberá_comprobar: ILUMINACION_NATURAL",
+    "el_programa_deberá_comprobar: VENTILACION",
+    "el_programa_deberá_comprobar: PRIVACIDAD",
+    "el_programa_deberá_comprobar: PATIOS",
+    "el_programa_deberá_comprobar: ALTURA",
+    "el_programa_deberá_comprobar: DENSIDAD",
+    "el_programa_deberá_comprobar: MEDIANERAS"
+   ]
+  },
+  {
+   "codigo": "VIV-05",
+   "nombre": "Vivienda bifamiliar",
+   "clave": "bifamiliar",
+   "etiqueta_gui": "Bifamiliar",
+   "reglas": [],
+   "notas": []
+  },
+  {
+   "codigo": "VIV-06",
+   "nombre": "Vivienda multifamiliar",
+   "clave": "multifamiliar",
+   "etiqueta_gui": "Multifamiliar",
+   "reglas": [],
+   "notas": [
+    "elementos: UNIDADES_RESIDENCIALES",
+    "elementos: CIRCULACION_HORIZONTAL",
+    "elementos: CIRCULACION_VERTICAL",
+    "elementos: VESTIBULO",
+    "elementos: ESCALERAS",
+    "elementos: ASCENSORES",
+    "elementos: CUARTO_TECNICO",
+    "elementos: RESIDUOS",
+    "elementos: ESTACIONAMIENTO",
+    "elementos: AREAS_COMUNES",
+    "el_programa_debe_calcular: Nº_VIVIENDAS",
+    "el_programa_debe_calcular: Nº_PLANTAS",
+    "el_programa_debe_calcular: SUPERFICIE_TOTAL",
+    "el_programa_debe_calcular: SUPERFICIE_COMUN",
+    "el_programa_debe_calcular: SUPERFICIE_PRIVADA",
+    "el_programa_debe_calcular: DENSIDAD",
+    "el_programa_debe_calcular: Nº_ESTACIONAMIENTOS",
+    "el_programa_debe_calcular: CAPACIDAD_ESCALERAS",
+    "el_programa_debe_calcular: CAPACIDAD_ASCENSORES"
+   ]
+  },
+  {
+   "codigo": "VIV-07",
+   "nombre": "Vivienda en bloque",
+   "clave": "bloque",
+   "etiqueta_gui": "Multifamiliar en bloque",
+   "reglas": [],
+   "notas": [
+    "elementos: UNIDADES_RESIDENCIALES",
+    "elementos: CIRCULACION_HORIZONTAL",
+    "elementos: CIRCULACION_VERTICAL",
+    "elementos: VESTIBULO",
+    "elementos: ESCALERAS",
+    "elementos: ASCENSORES",
+    "elementos: CUARTO_TECNICO",
+    "elementos: RESIDUOS",
+    "elementos: ESTACIONAMIENTO",
+    "elementos: AREAS_COMUNES",
+    "el_programa_debe_calcular: Nº_VIVIENDAS",
+    "el_programa_debe_calcular: Nº_PLANTAS",
+    "el_programa_debe_calcular: SUPERFICIE_TOTAL",
+    "el_programa_debe_calcular: SUPERFICIE_COMUN",
+    "el_programa_debe_calcular: SUPERFICIE_PRIVADA",
+    "el_programa_debe_calcular: DENSIDAD",
+    "el_programa_debe_calcular: Nº_ESTACIONAMIENTOS",
+    "el_programa_debe_calcular: CAPACIDAD_ESCALERAS",
+    "el_programa_debe_calcular: CAPACIDAD_ASCENSORES"
+   ]
+  },
+  {
+   "codigo": "VIV-08",
+   "nombre": "Vivienda en torre",
+   "clave": "torre",
+   "etiqueta_gui": "Multifamiliar en torre",
+   "reglas": [],
+   "notas": [
+    "elementos: UNIDADES_RESIDENCIALES",
+    "elementos: CIRCULACION_HORIZONTAL",
+    "elementos: CIRCULACION_VERTICAL",
+    "elementos: VESTIBULO",
+    "elementos: ESCALERAS",
+    "elementos: ASCENSORES",
+    "elementos: CUARTO_TECNICO",
+    "elementos: RESIDUOS",
+    "elementos: ESTACIONAMIENTO",
+    "elementos: AREAS_COMUNES",
+    "el_programa_debe_calcular: Nº_VIVIENDAS",
+    "el_programa_debe_calcular: Nº_PLANTAS",
+    "el_programa_debe_calcular: SUPERFICIE_TOTAL",
+    "el_programa_debe_calcular: SUPERFICIE_COMUN",
+    "el_programa_debe_calcular: SUPERFICIE_PRIVADA",
+    "el_programa_debe_calcular: DENSIDAD",
+    "el_programa_debe_calcular: Nº_ESTACIONAMIENTOS",
+    "el_programa_debe_calcular: CAPACIDAD_ESCALERAS",
+    "el_programa_debe_calcular: CAPACIDAD_ASCENSORES"
+   ]
+  },
+  {
+   "codigo": "VIV-09",
+   "nombre": "Vivienda dúplex",
+   "clave": "duplex",
+   "etiqueta_gui": "Dúplex",
+   "reglas": [],
+   "notas": [
+    "debe_definir: PLANTA_SOCIAL",
+    "debe_definir: PLANTA_PRIVADA",
+    "escalera: posición",
+    "escalera: ancho",
+    "escalera: huella",
+    "escalera: contrahuella",
+    "escalera: descansos",
+    "escalera: barandas",
+    "escalera: iluminación",
+    "escalera: ventilación",
+    "regla: Evitar que la escalera ocupe el centro funcional de la vivienda salvo que",
+    "regla: forme parte del concepto arquitectónico"
+   ]
+  },
+  {
+   "codigo": "VIV-10",
+   "nombre": "Vivienda tríplex",
+   "clave": "triplex",
+   "etiqueta_gui": "Tríplex",
+   "reglas": [],
+   "notas": []
+  },
+  {
+   "codigo": "VIV-11",
+   "nombre": "Vivienda patio",
+   "clave": "patio",
+   "etiqueta_gui": "De patio",
+   "reglas": [],
+   "notas": [
+    "el_patio_puede_funcionar_como: CENTRO_CLIMATICO",
+    "el_patio_puede_funcionar_como: CENTRO_SOCIAL",
+    "el_patio_puede_funcionar_como: CENTRO_DE_ILUMINACION",
+    "el_patio_puede_funcionar_como: CENTRO_DE_VENTILACION",
+    "el_patio_puede_funcionar_como: CENTRO_VISUAL",
+    "variables: PATIO_LARGO",
+    "variables: PATIO_ANCHO",
+    "variables: PATIO_SUPERFICIE",
+    "variables: ALTURA_EDIFICACION",
+    "variables: RELACION_VACIO_LLENO",
+    "variables: ORIENTACION"
+   ]
+  },
+  {
+   "codigo": "VIV-12",
+   "nombre": "Vivienda alrededor de patio central",
+   "clave": "patio_central",
+   "etiqueta_gui": "Alrededor de patio central",
+   "reglas": [],
+   "notas": [
+    "el_patio_puede_funcionar_como: CENTRO_CLIMATICO",
+    "el_patio_puede_funcionar_como: CENTRO_SOCIAL",
+    "el_patio_puede_funcionar_como: CENTRO_DE_ILUMINACION",
+    "el_patio_puede_funcionar_como: CENTRO_DE_VENTILACION",
+    "el_patio_puede_funcionar_como: CENTRO_VISUAL",
+    "variables: PATIO_LARGO",
+    "variables: PATIO_ANCHO",
+    "variables: PATIO_SUPERFICIE",
+    "variables: ALTURA_EDIFICACION",
+    "variables: RELACION_VACIO_LLENO",
+    "variables: ORIENTACION"
+   ]
+  },
+  {
+   "codigo": "VIV-13",
+   "nombre": "Vivienda en esquina",
+   "clave": "esquina",
+   "etiqueta_gui": "De esquina",
+   "reglas": [],
+   "notas": []
+  },
+  {
+   "codigo": "VIV-14",
+   "nombre": "Vivienda entre medianeras",
+   "clave": "entre_medianeras",
+   "etiqueta_gui": "Entre medianeras",
+   "reglas": [],
+   "notas": []
+  },
+  {
+   "codigo": "VIV-15",
+   "nombre": "Vivienda rural",
+   "clave": "rural",
+   "etiqueta_gui": "Rural",
+   "reglas": [],
+   "notas": []
+  },
+  {
+   "codigo": "VIV-16",
+   "nombre": "Vivienda campesina",
+   "clave": "campesina",
+   "etiqueta_gui": "Campesina",
+   "reglas": [],
+   "notas": []
+  },
+  {
+   "codigo": "VIV-17",
+   "nombre": "Vivienda costera",
+   "clave": "costera",
+   "etiqueta_gui": "Costera",
+   "reglas": [],
+   "notas": []
+  },
+  {
+   "codigo": "VIV-18",
+   "nombre": "Vivienda tropical",
+   "clave": "tropical",
+   "etiqueta_gui": "Tropical",
+   "reglas": [],
+   "notas": []
+  },
+  {
+   "codigo": "VIV-19",
+   "nombre": "Vivienda de montaña",
+   "clave": "montana",
+   "etiqueta_gui": "De montaña",
+   "reglas": [],
+   "notas": []
+  },
+  {
+   "codigo": "VIV-20",
+   "nombre": "Vivienda modular",
+   "clave": "modular",
+   "etiqueta_gui": "Modular",
+   "reglas": [],
+   "notas": []
+  },
+  {
+   "codigo": "VIV-21",
+   "nombre": "Vivienda prefabricada",
+   "clave": "prefabricada",
+   "etiqueta_gui": "Prefabricada",
+   "reglas": [],
+   "notas": []
+  },
+  {
+   "codigo": "VIV-22",
+   "nombre": "Vivienda progresiva",
+   "clave": "progresiva",
+   "etiqueta_gui": "Progresiva",
+   "reglas": [],
+   "notas": []
+  },
+  {
+   "codigo": "VIV-23",
+   "nombre": "Vivienda económica",
+   "clave": "economica",
+   "etiqueta_gui": "Económica",
+   "reglas": [],
+   "notas": []
+  },
+  {
+   "codigo": "VIV-24",
+   "nombre": "Vivienda de estándar medio",
+   "clave": "estandar_medio",
+   "etiqueta_gui": "De estándar medio",
+   "reglas": [],
+   "notas": []
+  },
+  {
+   "codigo": "VIV-25",
+   "nombre": "Vivienda premium",
+   "clave": "premium",
+   "etiqueta_gui": "Premium",
+   "reglas": [],
+   "notas": []
+  },
+  {
+   "codigo": "VIV-26",
+   "nombre": "Vivienda de lujo",
+   "clave": "lujo",
+   "etiqueta_gui": "De lujo",
+   "reglas": [],
+   "notas": []
+  },
+  {
+   "codigo": "VIV-27",
+   "nombre": "Vivienda accesible",
+   "clave": "accesible",
+   "etiqueta_gui": "Accesible",
+   "reglas": [],
+   "notas": []
+  },
+  {
+   "codigo": "VIV-28",
+   "nombre": "Vivienda para adulto mayor",
+   "clave": "adulto_mayor",
+   "etiqueta_gui": "Para adulto mayor",
+   "reglas": [],
+   "notas": []
+  },
+  {
+   "codigo": "VIV-29",
+   "nombre": "Vivienda para movilidad reducida",
+   "clave": "movilidad_reducida",
+   "etiqueta_gui": "Para movilidad reducida",
+   "reglas": [],
+   "notas": []
+  },
+  {
+   "codigo": "VIV-30",
+   "nombre": "Vivienda multigeneracional",
+   "clave": "multigeneracional",
+   "etiqueta_gui": "Multigeneracional",
+   "reglas": [],
+   "notas": []
+  }
+ ],
+ "sistemas_constructivos": [
+  {
+   "codigo": "TC-01",
+   "nombre": "Mampostería tradicional",
+   "clave": "mamposteria",
+   "parametros": [
+    {
+     "grupo": "materiales",
+     "items": [
+      "LADRILLO",
+      "BLOQUE_HORMIGON",
+      "BLOQUE_CERAMICO",
+      "PIEDRA",
+      "ADOBE",
+      "BAHAREQUE"
+     ]
+    },
+    {
+     "grupo": "variables",
+     "items": [
+      "ESPESOR_MURO",
+      "ALTURA_MURO",
+      "TIPO_MORTERO",
+      "REFUERZO",
+      "COLUMNAS_CONFINAMIENTO",
+      "VIGAS_CONFINAMIENTO",
+      "ABERTURAS",
+      "LONGITUD_MURO",
+      "CARGA",
+      "El cálculo estructural deberá ser realizado según norma estructural adoptada"
+     ]
+    }
+   ]
+  },
+  {
+   "codigo": "TC-02",
+   "nombre": "Mampostería confinada",
+   "clave": "mamposteria_confinada",
+   "parametros": [
+    {
+     "grupo": "elementos",
+     "items": [
+      "MURO",
+      "COLUMNA_CONFINAMIENTO",
+      "VIGA_CONFINAMIENTO",
+      "CIMENTACION",
+      "DINTEL",
+      "REFUERZO"
+     ]
+    },
+    {
+     "grupo": "variables",
+     "items": [
+      "ESPESOR",
+      "RESISTENCIA_BLOQUE",
+      "RESISTENCIA_MORTERO",
+      "RESISTENCIA_HORMIGON",
+      "ACERO",
+      "SEPARACION_REFUERZO",
+      "DIMENSIONES_CONFINAMIENTO"
+     ]
+    },
+    {
+     "grupo": "regla",
+     "items": [
+      "Las dimensiones estructurales no deben ser fijadas únicamente por criterios",
+      "arquitectónicos. Deben validarse mediante cálculo estructural"
+     ]
+    }
+   ]
+  },
+  {
+   "codigo": "TC-03",
+   "nombre": "Mampostería reforzada",
+   "clave": "mamposteria_reforzada",
+   "parametros": [
+    {
+     "grupo": "elementos",
+     "items": [
+      "MURO",
+      "COLUMNA_CONFINAMIENTO",
+      "VIGA_CONFINAMIENTO",
+      "CIMENTACION",
+      "DINTEL",
+      "REFUERZO"
+     ]
+    },
+    {
+     "grupo": "variables",
+     "items": [
+      "ESPESOR",
+      "RESISTENCIA_BLOQUE",
+      "RESISTENCIA_MORTERO",
+      "RESISTENCIA_HORMIGON",
+      "ACERO",
+      "SEPARACION_REFUERZO",
+      "DIMENSIONES_CONFINAMIENTO"
+     ]
+    },
+    {
+     "grupo": "regla",
+     "items": [
+      "Las dimensiones estructurales no deben ser fijadas únicamente por criterios",
+      "arquitectónicos. Deben validarse mediante cálculo estructural"
+     ]
+    }
+   ]
+  },
+  {
+   "codigo": "TC-04",
+   "nombre": "Hormigón armado tradicional",
+   "clave": "hormigon_armado",
+   "parametros": [
+    {
+     "grupo": "elementos",
+     "items": [
+      "COLUMNA",
+      "VIGA",
+      "LOSA",
+      "CIMENTACION",
+      "MURO_NO_ESTRUCTURAL"
+     ]
+    },
+    {
+     "grupo": "parametros",
+     "items": [
+      "LUZ",
+      "CARGA",
+      "ALTURA",
+      "SECCION",
+      "MATERIAL",
+      "ARMADO",
+      "SISMO",
+      "VIENTO",
+      "TIPO_SUELO"
+     ]
+    },
+    {
+     "grupo": "salidas",
+     "items": [
+      "SECCION_COLUMNAS",
+      "SECCION_VIGAS",
+      "ESPESOR_LOSA",
+      "ARMADURA",
+      "CARGA",
+      "DEFORMACION",
+      "DERIVA",
+      "El cálculo debe realizarse mediante un módulo estructural independiente"
+     ]
+    }
+   ]
+  },
+  {
+   "codigo": "TC-05",
+   "nombre": "Hormigón armado aporticado",
+   "clave": "hormigon_aporticado",
+   "parametros": [
+    {
+     "grupo": "elementos",
+     "items": [
+      "COLUMNA",
+      "VIGA",
+      "LOSA",
+      "CIMENTACION",
+      "MURO_NO_ESTRUCTURAL"
+     ]
+    },
+    {
+     "grupo": "parametros",
+     "items": [
+      "LUZ",
+      "CARGA",
+      "ALTURA",
+      "SECCION",
+      "MATERIAL",
+      "ARMADO",
+      "SISMO",
+      "VIENTO",
+      "TIPO_SUELO"
+     ]
+    },
+    {
+     "grupo": "salidas",
+     "items": [
+      "SECCION_COLUMNAS",
+      "SECCION_VIGAS",
+      "ESPESOR_LOSA",
+      "ARMADURA",
+      "CARGA",
+      "DEFORMACION",
+      "DERIVA",
+      "El cálculo debe realizarse mediante un módulo estructural independiente"
+     ]
+    }
+   ]
+  },
+  {
+   "codigo": "TC-06",
+   "nombre": "Muros estructurales de hormigón armado",
+   "clave": "muros_hormigon",
+   "parametros": [
+    {
+     "grupo": "elementos",
+     "items": [
+      "COLUMNA",
+      "VIGA",
+      "LOSA",
+      "CIMENTACION",
+      "MURO_NO_ESTRUCTURAL"
+     ]
+    },
+    {
+     "grupo": "parametros",
+     "items": [
+      "LUZ",
+      "CARGA",
+      "ALTURA",
+      "SECCION",
+      "MATERIAL",
+      "ARMADO",
+      "SISMO",
+      "VIENTO",
+      "TIPO_SUELO"
+     ]
+    },
+    {
+     "grupo": "salidas",
+     "items": [
+      "SECCION_COLUMNAS",
+      "SECCION_VIGAS",
+      "ESPESOR_LOSA",
+      "ARMADURA",
+      "CARGA",
+      "DEFORMACION",
+      "DERIVA",
+      "El cálculo debe realizarse mediante un módulo estructural independiente"
+     ]
+    }
+   ]
+  },
+  {
+   "codigo": "TC-07",
+   "nombre": "Acero estructural",
+   "clave": "acero",
+   "parametros": [
+    {
+     "grupo": "elementos",
+     "items": [
+      "COLUMNAS",
+      "VIGAS",
+      "CERCHAS",
+      "CORREAS",
+      "ARRIOSTRAMIENTOS",
+      "PLACAS",
+      "UNIONES"
+     ]
+    },
+    {
+     "grupo": "parametros",
+     "items": [
+      "PERFIL",
+      "ACERO",
+      "LUZ",
+      "CARGA",
+      "CORROSION",
+      "PROTECCION_FUEGO",
+      "UNION_ATORNILLADA",
+      "UNION_SOLDADA"
+     ]
+    },
+    {
+     "grupo": "salida",
+     "items": [
+      "PESO_ACERO",
+      "LONGITUD_PERFILES",
+      "Nº_PERFILES",
+      "TORNILLOS",
+      "SOLDADURA",
+      "PINTURA",
+      "PROTECCION"
+     ]
+    }
+   ]
+  },
+  {
+   "codigo": "TC-08",
+   "nombre": "Estructura metálica ligera",
+   "clave": "metalica_ligera",
+   "parametros": [
+    {
+     "grupo": "elementos",
+     "items": [
+      "COLUMNAS",
+      "VIGAS",
+      "CERCHAS",
+      "CORREAS",
+      "ARRIOSTRAMIENTOS",
+      "PLACAS",
+      "UNIONES"
+     ]
+    },
+    {
+     "grupo": "parametros",
+     "items": [
+      "PERFIL",
+      "ACERO",
+      "LUZ",
+      "CARGA",
+      "CORROSION",
+      "PROTECCION_FUEGO",
+      "UNION_ATORNILLADA",
+      "UNION_SOLDADA"
+     ]
+    },
+    {
+     "grupo": "salida",
+     "items": [
+      "PESO_ACERO",
+      "LONGITUD_PERFILES",
+      "Nº_PERFILES",
+      "TORNILLOS",
+      "SOLDADURA",
+      "PINTURA",
+      "PROTECCION"
+     ]
+    }
+   ]
+  },
+  {
+   "codigo": "TC-09",
+   "nombre": "Estructura de madera",
+   "clave": "madera",
+   "parametros": [
+    {
+     "grupo": "tipos",
+     "items": [
+      "MADERA_MACIZA",
+      "LAMINADA",
+      "LVL",
+      "CLT",
+      "ENTRAMADO_LIGERO"
+     ]
+    },
+    {
+     "grupo": "parametros",
+     "items": [
+      "ESPECIE",
+      "CLASE_RESISTENCIA",
+      "SECCION",
+      "LUZ",
+      "HUMEDAD",
+      "PROTECCION",
+      "UNIONES",
+      "RIESGO_BIOLOGICO",
+      "FUEGO"
+     ]
+    }
+   ]
+  },
+  {
+   "codigo": "TC-10",
+   "nombre": "Entramado ligero de madera",
+   "clave": "entramado_madera",
+   "parametros": [
+    {
+     "grupo": "tipos",
+     "items": [
+      "MADERA_MACIZA",
+      "LAMINADA",
+      "LVL",
+      "CLT",
+      "ENTRAMADO_LIGERO"
+     ]
+    },
+    {
+     "grupo": "parametros",
+     "items": [
+      "ESPECIE",
+      "CLASE_RESISTENCIA",
+      "SECCION",
+      "LUZ",
+      "HUMEDAD",
+      "PROTECCION",
+      "UNIONES",
+      "RIESGO_BIOLOGICO",
+      "FUEGO"
+     ]
+    }
+   ]
+  },
+  {
+   "codigo": "TC-11",
+   "nombre": "Steel framing",
+   "clave": "steel_framing",
+   "parametros": [
+    {
+     "grupo": "elementos",
+     "items": [
+      "MONTANTES",
+      "CANALES",
+      "ARRIOSTRAMIENTOS",
+      "PLACAS",
+      "AISLAMIENTO",
+      "BARRERA_DE_VAPOR",
+      "REVESTIMIENTO"
+     ]
+    },
+    {
+     "grupo": "parametros",
+     "items": [
+      "SECCION",
+      "ESPESOR",
+      "SEPARACION",
+      "ALTURA",
+      "CARGA",
+      "TIPO_PLACA",
+      "AISLAMIENTO",
+      "PROTECCION_CORROSION"
+     ]
+    }
+   ]
+  },
+  {
+   "codigo": "TC-12",
+   "nombre": "Sistema modular prefabricado",
+   "clave": "modular",
+   "parametros": [
+    {
+     "grupo": "tipos",
+     "items": [
+      "PANELES",
+      "MODULOS_TRIDIMENSIONALES",
+      "PANELES_HORMIGON",
+      "SIP",
+      "MODULOS_ACERO",
+      "MODULOS_MADERA"
+     ]
+    },
+    {
+     "grupo": "parametros",
+     "items": [
+      "DIMENSION_MODULO",
+      "PESO",
+      "TRANSPORTE",
+      "GRUA",
+      "UNION",
+      "TOLERANCIA",
+      "FUNDACION",
+      "JUNTA",
+      "SELLADO"
+     ]
+    }
+   ]
+  },
+  {
+   "codigo": "TC-13",
+   "nombre": "Paneles prefabricados de hormigón",
+   "clave": "paneles_hormigon",
+   "parametros": [
+    {
+     "grupo": "tipos",
+     "items": [
+      "PANELES",
+      "MODULOS_TRIDIMENSIONALES",
+      "PANELES_HORMIGON",
+      "SIP",
+      "MODULOS_ACERO",
+      "MODULOS_MADERA"
+     ]
+    },
+    {
+     "grupo": "parametros",
+     "items": [
+      "DIMENSION_MODULO",
+      "PESO",
+      "TRANSPORTE",
+      "GRUA",
+      "UNION",
+      "TOLERANCIA",
+      "FUNDACION",
+      "JUNTA",
+      "SELLADO"
+     ]
+    }
+   ]
+  },
+  {
+   "codigo": "TC-14",
+   "nombre": "Paneles SIP",
+   "clave": "sip",
+   "parametros": [
+    {
+     "grupo": "tipos",
+     "items": [
+      "PANELES",
+      "MODULOS_TRIDIMENSIONALES",
+      "PANELES_HORMIGON",
+      "SIP",
+      "MODULOS_ACERO",
+      "MODULOS_MADERA"
+     ]
+    },
+    {
+     "grupo": "parametros",
+     "items": [
+      "DIMENSION_MODULO",
+      "PESO",
+      "TRANSPORTE",
+      "GRUA",
+      "UNION",
+      "TOLERANCIA",
+      "FUNDACION",
+      "JUNTA",
+      "SELLADO"
+     ]
+    }
+   ]
+  },
+  {
+   "codigo": "TC-15",
+   "nombre": "Bloques de hormigón",
+   "clave": "bloques_hormigon",
+   "parametros": [
+    {
+     "grupo": "materiales",
+     "items": [
+      "LADRILLO",
+      "BLOQUE_HORMIGON",
+      "BLOQUE_CERAMICO",
+      "PIEDRA",
+      "ADOBE",
+      "BAHAREQUE"
+     ]
+    },
+    {
+     "grupo": "variables",
+     "items": [
+      "ESPESOR_MURO",
+      "ALTURA_MURO",
+      "TIPO_MORTERO",
+      "REFUERZO",
+      "COLUMNAS_CONFINAMIENTO",
+      "VIGAS_CONFINAMIENTO",
+      "ABERTURAS",
+      "LONGITUD_MURO",
+      "CARGA",
+      "El cálculo estructural deberá ser realizado según norma estructural adoptada"
+     ]
+    }
+   ]
+  },
+  {
+   "codigo": "TC-16",
+   "nombre": "Bloques cerámicos",
+   "clave": "bloques_ceramicos",
+   "parametros": [
+    {
+     "grupo": "materiales",
+     "items": [
+      "LADRILLO",
+      "BLOQUE_HORMIGON",
+      "BLOQUE_CERAMICO",
+      "PIEDRA",
+      "ADOBE",
+      "BAHAREQUE"
+     ]
+    },
+    {
+     "grupo": "variables",
+     "items": [
+      "ESPESOR_MURO",
+      "ALTURA_MURO",
+      "TIPO_MORTERO",
+      "REFUERZO",
+      "COLUMNAS_CONFINAMIENTO",
+      "VIGAS_CONFINAMIENTO",
+      "ABERTURAS",
+      "LONGITUD_MURO",
+      "CARGA",
+      "El cálculo estructural deberá ser realizado según norma estructural adoptada"
+     ]
+    }
+   ]
+  },
+  {
+   "codigo": "TC-17",
+   "nombre": "Ladrillo tradicional",
+   "clave": "ladrillo",
+   "parametros": [
+    {
+     "grupo": "materiales",
+     "items": [
+      "LADRILLO",
+      "BLOQUE_HORMIGON",
+      "BLOQUE_CERAMICO",
+      "PIEDRA",
+      "ADOBE",
+      "BAHAREQUE"
+     ]
+    },
+    {
+     "grupo": "variables",
+     "items": [
+      "ESPESOR_MURO",
+      "ALTURA_MURO",
+      "TIPO_MORTERO",
+      "REFUERZO",
+      "COLUMNAS_CONFINAMIENTO",
+      "VIGAS_CONFINAMIENTO",
+      "ABERTURAS",
+      "LONGITUD_MURO",
+      "CARGA",
+      "El cálculo estructural deberá ser realizado según norma estructural adoptada"
+     ]
+    }
+   ]
+  },
+  {
+   "codigo": "TC-18",
+   "nombre": "Adobe",
+   "clave": "adobe",
+   "parametros": [
+    {
+     "grupo": "materiales",
+     "items": [
+      "LADRILLO",
+      "BLOQUE_HORMIGON",
+      "BLOQUE_CERAMICO",
+      "PIEDRA",
+      "ADOBE",
+      "BAHAREQUE"
+     ]
+    },
+    {
+     "grupo": "variables",
+     "items": [
+      "ESPESOR_MURO",
+      "ALTURA_MURO",
+      "TIPO_MORTERO",
+      "REFUERZO",
+      "COLUMNAS_CONFINAMIENTO",
+      "VIGAS_CONFINAMIENTO",
+      "ABERTURAS",
+      "LONGITUD_MURO",
+      "CARGA",
+      "El cálculo estructural deberá ser realizado según norma estructural adoptada"
+     ]
+    }
+   ]
+  },
+  {
+   "codigo": "TC-19",
+   "nombre": "Tapial",
+   "clave": "tapial",
+   "parametros": []
+  },
+  {
+   "codigo": "TC-20",
+   "nombre": "Bahareque",
+   "clave": "bahareque",
+   "parametros": [
+    {
+     "grupo": "materiales",
+     "items": [
+      "LADRILLO",
+      "BLOQUE_HORMIGON",
+      "BLOQUE_CERAMICO",
+      "PIEDRA",
+      "ADOBE",
+      "BAHAREQUE"
+     ]
+    },
+    {
+     "grupo": "variables",
+     "items": [
+      "ESPESOR_MURO",
+      "ALTURA_MURO",
+      "TIPO_MORTERO",
+      "REFUERZO",
+      "COLUMNAS_CONFINAMIENTO",
+      "VIGAS_CONFINAMIENTO",
+      "ABERTURAS",
+      "LONGITUD_MURO",
+      "CARGA",
+      "El cálculo estructural deberá ser realizado según norma estructural adoptada"
+     ]
+    }
+   ]
+  },
+  {
+   "codigo": "TC-21",
+   "nombre": "Construcción mixta",
+   "clave": "mixta",
+   "parametros": []
+  },
+  {
+   "codigo": "TC-22",
+   "nombre": "Sistema híbrido",
+   "clave": "hibrido",
+   "parametros": []
+  },
+  {
+   "codigo": "TC-23",
+   "nombre": "Construcción industrializada",
+   "clave": "industrializada",
+   "parametros": []
+  },
+  {
+   "codigo": "TC-24",
+   "nombre": "Construcción progresiva",
+   "clave": "progresiva",
+   "parametros": []
+  },
+  {
+   "codigo": "TC-25",
+   "nombre": "Construcción artesanal",
+   "clave": "artesanal",
+   "parametros": []
+  }
+ ],
+ "sistemas_estructurales": [
+  {
+   "codigo": "EST-01",
+   "nombre": "Muros portantes",
+   "clave": "muros_portantes"
+  },
+  {
+   "codigo": "EST-02",
+   "nombre": "Mampostería confinada",
+   "clave": "mamposteria_confinada"
+  },
+  {
+   "codigo": "EST-03",
+   "nombre": "Pórticos de hormigón armado",
+   "clave": "porticos_hormigon"
+  },
+  {
+   "codigo": "EST-04",
+   "nombre": "Pórticos de acero",
+   "clave": "porticos_acero"
+  },
+  {
+   "codigo": "EST-05",
+   "nombre": "Pórticos de madera",
+   "clave": "porticos_madera"
+  },
+  {
+   "codigo": "EST-06",
+   "nombre": "Muros de corte",
+   "clave": "muros_corte"
+  },
+  {
+   "codigo": "EST-07",
+   "nombre": "Sistema dual",
+   "clave": "dual"
+  },
+  {
+   "codigo": "EST-08",
+   "nombre": "Losas planas",
+   "clave": "losas_planas"
+  },
+  {
+   "codigo": "EST-09",
+   "nombre": "Losas nervadas",
+   "clave": "losas_nervadas"
+  },
+  {
+   "codigo": "EST-10",
+   "nombre": "Losas macizas",
+   "clave": "losas_macizas"
+  },
+  {
+   "codigo": "EST-11",
+   "nombre": "Losas aligeradas",
+   "clave": "losas_aligeradas"
+  },
+  {
+   "codigo": "EST-12",
+   "nombre": "Vigas y losas",
+   "clave": "vigas_losas"
+  },
+  {
+   "codigo": "EST-13",
+   "nombre": "Cerchas",
+   "clave": "cerchas"
+  },
+  {
+   "codigo": "EST-14",
+   "nombre": "Pórticos rígidos",
+   "clave": "porticos_rigidos"
+  },
+  {
+   "codigo": "EST-15",
+   "nombre": "Sistema espacial",
+   "clave": "espacial"
+  },
+  {
+   "codigo": "EST-16",
+   "nombre": "Sistema modular",
+   "clave": "modular"
+  },
+  {
+   "codigo": "EST-17",
+   "nombre": "Estructura mixta",
+   "clave": "mixta"
+  },
+  {
+   "codigo": "EST-18",
+   "nombre": "Estructura prefabricada",
+   "clave": "prefabricada"
+  },
+  {
+   "codigo": "EST-19",
+   "nombre": "Estructura ligera",
+   "clave": "ligera"
+  },
+  {
+   "codigo": "EST-20",
+   "nombre": "Sistema tradicional rural",
+   "clave": "tradicional_rural"
+  }
+ ],
+ "estilos": [
+  {
+   "codigo": "ESTILO-01",
+   "nombre": "Colonial",
+   "clave": "colonial",
+   "reglas": [
+    "patios",
+    "galerías",
+    "grandes vanos",
+    "cubiertas inclinadas",
+    "corredores",
+    "proporción vertical de huecos",
+    "materiales tradicionales"
+   ]
+  },
+  {
+   "codigo": "ESTILO-02",
+   "nombre": "Neocolonial",
+   "clave": "neocolonial",
+   "reglas": [
+    "reinterpretación de elementos coloniales",
+    "patios",
+    "balcones",
+    "cubiertas inclinadas",
+    "portales"
+   ]
+  },
+  {
+   "codigo": "ESTILO-03",
+   "nombre": "Republicano",
+   "clave": "republicano",
+   "reglas": []
+  },
+  {
+   "codigo": "ESTILO-04",
+   "nombre": "Art Déco",
+   "clave": "art_deco",
+   "reglas": [
+    "geometría",
+    "simetría",
+    "bandas horizontales",
+    "elementos decorativos geométricos"
+   ]
+  },
+  {
+   "codigo": "ESTILO-05",
+   "nombre": "Moderno",
+   "clave": "moderno",
+   "reglas": [
+    "volúmenes simples",
+    "planta funcional",
+    "grandes vanos",
+    "integración interior-exterior"
+   ]
+  },
+  {
+   "codigo": "ESTILO-06",
+   "nombre": "Modernismo tropical",
+   "clave": "moderno_tropical",
+   "reglas": []
+  },
+  {
+   "codigo": "ESTILO-07",
+   "nombre": "Racionalista",
+   "clave": "racionalista",
+   "reglas": []
+  },
+  {
+   "codigo": "ESTILO-08",
+   "nombre": "Internacional",
+   "clave": "internacional",
+   "reglas": []
+  },
+  {
+   "codigo": "ESTILO-09",
+   "nombre": "Minimalista",
+   "clave": "minimalista",
+   "reglas": [
+    "geometría limpia",
+    "pocos materiales",
+    "ausencia de ornamentación",
+    "integración de almacenamiento"
+   ]
+  },
+  {
+   "codigo": "ESTILO-10",
+   "nombre": "Contemporáneo",
+   "clave": "contemporaneo",
+   "reglas": [
+    "combinación libre de materiales",
+    "grandes superficies acristaladas",
+    "volúmenes",
+    "integración tecnológica"
+   ]
+  },
+  {
+   "codigo": "ESTILO-11",
+   "nombre": "Mediterráneo",
+   "clave": "mediterraneo",
+   "reglas": [
+    "patios",
+    "terrazas",
+    "cubiertas inclinadas",
+    "colores claros",
+    "protección solar"
+   ]
+  },
+  {
+   "codigo": "ESTILO-12",
+   "nombre": "Caribeño",
+   "clave": "caribeno",
+   "reglas": []
+  },
+  {
+   "codigo": "ESTILO-13",
+   "nombre": "Tropical",
+   "clave": "tropical",
+   "reglas": [
+    "ventilación cruzada",
+    "grandes aleros",
+    "galerías",
+    "sombra",
+    "relación interior-exterior",
+    "portales",
+    "patios",
+    "galerías",
+    "ventilación cruzada",
+    "protección solar",
+    "cubiertas adaptadas a lluvias intensas"
+   ]
+  },
+  {
+   "codigo": "ESTILO-14",
+   "nombre": "Campestre",
+   "clave": "campestre",
+   "reglas": []
+  },
+  {
+   "codigo": "ESTILO-15",
+   "nombre": "Rural tradicional",
+   "clave": "rural_tradicional",
+   "reglas": [
+    "materiales locales",
+    "cubierta inclinada",
+    "relación directa con paisaje",
+    "soluciones constructivas sencillas"
+   ]
+  },
+  {
+   "codigo": "ESTILO-16",
+   "nombre": "Industrial",
+   "clave": "industrial",
+   "reglas": []
+  },
+  {
+   "codigo": "ESTILO-17",
+   "nombre": "Brutalista",
+   "clave": "brutalista",
+   "reglas": []
+  },
+  {
+   "codigo": "ESTILO-18",
+   "nombre": "Japandi",
+   "clave": "japandi",
+   "reglas": []
+  },
+  {
+   "codigo": "ESTILO-19",
+   "nombre": "Nórdico",
+   "clave": "nordico",
+   "reglas": []
+  },
+  {
+   "codigo": "ESTILO-20",
+   "nombre": "Bioclimático",
+   "clave": "bioclimatico",
+   "reglas": []
+  },
+  {
+   "codigo": "ESTILO-21",
+   "nombre": "Vernáculo",
+   "clave": "vernaculo",
+   "reglas": []
+  },
+  {
+   "codigo": "ESTILO-22",
+   "nombre": "Regionalista",
+   "clave": "regionalista",
+   "reglas": []
+  },
+  {
+   "codigo": "ESTILO-23",
+   "nombre": "Ecléctico",
+   "clave": "eclectico",
+   "reglas": []
+  },
+  {
+   "codigo": "ESTILO-24",
+   "nombre": "Neoclásico",
+   "clave": "neoclasico",
+   "reglas": []
+  },
+  {
+   "codigo": "ESTILO-25",
+   "nombre": "Tradicional cubano",
+   "clave": "tradicional_cubano",
+   "reglas": []
+  },
+  {
+   "codigo": "ESTILO-26",
+   "nombre": "Arquitectura de patio",
+   "clave": "arquitectura_patio",
+   "reglas": []
+  },
+  {
+   "codigo": "ESTILO-27",
+   "nombre": "Contemporáneo tropical",
+   "clave": "contemporaneo_tropical",
+   "reglas": []
+  },
+  {
+   "codigo": "ESTILO-28",
+   "nombre": "High-tech residencial",
+   "clave": "high_tech",
+   "reglas": []
+  },
+  {
+   "codigo": "ESTILO-29",
+   "nombre": "Orgánico",
+   "clave": "organico",
+   "reglas": []
+  },
+  {
+   "codigo": "ESTILO-30",
+   "nombre": "Personalizado",
+   "clave": "personalizado",
+   "reglas": []
+  }
+ ],
+ "compatibilidad_estilo_sistema": {
+  "escala": {
+   "0": "incompatible",
+   "1": "posible",
+   "2": "compatible",
+   "3": "altamente compatible"
+  },
+  "fuente": "pares literales del §27 + matriz razonada según las reglas de estilo del §26; nunca bloquea, solo advierte (§27)",
+  "ejemplos_doc": [
+   "COLONIAL + MAMPOSTERIA = 3 (ejemplo literal del §27)",
+   "COLONIAL + HORMIGON = 2 (ejemplo literal del §27)",
+   "COLONIAL + STEEL_FRAMING = 1 (ejemplo literal del §27)",
+   "MODERNO + HORMIGON = 3 (ejemplo literal del §27)",
+   "MODERNO + ACERO = 3 (ejemplo literal del §27)",
+   "MODERNO + MADERA = 3 (ejemplo literal del §27)",
+   "TROPICAL + MAMPOSTERIA = 3 (ejemplo literal del §27)",
+   "TROPICAL + ACERO = 2 (ejemplo literal del §27)",
+   "TROPICAL + MADERA = 3 (ejemplo literal del §27)",
+   "INDUSTRIAL + ACERO = 3 (ejemplo literal del §27)",
+   "INDUSTRIAL + HORMIGON = 3 (ejemplo literal del §27)",
+   "MINIMALISTA + HORMIGON = 3 (ejemplo literal del §27)",
+   "MINIMALISTA + MAMPOSTERIA = 2 (ejemplo literal del §27)"
+  ],
+  "pares": {
+   "arquitectura_patio|acero": 1,
+   "arquitectura_patio|adobe": 2,
+   "arquitectura_patio|hormigon": 2,
+   "arquitectura_patio|mamposteria": 3,
+   "art_deco|acero": 2,
+   "art_deco|hormigon": 3,
+   "art_deco|madera": 1,
+   "art_deco|mamposteria": 3,
+   "bioclimatico|acero": 2,
+   "bioclimatico|adobe": 2,
+   "bioclimatico|hormigon": 2,
+   "bioclimatico|madera": 3,
+   "bioclimatico|mamposteria": 3,
+   "bioclimatico|tapial": 2,
+   "brutalista|acero": 2,
+   "brutalista|adobe": 0,
+   "brutalista|hormigon": 3,
+   "brutalista|madera": 0,
+   "brutalista|mamposteria": 1,
+   "campestre|hormigon": 1,
+   "campestre|ladrillo": 3,
+   "campestre|madera": 3,
+   "campestre|mamposteria": 3,
+   "caribeno|acero": 2,
+   "caribeno|bahareque": 2,
+   "caribeno|hormigon": 2,
+   "caribeno|madera": 3,
+   "caribeno|mamposteria": 3,
+   "colonial|acero": 1,
+   "colonial|adobe": 2,
+   "colonial|bahareque": 2,
+   "colonial|hormigon": 2,
+   "colonial|madera": 2,
+   "colonial|mamposteria": 3,
+   "colonial|mamposteria_confinada": 3,
+   "colonial|steel_framing": 1,
+   "contemporaneo|acero": 3,
+   "contemporaneo|hormigon": 3,
+   "contemporaneo|madera": 2,
+   "contemporaneo|mamposteria": 2,
+   "contemporaneo|steel_framing": 2,
+   "contemporaneo_tropical|acero": 2,
+   "contemporaneo_tropical|hormigon": 3,
+   "contemporaneo_tropical|madera": 3,
+   "contemporaneo_tropical|mamposteria": 3,
+   "eclectico|acero": 1,
+   "eclectico|hormigon": 2,
+   "eclectico|madera": 2,
+   "eclectico|mamposteria": 3,
+   "high_tech|acero": 3,
+   "high_tech|adobe": 0,
+   "high_tech|hormigon": 2,
+   "high_tech|madera": 1,
+   "high_tech|steel_framing": 3,
+   "industrial|acero": 3,
+   "industrial|adobe": 0,
+   "industrial|hormigon": 3,
+   "industrial|madera": 1,
+   "industrial|mamposteria": 2,
+   "industrial|steel_framing": 3,
+   "internacional|acero": 3,
+   "internacional|hormigon": 3,
+   "internacional|madera": 1,
+   "internacional|mamposteria": 2,
+   "japandi|hormigon": 2,
+   "japandi|madera": 3,
+   "japandi|mamposteria": 2,
+   "japandi|steel_framing": 2,
+   "mediterraneo|acero": 1,
+   "mediterraneo|adobe": 2,
+   "mediterraneo|hormigon": 2,
+   "mediterraneo|mamposteria": 3,
+   "minimalista|acero": 3,
+   "minimalista|adobe": 0,
+   "minimalista|hormigon": 3,
+   "minimalista|madera": 1,
+   "minimalista|mamposteria": 2,
+   "minimalista|steel_framing": 2,
+   "moderno|acero": 3,
+   "moderno|hormigon": 3,
+   "moderno|madera": 3,
+   "moderno_tropical|acero": 2,
+   "moderno_tropical|hormigon": 2,
+   "moderno_tropical|madera": 3,
+   "moderno_tropical|mamposteria": 3,
+   "neoclasico|acero": 1,
+   "neoclasico|adobe": 1,
+   "neoclasico|hormigon": 2,
+   "neoclasico|madera": 1,
+   "neoclasico|mamposteria": 3,
+   "neocolonial|hormigon": 2,
+   "neocolonial|mamposteria": 3,
+   "nordico|hormigon": 2,
+   "nordico|madera": 3,
+   "nordico|mamposteria": 2,
+   "nordico|steel_framing": 2,
+   "organico|acero": 1,
+   "organico|adobe": 2,
+   "organico|hormigon": 2,
+   "organico|madera": 3,
+   "organico|mamposteria": 2,
+   "racionalista|acero": 3,
+   "racionalista|adobe": 0,
+   "racionalista|hormigon": 3,
+   "racionalista|madera": 1,
+   "racionalista|mamposteria": 2,
+   "regionalista|adobe": 2,
+   "regionalista|hormigon": 2,
+   "regionalista|madera": 2,
+   "regionalista|mamposteria": 3,
+   "republicano|hormigon": 2,
+   "republicano|mamposteria": 3,
+   "rural_tradicional|acero": 1,
+   "rural_tradicional|adobe": 3,
+   "rural_tradicional|bahareque": 3,
+   "rural_tradicional|madera": 2,
+   "rural_tradicional|mamposteria": 3,
+   "rural_tradicional|tapial": 3,
+   "tradicional_cubano|bahareque": 3,
+   "tradicional_cubano|hormigon": 2,
+   "tradicional_cubano|madera": 2,
+   "tradicional_cubano|mamposteria": 3,
+   "tropical|acero": 2,
+   "tropical|adobe": 2,
+   "tropical|bahareque": 3,
+   "tropical|hormigon": 2,
+   "tropical|madera": 3,
+   "tropical|mamposteria": 3,
+   "tropical|steel_framing": 2,
+   "vernaculo|adobe": 3,
+   "vernaculo|bahareque": 3,
+   "vernaculo|madera": 2,
+   "vernaculo|mamposteria": 3
+  }
+ },
+ "rangos_locales": {
+  "VESTIBULO": {
+   "texto": "",
+   "min": 2.0,
+   "max": 6.0,
+   "space_type": "ENTRANCE"
+  },
+  "SALA": {
+   "texto": "",
+   "min": 16.0,
+   "max": 35.0,
+   "space_type": "LIVING_ROOM"
+  },
+  "COMEDOR": {
+   "texto": "",
+   "min": 10.0,
+   "max": 20.0,
+   "space_type": "DINING_ROOM"
+  },
+  "SALA_COMEDOR": {
+   "texto": "",
+   "min": 25.0,
+   "max": 50.0,
+   "space_type": "LIVING_ROOM"
+  },
+  "COCINA": {
+   "texto": "",
+   "min": 8.0,
+   "max": 18.0,
+   "space_type": "KITCHEN"
+  },
+  "COCINA_ABIERTA": {
+   "texto": "",
+   "min": 10.0,
+   "max": 20.0,
+   "space_type": "KITCHEN"
+  },
+  "DESPENSA": {
+   "texto": "",
+   "min": 2.0,
+   "max": 5.0,
+   "space_type": "STOREROOM"
+  },
+  "DORMITORIO_PRINCIPAL": {
+   "texto": "",
+   "min": 14.0,
+   "max": 25.0,
+   "space_type": "BEDROOM"
+  },
+  "DORMITORIO_SECUNDARIO": {
+   "texto": "",
+   "min": 9.0,
+   "max": 16.0,
+   "space_type": "BEDROOM"
+  },
+  "DORMITORIO_PEQUEÑO": {
+   "texto": "",
+   "min": 8.0,
+   "max": 12.0,
+   "space_type": "ROOM"
+  },
+  "VESTIDOR": {
+   "texto": "",
+   "min": 3.0,
+   "max": 8.0,
+   "space_type": "STOREROOM"
+  },
+  "BANOS": {
+   "texto": "",
+   "min": 4.0,
+   "max": 8.0,
+   "space_type": "BATHROOM"
+  },
+  "BANOS_SOCIAL": {
+   "texto": "",
+   "min": 1.5,
+   "max": 3.0,
+   "space_type": "BATHROOM"
+  },
+  "LAVANDERIA": {
+   "texto": "",
+   "min": 4.0,
+   "max": 8.0,
+   "space_type": "LAUNDRY"
+  },
+  "ALMACEN": {
+   "texto": "",
+   "min": 2.0,
+   "max": 6.0,
+   "space_type": "STOREROOM"
+  },
+  "ESTUDIO": {
+   "texto": "",
+   "min": 8.0,
+   "max": 15.0,
+   "space_type": "OFFICE"
+  },
+  "OFICINA": {
+   "texto": "",
+   "min": 8.0,
+   "max": 16.0,
+   "space_type": "OFFICE"
+  },
+  "TERRAZA": {
+   "texto": "",
+   "min": 8.0,
+   "max": 30.0,
+   "space_type": "ROOM"
+  },
+  "PORTAL": {
+   "texto": "",
+   "min": 5.0,
+   "max": 20.0,
+   "space_type": "ENTRANCE"
+  },
+  "GARAJE": {
+   "texto": "por vehículo como programación inicial",
+   "min": 18.0,
+   "max": 25.0,
+   "space_type": "PARKING"
+  },
+  "CUARTO_TECNICO": {
+   "texto": "",
+   "min": 3.0,
+   "max": 8.0,
+   "space_type": "ELECTRICAL_ROOM"
+  }
+ },
+ "relaciones": [
+  {
+   "a": "SALA",
+   "b": "VESTIBULO",
+   "nivel": "3"
+  },
+  {
+   "a": "SALA",
+   "b": "COMEDOR",
+   "nivel": "3"
+  },
+  {
+   "a": "COMEDOR",
+   "b": "COCINA",
+   "nivel": "3"
+  },
+  {
+   "a": "COCINA",
+   "b": "DESPENSA",
+   "nivel": "2"
+  },
+  {
+   "a": "COCINA",
+   "b": "LAVANDERIA",
+   "nivel": "1"
+  },
+  {
+   "a": "SALA",
+   "b": "TERRAZA",
+   "nivel": "2"
+  },
+  {
+   "a": "DORMITORIO_PRINCIPAL",
+   "b": "BAÑO",
+   "nivel": "3"
+  },
+  {
+   "a": "DORMITORIO_PRINCIPAL",
+   "b": "VESTIDOR",
+   "nivel": "3"
+  },
+  {
+   "a": "DORMITORIOS",
+   "b": "BAÑO",
+   "nivel": "2"
+  },
+  {
+   "a": "DORMITORIOS",
+   "b": "SALA",
+   "nivel": "1"
+  },
+  {
+   "a": "BAÑO",
+   "b": "COCINA",
+   "nivel": "1"
+  },
+  {
+   "a": "BAÑO",
+   "b": "COMEDOR",
+   "nivel": "X"
+  },
+  {
+   "a": "LAVANDERIA",
+   "b": "DORMITORIO",
+   "nivel": "1"
+  },
+  {
+   "a": "GARAJE",
+   "b": "VESTIBULO",
+   "nivel": "2"
+  },
+  {
+   "a": "GARAJE",
+   "b": "COCINA",
+   "nivel": "1"
+  },
+  {
+   "a": "PATIO",
+   "b": "SALA",
+   "nivel": "2"
+  },
+  {
+   "a": "PATIO",
+   "b": "COCINA",
+   "nivel": "2"
+  }
+ ],
+ "zonificacion": {
+  "zonas": [
+   "ZONA_PUBLICA",
+   "ZONA_SEMIPUBLICA",
+   "ZONA_PRIVADA",
+   "ZONA_SERVICIO",
+   "ZONA_TECNICA",
+   "ZONA_EXTERIOR"
+  ],
+  "reglas": [
+   "Z001: El acceso principal debe conducir preferentemente a zona pública.",
+   "Z002: Los dormitorios deben quedar protegidos de las circulaciones principales.",
+   "Z003: La cocina puede tener conexión directa con comedor.",
+   "Z004: La lavandería debe quedar próxima al área de servicio.",
+   "Z005: El baño social no debe abrir directamente hacia comedor o cocina.",
+   "Z006: Los baños deben disponer de ventilación natural o mecánica adecuada.",
+   "Z007: La zona privada debe poder aislarse de la zona social.",
+   "Z008: En vivienda multigeneracional puede existir una suite accesible independiente."
+  ]
+ },
+ "niveles_acabado": {
+  "niveles": [
+   {
+    "nivel": 1,
+    "nombre": "Económico"
+   },
+   {
+    "nivel": 2,
+    "nombre": "Estándar"
+   },
+   {
+    "nivel": 3,
+    "nombre": "Medio"
+   },
+   {
+    "nivel": 4,
+    "nombre": "Premium"
+   },
+   {
+    "nivel": 5,
+    "nombre": "Lujo"
+   }
+  ],
+  "modifica": [
+   "PISOS",
+   "PAREDES",
+   "TECHOS",
+   "SANITARIOS",
+   "GRIFERIA",
+   "PUERTAS",
+   "VENTANAS",
+   "ILUMINACION",
+   "COCINA",
+   "FACHADA",
+   "CARPINTERIA",
+   "DOMOTICA"
+  ]
+ },
+ "modulacion": {
+  "modulos": [
+   "MODULO_0.60",
+   "MODULO_1.20",
+   "MODULO_1.25",
+   "MODULO_1.50",
+   "MODULO_PERSONALIZADO"
+  ],
+  "nota": "para reducir desperdicios (§56)"
+ },
+ "progresiva": {
+  "fases": [
+   {
+    "fase": 1,
+    "nombre": "Vivienda mínima habitable"
+   },
+   {
+    "fase": 2,
+    "nombre": "Ampliación dormitorios"
+   },
+   {
+    "fase": 3,
+    "nombre": "Ampliación zona social"
+   },
+   {
+    "fase": 4,
+    "nombre": "Segundo nivel"
+   },
+   {
+    "fase": 5,
+    "nombre": "Terraza/cubierta"
+   }
+  ],
+  "conservar": [
+   "EJES",
+   "CIMENTACION",
+   "INSTALACIONES",
+   "ESTRUCTURA",
+   "ESCALERA",
+   "RESERVAS"
+  ]
+ },
+ "validaciones": [
+  {
+   "codigo": "VIV001",
+   "regla": "SUPERFICIE_CONSTRUIDA <= SUPERFICIE_MAX_PERMITIDA",
+   "modo": "medido"
+  },
+  {
+   "codigo": "VIV002",
+   "regla": "OCUPACION <= OCUPACION_PERMITIDA",
+   "modo": "medido"
+  },
+  {
+   "codigo": "VIV003",
+   "regla": "ALTURA <= ALTURA_MAXIMA",
+   "modo": "pendiente"
+  },
+  {
+   "codigo": "VIV004",
+   "regla": "RETIROS >= RETIROS_MINIMOS",
+   "modo": "pendiente"
+  },
+  {
+   "codigo": "VIV005",
+   "regla": "AREA_LIBRE >= AREA_LIBRE_MINIMA",
+   "modo": "medido"
+  },
+  {
+   "codigo": "VIV006",
+   "regla": "NUMERO_ESTACIONAMIENTOS >= MINIMO_REQUERIDO",
+   "modo": "medido"
+  },
+  {
+   "codigo": "VIV007",
+   "regla": "DORMITORIO tiene iluminación y ventilación adecuada",
+   "modo": "medido"
+  },
+  {
+   "codigo": "VIV008",
+   "regla": "BAÑO tiene ventilación adecuada",
+   "modo": "medido"
+  },
+  {
+   "codigo": "VIV009",
+   "regla": "COCINA tiene extracción adecuada",
+   "modo": "medido"
+  },
+  {
+   "codigo": "VIV010",
+   "regla": "ESCALERA cumple geometría normativa",
+   "modo": "medido"
+  },
+  {
+   "codigo": "VIV011",
+   "regla": "PUERTAS cumplen accesibilidad cuando MODO_ACCESIBLE = TRUE",
+   "modo": "medido"
+  },
+  {
+   "codigo": "VIV012",
+   "regla": "INSTALACION_ELECTRICA tiene protección",
+   "modo": "medido"
+  },
+  {
+   "codigo": "VIV013",
+   "regla": "VIVIENDA tiene puesta a tierra",
+   "modo": "calculo"
+  },
+  {
+   "codigo": "VIV014",
+   "regla": "CUBIERTA tiene evacuación de agua",
+   "modo": "medido"
+  },
+  {
+   "codigo": "VIV015",
+   "regla": "BAJANTES dimensionadas",
+   "modo": "medido"
+  },
+  {
+   "codigo": "VIV016",
+   "regla": "ESTRUCTURA definida",
+   "modo": "medido"
+  },
+  {
+   "codigo": "VIV017",
+   "regla": "SUELO definido antes de cimentación definitiva",
+   "modo": "calculo"
+  },
+  {
+   "codigo": "VIV018",
+   "regla": "CARGAS estructurales definidas",
+   "modo": "calculo"
+  },
+  {
+   "codigo": "VIV019",
+   "regla": "ESTILO compatible o marcado como excepción",
+   "modo": "medido"
+  },
+  {
+   "codigo": "VIV020",
+   "regla": "SISTEMA_CONSTRUCTIVO compatible con condiciones locales",
+   "modo": "medido"
+  },
+  {
+   "codigo": "VIV021",
+   "regla": "COSTO <= PRESUPUESTO cuando se active control presupuestario",
+   "modo": "pendiente"
+  },
+  {
+   "codigo": "VIV022",
+   "regla": "SUPERFICIE_TOTAL = suma de superficies",
+   "modo": "medido"
+  },
+  {
+   "codigo": "VIV023",
+   "regla": "SUPERFICIE_UTIL <= SUPERFICIE_CONSTRUIDA",
+   "modo": "medido"
+  },
+  {
+   "codigo": "VIV024",
+   "regla": "Todos los locales tienen categoría",
+   "modo": "medido"
+  },
+  {
+   "codigo": "VIV025",
+   "regla": "Todos los locales tienen relaciones",
+   "modo": "medido"
+  },
+  {
+   "codigo": "VIV026",
+   "regla": "Todos los equipos tienen ubicación",
+   "modo": "medido"
+  },
+  {
+   "codigo": "VIV027",
+   "regla": "Todas las instalaciones tienen origen/destino",
+   "modo": "medido"
+  },
+  {
+   "codigo": "VIV028",
+   "regla": "Todas las puertas están asociadas a un muro",
+   "modo": "medido"
+  },
+  {
+   "codigo": "VIV029",
+   "regla": "Todas las ventanas están asociadas a una fachada",
+   "modo": "medido"
+  },
+  {
+   "codigo": "VIV030",
+   "regla": "No existen habitaciones sin acceso",
+   "modo": "medido"
+  }
+ ],
+ "conflictos": [
+  {
+   "codigo": "CONFLICTO_01",
+   "texto": "Columna dentro de puerta",
+   "viv": ""
+  },
+  {
+   "codigo": "CONFLICTO_02",
+   "texto": "Columna dentro de ventana",
+   "viv": ""
+  },
+  {
+   "codigo": "CONFLICTO_03",
+   "texto": "Viga interfiriendo con instalación",
+   "viv": ""
+  },
+  {
+   "codigo": "CONFLICTO_04",
+   "texto": "Bajante atravesando dormitorio",
+   "viv": ""
+  },
+  {
+   "codigo": "CONFLICTO_05",
+   "texto": "Baño sin ventilación",
+   "viv": "VIV008"
+  },
+  {
+   "codigo": "CONFLICTO_06",
+   "texto": "Dormitorio sin iluminación natural cuando sea requerida",
+   "viv": "VIV007"
+  },
+  {
+   "codigo": "CONFLICTO_07",
+   "texto": "Cocina sin extracción",
+   "viv": "VIV009"
+  },
+  {
+   "codigo": "CONFLICTO_08",
+   "texto": "Cubierta sin drenaje",
+   "viv": "VIV014"
+  },
+  {
+   "codigo": "CONFLICTO_09",
+   "texto": "Escalera sin espacio suficiente",
+   "viv": ""
+  },
+  {
+   "codigo": "CONFLICTO_10",
+   "texto": "Equipo sin espacio de mantenimiento",
+   "viv": ""
+  },
+  {
+   "codigo": "CONFLICTO_11",
+   "texto": "Puerta incompatible con circulación",
+   "viv": ""
+  },
+  {
+   "codigo": "CONFLICTO_12",
+   "texto": "Muro estructural eliminado",
+   "viv": ""
+  },
+  {
+   "codigo": "CONFLICTO_13",
+   "texto": "Instalación atravesando elemento estructural",
+   "viv": ""
+  },
+  {
+   "codigo": "CONFLICTO_14",
+   "texto": "Área construida superior al límite",
+   "viv": "VIV001"
+  },
+  {
+   "codigo": "CONFLICTO_15",
+   "texto": "Retiro insuficiente",
+   "viv": "VIV004"
+  }
+ ],
+ "configurables": [
+  "retiros",
+  "ocupación",
+  "altura máxima",
+  "densidad",
+  "estacionamientos",
+  "superficies mínimas",
+  "accesibilidad",
+  "resistencia estructural",
+  "cargas",
+  "viento",
+  "sismo",
+  "tipo de suelo",
+  "espesores estructurales",
+  "instalaciones",
+  "eficiencia energética",
+  "precios",
+  "salarios",
+  "materiales",
+  "normas",
+  "estilos",
+  "colores",
+  "acabados"
+ ],
+ "jurisdicciones": {
+  "lista": [
+   "CUBA",
+   "ESPAÑA",
+   "MEXICO",
+   "COLOMBIA",
+   "CHILE",
+   "ARGENTINA",
+   "OTRA",
+   "PERSONALIZADA"
+  ],
+  "campos_norma": [
+   "CODIGO_CONSTRUCCION",
+   "NORMA_ESTRUCTURAL",
+   "NORMA_ELECTRICA",
+   "NORMA_HIDRAULICA",
+   "NORMA_SANITARIA",
+   "NORMA_ACCESIBILIDAD",
+   "NORMA_INCENDIOS",
+   "NORMA_ENERGETICA",
+   "NORMA_ACUSTICA",
+   "NORMA_BIOCLIMATICA"
+  ]
+ },
+ "tropical": [
+  "priorizar sombra",
+  "ventilación cruzada",
+  "protección solar",
+  "aleros",
+  "galerías",
+  "cubiertas ventiladas",
+  "materiales resistentes a humedad",
+  "protección contra corrosión",
+  "evacuación rápida de lluvia",
+  "vegetación estratégica"
+ ],
+ "huracanes": [
+  "VELOCIDAD_VIENTO",
+  "CATEGORIA_RIESGO",
+  "FORMA_CUBIERTA",
+  "PENDIENTE",
+  "ANCLAJES",
+  "SUCCION",
+  "PRESION",
+  "ABERTURAS",
+  "PROTECCION_VENTANAS"
+ ],
+ "fuentes": [
+  "Catálogo maestro de viviendas v1.0 (especificación técnica programable, 81 secciones) integrado como datos versionados.",
+  "Jurisdicciones normativas (§69): CUBA, ESPAÑA, MÉXICO, COLOMBIA, CHILE, ARGENTINA, OTRA, PERSONALIZADA - la norma concreta se carga desde fuentes verificadas (§70).",
+  "Los rangos del §7 son valores iniciales de programación, no normativa: el usuario los ajusta a su reglamento local."
+ ],
+ "comparacion_sistemas": {
+  "nota": "valores de REFERENCIA editables (§66) para comparar alternativas del §62-63; apreciación de estimación visible y determinista, no precio oficial",
+  "sistemas": [
+   "mamposteria_confinada",
+   "hormigon_aporticado",
+   "steel_framing",
+   "modular"
+  ],
+  "etiquetas": {
+   "mamposteria_confinada": "Mampostería confinada",
+   "hormigon_aporticado": "Hormigón armado aporticado",
+   "steel_framing": "Steel framing",
+   "modular": "Sistema modular prefabricado"
+  },
+  "costo_indice_m2": {
+   "mamposteria_confinada": 100,
+   "hormigon_aporticado": 120,
+   "steel_framing": 130,
+   "modular": 115
+  },
+  "tiempo_meses_por_100m2": {
+   "mamposteria_confinada": 6.0,
+   "hormigon_aporticado": 7.0,
+   "steel_framing": 4.0,
+   "modular": 3.0
+  },
+  "vida_util_anos": {
+   "mamposteria_confinada": 50,
+   "hormigon_aporticado": 60,
+   "steel_framing": 40,
+   "modular": 35
+  },
+  "mantenimiento_pct_anual": {
+   "mamposteria_confinada": 1.0,
+   "hormigon_aporticado": 0.5,
+   "steel_framing": 0.8,
+   "modular": 0.6
+  },
+  "consumo_kwh_m2_ano": {
+   "mamposteria_confinada": 55,
+   "hormigon_aporticado": 60,
+   "steel_framing": 50,
+   "modular": 45
+  },
+  "complejidad_1_3": {
+   "mamposteria_confinada": 1,
+   "hormigon_aporticado": 2,
+   "steel_framing": 2,
+   "modular": 1
+  },
+  "disponibilidad_cuba": {
+   "mamposteria_confinada": "alta",
+   "hormigon_aporticado": "alta",
+   "steel_framing": "media",
+   "modular": "media"
+  },
+  "hormigon_m3_m2": {
+   "mamposteria_confinada": 0.35,
+   "hormigon_aporticado": 0.45,
+   "steel_framing": 0.1,
+   "modular": 0.2
+  },
+  "acero_kg_m2": {
+   "mamposteria_confinada": 12.0,
+   "hormigon_aporticado": 25.0,
+   "steel_framing": 18.0,
+   "modular": 15.0
+  },
+  "mamposteria_m2_m2": {
+   "mamposteria_confinada": 2.8,
+   "hormigon_aporticado": 0.6,
+   "steel_framing": 0.1,
+   "modular": 0.2
+  },
+  "madera_m3_m2": {
+   "mamposteria_confinada": 0.02,
+   "hormigon_aporticado": 0.01,
+   "steel_framing": 0.15,
+   "modular": 0.1
+  }
+ },
+ "energia_solar": {
+  "nota": "parámetros de referencia del §38 (energía solar), configurables según localización (§66 y §71)",
+  "sistemas": [
+   "FOTOVOLTAICO",
+   "SOLAR_TERMICO",
+   "HIBRIDO"
+  ],
+  "consumo_diario_kwh_defecto": 6.0,
+  "horas_sol_pico_defecto": 5.0,
+  "potencia_panel_w_defecto": 450.0,
+  "eficiencia_defecto": 0.2,
+  "perdidas_defecto": 0.15,
+  "autonomia_dias_defecto": 1.0,
+  "profundidad_descarga": 0.8,
+  "area_panel_m2": 2.0,
+  "colector_m2_por_persona": 1.0,
+  "tanque_l_por_persona": 50.0,
+  "climas_horas_sol_pico": {
+   "cálido húmedo": 5.0,
+   "cálido seco": 5.5,
+   "templado": 4.5,
+   "frío (necesita calefacción)": 3.5
+  }
+ }
+}

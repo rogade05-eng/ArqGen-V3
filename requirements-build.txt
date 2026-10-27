@@ -1,0 +1,2 @@
+# ARQ GEN — dependencias SOLO de compilación/empaquetado (usadas por 03_COMPILAR.bat)
+pyinstaller>=6.10.0

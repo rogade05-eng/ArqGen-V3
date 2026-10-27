@@ -1,0 +1,59 @@
+{
+  "format": "ARQ_GEN_NEUFERT_REGION",
+  "code": "cuba",
+  "nombre": "Cuba",
+  "edicion": "adaptación caribeña",
+  "referencias": "Neufert adaptado a clima cálido húmedo; Normas Cubanas (NC) de la Oficina Nacional de Normalización; práctica del diseño y la construcción en el Caribe.",
+  "disclaimer": "Valores de referencia para proyectar; verifica siempre la norma cubana vigente (NC) de tu año.",
+  "criterio": "Clima cálido húmedo con lluvia y ciclones: techos más altos para que el aire circule por persona, ventanas mayores (luz y ventilación cruzada 1/5–1/4 del suelo), aleros y portales generosos, cubiertas que desagüen rápido.",
+  "overrides": {
+    "alturas_libres": {
+      "por_uso": {
+        "Vivienda": 3.0,
+        "Oficina": 3.0,
+        "Escuela primaria": 3.2,
+        "Círculo infantil": 3.0,
+        "Consultorio médico": 3.0,
+        "Policlínico": 3.2,
+        "Hospital": 3.2,
+        "Comedor social": 3.2,
+        "Centro comunitario": 3.2,
+        "Albergue": 3.0,
+        "Local comercial": 3.5
+      },
+      "vivienda_min_m": 2.7,
+      "nota": "Edición Cuba: el calor manda. Techos de 3,0 a 3,5 m para que el aire caliente suba y el ambiente respire; el mínimo habitable sube a 2,70 m."
+    },
+    "ventanas": {
+      "ratio_luz_minimo": 0.2,
+      "ratio_luz_recomendado": 0.25,
+      "ratio_texto": "El acristalado suma entre 1/5 y 1/4 del área del suelo iluminado (ventilación cruzada tropical)",
+      "nota": "Edición Cuba: la ventana no solo da luz, da VIDA — ventilación cruzada permanente. 1/5 del suelo como mínimo y 1/4 como lo cómodo; el fondo útil de iluminación baja a 6,5 m."
+    },
+    "bioclimatica": {
+      "alero_min_m": 0.8,
+      "alero_recomendado_m": 1.2,
+      "porche_m": 2.4,
+      "patio_lado_min_m": 2.5,
+      "patio_luz_min_m": 6.0,
+      "nota": "Edición Cuba: sol vertical y aguaceros — alero de 0,80 a 1,20 m y el portal (porche de 2,40 m) como sala exterior sombreada; el patio conserva sus 6,00 m para que el sol entre de lleno."
+    },
+    "estacionamiento": {
+      "plaza_estandar_m": "2.30x4.60",
+      "plaza_compacta_m": "2.20x4.20",
+      "plaza_accesible_m": "3.50x5.00",
+      "pasillo_90_grados_m": 5.5,
+      "nota": "Edición Cuba: parque automotor de turismos compactos — plaza de 2,30 × 4,60 m con pasillo de maniobra de 5,50 m; la plaza accesible se queda en 3,50 × 5,00 m."
+    },
+    "puertas": {
+      "principal_vivienda_m": 1.2,
+      "nota": "Edición Cuba: la puerta principal de la vivienda es doble (1,20 m) — además del aire, deja pasar el sofá y la nevera."
+    },
+    "cubiertas_pendiente": {
+      "nota": "Edición Cuba: lluvia intensa y ciclones — la chapa metálica anclada gana protagonismo (15 % mínimo); la cubierta plana solo con pendiente de 2 % al desagüe y buen brocal."
+    },
+    "accesibilidad": {
+      "nota": "Edición Cuba: círculo de giro de 1,50 m, puertas con 0,90 m libres, rampa al 8 % y pasamanos a 0,90 m (verificar la NC de accesibilidad vigente)."
+    }
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "code": "precons_cuba_v1",
+  "name": "PRECONS III (base Cuba 2026) — reglas versionadas",
+  "description": "Ruleset PRECONS: partidas, indicadores, recursos, rendimientos y coeficientes como datos versionados (spec 59). Modelo: PRECONS_RULESET -> WORK ITEMS -> INDICATORS -> RESOURCES -> PRICE LIST -> PRICE ANALYSIS.",
+  "version": "2026.1",
+  "currency": "CUP",
+  "coefficients": {
+    "indirect_pct": 18.0,
+    "benefit_pct": 8.0,
+    "transport_pct": 2.5,
+    "other_pct": 3.0
+  },
+  "resources": [
+    {"code": "BLOQUE-20", "name": "Bloque de hormigón 20x20x40", "kind": "MATERIAL", "unit": "und"},
+    {"code": "CEMENTO", "name": "Cemento P-35", "kind": "MATERIAL", "unit": "saco"},
+    {"code": "ARENA", "name": "Arena de río", "kind": "MATERIAL", "unit": "m3"},
+    {"code": "PIEDRA", "name": "Picado 1-2 pulg", "kind": "MATERIAL", "unit": "m3"},
+    {"code": "ACERO-CA", "name": "Acero corrugado CA-50", "kind": "MATERIAL", "unit": "kg"},
+    {"code": "MO-ALBANIL", "name": "Albañil", "kind": "LABOR", "unit": "jornada"},
+    {"code": "MO-AYUDANTE", "name": "Ayudante", "kind": "LABOR", "unit": "jornada"},
+    {"code": "MO-HORMIGONERO", "name": "Hormigonero", "kind": "LABOR", "unit": "jornada"},
+    {"code": "HORMIGONERA", "name": "Hormigonera 9 pies3", "kind": "EQUIPMENT", "unit": "turno"},
+    {"code": "TRANSPORTE", "name": "Transporte de materiales", "kind": "TRANSPORT", "unit": "viaje"}
+  ],
+  "work_items": [
+    {
+      "code": "E-01",
+      "name": "Muro de bloque 20 cm, asentado con mortero C:A",
+      "unit": "m3",
+      "qto_formula": "WALL_VOLUME",
+      "indicators": [
+        {"resource": "BLOQUE-20", "yield": 72.0, "waste_pct": 5.0},
+        {"resource": "CEMENTO", "yield": 18.0, "waste_pct": 3.0},
+        {"resource": "ARENA", "yield": 0.09, "waste_pct": 5.0},
+        {"resource": "MO-ALBANIL", "yield": 1.6},
+        {"resource": "MO-AYUDANTE", "yield": 1.6}
+      ]
+    },
+    {
+      "code": "E-04",
+      "name": "Hormigón f'c 210 kg/cm2 en cimentación, mezclado y colocado",
+      "unit": "m3",
+      "qto_formula": "CONCRETE_VOLUME",
+      "indicators": [
+        {"resource": "CEMENTO", "yield": 7.8, "waste_pct": 2.0},
+        {"resource": "ARENA", "yield": 0.52, "waste_pct": 4.0},
+        {"resource": "PIEDRA", "yield": 0.78, "waste_pct": 4.0},
+        {"resource": "MO-HORMIGONERO", "yield": 1.2},
+        {"resource": "MO-AYUDANTE", "yield": 1.8},
+        {"resource": "HORMIGONERA", "yield": 0.25}
+      ]
+    },
+    {
+      "code": "E-06",
+      "name": "Acero de refuerzo CA-50, corte y doblado",
+      "unit": "kg",
+      "qto_formula": "STEEL_WEIGHT",
+      "indicators": [
+        {"resource": "ACERO-CA", "yield": 1.05, "waste_pct": 3.0},
+        {"resource": "MO-HORMIGONERO", "yield": 0.02},
+        {"resource": "MO-AYUDANTE", "yield": 0.02}
+      ]
+    },
+    {
+      "code": "R-01",
+      "name": "Enlucido vertical interior, espesor 1.5 cm",
+      "unit": "m2",
+      "qto_formula": "WALL_AREA_NET",
+      "indicators": [
+        {"resource": "CEMENTO", "yield": 4.2, "waste_pct": 3.0},
+        {"resource": "ARENA", "yield": 0.025, "waste_pct": 5.0},
+        {"resource": "MO-ALBANIL", "yield": 0.5},
+        {"resource": "MO-AYUDANTE", "yield": 0.5}
+      ]
+    }
+  ],
+  "variants": [
+    {"code": "BASE", "multiplier": 1.0, "description": "Base del proyecto"},
+    {"code": "ECONOMIC", "multiplier": 0.9, "description": "Ajuste económico de rendimientos"},
+    {"code": "PREMIUM", "multiplier": 1.15, "description": "Calidad superior"}
+  ]
+}

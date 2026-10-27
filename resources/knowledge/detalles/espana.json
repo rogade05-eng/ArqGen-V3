@@ -1,0 +1,125 @@
+{
+  "format": "ARQ_GEN_DETALLES_REGION",
+  "code": "espana",
+  "nombre": "España",
+  "edicion": "edición española (CTE)",
+  "referencias": "Código Técnico de la Edificación (CTE): DB-SE-A Seguridad Estructural (Fábricas), DB-HS 1 Protección frente a la humedad, DB-HE Ahorro de energía; EHE-08 Instrucción de Hormigón Estructural.",
+  "disclaimer": "Detalles de referencia para proyectar según el CTE; los límites de transmitancia (DB-HE) dependen de la zona climática del emplazamiento y la norma local del ayuntamiento puede exigir condiciones adicionales.",
+  "criterio": "Envolvente térmica exigente: fábrica de ladrillo con cámara aislada o SATE, forjado unidireccional de bovedilla, cubierta inclinada de teja curva o plana transitable invertida, y carpinterías con rotura de puente térmico según DB-HE.",
+  "retirar": [],
+  "overrides": {
+    "detalles": [
+      {
+        "id": "muros/muro_ladrillo_fabrica",
+        "categoria": "muros",
+        "nombre": "Fábrica de ladrillo doble hoja con cámara (CTE)",
+        "resumen": "Hoja exterior de ladrillo cara vista, cámara con aislamiento semirrígido, hoja interior de tabicón y enlucido de yeso: el muro exterior español de referencia.",
+        "sentido": "de exterior a interior",
+        "capas": [
+          {"nombre": "Hoja exterior de ladrillo cara vista", "espesor_mm": 115, "material": "ladrillo cerámico cara vista (1/2 pie), mortero M5"},
+          {"nombre": "Cámara de aire con aislamiento", "espesor_mm": 40, "material": "lana de roca semirrígida en el interior de la cámara"},
+          {"nombre": "Hoja interior de tabicón", "espesor_mm": 90, "material": "ladrillo hueco cerámico, mortero M5"},
+          {"nombre": "Enlucido de yeso", "espesor_mm": 15, "material": "yeso blanqueado o guarnición + afino"}
+        ],
+        "usos": ["Vivienda", "Residencial colectivo", "Dotacional"],
+        "norma": "CTE DB-SE-A (fábricas: atado metálico entre hojas cada 4 hiladas, dinteles y apoyos); DB-HE-1: transmitancia según zona climática (D1…E1); DB-HS 1 lluvias: junta vertical abierta o rellena según exposición.",
+        "notas": ["El atado no debe atravesar la cámara aislada: usa conectores homologados con retención de gotas.",
+                  "Remata la hoja exterior con coronación o goterón para evitar el lavado de mortero sobre la cámara."],
+        "tags": ["ladrillo", "camara", "aislamiento", "cte", "he"]
+      },
+      {
+        "id": "entrepisos/losa_vigueta_bovedilla",
+        "categoria": "entrepisos",
+        "nombre": "Forjado unidireccional de bovedilla cerámica (CTE)",
+        "resumen": "Viguetas pretensadas con bovedilla cerámica, capa de compresión freada y guarnición bajo techo: el forjado habitual de la edificación española.",
+        "sentido": "de arriba abajo",
+        "capas": [
+          {"nombre": "Capa de compresión (freado)", "espesor_mm": 50, "material": "HA en masa con malla electrosoldada"},
+          {"nombre": "Viguetas pretensadas + bovedilla", "espesor_mm": 250, "material": "canto 25 cm, bovedilla RE-H-60, viguetas a 72 cm con nervio central"},
+          {"nombre": "Guarnición y enlucido", "espesor_mm": 15, "material": "mortero de guarnición + yeso"}
+        ],
+        "usos": ["Vivienda", "Residencial colectivo", "Parking ligero"],
+        "norma": "CTE DB-SE-A (forjados unidireccionales, apoyos mínimos 10 cm en muros y 15 cm según clase); EHE-08 para viguetas y freado con malla.",
+        "notas": ["Rigidiza con nudillos y nervios sobre vanos grandes; el freado con malla evita la fisuración retráctil.",
+                  "Prevé los encuentros con muros de carga y los testeros cerrados en bordes de forjado."],
+        "tags": ["forjado", "vigueta", "bovedilla", "cte"]
+      },
+      {
+        "id": "cubiertas/cubierta_plana_losa",
+        "categoria": "cubiertas",
+        "nombre": "Cubierta plana transitable invertida (CTE DB-HS 1)",
+        "resumen": "Losa de HA con forma de pendiente, lámina impermeable, aislamiento XPS colocado SOBRE la lámina y baldosa flotante: la cubierta invertida transitable.",
+        "sentido": "de arriba abajo",
+        "capas": [
+          {"nombre": "Baldosa flotante sobre apoyos", "espesor_mm": 40, "material": "baldosa cerámica o pétreo sobre apoyos puntuales"},
+          {"nombre": "Lámina de geotextil", "espesor_mm": 5, "material": "geotextil antipunzonamiento 300 g/m2"},
+          {"nombre": "Aislamiento XPS", "espesor_mm": 80, "material": "poliestireno extruido resistente a compresión"},
+          {"nombre": "Lámina impermeable", "espesor_mm": 4, "material": "LBM elastomérica o EPDM adherida"},
+          {"nombre": "Forma de pendiente", "espesor_mm": 60, "material": "mortero de espuma ligera o conglomerado, pendiente 2%"},
+          {"nombre": "Losa de hormigón armado", "espesor_mm": 250, "material": "HA, estructura del forjado de cubierta"}
+        ],
+        "usos": ["Vivienda", "Terraza transitable", "Hotel"],
+        "norma": "CTE DB-HS 1 (fichas de cubierta plana: pendiente mínima 2%, solapes y petos); DB-HE-1 con el XPS por encima de la impermeabilización.",
+        "notas": ["Con el aislamiento sobre la lámina, esta queda protegida del golpe térmico: dimensiona con la hoja de cálculo de la ficha HS1.",
+                  "Sube la impermeabilización 20 cm por encima del terreno o el pavimento en petos y jambas."],
+        "tags": ["cubierta", "invertida", "transitable", "hs1", "cte"]
+      },
+      {
+        "id": "cubiertas/cubierta_inclinada_teja",
+        "categoria": "cubiertas",
+        "nombre": "Cubierta inclinada de teja curva cerámica (CTE)",
+        "resumen": "Teja curva cerámica sobre rastreles, con lámina bajo teja y aislamiento entre pares: la cubierta de pendiente tradicional española resuelta según el CTE.",
+        "sentido": "de arriba abajo",
+        "capas": [
+          {"nombre": "Teja curva cerámica", "espesor_mm": 30, "material": "teja de barro cocido sobre rastreles con gancho o clips"},
+          {"nombre": "Rastreles de madera", "espesor_mm": 40, "material": "madera aserrada tratada, sección 4x4"},
+          {"nombre": "Lámina bajo teja", "espesor_mm": 3, "material": "lámina flexible bituminosa microporosa"},
+          {"nombre": "Aislamiento entre pares", "espesor_mm": 120, "material": "lana mineral en rollos"},
+          {"nombre": "Placa de yeso laminado (falso techo)", "espesor_mm": 15, "material": "PYL sobre perfilería"}
+        ],
+        "usos": ["Vivienda", "Rehabilitación", "Turismo rural"],
+        "norma": "CTE DB-HS 1 (fichas de cubierta inclinada: pendientes según tipo de teja, canales y limatesas); DB-HE-1 para el aislamiento de la cubierta; DB-SE-A y DB-SE-M para la estructura de pendiente.",
+        "notas": ["Ventila la cámara de aire entre la lámina y el aislamiento (canal de ventilación de 2-3 cm) para evitar condensaciones.",
+                  "En zonas de viento fuerte, fija las tejas de contorno y faldón con clips o ganchos."],
+        "tags": ["teja", "curva", "inclinada", "ventilada", "cte"]
+      },
+      {
+        "id": "carpinteria/ventana_pvc_rpt",
+        "categoria": "carpinteria",
+        "nombre": "Ventana de PVC con rotura de puente térmico (DB-HE)",
+        "resumen": "Marco de PVC multicámara con doble vidrio aislante low-e y caja con alféizar: el hueco eficiente del CTE.",
+        "sentido": "de exterior a interior",
+        "capas": [
+          {"nombre": "Marco de PVC multicámara", "espesor_mm": 70, "material": "perfil PVC con 3-5 cámaras, refuerzo de acero interior"},
+          {"nombre": "Vidrio aislante 4/16/4 low-e", "espesor_mm": 24, "material": "doble vidrio con cámara de aire o argón y cara interior low-e"},
+          {"nombre": "Premarco y sellado", "espesor_mm": 20, "material": "premarco de PVC o aluminio, espuma + sellador elastomérico"},
+          {"nombre": "Alféizar con goterón", "espesor_mm": 30, "material": "piedra, cerámica o aluminio con pendiente exterior"}
+        ],
+        "usos": ["Vivienda", "Residencial colectivo", "Oficina"],
+        "norma": "CTE DB-HE-3: transmitancia máxima de marco y vidrio según zona climática; DB-HS 1 sellado al agua; DB-HS 3 y luces de hueco para ventilación mínima.",
+        "notas": ["Sella con junta perimetral continua (membrana o sellador) y evita puentes térmicos entre marco y fábrica.",
+                  "El vidrio low-e orientado: capa hacia la cámara interior; en zonas de verano caluroso valora el control solar exterior."],
+        "tags": ["pvc", "rpt", "vidrio", "he3", "cte"]
+      },
+      {
+        "id": "muros/sate_estuco_aislado",
+        "categoria": "muros",
+        "nombre": "SATE: aislamiento térmico exterior con estuco (DB-HE)",
+        "resumen": "Sistema de aislamiento por el exterior: mortero cola, aislante continuo, malla y estuco acrílico; elimina los puentes térmicos de la envolvente.",
+        "sentido": "de exterior a interior",
+        "capas": [
+          {"nombre": "Estuco acrílico de acabado", "espesor_mm": 3, "material": "mortero acrílico pigmentado con textura"},
+          {"nombre": "Mortero base con malla", "espesor_mm": 6, "material": "mortero adhesivo con malla de fibra de vidrio"},
+          {"nombre": "Aislante continuo", "espesor_mm": 100, "material": "EPS grafitado o lana de roca con tacos homologados"},
+          {"nombre": "Mortero cola", "espesor_mm": 5, "material": "adhesivo cementoso en banda perimetral + puntos"},
+          {"nombre": "Soporte (fábrica existente)", "espesor_mm": 115, "material": "ladrillo o bloque con enlucido firme"}
+        ],
+        "usos": ["Vivienda", "Rehabilitación energética", "Residencial colectivo"],
+        "norma": "CTE DB-HE-1: transmitancia de la envolvente; cada SATE se instala con su Documento de Idoneidad Técnica (ETE/DIT) que fija espesores, tacaje y refuerzos en esquinas y vanos.",
+        "notas": ["Arranca el sistema por debajo del nivel de suelo con perfil de arranque y protege el remate inferior contra capilaridad e insectos.",
+                  "Refuerza con malla doble en esquinas de vano, cantonadas y zonas de impacto."],
+        "tags": ["sate", "aislamiento", "rehabilitacion", "he1", "cte"]
+      }
+    ]
+  }
+}

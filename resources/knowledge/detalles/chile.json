@@ -1,0 +1,100 @@
+{
+  "format": "ARQ_GEN_DETALLES_REGION",
+  "code": "chile",
+  "nombre": "Chile",
+  "edicion": "edición chilena (DS 61 / NCh)",
+  "referencias": "Decreto Supremo 61 (norma de diseño sismorresistente NCh433), NCh1537 cargas, NCh21247 albañilería confinada, NCh1198 madera estructural, Ordenanza General de Urbanismo y Construcciones (OGUC).",
+  "disclaimer": "Detalles de referencia para proyectar según la práctica y las normas chilenas; la zona sísmica (más alta del planeta) obliga a revisar cada proyecto con un calculista y la recepción municipal exige permiso de obra.",
+  "criterio": "Sismo como criterio rector: muros de corte de hormigón armado o albañilería confinada, entrepisos de madera con vigas NCh1198 o losa de HA, cubierta de chapa de zinc sobre volcometas y cadena de desplante impermeabilizada.",
+  "retirar": [],
+  "overrides": {
+    "detalles": [
+      {
+        "id": "muros/muro_corte_hormigon",
+        "categoria": "muros",
+        "nombre": "Muro de corte de hormigón armado (DS 61 / NCh433)",
+        "resumen": "Muro estructural de HA que recorta el edificio en ambos ejes: el sistema chileno que mejor responde a los sismos de magnitud 8.",
+        "sentido": "de exterior a interior",
+        "capas": [
+          {"nombre": "Revestimiento exterior", "espesor_mm": 10, "material": "revoque cemento-arena o revestimiento acrílico"},
+          {"nombre": "Muro de corte de HA", "espesor_mm": 180, "material": "concreto G-25/G-30, enfierradura en dos mallas con estribos en bordes"},
+          {"nombre": "Revestimiento interior", "espesor_mm": 10, "material": "revoque + finito o placa de yeso pegada"}
+        ],
+        "usos": ["Edificio residencial en altura", "Condominio", "Hotel"],
+        "norma": "DS 61 / NCh433: diseño por espectros según zona sísmica y periodo del suelo; NCh1537 cargas; el borde comprimido y la cuantía mínima se verifican según la norma de hormigón aplicable (compatible con ACI 318 como exige la OGUC).",
+        "notas": ["Los muros de corte se distribuyen simétricos y continuos hasta la fundación; evita saltos de rigidez en altura.",
+                  "Refuerza los bordes de los muros con zonas confinadas (estribado cerrado) en edificios altos."],
+        "tags": ["sismo", "ds61", "nch433", "muro", "corte"]
+      },
+      {
+        "id": "muros/muro_bloque_enlucido",
+        "categoria": "muros",
+        "nombre": "Muro de albañilería confinada (NCh21247 / OGUC)",
+        "resumen": "Muro de ladrillo cerámico o bloque confinado con pilares y cadenas de hormigón colados después del muro: la vivienda sismorresistente chilena de baja altura.",
+        "sentido": "de exterior a interior",
+        "capas": [
+          {"nombre": "Revoque exterior", "espesor_mm": 10, "material": "revoque cemento-arena con pañete"},
+          {"nombre": "Albañilería de ladrillo cerámico", "espesor_mm": 140, "material": "ladrillo hueco cerámico con mortero cemento-arena 1:4"},
+          {"nombre": "Revoque interior + finito", "espesor_mm": 10, "material": "revoque con finito liso"}
+        ],
+        "usos": ["Vivienda", "Colegio", "Sede social"],
+        "norma": "NCh21247 (albañilería confinada para vivienda hasta 2 pisos): pilares en extremos y encuentros, cadenas en cada nivel, muros en ambos ejes; DS 61 fija las zonas sísmicas y la OGUC el trámite de recepción.",
+        "notas": ["El hormigón de confinamiento se cuela después del muro con dentelladuras: nunca se pega después en frío.",
+                  "Verifica la relación altura/largo del muro y coloca refuerzo horizontal en muros largos."],
+        "tags": ["sismo", "nch21247", "confinada", "vivienda"]
+      },
+      {
+        "id": "entrepisos/entrepiso_madera",
+        "categoria": "entrepisos",
+        "nombre": "Entrepiso de madera con vigas NCh1198",
+        "resumen": "Vigas de pino radiata clasificado, entablado de piso y cielo con aislamiento: el entrepiso de madera chileno resuelto con madera estructural.",
+        "sentido": "de arriba abajo",
+        "capas": [
+          {"nombre": "Entablado de piso", "espesor_mm": 25, "material": "pino radiata cepillado clavado sobre vigas (o OSB 18)"},
+          {"nombre": "Vigas de pino radiata", "espesor_mm": 200, "material": "2x8 NCh1198, eje a 40 cm con llamadas y doblado en vanos"},
+          {"nombre": "Cielo con aislamiento", "espesor_mm": 20, "material": "tablero T&G o placa sobre perfilería, lana de vidrio 100 sobre el cielo"}
+        ],
+        "usos": ["Vivienda", "Segundo piso de vivienda", "Turismo rural"],
+        "norma": "NCh1198 (madera estructural: clasificación G y humedad) y NCh1537 (cargas de uso); la OGUC permite entrepisos de madera en vivienda hasta 2 pisos con las separaciones de fuego correspondientes.",
+        "notas": ["Clasifica la madera (G-16, G-20) y úsala seca (humedad ≤ 19%): la rigidez del entrepiso depende de eso.",
+                  "Amarra las vigas con llamadas (travesaños) y dobla las que reciben muros o tabiques sobre ellas."],
+        "tags": ["madera", "pino", "nch1198", "entrepiso"]
+      },
+      {
+        "id": "cubiertas/cubierta_chapa_metalica",
+        "categoria": "cubiertas",
+        "nombre": "Cubierta de chapa de zinc sobre volcometas (NCh)",
+        "resumen": "Chapa de zinc ondulada o minibond sobre volcometas de acero galvanizado y correas, con fieltro bajo chapa: la cubierta chilena por antonomasia.",
+        "sentido": "de arriba abajo",
+        "capas": [
+          {"nombre": "Chapa de zinc A2.1", "espesor_mm": 3, "material": "chapa ondulada o minibond galvanizada, tornillos autoperforantes con arandela"},
+          {"nombre": "Volcometas sobre correas", "espesor_mm": 40, "material": "volcometa de acero galvanizado perfilada que separa la chapa de la correa"},
+          {"nombre": "Fieltro asfáltico", "espesor_mm": 2, "material": "fieltro impermeable bajo chapa (condensación)"},
+          {"nombre": "Correas de pino", "espesor_mm": 70, "material": "correa de pino radiata 2x3 sobre cabios o faldones"}
+        ],
+        "usos": ["Vivienda", "Colegio", "Galpón"],
+        "norma": "Práctica constructiva chilena y OGUC (pendiente mínima según el tipo de chapa: ≥ 15% ondulada, ≥ 7% minibond); NCh1537 para succión de viento y fijaciones en zonas expuestas.",
+        "notas": ["El aire entre la volcometa y la chapa ventila y corta la condensación: mantén la continuidad del fieltro debajo.",
+                  "En zonas de viento fuerte reduce la separación de fijaciones y usa arandela de neopreno en cada tornillo."],
+        "tags": ["zinc", "volcometa", "chapa", "cubierta"]
+      },
+      {
+        "id": "cimentaciones/cadena_desplante_nch",
+        "categoria": "cimentaciones",
+        "nombre": "Cadena de desplante de hormigón simple (OGUC)",
+        "resumen": "Cadena (viga) de desplante de hormigón simple sobre mortero de asiento, con sobrecimiento revoque hidrófugo: el arranque chileno del muro bajo el nivel de piso.",
+        "sentido": "de abajo arriba",
+        "capas": [
+          {"nombre": "Mortero de asiento", "espesor_mm": 20, "material": "mortero 1:4 sobre la zapata o suelo firme"},
+          {"nombre": "Cadena de desplante", "espesor_mm": 250, "material": "hormigón simple H-10 (o armado si el cálculo lo pide), ancho igual al muro"},
+          {"nombre": "Sobrecimiento con revoque hidrófugo", "espesor_mm": 300, "material": "albañilería con revoque hidrófugo hasta 30 cm sobre el piso"}
+        ],
+        "usos": ["Vivienda", "Muro perimetral", "Ampliación"],
+        "norma": "OGUC (fundaciones y profundidad de desplante según el terreno) y DS 61 para el amarre sísmico; la cadena distribuye el muro sobre zapatas corridas o directas.",
+        "notas": ["Desplanta bajo la línea de congelación y sobre terreno firme o relleno compactado con la carta de un calculista.",
+                  "El revoque hidrófugo del sobrecimiento corta la humedad ascendente: complétalo con la banda de betún bajo la primera hilada."],
+        "tags": ["cadena", "desplante", "h10", "sobrecimiento"]
+      }
+    ]
+  }
+}

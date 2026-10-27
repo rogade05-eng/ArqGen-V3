@@ -1,0 +1,403 @@
+{
+  "format": "ARQ_GEN_VIVIENDA_SERVICIOS",
+  "version": "1.0.0",
+  "source": "Especificaciones técnicas Viviendas.txt - secciones 39 (Domótica), 45 (Piscina) y 46 (Acústica)",
+  "advertencia": "Los valores numéricos son de REFERENCIA constructiva para dimensionar y comparar: no sustituyen el cálculo especializado ni la norma local (configurables del §66 del catálogo).",
+  "principio_seguridad": {
+    "marca": "REQUIERE_CALCULO_ESPECIALIZADO",
+    "texto": "La malla equipotencial y las protecciones eléctricas de la piscina (§45), el diseño de bus/panel/alimentación domótica (§39) y el aislamiento final R_w por ensayo (§46) piden cálculo especializado."
+  },
+  "piscina": {
+    "seccion": "45",
+    "principio": "La piscina se trata como SISTEMA INDEPENDIENTE de la vivienda (§45): se calcula y presupuesta por separado.",
+    "parametros": [
+      "LARGO",
+      "ANCHO",
+      "PROFUNDIDAD",
+      "VOLUMEN",
+      "FILTRACION",
+      "BOMBA",
+      "DRENAJE",
+      "RECIRCULACION",
+      "EQUIPOTENCIALIDAD",
+      "ILUMINACION",
+      "SEGURIDAD"
+    ],
+    "renovacion_horas": {
+      "por_defecto": 6.0,
+      "min": 4.0,
+      "max": 8.0,
+      "nota": "renovación total del agua por ciclo de filtración; 4-6 h es la práctica habitual en piscina privada (referencia)"
+    },
+    "profundidad": {
+      "min_m": 0.8,
+      "max_m": 2.5,
+      "nota": "fuera del rango se avisa: vaso para niños o de salto pide diseño aparte"
+    },
+    "skimmers": {
+      "m2_por_unidad": 35.0,
+      "nota": "1 skimmer por 30-40 m2 de lámina de agua (referencia)"
+    },
+    "impulsores": {
+      "m2_por_unidad": 25.0,
+      "nota": "boquillas de impulsión para llevar el agua sucia hacia los skimmers (referencia)"
+    },
+    "iluminacion": {
+      "m2_por_foco": 20.0,
+      "nota": "focos LED submarinos, 1 por 15-25 m2 de lámina (referencia)"
+    },
+    "bomba": {
+      "rendimiento": 0.55,
+      "altura_manometrica_m": 10.0,
+      "kW_maximo_referencia": 0.5,
+      "nota": "P(kW) = 1000 * 9.81 * Q(m3/s) * H(m) / rendimiento; H manométrica configurable, 10 m cubre el caso típico (referencia)"
+    },
+    "seguridad": [
+      "cierre perimetral >= 1.20 m con portón autocerrante y cierre alto",
+      "alarma de inmersión o cubierta de seguridad",
+      "profundidades pintadas en el borde",
+      "pértiga o punto de rescate accesible"
+    ],
+    "equipotencialidad": {
+      "marca": "REQUIERE_CALCULO_ESPECIALIZADO",
+      "texto": "la malla equipotencial del vaso, el cuadro y las protecciones diferenciales se dimensionan con la norma eléctrica local (EQUIPOTENCIALIDAD del §45)"
+    },
+    "drenaje": {
+      "texto": "desagüe de fondo con válvula para el vaciado conectado al drenaje del solar; el punto de vertido lo fija la norma local (DRENAJE del §45)"
+    },
+    "equipos_ref": [
+      {
+        "codigo": "PIS-BOMBA",
+        "descripcion": "Bomba de filtración autocebada 0.5 kW",
+        "unidad": "ud",
+        "precio_cup": 45000.0
+      },
+      {
+        "codigo": "PIS-FILTRO",
+        "descripcion": "Filtro de arena d 500 mm con válvula selectora",
+        "unidad": "ud",
+        "precio_cup": 52000.0
+      },
+      {
+        "codigo": "PIS-SKIM",
+        "descripcion": "Skimmer de poliéster con rejilla y compuerta",
+        "unidad": "ud",
+        "precio_cup": 6500.0
+      },
+      {
+        "codigo": "PIS-IMPUL",
+        "descripcion": "Boquilla de impulsión rotable inox",
+        "unidad": "ud",
+        "precio_cup": 2200.0
+      },
+      {
+        "codigo": "PIS-FOCO",
+        "descripcion": "Foco LED submarino 18 W 12 V con nicho",
+        "unidad": "ud",
+        "precio_cup": 7800.0
+      },
+      {
+        "codigo": "PIS-CERCA",
+        "descripcion": "Cierre de seguridad perimetral con portón",
+        "unidad": "m",
+        "precio_cup": 3200.0
+      },
+      {
+        "codigo": "PIS-ALARMA",
+        "descripcion": "Alarma de inmersión",
+        "unidad": "ud",
+        "precio_cup": 9500.0
+      }
+    ]
+  },
+  "acustica": {
+    "seccion": "46",
+    "principio": "Identificar FUENTE_RUIDO, DORMITORIOS, BAÑOS, COCINA, EQUIPOS, CALLES y VECINOS (§46) y establecer AISLAMIENTO_REQUERIDO, MATERIAL, ESPESOR, DOBLE_TABIQUE, AISLAMIENTO_CUBIERTA y VIDRIO_ACUSTICO.",
+    "nota_valores": "R_w de referencia (ISO 717-1) tomando como guía los valores públicos del CTE DB-HR español; la norma local manda (configurables del §66). El R_w final exige hoja de prestaciones del fabricante o ensayo en obra.",
+    "tipos_fuente": {
+      "COCINA": [
+        "KITCHEN"
+      ],
+      "BANOS": [
+        "BATHROOM",
+        "LAVATORY"
+      ],
+      "EQUIPOS": [
+        "GARAGE",
+        "LAUNDRY",
+        "STOREROOM",
+        "CORE",
+        "PARKING"
+      ],
+      "DORMITORIO": [
+        "BEDROOM"
+      ]
+    },
+    "soluciones": {
+      "COCINA": {
+        "material": "Partición de ladrillo hueco doble con enlucido por ambas caras",
+        "espesor_mm": 150,
+        "doble_tabique": false,
+        "rw_db": 30.0
+      },
+      "BANOS": {
+        "material": "Partición de ladrillo hueco doble con enlucido por ambas caras",
+        "espesor_mm": 150,
+        "doble_tabique": false,
+        "rw_db": 30.0
+      },
+      "EQUIPOS": {
+        "material": "Doble tabique desacoplado con cámara con lana mineral",
+        "espesor_mm": 240,
+        "doble_tabique": true,
+        "rw_db": 40.0
+      },
+      "CALLES": {
+        "material": "Ventana con vidrio laminado acústico (6+4 PVB) y marco con doble cierre",
+        "espesor_mm": 100,
+        "doble_tabique": false,
+        "rw_db": 36.0
+      },
+      "VECINOS": {
+        "material": "Muro medianero de doble hoja desacoplada con cámara",
+        "espesor_mm": 300,
+        "doble_tabique": true,
+        "rw_db": 50.0
+      }
+    },
+    "trafico": [
+      {
+        "nivel": "bajo",
+        "rw_db": 33.0,
+        "nota": "calle tranquila, por debajo de 50 dBA"
+      },
+      {
+        "nivel": "medio",
+        "rw_db": 36.0,
+        "nota": "tráfico urbano medio (50-60 dBA)"
+      },
+      {
+        "nivel": "alto",
+        "rw_db": 43.0,
+        "nota": "avenida o carretera, por encima de 60 dBA"
+      }
+    ],
+    "cubierta": {
+      "material": "Cámara con lana mineral de >= 100 mm y doble placa de yeso bajo cubierta",
+      "rw_db": 45.0
+    }
+  },
+  "domotica": {
+    "seccion": "39",
+    "sistemas_doc": [
+      "ILUMINACION",
+      "SEGURIDAD",
+      "CLIMATIZACION",
+      "PERSIANAS",
+      "RIEGO",
+      "ENERGIA",
+      "AGUA",
+      "ACCESO"
+    ],
+    "elementos_doc": [
+      "SENSORES",
+      "ACTUADORES",
+      "CONTROLADORES",
+      "RED",
+      "PANEL",
+      "ALIMENTACION"
+    ],
+    "principio": "El plan domótico se arma por SISTEMAS con sus ELEMENTOS (§39); RED, PANEL y ALIMENTACION se diseñan con el instalador.",
+    "reglas": [
+      {
+        "sistema": "ILUMINACION",
+        "nombre": "Iluminación",
+        "elementos": [
+          {
+            "elemento": "SENSORES",
+            "nombre": "Sensor de presencia",
+            "unidad": "ud",
+            "precio_cup": 3200.0,
+            "clave": "presencia",
+            "base": "pasillos y escaleras del programa más puertas exteriores"
+          },
+          {
+            "elemento": "ACTUADORES",
+            "nombre": "Actuador de circuito de luz",
+            "unidad": "ud",
+            "precio_cup": 2600.0,
+            "clave": "circuito",
+            "base": "un circuito por local habitable"
+          },
+          {
+            "elemento": "CONTROLADORES",
+            "nombre": "Central domótica (hub)",
+            "unidad": "ud",
+            "precio_cup": 18000.0,
+            "clave": "central",
+            "base": "1 por vivienda"
+          },
+          {
+            "elemento": "PANEL",
+            "nombre": "Panel táctil de control",
+            "unidad": "ud",
+            "precio_cup": 9500.0,
+            "clave": "panel",
+            "base": "1 por vivienda"
+          }
+        ]
+      },
+      {
+        "sistema": "SEGURIDAD",
+        "nombre": "Seguridad",
+        "elementos": [
+          {
+            "elemento": "SENSORES",
+            "nombre": "Contacto magnético",
+            "unidad": "ud",
+            "precio_cup": 1400.0,
+            "clave": "contactos",
+            "base": "puertas exteriores y ventanas del nivel de acceso"
+          },
+          {
+            "elemento": "SENSORES",
+            "nombre": "Sensor volumétrico PIR",
+            "unidad": "ud",
+            "precio_cup": 2800.0,
+            "clave": "volumetricos",
+            "base": "1 por cada 3 locales habitables y fracción"
+          },
+          {
+            "elemento": "ACTUADORES",
+            "nombre": "Sirena interior",
+            "unidad": "ud",
+            "precio_cup": 4600.0,
+            "clave": "sirena",
+            "base": "1 por vivienda"
+          }
+        ]
+      },
+      {
+        "sistema": "CLIMATIZACION",
+        "nombre": "Climatización",
+        "elementos": [
+          {
+            "elemento": "SENSORES",
+            "nombre": "Termostato programable",
+            "unidad": "ud",
+            "precio_cup": 7500.0,
+            "clave": "termostato",
+            "base": "1 por nivel (una zona por planta)"
+          }
+        ]
+      },
+      {
+        "sistema": "PERSIANAS",
+        "nombre": "Persianas",
+        "elementos": [
+          {
+            "elemento": "ACTUADORES",
+            "nombre": "Actuador de persiana",
+            "unidad": "ud",
+            "precio_cup": 3800.0,
+            "clave": "persianas",
+            "base": "número de ventanas; sólo si se motorizan todas"
+          }
+        ]
+      },
+      {
+        "sistema": "RIEGO",
+        "nombre": "Riego",
+        "elementos": [
+          {
+            "elemento": "ACTUADORES",
+            "nombre": "Programador de riego",
+            "unidad": "ud",
+            "precio_cup": 4200.0,
+            "clave": "programador_riego",
+            "base": "1 si hay zona verde en el programa"
+          },
+          {
+            "elemento": "ACTUADORES",
+            "nombre": "Electroválvula de zona",
+            "unidad": "ud",
+            "precio_cup": 3600.0,
+            "clave": "electrovalvulas",
+            "base": "1 por zona verde detectada"
+          }
+        ]
+      },
+      {
+        "sistema": "ENERGIA",
+        "nombre": "Energía",
+        "elementos": [
+          {
+            "elemento": "SENSORES",
+            "nombre": "Monitor de consumo",
+            "unidad": "ud",
+            "precio_cup": 8800.0,
+            "clave": "monitor",
+            "base": "1 por vivienda, 2 si hay sistema solar FV"
+          }
+        ]
+      },
+      {
+        "sistema": "AGUA",
+        "nombre": "Agua",
+        "elementos": [
+          {
+            "elemento": "SENSORES",
+            "nombre": "Detector de fuga",
+            "unidad": "ud",
+            "precio_cup": 1900.0,
+            "clave": "fugas",
+            "base": "baños, cocina y lavaderos del programa"
+          },
+          {
+            "elemento": "ACTUADORES",
+            "nombre": "Llave motorizada de corte",
+            "unidad": "ud",
+            "precio_cup": 11000.0,
+            "clave": "llave",
+            "base": "1 por vivienda"
+          }
+        ]
+      },
+      {
+        "sistema": "ACCESO",
+        "nombre": "Acceso",
+        "elementos": [
+          {
+            "elemento": "CONTROLADORES",
+            "nombre": "Video portero",
+            "unidad": "ud",
+            "precio_cup": 15600.0,
+            "clave": "videoportero",
+            "base": "1 por vivienda"
+          },
+          {
+            "elemento": "ACTUADORES",
+            "nombre": "Cerradura electrónica",
+            "unidad": "ud",
+            "precio_cup": 23000.0,
+            "clave": "cerradura",
+            "base": "1 por puerta exterior"
+          }
+        ]
+      }
+    ],
+    "sin_diseno": [
+      "RED",
+      "ALIMENTACION"
+    ],
+    "nota_red": "La RED (bus), el PANEL de cuadro domótico y la ALIMENTACION auxiliar no se presupuestan por elemento: se diseñan con el instalador (REQUIERE_CALCULO_ESPECIALIZADO).",
+    "nota_precios": "Equipos de REFERENCIA sin calidad ni marca, en CUP, sin cableado ni mano de obra."
+  },
+  "fuentes": [
+    "Especificaciones técnicas Viviendas.txt §39 (Domótica)",
+    "Especificaciones técnicas Viviendas.txt §45 (Piscina)",
+    "Especificaciones técnicas Viviendas.txt §46 (Acústica)",
+    "CTE DB-HR (valores R_w de referencia públicos)",
+    "ISO 717-1 (definición de R_w)"
+  ]
+}

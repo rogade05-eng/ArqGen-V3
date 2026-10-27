@@ -1,0 +1,53 @@
+{
+  "format": "ARQ_GEN_NEUFERT_REGION",
+  "code": "colombia",
+  "nombre": "Colombia",
+  "edicion": "adaptación colombiana",
+  "referencias": "Neufert (adaptación colombiana); NSR-10 Reglamento Colombiano de Construcción Sismo Resistente; NTC 4147 accesibilidad y NTC 4595.",
+  "disclaimer": "Valores de referencia para proyectar; verifica siempre el NSR-10 vigente y la norma técnica NTC aplicable.",
+  "criterio": "Clima de montaña templada y sismo: techos de 2,50 m, mampostería confinada de 0,15 m, rampas al 8 % (NTC 4147), cubierta plana o de teja según zona.",
+  "overrides": {
+    "alturas_libres": {
+      "por_uso": {
+        "Vivienda": 2.5,
+        "Oficina": 2.6,
+        "Escuela primaria": 3.0,
+        "Círculo infantil": 2.8,
+        "Consultorio médico": 2.8,
+        "Policlínico": 3.0,
+        "Hospital": 3.0,
+        "Comedor social": 3.0,
+        "Centro comunitario": 3.0,
+        "Albergue": 2.5,
+        "Local comercial": 3.0
+      },
+      "vivienda_min_m": 2.4,
+      "nota": "Edición Colombia: 2,50 m de techo en vivienda (mínimo 2,40) y 2,60 m en oficinas; la salud y la escuela piden los 3,00 m del libro."
+    },
+    "muros_espesor": {
+      "por_tipologia": {
+        "Mampostería de bloque + losa de vigueta": {"exterior_m": 0.15, "interior_m": 0.1},
+        "Hormigón armado (monolítico)": {"exterior_m": 0.15, "interior_m": 0.12}
+      },
+      "nota": "Edición Colombia: mampostería confinada de 0,15 m con castillos y vigas de amarre (NSR-10); el hormigón monolítico de 0,15 m con pórticos resistentes a sismo."
+    },
+    "rampas": {
+      "pendiente_max_porcentaje": 8,
+      "ancho_min_m": 1.2,
+      "nota": "Edición Colombia: rampa al 8 % máximo con ancho mínimo de 1,20 m y descansos (NTC 4147); en tramos de hasta 3 m se tolera el 10 %."
+    },
+    "accesibilidad": {
+      "nota": "Edición Colombia: círculo de giro de 1,50 m, puerta con 0,90 m libres, pasamanos a 0,90 m y baño accesible de 2,20 × 2,40 m (NTC 4147)."
+    },
+    "estacionamiento": {
+      "plaza_estandar_m": "2.50x5.00",
+      "plaza_compacta_m": "2.30x4.50",
+      "nota": "Edición Colombia: plaza de 2,50 × 5,00 m; los reglamentos urbanos suelen pedir un 1–2 % de plazas accesibles señaladas."
+    },
+    "bioclimatica": {
+      "alero_min_m": 0.6,
+      "alero_recomendado_m": 0.9,
+      "nota": "Edición Colombia: alero de 0,60 a 0,90 m según piso térmico — más generoso en el cálido para la lluvia, contenido en el frío para dejar entrar el sol."
+    }
+  }
+}

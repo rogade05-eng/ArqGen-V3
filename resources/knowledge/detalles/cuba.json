@@ -1,0 +1,129 @@
+{
+  "format": "ARQ_GEN_DETALLES_REGION",
+  "code": "cuba",
+  "nombre": "Cuba",
+  "edicion": "edición cubana",
+  "referencias": "Normas Cubanas (NC) de construcción y práctica constructiva nacional: bloque de hormigón nacional, teja criolla, losa nervada de viguetas, mosaico granito; clima tropical cálido-húmedo con vientos ciclónicos.",
+  "disclaimer": "Detalles de referencia para proyectar; verifica la NC aplicable y la disponibilidad real de materiales en tu territorio.",
+  "criterio": "Clima tropical con ciclones: muros de bloque nacional con repello hidrófugo, cubiertas de teja criolla bien ancladas, ventilación permanente con celosías y pisos de mosaico granito de producción nacional; el hormigón celular autoclavado no es de uso corriente, por lo que se retira de la biblioteca base.",
+  "retirar": ["muros/muro_hormigon_celular"],
+  "overrides": {
+    "detalles": [
+      {
+        "id": "muros/muro_bloque_nacional",
+        "categoria": "muros",
+        "nombre": "Muro de bloque de hormigón nacional con repello hidrófugo",
+        "resumen": "El muro cubano estándar: bloque de hormigón 20×20×40 con repello hidrófugo por la cara de lluvia dominante.",
+        "sentido": "de exterior a interior",
+        "capas": [
+          {"nombre": "Repello hidrófugo exterior", "espesor_mm": 15, "material": "mortero 1:4 con aditivo hidrófugo, pañete y frotachado"},
+          {"nombre": "Bloque de hormigón nacional", "espesor_mm": 200, "material": "bloque 20×20×40 asentado con mortero 1:4"},
+          {"nombre": "Repello interior", "espesor_mm": 15, "material": "mortero + finito"}
+        ],
+        "usos": ["Vivienda", "Escuela", "Policlínico"],
+        "norma": "Muro portante con refuerzo en zonas sísmicas del oriente; confinar con columnas en edificios de más de un piso.",
+        "notas": [
+          "El repello hidrófugo en la fachada de lluvia evita manchas y cangrejera por solapado tropical.",
+          "En zonas ciclónicas, revisar el anclaje de la cubierta y los marcos de ventanas: el viento entra por donde puede."
+        ],
+        "tags": ["tropical", "bloque", "economico"]
+      },
+      {
+        "id": "cubiertas/teja_criolla_cuba",
+        "categoria": "cubiertas",
+        "nombre": "Cubierta de teja criolla sobre estructura de madera",
+        "resumen": "Teja criolla de 30×30 sobre rastreles y pares: la cubierta tradicional cubana, ventilada y rápida de reparar tras un ciclón.",
+        "sentido": "de arriba abajo",
+        "capas": [
+          {"nombre": "Teja criolla 30×30", "espesor_mm": 25, "material": "teja de hormigón o cerámica, asentada a limatesa"},
+          {"nombre": "Rastrel de madera", "espesor_mm": 20, "material": "listón sobre los pares"},
+          {"nombre": "Par y nudillo de madera", "espesor_mm": 100, "material": "estructura a dos aguas, pendiente ≥ 27°"}
+        ],
+        "usos": ["Vivienda", "Bohío mejorado", "Escuela rural"],
+        "norma": "Pendiente ≥ 27° para la lluvia tropical intensa; en zonas ciclónicas, amarrar las tejas de cornisa y cumbrera con alambre a los rastreles.",
+        "notas": [
+          "La teja criolla suelta es proyectil en ciclón: el amarre con alambre recocido es la diferencia entre reparar y reponer.",
+          "Dejar lucernarios o ventilas en cumbrera para aliviar el calor acumulado bajo techo."
+        ],
+        "tags": ["tropical", "teja", "ciclon"]
+      },
+      {
+        "id": "cimentaciones/cadena_cimentacion_cuba",
+        "categoria": "cimentaciones",
+        "nombre": "Cadena de cimentación monolítica",
+        "resumen": "Cadena de HA corrida bajo muros, sobre zapata corrida o directamente en suelos firmes: la fundación más practicada en Cuba.",
+        "sentido": "de abajo arriba",
+        "capas": [
+          {"nombre": "Solado de limpieza", "espesor_mm": 50, "material": "concreto pobre sobre fondo compactado"},
+          {"nombre": "Zapata corrida (si el suelo lo pide)", "espesor_mm": 200, "material": "concreto 1:2:4 con refuerzo mínimo"},
+          {"nombre": "Cadena de cimentación de HA", "espesor_mm": 250, "material": "HA 25×30 cm con rejilla o varillas longitudinales"}
+        ],
+        "usos": ["Vivienda", "Escuela", "Anexos"],
+        "norma": "Ancho de zapata según tensión admisible del suelo; la cadena corre en todo el perímetro y bajo muros divisorios.",
+        "notas": [
+          "En terrenos bajos con napa alta, combinar con drenaje perimetral y elevar el arranque del muro.",
+          "Curar la cadena con agua 7 días: el sol tropical agrieta el concreto que se seca rápido."
+        ],
+        "tags": ["tropical", "cadena", "economico"]
+      },
+      {
+        "id": "entrepisos/losa_nervada_viguetas_cuba",
+        "categoria": "entrepisos",
+        "nombre": "Losa nervada de viguetas y bovedillas de hormigón",
+        "resumen": "Entrepiso nacionalizado: viguetas de HA moldeadas en obra entre bovedillas de hormigón, con capa de compresión; ahorra acero y cimbra.",
+        "sentido": "de abajo arriba",
+        "capas": [
+          {"nombre": "Empaste de cielorraso", "espesor_mm": 10, "material": "emplaste sobre bovedilla"},
+          {"nombre": "Bovedilla de hormigón", "espesor_mm": 120, "material": "bovedilla 12×25×33 entre viguetas"},
+          {"nombre": "Capa de compresión", "espesor_mm": 50, "material": "concreto con malla electrosoldada"},
+          {"nombre": "Contrapiso", "espesor_mm": 20, "material": "mortero de nivelación"}
+        ],
+        "usos": ["Vivienda", "Local comercial"],
+        "norma": "Viguetas cada 0,40–0,60 m según carga; apuntalamiento hasta que la capa de compresión alcance resistencia (mínimo 14 días).",
+        "notas": [
+          "Las bovedillas de hormigón son pesadas: organizar el montaje con descansos y no concentrarlas en un vano.",
+          "Instalaciones entre nervios y a lo largo de las bovedillas, nunca cortando viguetas."
+        ],
+        "tags": ["nervada", "economico", "hormigon"]
+      },
+      {
+        "id": "carpinteria/ventana_celosia_cuba",
+        "categoria": "carpinteria",
+        "nombre": "Ventana de celosía de aluminio",
+        "resumen": "Corte por la jamba: alabes de vidrio en perfil de celosía que ventilan permanentemente sin meter la lluvia: la ventana del trópico.",
+        "sentido": "de interior a exterior",
+        "capas": [
+          {"nombre": "Alabe de vidrio", "espesor_mm": 5, "material": "vidrio de celosía 4–5 mm con clips y pasadores"},
+          {"nombre": "Perfil de celosía de aluminio", "espesor_mm": 40, "material": "marco y guías con manivela o palanca"},
+          {"nombre": "Derrame de mortero", "espesor_mm": 20, "material": "mortero sobre premarco anclado al muro"}
+        ],
+        "usos": ["Vivienda", "Escuela", "Consultorio"],
+        "norma": "La celosía ventilando garantiza renovación de aire permanente, clave en clima húmedo; con viento ciclónico se cierra y refuerza con barrote o persiana.",
+        "notas": [
+          "Los alabes se colocan con los clips del lado interior para poder cambiarlos desde adentro.",
+          "Combinar con barrote o reja para seguridad sin perder la ventilación cruzada."
+        ],
+        "tags": ["tropical", "ventilacion", "aluminio"]
+      },
+      {
+        "id": "acabados/mosaico_granito_cuba",
+        "categoria": "acabados",
+        "nombre": "Piso de mosaico granito",
+        "resumen": "El piso cubano por excelencia: baldosa de mosaico granito de 30×30 con capa de marmolina, asentada en mortero sobre contrapiso.",
+        "sentido": "de arriba abajo",
+        "capas": [
+          {"nombre": "Mosaico granito 30×30", "espesor_mm": 20, "material": "baldosa de marmolina y granza, brillo de fábrica"},
+          {"nombre": "Mortero de asiento", "espesor_mm": 25, "material": "mortero 1:4 semiseco golpeado con mazo"},
+          {"nombre": "Contrapiso", "espesor_mm": 40, "material": "mortero nivelado sobre la losa"}
+        ],
+        "usos": ["Vivienda", "Escuela", "Local"],
+        "norma": "Juntas de 3–5 mm alineadas con hilo; el brillo se conserva con lustrado periódico, no con ceras grasas.",
+        "notas": [
+          "Piezas con esquinas desconchadas se guardan para remates y umbrales.",
+          "Muy durable y reparable: una baldosa rota se cambia sin tocar el resto."
+        ],
+        "tags": ["tropical", "piso", "mosaico"]
+      }
+    ]
+  }
+}

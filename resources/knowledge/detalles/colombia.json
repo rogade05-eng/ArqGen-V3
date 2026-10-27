@@ -1,0 +1,111 @@
+{
+  "format": "ARQ_GEN_DETALLES_REGION",
+  "code": "colombia",
+  "nombre": "Colombia",
+  "edicion": "edición colombiana",
+  "referencias": "Reglamento Colombiano de Construcción Sismo Resistente (NSR-10): Título C (hormigón), Título D (mampostería y bahareques), Título E (cubiertas); práctica sismorresistente del país.",
+  "disclaimer": "Detalles de referencia para proyectar; la NSR-10 es obligatoria según la zona sísmica del municipio: verifica la asignación de tu municipio (D.1.1).",
+  "criterio": "Sismo resistencia obligatoria en todo el territorio: mampostería confinada y bahareque cementado para vivienda de baja altura, hormigón f'c 21 MPa como mínimo estructural y cubiertas de teja de barro sobre madera bien ancladas.",
+  "retirar": [],
+  "overrides": {
+    "detalles": [
+      {
+        "id": "muros/muro_confinado_ladrillo_nsr10",
+        "categoria": "muros",
+        "nombre": "Muro de mampostería confinada (NSR-10, Título D)",
+        "resumen": "Muro de ladrillo confinado con columnas y vigas de confinamiento coladas integralmente: el sistema sismorresistente más usado para vivienda colombiana.",
+        "sentido": "de exterior a interior",
+        "capas": [
+          {"nombre": "Revoque exterior", "espesor_mm": 10, "material": "mortero cemento-arena"},
+          {"nombre": "Ladrillo macizo o perforado", "espesor_mm": 150, "material": "unidades f'm ≥ 6,5 MPa (NSR-10 D.5) asentadas con mortero"},
+          {"nombre": "Revoque interior", "espesor_mm": 10, "material": "mortero + finito"}
+        ],
+        "usos": ["Vivienda hasta 5 pisos", "Escuela", "Centro comunitario"],
+        "norma": "NSR-10 D.7: columnas de confinamiento en extremos, esquinas y vanos; vigas de confinamiento en cada entrepiso; el muro no confinado queda limitado a menor altura y área.",
+        "notas": [
+          "El confinamiento se vacía DESPUÉS de levantar el muro: los muros se levantan completos y luego se colan los esquinas.",
+          "Diagonales de refuerzo en tramos largos según D.7.6 cuando la relación altura/largo excede el límite."
+        ],
+        "tags": ["sismo", "nsr10", "confinado"]
+      },
+      {
+        "id": "muros/bahareque_cementado",
+        "categoria": "muros",
+        "nombre": "Bahareque cementado sobre estructura de madera o guadua",
+        "resumen": "Muro liviano tradicional modernizado: junta de guadua o madera con malla gallinero y mortero cementado en ambas caras; excelente en sismo por su peso mínimo.",
+        "sentido": "de exterior a interior",
+        "capas": [
+          {"nombre": "Mortero cementado exterior", "espesor_mm": 20, "material": "mortero 1:3 aplicado sobre malla"},
+          {"nombre": "Malla gallinero", "espesor_mm": 2, "material": "malla metálica clavada a la estructura"},
+          {"nombre": "Junta de guadua / madera", "espesor_mm": 100, "material": "guadua rayada o listones sobre riostras"},
+          {"nombre": "Mortero interior + finito", "espesor_mm": 15, "material": "mortero con acabado fino"}
+        ],
+        "usos": ["Vivienda 1–2 pisos", "Ecoturismo", "Zona rural"],
+        "norma": "NSR-10 D.12: bahareque cementado con estructura de madera o guadua; altura máxima 2 pisos; la guadua debe tratarse contra el gusano (Dinoderus).",
+        "notas": [
+          "Peso mínimo (≈ 1,0 kN/m2) = menor fuerza sísmica: es el muro más amable con el sismo.",
+          "Proteger la base del muro con sobrecimiento de 0,30–0,50 m para aislar la guadua de la humedad."
+        ],
+        "tags": ["sismo", "liviano", "guadua", "tradicional"]
+      },
+      {
+        "id": "entrepisos/losa_maciza_fc21",
+        "categoria": "entrepisos",
+        "nombre": "Losa maciza de hormigón f'c 21 MPa",
+        "resumen": "Entrepiso de losa maciza con el hormigón mínimo estructural de la NSR-10; canto y armadura por calculista según zona sísmica.",
+        "sentido": "de arriba abajo",
+        "capas": [
+          {"nombre": "Contrapiso / rasante", "espesor_mm": 30, "material": "mortero 1:4"},
+          {"nombre": "Losa maciza de HA", "espesor_mm": 150, "material": "concreto f'c ≥ 21 MPa (NSR-10 C.5), armadura por diseño"},
+          {"nombre": "Enlucido de cielorraso", "espesor_mm": 10, "material": "emplaste"}
+        ],
+        "usos": ["Vivienda", "Escuela", "Hospital"],
+        "norma": "NSR-10 C.5.2: f'c mínimo 21 MPa en elementos estructurales; recubrimientos según exposición (C.7.2.7).",
+        "notas": [
+          "En zona de amenaza sísmica alta, verificar derivas y las conexiones losa–pórtico (C.9).",
+          "El contrapiso nunca se considera estructural: las instalaciones empotradas no reducen el canto de la losa."
+        ],
+        "tags": ["sismo", "nsr10", "hormigon"]
+      },
+      {
+        "id": "cimentaciones/viga_fundacion_nsr10",
+        "categoria": "cimentaciones",
+        "nombre": "Viga de fundación sobre zapatas",
+        "resumen": "Viga de amarre entre zapatas aisladas que recibe el muro y liga la cimentación: obligatoria de facto en sismo resistencia.",
+        "sentido": "de abajo arriba",
+        "capas": [
+          {"nombre": "Solado de limpieza", "espesor_mm": 50, "material": "concreto pobre"},
+          {"nombre": "Viga de fundación de HA", "espesor_mm": 300, "material": "f'c 21 MPa, mínimo 4 varillas de 1/2\" longitudinales, estribos @ 0,10"},
+          {"nombre": "Lecho de piedra picada niveladora", "espesor_mm": 50, "material": "piedra picada compactada"}
+        ],
+        "usos": ["Pórtico de hormigón", "Vivienda", "Escuela"],
+        "norma": "La viga de fundación amarra zapatas y muros para que el sismo no genere asientos diferenciales; su canto no debe ser menor que el del muro que recibe.",
+        "notas": [
+          "Anclar las barras de espera del confinamiento o del pilar dentro de la viga.",
+          "Sobre terreno muy blando, la viga trabaja como caja: revisar la reacción del suelo por calculista."
+        ],
+        "tags": ["sismo", "amarre", "hormigon"]
+      },
+      {
+        "id": "cubiertas/cubierta_teja_barro_nsr10",
+        "categoria": "cubiertas",
+        "nombre": "Cubierta de teja de barro sobre estructura de madera",
+        "resumen": "Teja de barro sobre rastreles y pares de madera con lona impermeable: cubierta tradicional colombiana anclada contra viento.",
+        "sentido": "de arriba abajo",
+        "capas": [
+          {"nombre": "Teja de barro", "espesor_mm": 25, "material": "teja de barro con solape ≥ 50 mm"},
+          {"nombre": "Rastrel de madera", "espesor_mm": 20, "material": "listón sobre los pares"},
+          {"nombre": "Lona impermeable", "espesor_mm": 3, "material": "tela asfáltica de apoyo"},
+          {"nombre": "Par de madera", "espesor_mm": 100, "material": "pares 2\"×4\" con pendiente 25–40%"}
+        ],
+        "usos": ["Vivienda", "Escuela rural", "Centro comunitario"],
+        "norma": "NSR-10 Título E: las cubiertas y sus anclajes se diseñan para presión de viento; en zonas de viento fuerte, amarrar tejas de cornisa y cumbrera.",
+        "notas": [
+          "Los pares van espigados o con correa a los muros con viga de cierrre: la cubierta no debe despegarse en sismo.",
+          "La lona bajo teja es la segunda piel: barata y evita goteras por teja volada."
+        ],
+        "tags": ["teja", "viento", "nsr10"]
+      }
+    ]
+  }
+}

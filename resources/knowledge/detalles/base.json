@@ -1,0 +1,824 @@
+{
+  "format": "ARQ_GEN_DETALLES",
+  "version": "1.1",
+  "fuente": {
+    "titulo": "Biblioteca universal de detalles constructivos",
+    "autor": "ARQ GEN — práctica general de obra, Neufert y manuales de construcción clásicos",
+    "nota": "Soluciones constructivas típicas válidas en cualquier región: el punto de partida antes de aplicar la edición regional."
+  },
+  "disclaimer": "Detalles de referencia para proyectar y explicar la obra; verifica siempre la norma local vigente, los materiales disponibles y el criterio del calculista.",
+  "criterio": "Materiales y soluciones genéricos: muros de bloque o ladrillo con enlucido, losas de hormigón armado, cubiertas inclinadas de teja o chapa, impermeabilización por capas y acabados de mortero. Cada detalle describe el corte por capas con espesores de obra habituales.",
+  "detalles": [
+    {
+      "id": "cimentaciones/zapata_corrida_ha",
+      "categoria": "cimentaciones",
+      "nombre": "Zapata corrida de hormigón armado",
+      "resumen": "Apoyo continuo bajo muros portantes: solado de limpieza, zapata de HA y viga de reparto que recibe el muro.",
+      "sentido": "de abajo arriba",
+      "capas": [
+        {
+          "nombre": "Solado de limpieza (concreto pobre)",
+          "espesor_mm": 50,
+          "material": "concreto 1:3:6 sobre suelo compactado"
+        },
+        {
+          "nombre": "Zapata corrida de hormigón armado",
+          "espesor_mm": 250,
+          "material": "HA con malla inferior, recubrimiento 40 mm"
+        },
+        {
+          "nombre": "Viga de reparto / arranque del muro",
+          "espesor_mm": 300,
+          "material": "HA, ancho igual al muro"
+        }
+      ],
+      "usos": [
+        "Vivienda",
+        "Escuela",
+        "Local comercial"
+      ],
+      "norma": "El ancho de zapata depende de la carga y de la tensión admisible del suelo (0,1–0,3 MPa en suelos comunes); ancho mínimo 2 × espesor del muro.",
+      "notas": [
+        "Asentar a la profundidad de desplante fijada por el estudio geotécnico (nunca encima de tierra vegetal).",
+        "Prever el corte capilar entre zapata y primer hilada (ver zócalo impermeable en humedades)."
+      ],
+      "tags": [
+        "portante",
+        "hormigon",
+        "economico"
+      ]
+    },
+    {
+      "id": "cimentaciones/zapata_aislada_pedestal",
+      "categoria": "cimentaciones",
+      "nombre": "Zapata aislada con pedestal para pórticos",
+      "resumen": "Fundación puntual bajo pilares de pórtico: zapata de HA centrada, pedestal y dados para barras de espera.",
+      "sentido": "de abajo arriba",
+      "capas": [
+        {
+          "nombre": "Concreto de limpieza",
+          "espesor_mm": 50,
+          "material": "concreto pobre, 100 mm de borde libre por cara"
+        },
+        {
+          "nombre": "Zapata aislada de hormigón armado",
+          "espesor_mm": 250,
+          "material": "HA con malla inferior en ambos sentidos"
+        },
+        {
+          "nombre": "Pedestal / pilar de arranque",
+          "espesor_mm": 300,
+          "material": "HA con barras de espera del pilar"
+        }
+      ],
+      "usos": [
+        "Pórtico de hormigón",
+        "Pórtico metálico",
+        "Industrial"
+      ],
+      "norma": "Dimensionar por puntulación (punching) y momento en la base; separar zapatas vecinas para no superponer bulones de presión.",
+      "notas": [
+        "Las barras de espera deben anclarse con dados o horquillas antes de vaciar la zapata.",
+        "Si el nivel freático está alto, valorar platea general o drenaje perimetral."
+      ],
+      "tags": [
+        "portante",
+        "portico",
+        "hormigon"
+      ]
+    },
+    {
+      "id": "muros/muro_bloque_enlucido",
+      "categoria": "muros",
+      "nombre": "Muro de bloque de hormigón con enlucido doble cara",
+      "resumen": "El muro económico universal: bloque de 20 cm asentado a hilada y enlucido de mortero por ambas caras.",
+      "sentido": "de exterior a interior",
+      "capas": [
+        {
+          "nombre": "Enlucido exterior de mortero",
+          "espesor_mm": 15,
+          "material": "mortero cemento-arena 1:4, frotachado"
+        },
+        {
+          "nombre": "Bloque de hormigón",
+          "espesor_mm": 200,
+          "material": "bloque 20×20×40 asentado con mortero 1:4"
+        },
+        {
+          "nombre": "Enlucido interior de mortero",
+          "espesor_mm": 15,
+          "material": "mortero 1:5 + finito, listo para pintar"
+        }
+      ],
+      "usos": [
+        "Vivienda",
+        "Escuela",
+        "Local comercial",
+        "Albergue"
+      ],
+      "norma": "Juntas de 10–12 mm; refuerzo horizontal (ferrocemento o escalerilla) cada 2–3 hiladas en zonas sísmicas o de asentamiento.",
+      "notas": [
+        "Humedecer el bloque antes de asentarlo para que no robe agua al mortero.",
+        "Muro portante solo hasta 2 pisos con confinamiento; el resto, tabique o portante con criterio del calculista."
+      ],
+      "tags": [
+        "economico",
+        "portante",
+        "tabique"
+      ]
+    },
+    {
+      "id": "muros/muro_ladrillo_fabrica",
+      "categoria": "muros",
+      "nombre": "Muro de ladrillo cerámico a soga y tizón",
+      "resumen": "Muro portante clásico de fábrica de ladrillo de 25 cm con revoque fino por ambas caras.",
+      "sentido": "de exterior a interior",
+      "capas": [
+        {
+          "nombre": "Revoque exterior",
+          "espesor_mm": 10,
+          "material": "mortero cal-cemento-arena"
+        },
+        {
+          "nombre": "Fábrica de ladrillo cerámico",
+          "espesor_mm": 250,
+          "material": "ladrillo 25×12×5 a soga y tizón, mortero 1:4"
+        },
+        {
+          "nombre": "Revoque interior",
+          "espesor_mm": 10,
+          "material": "mortero + finito"
+        }
+      ],
+      "usos": [
+        "Vivienda",
+        "Edificio pequeño"
+      ],
+      "norma": "Albañilería de fábrica: espesores de junta uniformes (12–15 mm), hiladas a nivel y a plomo; apeo durante el fraguado en altura.",
+      "notas": [
+        "El aparejo a soga y tizón amarra los dos paños: mejor comportamiento a flexión.",
+        "Los espesores mayores (38 cm) solo se justifican por carga o aislamiento acústico."
+      ],
+      "tags": [
+        "portante",
+        "ceramico",
+        "clasico"
+      ]
+    },
+    {
+      "id": "muros/muro_hormigon_celular",
+      "categoria": "muros",
+      "nombre": "Bloque de hormigón celular autoclavado",
+      "resumen": "Muro ligero y aislante: bloque celular pegado con mortero cola y estuco fino, ideal donde pesa la térmica.",
+      "sentido": "de exterior a interior",
+      "capas": [
+        {
+          "nombre": "Estuco exterior acrílico",
+          "espesor_mm": 5,
+          "material": "estuco sobre imprímete con malla"
+        },
+        {
+          "nombre": "Bloque de hormigón celular (HCCA)",
+          "espesor_mm": 200,
+          "material": "densidad 500–600 kg/m3, pegado con mortero cola de 2–3 mm"
+        },
+        {
+          "nombre": "Estuco interior",
+          "espesor_mm": 5,
+          "material": "estuco fino, directo para pintar"
+        }
+      ],
+      "usos": [
+        "Vivienda",
+        "Oficina",
+        "Ampliación sobre losa"
+      ],
+      "norma": "λ ≈ 0,11–0,13 W/m·K: un bloque de 20 cm equivale térmicamente a más de un metro de hormigón; sin embargo, es frágil a impacto: usar en vanos con herraje reforzado.",
+      "notas": [
+        "El muro pegado con cola no lleva junta de mortero: ahorro y menos puente térmico.",
+        "Fijaciones pesadas (armarios, aires) con expansivos de rosca o anclajes químicos."
+      ],
+      "tags": [
+        "termico",
+        "ligero",
+        "tabique"
+      ]
+    },
+    {
+      "id": "muros/muro_adobe_tapial",
+      "categoria": "muros",
+      "nombre": "Muro de tierra (adobe o tapial)",
+      "resumen": "Muro de tierra cruda estabilizada: adobes secados al sol o tapial compactado en encofrado, con enlucido de barro; la solución de menor energía encarnada.",
+      "sentido": "de exterior a interior",
+      "capas": [
+        {
+          "nombre": "Enlucido de barro con paja",
+          "espesor_mm": 10,
+          "material": "barra de barro y fibra vegetal, terminado con cauce o leche de cal"
+        },
+        {
+          "nombre": "Muro de adobe o tapial",
+          "espesor_mm": 450,
+          "material": "tierra arcillosa + 4–8 % de cal o cemento como estabilizante; adobe 0,30×0,15×0,10 o tapial en tiros de 0,50–0,70 m"
+        },
+        {
+          "nombre": "Enlucido de barro con paja",
+          "espesor_mm": 10,
+          "material": "barra de barro y fibra vegetal"
+        }
+      ],
+      "usos": [
+        "Vivienda de una planta",
+        "Muros interiores de masa",
+        "Construcción bioclimática",
+        "Arquitectura vernácula"
+      ],
+      "norma": "Neufert: muro de tierra 0,40–0,50 m; protege la base con zócalo y el arranque con corte capilar; aleros ≥ 0,60 m sobre la fachada de lluvia dominante.",
+      "notas": [
+        "La tierra NUNCA se moja en obra ni en servicio: zócalo impermeable, cimentación que sobre-salga 0,10–0,15 m y salientes de cubierta generosos.",
+        "Vanos con dintel de madera u hormigón apoyado ≥ 0,30 m por lado; anclajes de carpintería con tarugos de madera."
+      ],
+      "tags": [
+        "tierra",
+        "termico",
+        "vernaculo",
+        "bioclimatico"
+      ]
+    },
+    {
+      "id": "muros/muro_piedra_mamposteria",
+      "categoria": "muros",
+      "nombre": "Muro de mampostería de piedra con enlucido",
+      "resumen": "Muro portante grueso de piedra asentada con mortero, careado por ambas caras: masa térmica y durabilidad donde la piedra es material del lugar.",
+      "sentido": "de exterior a interior",
+      "capas": [
+        {
+          "nombre": "Enlucido de cal",
+          "espesor_mm": 15,
+          "material": "mortero de cal 1:3, llaneado fino"
+        },
+        {
+          "nombre": "Mampostería de piedra",
+          "espesor_mm": 400,
+          "material": "piedra del lugar careada, mortero 1:4, hiladas alternadas con «llorones» (piedra larga)"
+        },
+        {
+          "nombre": "Enlucido de cal",
+          "espesor_mm": 15,
+          "material": "mortero de cal 1:3, llaneado fino"
+        }
+      ],
+      "usos": [
+        "Vivienda rural",
+        "Muros de contención baja",
+        "Cerramiento de parcela",
+        "Arquitectura vernácula"
+      ],
+      "norma": "Neufert: muro de piedra 0,35–0,50 m según altura; hiladas con piedras atraviesadas («llorones») cada 0,8–1,0 m para atar las caras.",
+      "notas": [
+        "Repiantar las caras en «espina de pescado»: junta desplazada para no hacer líneas continuas de mortero.",
+        "Amarre con zunchos y dinteles de hormigón sobre vanos; el muro de piedra no vuela (voladizos con estructura aparte)."
+      ],
+      "tags": [
+        "portante",
+        "piedra",
+        "vernaculo"
+      ]
+    },
+    {
+      "id": "entrepisos/losa_maciza_ha",
+      "categoria": "entrepisos",
+      "nombre": "Losa maciza de hormigón armado",
+      "resumen": "El entrepiso de siempre: losa maciza de HA con contrapiso encima y enlucido debajo; máxima robustez y luz corta.",
+      "sentido": "de arriba abajo",
+      "capas": [
+        {
+          "nombre": "Contrapiso / rasante",
+          "espesor_mm": 30,
+          "material": "mortero 1:4 nivelado"
+        },
+        {
+          "nombre": "Losa maciza de hormigón armado",
+          "espesor_mm": 200,
+          "material": "HA, armadura doble para luces 4–6 m"
+        },
+        {
+          "nombre": "Enlucido de cielorraso",
+          "espesor_mm": 10,
+          "material": "mortero o emplaste"
+        }
+      ],
+      "usos": [
+        "Vivienda",
+        "Hospital",
+        "Escuela"
+      ],
+      "norma": "Espesor ≥ luz/28 en losas continuas y ≥ luz/25 en apoyadas; canto y armadura por calculista según carga y luces.",
+      "notas": [
+        "Soporta cargas altas y permite empotrar cajas eléctricas y tuberías entre armaduras.",
+        "El cimbrado se retira a los 14–21 días según el cemento y el clima."
+      ],
+      "tags": [
+        "hormigon",
+        "portante",
+        "robusto"
+      ]
+    },
+    {
+      "id": "entrepisos/losa_vigueta_bovedilla",
+      "categoria": "entrepisos",
+      "nombre": "Losa de viguetas y bovedillas",
+      "resumen": "Entrepiso nervado: viguetas de HA entre bovedillas cerámicas, capa de compresión y contrapiso; ligero y sin cimbra completa.",
+      "sentido": "de arriba abajo",
+      "capas": [
+        {
+          "nombre": "Contrapiso",
+          "espesor_mm": 30,
+          "material": "mortero 1:4"
+        },
+        {
+          "nombre": "Capa de compresión con mallazo",
+          "espesor_mm": 50,
+          "material": "HA de 50 mm con malla electrosoldada"
+        },
+        {
+          "nombre": "Bovedilla cerámica",
+          "espesor_mm": 120,
+          "material": "bovedilla entre viguetas cada 0,80–1,25 m"
+        },
+        {
+          "nombre": "Empaste de cielorraso",
+          "espesor_mm": 10,
+          "material": "emplaste sobre bovedilla"
+        }
+      ],
+      "usos": [
+        "Vivienda",
+        "Local comercial"
+      ],
+      "norma": "Nervios de vigueta pretensada o moldeada con esfuerzo de la capa de compresión; luces usuales 3,5–6 m con apuntalamiento hasta fragua.",
+      "notas": [
+        "Ahorra hasta un 30% de hormigón frente a la maciza y no necesita cimbra de fondo continua.",
+        "Las perforaciones de instalaciones solo entre nervios, nunca cortando viguetas."
+      ],
+      "tags": [
+        "nervada",
+        "economico",
+        "hormigon"
+      ]
+    },
+    {
+      "id": "entrepisos/entrepiso_madera",
+      "categoria": "entrepisos",
+      "nombre": "Entrepiso de madera aserrada",
+      "resumen": "Entrepiso liviano de vigas de madera con tablón de piso y cielorraso; rápido, renovable y fácil de perforar.",
+      "sentido": "de arriba abajo",
+      "capas": [
+        {
+          "nombre": "Tablón de piso",
+          "espesor_mm": 22,
+          "material": "madera dura machihembrada"
+        },
+        {
+          "nombre": "Viga de madera",
+          "espesor_mm": 200,
+          "material": "vigas 2\"×8\" cada 0,40 m, con cinta de bloqueo en apoyos"
+        },
+        {
+          "nombre": "Cielorraso de tabla",
+          "espesor_mm": 15,
+          "material": "tabla o tablero yeso-fibra"
+        }
+      ],
+      "usos": [
+        "Vivienda",
+        "Ampliación",
+        "Zona rural"
+      ],
+      "norma": "Luz útil ≤ 4 m con 2\"×8\" @ 0,40 m (para mayores luces, celosía o viga compuesta); madera con humedad ≤ 19% y tratamiento contra termitas.",
+      "notas": [
+        "Dejar cámara ventilada en apoyos y contra muros húmedos.",
+        "Aislamiento acústico y de fuego limitado: valorar cielo continuo ignífugo en públicos."
+      ],
+      "tags": [
+        "madera",
+        "ligero",
+        "bioclimatico"
+      ]
+    },
+    {
+      "id": "cubiertas/cubierta_inclinada_teja",
+      "categoria": "cubiertas",
+      "nombre": "Cubierta inclinada de teja cerámica",
+      "resumen": "La cubierta clásica de teja curva sobre rastreles y pares de madera, con tela impermeable como segunda piel.",
+      "sentido": "de arriba abajo",
+      "capas": [
+        {
+          "nombre": "Teja curva cerámica",
+          "espesor_mm": 30,
+          "material": "teja de barro, solape ≥ 50 mm"
+        },
+        {
+          "nombre": "Rastrel de madera",
+          "espesor_mm": 20,
+          "material": "listón clavado sobre los pares"
+        },
+        {
+          "nombre": "Tela impermeable de apoyo",
+          "espesor_mm": 3,
+          "material": "lona asfáltica o membrana bajo teja"
+        },
+        {
+          "nombre": "Par de madera (estructura)",
+          "espesor_mm": 100,
+          "material": "par 2\"×4\" según luz y pendiente"
+        }
+      ],
+      "usos": [
+        "Vivienda",
+        "Escuela",
+        "Centro comunitario"
+      ],
+      "norma": "Pendiente 30–40% para teja curva; cumbrera, limatesas y limatones con tejas especiales y mortero.",
+      "notas": [
+        "La tela bajo teja evita goteras por viento con lluvia y por teja rota.",
+        "En viento fuerte, amarrar tejas de cornisa y cumbrera con alambre o mortero."
+      ],
+      "tags": [
+        "teja",
+        "ceramico",
+        "inclinada"
+      ]
+    },
+    {
+      "id": "cubiertas/cubierta_plana_losa",
+      "categoria": "cubiertas",
+      "nombre": "Cubierta plana transitable sobre losa",
+      "resumen": "Azotea plana de losa con capa de pendiente, membrana impermeable y baldosa flotante para caminar sobre ella.",
+      "sentido": "de arriba abajo",
+      "capas": [
+        {
+          "nombre": "Baldosa flotante de protección",
+          "espesor_mm": 30,
+          "material": "baldosa sobre tacos o mortero suelto"
+        },
+        {
+          "nombre": "Membrana impermeabilizante",
+          "espesor_mm": 4,
+          "material": "lámina asfáltica soldada, remates 200 mm"
+        },
+        {
+          "nombre": "Capa de pendiente",
+          "espesor_mm": 40,
+          "material": "mortero al 1,5–2% hacia sumideros"
+        },
+        {
+          "nombre": "Losa de hormigón armado",
+          "espesor_mm": 200,
+          "material": "HA (soporte)"
+        },
+        {
+          "nombre": "Enlucido de cielorraso",
+          "espesor_mm": 10,
+          "material": "emplaste"
+        }
+      ],
+      "usos": [
+        "Vivienda",
+        "Hotel",
+        "Oficina"
+      ],
+      "norma": "Pendiente mínima 1,5–2%; sumideros con colador y chaflanes en encuentros muro-cubierta (sombrerete).",
+      "notas": [
+        "Prueba de estanqueidad de 48 h antes de poner la protección.",
+        "Nunca soldar la membrana apoyando la llama directo contra la losa: primero la capa de pendiente."
+      ],
+      "tags": [
+        "plana",
+        "impermeable",
+        "transitable"
+      ]
+    },
+    {
+      "id": "cubiertas/cubierta_chapa_metalica",
+      "categoria": "cubiertas",
+      "nombre": "Cubierta de chapa metálica ondulada",
+      "resumen": "Cubierta económica y rapidísima: chapa galvanizada ondulada sobre rastreles y pares; ideal naves y viviendas económicas.",
+      "sentido": "de arriba abajo",
+      "capas": [
+        {
+          "nombre": "Chapa ondulada galvanizada",
+          "espesor_mm": 2,
+          "material": "chapa calibre 24–26, solape una onda y media"
+        },
+        {
+          "nombre": "Rastrel / correas",
+          "espesor_mm": 20,
+          "material": "listón de madera o perfil metálico cada 0,60–0,80 m"
+        },
+        {
+          "nombre": "Par de madera (estructura)",
+          "espesor_mm": 100,
+          "material": "par 2\"×4\" o cercha metálica"
+        }
+      ],
+      "usos": [
+        "Vivienda económica",
+        "Nave",
+        "Almacén"
+      ],
+      "norma": "Pendiente mínima 15%; fijación con tornillo autoperforante con arandela de neopreno en el valle de la onda.",
+      "notas": [
+        "Ruidosa con la lluvia: valorar manta aislante bajo chapa en locales ocupados.",
+        "Aterrar la estructura y evitar contacto directo chapa-madera tratada con sales."
+      ],
+      "tags": [
+        "chapa",
+        "economico",
+        "inclinada"
+      ]
+    },
+    {
+      "id": "escaleras/escalera_ha_baldosa",
+      "categoria": "escaleras",
+      "nombre": "Escalera de hormigón armado con baldosa",
+      "resumen": "Tramo de escalera de HA en voladizo o vigas laterales, acabado en baldosa con contrahuella embutida.",
+      "sentido": "de arriba abajo",
+      "capas": [
+        {
+          "nombre": "Baldosa de huella en mortero",
+          "espesor_mm": 30,
+          "material": "baldosa antideslizante + boquilla en contrahuella"
+        },
+        {
+          "nombre": "Losa inclinada de hormigón armado",
+          "espesor_mm": 150,
+          "material": "HA con armadura principal a lo largo del tramo"
+        },
+        {
+          "nombre": "Enlucido inferior",
+          "espesor_mm": 10,
+          "material": "emplaste del sofito"
+        }
+      ],
+      "usos": [
+        "Vivienda",
+        "Escuela",
+        "Oficina"
+      ],
+      "norma": "Fórmula de Blondel: 2 × contrahuella + huella entre 0,60 y 0,64 m (huella 0,28–0,30, contrahuella 0,16–0,18); barandilla a 0,90 m.",
+      "notas": [
+        "Las contrahuellas se aploman con taco de madera antes de fraguar.",
+        "Descanso cada 16 contrahuellas como máximo en uso público."
+      ],
+      "tags": [
+        "hormigon",
+        "blondel",
+        "vertical"
+      ]
+    },
+    {
+      "id": "humedades/drenaje_perimetral",
+      "categoria": "humedades",
+      "nombre": "Drenaje perimetral de cimentación",
+      "resumen": "Tubería perforada envuelta en grava y geotextil al pie del cimiento: baja el nivel freático y protege el sótano.",
+      "sentido": "de dentro afuera",
+      "capas": [
+        {
+          "nombre": "Tubería perforada DN100",
+          "espesor_mm": 100,
+          "material": "PVC perforado con pendiente 0,5–1% al sumidero"
+        },
+        {
+          "nombre": "Grava lavada envolvente",
+          "espesor_mm": 200,
+          "material": "grava 10–25 mm alrededor del tubo"
+        },
+        {
+          "nombre": "Geotextil filtrante",
+          "espesor_mm": 3,
+          "material": "tela no tejida que impide la colmatación"
+        },
+        {
+          "nombre": "Filtro de arena",
+          "espesor_mm": 100,
+          "material": "arena gruesa contra el terreno natural"
+        }
+      ],
+      "usos": [
+        "Sótano",
+        "Cimentación en zona húmeda",
+        "Muro de contención"
+      ],
+      "norma": "Colocar a la base del cimiento, nunca encima; el geotextil debe envolver toda la grava o el drenaje se colmata en pocos años.",
+      "notas": [
+        "Tener pozo de visita cada 30–40 m y boca de limpieza en los cambios de dirección.",
+        "El agua recolectada va a sumidero, cisterna de riego o evacuación por gravedad, nunca a la cisterna de consumo."
+      ],
+      "tags": [
+        "drenaje",
+        "freatico",
+        "sotano"
+      ]
+    },
+    {
+      "id": "humedades/zocalo_impermeable",
+      "categoria": "humedades",
+      "nombre": "Zócalo y corte capilar en arranque de muro",
+      "resumen": "La gota asfáltica entre cimiento y muro más el zócalo hidrófugo: la pareja que corta la humedad de ascenso capilar.",
+      "sentido": "de exterior a interior",
+      "capas": [
+        {
+          "nombre": "Enlucido hidrófugo de zócalo",
+          "espesor_mm": 15,
+          "material": "mortero con aditivo hidrófugo, hasta 0,30 m de altura"
+        },
+        {
+          "nombre": "Muro (primeras hiladas)",
+          "espesor_mm": 200,
+          "material": "bloque o ladrillo"
+        },
+        {
+          "nombre": "Corte capilar (gota asfáltica)",
+          "espesor_mm": 20,
+          "material": "mortero impermeable o lámina betuminosa entre cimiento y muro"
+        }
+      ],
+      "usos": [
+        "Vivienda",
+        "Cualquier muro sobre cimiento"
+      ],
+      "norma": "El corte capilar va en continuo bajo TODA la línea de muro, incluidos dinteles de ventanas a nivel de suelo.",
+      "notas": [
+        "La humedad que sube por capilaridad mancha y desprende el enlucido hasta un metro: barato prevenirlo, caro repararlo.",
+        "El terreno junto al muro debe quedar por debajo del zócalo y con pendiente de alejamiento."
+      ],
+      "tags": [
+        "capilar",
+        "asfalto",
+        "economico"
+      ]
+    },
+    {
+      "id": "carpinteria/ventana_aluminio_alfizar",
+      "categoria": "carpinteria",
+      "nombre": "Ventana de aluminio con alféizar de piedra",
+      "resumen": "Corte por la jamba: vidrio en perfil de aluminio con premarco embebido, derrame de mortero y alféizar con goterón.",
+      "sentido": "de interior a exterior",
+      "capas": [
+        {
+          "nombre": "Vidrio templado",
+          "espesor_mm": 6,
+          "material": "vidrio con calzos y junquillo"
+        },
+        {
+          "nombre": "Perfil de aluminio + premarco",
+          "espesor_mm": 40,
+          "material": "premarco anclado al muro, sellado perimetral"
+        },
+        {
+          "nombre": "Derrame de mortero",
+          "espesor_mm": 20,
+          "material": "mortero que rellena el hueco alrededor del premarco"
+        },
+        {
+          "nombre": "Alféizar de piedra con goterón",
+          "espesor_mm": 30,
+          "material": "piedra o baldosa con goteadera en cara inferior"
+        }
+      ],
+      "usos": [
+        "Vivienda",
+        "Escuela",
+        "Oficina"
+      ],
+      "norma": "El alféizar sobresale 20–30 mm de la cara del muro y lleva goterón: sin él, el agua corre al muro y mancha la fachada.",
+      "notas": [
+        "Sellado con silicona neutra (no áctica) sobre aluminio y mortero curado.",
+        "Dejar juego perimetral 5–10 mm para dilatación y tolerancia de hueco."
+      ],
+      "tags": [
+        "vano",
+        "aluminio",
+        "fachada"
+      ]
+    },
+    {
+      "id": "carpinteria/puerta_interior_premarco",
+      "categoria": "carpinteria",
+      "nombre": "Puerta interior con premarco",
+      "resumen": "Corte por la jamba de una puerta interior: hoja sobre premarco fijado al tabique con derrame de mortero.",
+      "sentido": "de interior a exterior",
+      "capas": [
+        {
+          "nombre": "Hoja de puerta",
+          "espesor_mm": 35,
+          "material": "madera maciza o alveolar enchapada"
+        },
+        {
+          "nombre": "Premarco y cerco",
+          "espesor_mm": 25,
+          "material": "premarco de acero o madera con marco machihembrado"
+        },
+        {
+          "nombre": "Derrame de mortero / espuma",
+          "espesor_mm": 15,
+          "material": "relleno entre premarco y muro"
+        }
+      ],
+      "usos": [
+        "Vivienda",
+        "Oficina",
+        "Escuela"
+      ],
+      "norma": "Hueco = hoja + 60–70 mm de juego total; el premarco se aploma y fija antes de enlucir, nunca después.",
+      "notas": [
+        "Colocar tres bisagras en hojas de hasta 2,10 m y 40 kg.",
+        "El zócalo termina contra el cerco, no lo atraviesa."
+      ],
+      "tags": [
+        "vano",
+        "madera",
+        "interior"
+      ]
+    },
+    {
+      "id": "acabados/solado_ceramico_mortero",
+      "categoria": "acabados",
+      "nombre": "Solado cerámico sobre mortero",
+      "resumen": "El piso universal: baldosa cerámica asentada en mortero sobre contrapiso; nivelado con mazo y nivel de burbuja.",
+      "sentido": "de arriba abajo",
+      "capas": [
+        {
+          "nombre": "Baldosa cerámica",
+          "espesor_mm": 8,
+          "material": "cerámica esmaltada o porcelánico"
+        },
+        {
+          "nombre": "Mortero de asiento",
+          "espesor_mm": 25,
+          "material": "mortero 1:4 semiseco, golpeado con mazo"
+        },
+        {
+          "nombre": "Contrapiso",
+          "espesor_mm": 40,
+          "material": "mortero o HA sobre la losa soporte"
+        }
+      ],
+      "usos": [
+        "Vivienda",
+        "Escuela",
+        "Local comercial"
+      ],
+      "norma": "Juntas 2–5 mm (más en exteriores); pendiente al desagüe en baños y cocinas; humedad del contrapiso < 3% antes de asentar.",
+      "notas": [
+        "Mezclar baldosas de varias cajas para igualar el tono de hornada.",
+        "Tráfico ligero a las 24 h; tráfico pleno a los 7 días."
+      ],
+      "tags": [
+        "piso",
+        "ceramico",
+        "economico"
+      ]
+    },
+    {
+      "id": "acabados/piso_flotante_laminado",
+      "categoria": "acabados",
+      "nombre": "Piso flotante laminado sobre capa aislante",
+      "resumen": "Piso laminado con clic sobre lámina de espuma: seco, inmediato y cómodo, sobre contrapiso nivelado.",
+      "sentido": "de arriba abajo",
+      "capas": [
+        {
+          "nombre": "Tablilla laminada clic",
+          "espesor_mm": 8,
+          "material": "laminado AC3–AC4 con junta perimetral de 10 mm"
+        },
+        {
+          "nombre": "Lámina de espuma aislante",
+          "espesor_mm": 3,
+          "material": "polietileno de 2–3 mm con solape de 100 mm"
+        },
+        {
+          "nombre": "Contrapiso nivelado",
+          "espesor_mm": 40,
+          "material": "autonivelante o mortero bien regleado"
+        }
+      ],
+      "usos": [
+        "Vivienda",
+        "Oficina",
+        "Dormitorios"
+      ],
+      "norma": "El contrapiso debe quedar plano (±2 mm en regla de 2 m) y seco; nunca clavar ni pegar la tablilla: flota.",
+      "notas": [
+        "La junta perimetral se tapa con rodapié flotante: sin ella el piso se abomba.",
+        "Aclimatar las cajas 48 h en la habitación antes de instalar."
+      ],
+      "tags": [
+        "piso",
+        "seco",
+        "termico"
+      ]
+    }
+  ]
+}

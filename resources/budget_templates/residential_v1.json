@@ -1,0 +1,70 @@
+{
+  "code": "residential_v1",
+  "name": "Plantilla residencial base",
+  "currency": "CUP",
+  "indirect_pct": 18.0,
+  "other_pct": 3.0,
+  "price_list": "GENERAL",
+  "chapters": [
+    {
+      "code": "01",
+      "name": "OBRA CIVIL",
+      "items": [
+        {
+          "code": "01.01",
+          "description": "Mampostería de bloque 20 cm, mortero cemento-arena",
+          "unit": "m3",
+          "quantity_source": {"kind": "qto_formula", "qto_formula": "WALL_VOLUME", "aggregate": "SUM"},
+          "performance": 4.0,
+          "resources": [
+            {"resource_code": "BLOQUE-20", "factor": 72.0, "waste_pct": 5.0, "kind": "MATERIAL"},
+            {"resource_code": "CEMENTO", "factor": 18.0, "waste_pct": 3.0, "kind": "MATERIAL"},
+            {"resource_code": "ARENA", "factor": 0.09, "waste_pct": 5.0, "kind": "MATERIAL"},
+            {"resource_code": "MO-ALBANIL", "factor": 1.6, "waste_pct": 0.0, "kind": "LABOR"},
+            {"resource_code": "MO-AYUDANTE", "factor": 1.6, "waste_pct": 0.0, "kind": "LABOR"}
+          ]
+        },
+        {
+          "code": "01.02",
+          "description": "Enlucido vertical interior de muros",
+          "unit": "m2",
+          "quantity_source": {"kind": "qto_formula", "qto_formula": "WALL_AREA_NET", "aggregate": "SUM"},
+          "performance": 12.0,
+          "resources": [
+            {"resource_code": "CEMENTO", "factor": 4.2, "waste_pct": 3.0, "kind": "MATERIAL"},
+            {"resource_code": "ARENA", "factor": 0.025, "waste_pct": 5.0, "kind": "MATERIAL"},
+            {"resource_code": "MO-ALBANIL", "factor": 0.5, "waste_pct": 0.0, "kind": "LABOR"}
+          ]
+        }
+      ]
+    },
+    {
+      "code": "02",
+      "name": "CARPINTERÍA",
+      "items": [
+        {
+          "code": "02.01",
+          "description": "Suministro y colocación de puertas interiores",
+          "unit": "und",
+          "quantity_source": {"kind": "count_type", "entity_type": "DOOR"},
+          "performance": 3.0,
+          "resources": [
+            {"resource_code": "PUERTA-MADERA", "factor": 1.0, "waste_pct": 0.0, "kind": "MATERIAL"},
+            {"resource_code": "MO-CARPINTERO", "factor": 2.0, "waste_pct": 0.0, "kind": "LABOR"}
+          ]
+        },
+        {
+          "code": "02.02",
+          "description": "Suministro y colocación de ventanas de aluminio",
+          "unit": "und",
+          "quantity_source": {"kind": "count_type", "entity_type": "WINDOW"},
+          "performance": 2.0,
+          "resources": [
+            {"resource_code": "VENTANA-ALUMINIO", "factor": 1.0, "waste_pct": 0.0, "kind": "MATERIAL"},
+            {"resource_code": "MO-CARPINTERO", "factor": 3.0, "waste_pct": 0.0, "kind": "LABOR"}
+          ]
+        }
+      ]
+    }
+  ]
+}

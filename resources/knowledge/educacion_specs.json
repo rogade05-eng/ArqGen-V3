@@ -1,0 +1,5398 @@
+{
+ "format": "ARQ_GEN_EDUCACION_SPECS",
+ "version": "1.0",
+ "source": "Especificaciones técnicas, funcionales y dimensionales - Escuelas primarias, secundarias, círculos infantiles y albergues escolares (125 secciones)",
+ "advertencia": "Los valores indicados como RECOMENDADO son criterios de diseño orientativos y no sustituyen la normativa local; las cotas definitivas se adaptan a la normativa educativa, de accesibilidad e incendios del país (§41/§45/§96/§121: el mínimo legal nunca se asume óptimo).",
+ "principio": {
+  "cotas": [
+   "COTA_MINIMA_NORMATIVA",
+   "COTA_MINIMA_FUNCIONAL",
+   "COTA_RECOMENDADA",
+   "COTA_OPTIMIZADA",
+   "COTA_MAXIMA",
+   "COTA_RESULTANTE_DEL_CALCULO"
+  ],
+  "regla": "El motor diferencia obligatoriamente las 7 clases de cota (§121) y no asume COTA_RECOMENDADA = COTA_NORMATIVA ni COTA_MINIMA = COTA_OPTIMA.",
+  "prioridades": {
+   "P01": "SEGURIDAD INFANTIL",
+   "P02": "SEGURIDAD DE VIDA",
+   "P03": "EVACUACIÓN",
+   "P04": "ACCESIBILIDAD",
+   "P05": "INCENDIOS",
+   "P06": "HIGIENE Y SALUD (OMS)",
+   "P07": "FUNCIONALIDAD DOCENTE",
+   "P08": "CONFORT BIOCLIMÁTICO",
+   "P09": "MANTENIMIENTO",
+   "P10": "EFICIENCIA",
+   "P11": "ECONOMÍA",
+   "P12": "ESTÉTICA"
+  }
+ },
+ "tipologias": [
+  {
+   "clave": "ED-01",
+   "nombre": "Escuela primaria",
+   "familia": "ESCUELA_PRIMARIA"
+  },
+  {
+   "clave": "ED-02",
+   "nombre": "Escuela secundaria",
+   "familia": "ESCUELA_SECUNDARIA"
+  },
+  {
+   "clave": "ED-03",
+   "nombre": "Círculo infantil",
+   "familia": "CIRCULO_INFANTIL"
+  },
+  {
+   "clave": "ED-04",
+   "nombre": "Albergue escolar",
+   "familia": "ALBERGUE_ESCOLAR"
+  }
+ ],
+ "capacidades": {
+  "ESCUELA_PRIMARIA": {
+   "formula_aulas": "NUM_AULAS = CEIL(NUM_ALUMNOS / ALUMNOS_POR_AULA)",
+   "alumnos_por_aula": {
+    "min": 20.0,
+    "max": 30.0,
+    "rec_min": 20.0,
+    "rec_max": 25.0
+   },
+   "rangos": [
+    {
+     "clave": "PEQUENA",
+     "nombre": "Escuela pequeña",
+     "min_alumnos": 60,
+     "max_alumnos": 180
+    },
+    {
+     "clave": "MEDIA",
+     "nombre": "Escuela media",
+     "min_alumnos": 181,
+     "max_alumnos": 450
+    },
+    {
+     "clave": "GRANDE",
+     "nombre": "Escuela grande",
+     "min_alumnos": 451,
+     "max_alumnos": 800
+    },
+    {
+     "clave": "MUY_GRANDE",
+     "nombre": "Escuela muy grande",
+     "min_alumnos": 801,
+     "max_alumnos": 1200
+    }
+   ],
+   "parametros": [
+    "NUM_ALUMNOS",
+    "NUM_GRADOS",
+    "NUM_AULAS",
+    "ALUMNOS_POR_AULA",
+    "NUM_DOCENTES",
+    "NUM_PERSONAL_ADMIN",
+    "NUM_PERSONAL_SERVICIO"
+   ]
+  },
+  "ESCUELA_SECUNDARIA": {
+   "nota": "el documento no fija rangos de capacidad propios de secundaria; los rangos generales del §4 se reutilizan como orden de magnitud y §6 fija 1.8-2.5 m2/alumno (ejemplos con 30 y 35 alumnos por aula)",
+   "formula_aulas": "NUM_AULAS = CEIL(NUM_ALUMNOS / ALUMNOS_POR_AULA)",
+   "alumnos_por_aula": {
+    "min": 30.0,
+    "max": 35.0,
+    "rec_min": 30.0,
+    "rec_max": 35.0
+   },
+   "rangos": [
+    {
+     "clave": "PEQUENA",
+     "nombre": "Escuela pequeña",
+     "min_alumnos": 60,
+     "max_alumnos": 180
+    },
+    {
+     "clave": "MEDIA",
+     "nombre": "Escuela media",
+     "min_alumnos": 181,
+     "max_alumnos": 450
+    },
+    {
+     "clave": "GRANDE",
+     "nombre": "Escuela grande",
+     "min_alumnos": 451,
+     "max_alumnos": 800
+    },
+    {
+     "clave": "MUY_GRANDE",
+     "nombre": "Escuela muy grande",
+     "min_alumnos": 801,
+     "max_alumnos": 1200
+    }
+   ],
+   "parametros": [
+    "NUM_ALUMNOS",
+    "NUM_AULAS",
+    "ALUMNOS_POR_AULA"
+   ]
+  },
+  "CIRCULO_INFANTIL": {
+   "grupos_edad": [
+    "0-12 meses",
+    "1-2 años",
+    "2-3 años",
+    "3-4 años",
+    "4-5 años",
+    "5-6 años"
+   ],
+   "por_grupo": [
+    "aula",
+    "zona de higiene",
+    "zona de descanso cuando corresponda",
+    "almacenamiento",
+    "espacio de juego",
+    "acceso seguro",
+    "circulación controlada"
+   ],
+   "ninios_por_grupo": {
+    "min": 10.0,
+    "max": 25.0,
+    "rec_min": 20.0,
+    "rec_max": 20.0
+   },
+   "formula": "N_AULAS = N_GRUPOS (con sala de cunas cuando hay grupos de 0-2 años)"
+  },
+  "ALBERGUE_ESCOLAR": {
+   "rangos": [
+    {
+     "clave": "PEQUENO",
+     "nombre": "Albergue pequeño",
+     "min_plazas": 20,
+     "max_plazas": 50
+    },
+    {
+     "clave": "MEDIO",
+     "nombre": "Albergue medio",
+     "min_plazas": 51,
+     "max_plazas": 150
+    },
+    {
+     "clave": "GRANDE",
+     "nombre": "Albergue grande",
+     "min_plazas": 151,
+     "max_plazas": 300
+    },
+    {
+     "clave": "MASIVO",
+     "nombre": "Albergue masivo",
+     "min_plazas": 301,
+     "max_plazas": null
+    }
+   ],
+   "simultaneidad_comedor_pct": 50,
+   "formula_comedor": "COMENSALES = PLAZAS x 0.50 (ejemplo §56: 150 plazas -> 75 comensales -> 90-135 m2)",
+   "parametros": [
+    "NUM_PLAZAS",
+    "SEXO",
+    "EDAD",
+    "PERSONAL",
+    "HORARIOS",
+    "COMEDOR",
+    "BAÑOS",
+    "LAVANDERÍA",
+    "ENFERMERÍA"
+   ]
+  }
+ },
+ "tamanos_parametricos": [
+  {
+   "familia": "ESCUELA_PRIMARIA",
+   "etiqueta": "Pequeña (60-180 alumnos)",
+   "capacidad": 120,
+   "por_aula_o_grupo": 25.0
+  },
+  {
+   "familia": "ESCUELA_PRIMARIA",
+   "etiqueta": "Media (181-450 alumnos)",
+   "capacidad": 315,
+   "por_aula_o_grupo": 25.0
+  },
+  {
+   "familia": "ESCUELA_PRIMARIA",
+   "etiqueta": "Grande (451-800 alumnos)",
+   "capacidad": 625,
+   "por_aula_o_grupo": 25.0
+  },
+  {
+   "familia": "ESCUELA_PRIMARIA",
+   "etiqueta": "Muy grande (801-1200 alumnos)",
+   "capacidad": 1000,
+   "por_aula_o_grupo": 25.0
+  },
+  {
+   "familia": "ESCUELA_SECUNDARIA",
+   "etiqueta": "Pequeña (60-180 alumnos)",
+   "capacidad": 120,
+   "por_aula_o_grupo": 30.0
+  },
+  {
+   "familia": "ESCUELA_SECUNDARIA",
+   "etiqueta": "Media (181-450 alumnos)",
+   "capacidad": 315,
+   "por_aula_o_grupo": 30.0
+  },
+  {
+   "familia": "ESCUELA_SECUNDARIA",
+   "etiqueta": "Grande (451-800 alumnos)",
+   "capacidad": 625,
+   "por_aula_o_grupo": 30.0
+  },
+  {
+   "familia": "ESCUELA_SECUNDARIA",
+   "etiqueta": "Muy grande (801-1200 alumnos)",
+   "capacidad": 1000,
+   "por_aula_o_grupo": 30.0
+  },
+  {
+   "familia": "CIRCULO_INFANTIL",
+   "etiqueta": "1 grupo (20 niños)",
+   "capacidad": 1,
+   "por_aula_o_grupo": 20.0
+  },
+  {
+   "familia": "CIRCULO_INFANTIL",
+   "etiqueta": "2 grupos (40 niños)",
+   "capacidad": 2,
+   "por_aula_o_grupo": 20.0
+  },
+  {
+   "familia": "CIRCULO_INFANTIL",
+   "etiqueta": "3 grupos (60 niños)",
+   "capacidad": 3,
+   "por_aula_o_grupo": 20.0
+  },
+  {
+   "familia": "CIRCULO_INFANTIL",
+   "etiqueta": "4 grupos (80 niños)",
+   "capacidad": 4,
+   "por_aula_o_grupo": 20.0
+  },
+  {
+   "familia": "CIRCULO_INFANTIL",
+   "etiqueta": "5 grupos (100 niños)",
+   "capacidad": 5,
+   "por_aula_o_grupo": 20.0
+  },
+  {
+   "familia": "CIRCULO_INFANTIL",
+   "etiqueta": "6 grupos (120 niños)",
+   "capacidad": 6,
+   "por_aula_o_grupo": 20.0
+  },
+  {
+   "familia": "ALBERGUE_ESCOLAR",
+   "etiqueta": "Pequeño (20-50 plazas)",
+   "capacidad": 35,
+   "por_aula_o_grupo": 8.0
+  },
+  {
+   "familia": "ALBERGUE_ESCOLAR",
+   "etiqueta": "Medio (51-150 plazas)",
+   "capacidad": 100,
+   "por_aula_o_grupo": 8.0
+  },
+  {
+   "familia": "ALBERGUE_ESCOLAR",
+   "etiqueta": "Grande (151-300 plazas)",
+   "capacidad": 225,
+   "por_aula_o_grupo": 8.0
+  }
+ ],
+ "cuadros": [
+  {
+   "id": "ED-GEN-001",
+   "seccion": "2",
+   "espacio": "ALTURAS_LIBRES",
+   "space_type": null,
+   "titulo": "Alturas libres mínimas por tipología",
+   "items": [
+    {
+     "parametro": "CIRCULO_INFANTIL",
+     "min": 2.7,
+     "rec_min": 2.8,
+     "rec_max": 3.2,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "PRIMARIA",
+     "min": 2.7,
+     "rec_min": 2.8,
+     "rec_max": 3.2,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "SECUNDARIA",
+     "min": 2.7,
+     "rec_min": 2.8,
+     "rec_max": 3.5,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ALBERGUE",
+     "min": 2.6,
+     "rec_min": 2.7,
+     "rec_max": 3.0,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "TALLERES_Y_GIMNASIOS",
+     "min": 4.5,
+     "rec_min": 4.5,
+     "rec_max": 7.0,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "SALONES_GRAN_VOLUMEN",
+     "min": 6.0,
+     "rec_min": 6.0,
+     "rec_max": 9.0,
+     "unidad": "m",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": 2.6
+  },
+  {
+   "id": "ED-GEN-002",
+   "seccion": "2",
+   "espacio": "ALTURA_ENTREPISOS",
+   "space_type": null,
+   "titulo": "Altura entre pisos por tipología",
+   "items": [
+    {
+     "parametro": "PRIMARIA",
+     "min": null,
+     "rec_min": 3.3,
+     "rec_max": 4.0,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "SECUNDARIA",
+     "min": null,
+     "rec_min": 3.3,
+     "rec_max": 4.5,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "CIRCULO_INFANTIL",
+     "min": null,
+     "rec_min": 3.2,
+     "rec_max": 4.0,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ALBERGUE",
+     "min": null,
+     "rec_min": 3.1,
+     "rec_max": 3.8,
+     "unidad": "m",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-GEN-003",
+   "seccion": "3",
+   "espacio": "MODULACION",
+   "space_type": null,
+   "titulo": "Módulos estructurales recomendados",
+   "items": [
+    {
+     "parametro": "MODULO_GENERAL",
+     "min": null,
+     "rec_min": 6.0,
+     "rec_max": 8.0,
+     "unidad": "m",
+     "nota": "6.00 / 6.60 / 7.20 / 7.50 / 8.00 m"
+    },
+    {
+     "parametro": "MODULO_AULAS",
+     "min": null,
+     "rec_min": 7.2,
+     "rec_max": 8.4,
+     "unidad": "m",
+     "nota": "7.20x8.40 / 7.50x8.00 / 8.00x8.00 m"
+    },
+    {
+     "parametro": "MODULO_TALLERES",
+     "min": null,
+     "rec_min": 8.0,
+     "rec_max": 12.0,
+     "unidad": "m",
+     "nota": "8x10 / 8x12 / 10x12 m"
+    },
+    {
+     "parametro": "MODULO_GIMNASIOS",
+     "min": null,
+     "rec_min": 12.0,
+     "rec_max": 30.0,
+     "unidad": "m",
+     "nota": "12x18 / 15x24 / 18x30 m"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-AUL-001",
+   "seccion": "4",
+   "espacio": "CAPACIDAD_PRIMARIA",
+   "space_type": null,
+   "titulo": "Capacidad de la escuela primaria",
+   "items": [
+    {
+     "parametro": "ESCUELA_PEQUENA",
+     "min": null,
+     "rec_min": 60,
+     "rec_max": 180,
+     "unidad": "alumnos",
+     "nota": ""
+    },
+    {
+     "parametro": "ESCUELA_MEDIA",
+     "min": null,
+     "rec_min": 181,
+     "rec_max": 450,
+     "unidad": "alumnos",
+     "nota": ""
+    },
+    {
+     "parametro": "ESCUELA_GRANDE",
+     "min": null,
+     "rec_min": 451,
+     "rec_max": 800,
+     "unidad": "alumnos",
+     "nota": ""
+    },
+    {
+     "parametro": "ESCUELA_MUY_GRANDE",
+     "min": null,
+     "rec_min": 801,
+     "rec_max": 1200,
+     "unidad": "alumnos",
+     "nota": ""
+    },
+    {
+     "parametro": "ALUMNOS_POR_AULA",
+     "min": 20.0,
+     "rec_min": 20,
+     "rec_max": 25,
+     "unidad": "alumnos",
+     "nota": "NUM_AULAS = CEIL(NUM_ALUMNOS / ALUMNOS_POR_AULA)"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-AUL-002",
+   "seccion": "5",
+   "espacio": "AULA_PRIMARIA",
+   "space_type": "CLASSROOM",
+   "titulo": "Aula de primaria",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 40.0,
+     "rec_min": 48.0,
+     "rec_max": 60.0,
+     "unidad": "m2",
+     "nota": "ampliada 60-72 m2; ejemplos 6x8=48, 7x8=56, 7.5x8=60"
+    },
+    {
+     "parametro": "SUPERFICIE_POR_ALUMNO",
+     "min": 1.8,
+     "rec_min": 2.0,
+     "rec_max": 2.5,
+     "unidad": "m2/alumno",
+     "nota": "25 alumnos x 2.0 = 50 m2; 30 alumnos x 2.0 = 60 m2"
+    },
+    {
+     "parametro": "ALTURA",
+     "min": 2.7,
+     "rec_min": 2.8,
+     "rec_max": 3.2,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "PUERTA",
+     "min": 0.9,
+     "rec_min": 0.9,
+     "rec_max": 1.2,
+     "unidad": "m",
+     "nota": "alto 2.10-2.40 m"
+    },
+    {
+     "parametro": "ANTEPECHO",
+     "min": 0.7,
+     "rec_min": 0.7,
+     "rec_max": 1.0,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ALTURA_VENTANA",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 1.8,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ANCHO_MODULAR_VENTANA",
+     "min": 0.6,
+     "rec_min": 0.6,
+     "rec_max": 1.5,
+     "unidad": "m",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": 40.0,
+   "min_ancho_m": 6.0,
+   "min_altura_m": 2.7
+  },
+  {
+   "id": "ED-AUL-003",
+   "seccion": "6",
+   "espacio": "AULA_SECUNDARIA",
+   "space_type": "CLASSROOM",
+   "titulo": "Aula de secundaria",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 45.0,
+     "rec_min": 50.0,
+     "rec_max": 65.0,
+     "unidad": "m2",
+     "nota": "ampliada 65-75 m2; ejemplos 6x8=48 ... 8x9=72"
+    },
+    {
+     "parametro": "SUPERFICIE_POR_ALUMNO",
+     "min": 1.8,
+     "rec_min": 2.0,
+     "rec_max": 2.5,
+     "unidad": "m2/alumno",
+     "nota": "30 alumnos: 54-75 m2; 35 alumnos: 63-87.5 m2"
+    },
+    {
+     "parametro": "PUERTA",
+     "min": 0.9,
+     "rec_min": 0.9,
+     "rec_max": 1.2,
+     "unidad": "m",
+     "nota": "carpintería §95"
+    }
+   ],
+   "min_area_m2": 45.0,
+   "min_ancho_m": 6.0,
+   "min_altura_m": 2.7
+  },
+  {
+   "id": "ED-AUL-004",
+   "seccion": "7",
+   "espacio": "AULA_FLEXIBLE",
+   "space_type": null,
+   "titulo": "Aula flexible",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 50.0,
+     "rec_min": 50.0,
+     "rec_max": 80.0,
+     "unidad": "m2",
+     "nota": "grupo completo / pequeño / individual / colaborativo"
+    },
+    {
+     "parametro": "CIRCULACION_ENTRE_MESAS",
+     "min": 0.9,
+     "rec_min": 1.0,
+     "rec_max": 1.2,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "CIRCULACION_PRINCIPAL",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 1.5,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "SEPARACION_ENTRE_FILAS",
+     "min": 0.9,
+     "rec_min": 0.9,
+     "rec_max": 1.2,
+     "unidad": "m",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": 50.0,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-AUL-005",
+   "seccion": "8",
+   "espacio": "AULA_EDUCACION_INFANTIL",
+   "space_type": "AULA_INFANTIL",
+   "titulo": "Aula de educación infantil",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 40.0,
+     "rec_min": 45.0,
+     "rec_max": 60.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "SUPERFICIE_POR_NINIO",
+     "min": 2.0,
+     "rec_min": 2.0,
+     "rec_max": 3.0,
+     "unidad": "m2/niño",
+     "nota": "20 niños: 40-60 m2; 25 niños: 50-75 m2"
+    },
+    {
+     "parametro": "ALTURA",
+     "min": 2.7,
+     "rec_min": 2.8,
+     "rec_max": 3.2,
+     "unidad": "m",
+     "nota": "altura CI §2"
+    }
+   ],
+   "min_area_m2": 40.0,
+   "min_ancho_m": null,
+   "min_altura_m": 2.7
+  },
+  {
+   "id": "ED-CUN-001",
+   "seccion": "10",
+   "espacio": "SALA_CUNA",
+   "space_type": "SALA_CUNA",
+   "titulo": "Sala de cuna",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 2.5,
+     "rec_min": 2.5,
+     "rec_max": 4.0,
+     "unidad": "m2/niño",
+     "nota": "10 niños: 25-40 m2; 15 niños: 37.5-60 m2"
+    },
+    {
+     "parametro": "SEPARACION_ENTRE_CUNAS",
+     "min": 0.6,
+     "rec_min": 0.6,
+     "rec_max": 0.9,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "CUNA",
+     "min": 0.6,
+     "rec_min": 0.6,
+     "rec_max": 1.2,
+     "unidad": "m",
+     "nota": "cuna aproximada 0.60 x 1.20 m"
+    },
+    {
+     "parametro": "AREA_LIBRE_ALREDEDOR",
+     "min": 0.6,
+     "rec_min": 0.6,
+     "rec_max": null,
+     "unidad": "m",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": 25.0,
+   "min_ancho_m": null,
+   "min_altura_m": 2.7
+  },
+  {
+   "id": "ED-DOR-001",
+   "seccion": "11",
+   "espacio": "DORMITORIO_CI",
+   "space_type": "DORMITORIO_COLETIVO",
+   "titulo": "Dormitorio de círculo infantil",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 2.0,
+     "rec_min": 2.0,
+     "rec_max": 3.0,
+     "unidad": "m2/niño",
+     "nota": ""
+    },
+    {
+     "parametro": "SEPARACION_ENTRE_CAMAS",
+     "min": 0.6,
+     "rec_min": 0.6,
+     "rec_max": 0.9,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "PASILLO",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 1.5,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "SUPERVISION",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "supervisión visual directa; minimizar obstáculos visuales"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": 2.7
+  },
+  {
+   "id": "ED-JUE-001",
+   "seccion": "12",
+   "espacio": "JUEGO_INTERIOR",
+   "space_type": "JUEGO_INTERIOR",
+   "titulo": "Zona de juego interior",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 2.0,
+     "rec_min": 2.0,
+     "rec_max": 4.0,
+     "unidad": "m2/niño",
+     "nota": ""
+    },
+    {
+     "parametro": "ALTURA",
+     "min": 2.7,
+     "rec_min": 3.0,
+     "rec_max": 3.5,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ACTIVIDADES",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "juego libre, psicomotor, grupal, almacenamiento y supervisión"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": 2.7
+  },
+  {
+   "id": "ED-JUE-002",
+   "seccion": "13",
+   "espacio": "JUEGO_EXTERIOR",
+   "space_type": "JUEGO_EXTERIOR",
+   "titulo": "Zona de juego exterior",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 4.0,
+     "rec_min": 6.0,
+     "rec_max": 10.0,
+     "unidad": "m2/niño",
+     "nota": "recomendada 6-12 m2/niño cuando el terreno lo permita"
+    },
+    {
+     "parametro": "DIVISIONES",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "juego tranquilo, activo, arena, agua, zona verde, sombra y transición (UNICEF: valor de los espacios exteriores y la sombra)"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-PAT-001",
+   "seccion": "14",
+   "espacio": "PATIO_ESCOLAR",
+   "space_type": "PATIO",
+   "titulo": "Patio escolar",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 2.0,
+     "rec_min": 2.0,
+     "rec_max": 5.0,
+     "unidad": "m2/alumno",
+     "nota": "por alumno simultáneo"
+    },
+    {
+     "parametro": "PATIO_PEQUENO",
+     "min": 100.0,
+     "rec_min": 100.0,
+     "rec_max": 300.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "PATIO_MEDIANO",
+     "min": 300.0,
+     "rec_min": 300.0,
+     "rec_max": 800.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "PATIO_GRANDE",
+     "min": 800.0,
+     "rec_min": 800.0,
+     "rec_max": 2000.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "DIVISIONES",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "recreación, circulación, formación, actos, deporte y juego"
+    }
+   ],
+   "min_area_m2": 100.0,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-POR-001",
+   "seccion": "15",
+   "espacio": "PORCHES_GALERIAS",
+   "space_type": "CORRIDOR",
+   "titulo": "Porches y galerías",
+   "items": [
+    {
+     "parametro": "ANCHO_MINIMO",
+     "min": 1.8,
+     "rec_min": 2.4,
+     "rec_max": 3.0,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ALTA_CIRCULACION",
+     "min": 3.0,
+     "rec_min": 3.0,
+     "rec_max": 4.0,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "CLIMAS_CALIDOS",
+     "min": 3.0,
+     "rec_min": 3.0,
+     "rec_max": 4.0,
+     "unidad": "m",
+     "nota": "transición climática entre aulas y patios"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": 1.8,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-CIR-001",
+   "seccion": "16",
+   "espacio": "CIRCULACIONES_ESCOLARES",
+   "space_type": "CORRIDOR",
+   "titulo": "Circulaciones escolares",
+   "items": [
+    {
+     "parametro": "CIRCULACION_SECUNDARIA",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 1.5,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "CIRCULACION_PRINCIPAL",
+     "min": 1.8,
+     "rec_min": 1.8,
+     "rec_max": 2.4,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ALTA_CONCENTRACION",
+     "min": 2.4,
+     "rec_min": 2.4,
+     "rec_max": 3.0,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "GRAN_MATRICULA_NODOS",
+     "min": 3.0,
+     "rec_min": 3.0,
+     "rec_max": 4.0,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "PROHIBIDO",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "pasillos ciegos, zonas oscuras, puntos sin visibilidad y cruces estudiantes-vehículos"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": 1.2,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-VES-001",
+   "seccion": "17",
+   "espacio": "VESTIBULO_PRINCIPAL",
+   "space_type": "VESTIBULE",
+   "titulo": "Vestíbulo principal",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 15.0,
+     "rec_min": 15.0,
+     "rec_max": 40.0,
+     "unidad": "m2",
+     "nota": "escuela mediana 25-50 m2; grande 40-80 m2"
+    },
+    {
+     "parametro": "PUERTA_PRINCIPAL",
+     "min": 1.8,
+     "rec_min": 1.8,
+     "rec_max": 2.4,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ALTA_CONCENTRACION",
+     "min": 2.4,
+     "rec_min": 2.4,
+     "rec_max": 3.6,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "FUNCIONES",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "control de acceso, recepción, señalización, espera y circulación hacia administración"
+    }
+   ],
+   "min_area_m2": 15.0,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-REC-001",
+   "seccion": "18",
+   "espacio": "RECEPCION_CONTROL",
+   "space_type": "WAITING_ROOM",
+   "titulo": "Recepción y control",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 8.0,
+     "rec_min": 8.0,
+     "rec_max": 20.0,
+     "unidad": "m2",
+     "nota": "escuela grande 15-30 m2"
+    },
+    {
+     "parametro": "MOSTRADOR_ALTURA",
+     "min": 0.72,
+     "rec_min": 0.72,
+     "rec_max": 0.9,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "MOSTRADOR_PROFUNDIDAD",
+     "min": 0.6,
+     "rec_min": 0.6,
+     "rec_max": 0.9,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "AREA_DE_ESPERA",
+     "min": 1.5,
+     "rec_min": 1.5,
+     "rec_max": 2.5,
+     "unidad": "m2/persona",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": 8.0,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-DIR-001",
+   "seccion": "19",
+   "espacio": "DIRECCION",
+   "space_type": "OFFICE",
+   "titulo": "Dirección",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 12.0,
+     "rec_min": 12.0,
+     "rec_max": 20.0,
+     "unidad": "m2",
+     "nota": "con reunión 18-30 m2"
+    },
+    {
+     "parametro": "ALTURA",
+     "min": 2.7,
+     "rec_min": 2.7,
+     "rec_max": 3.2,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "PUERTA",
+     "min": 0.9,
+     "rec_min": 0.9,
+     "rec_max": null,
+     "unidad": "m",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": 12.0,
+   "min_ancho_m": null,
+   "min_altura_m": 2.7
+  },
+  {
+   "id": "ED-SEC-001",
+   "seccion": "20",
+   "espacio": "SECRETARIA",
+   "space_type": "OFFICE",
+   "titulo": "Secretaría",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 12.0,
+     "rec_min": 12.0,
+     "rec_max": 30.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "PUESTO_ADMINISTRATIVO",
+     "min": 6.0,
+     "rec_min": 6.0,
+     "rec_max": 10.0,
+     "unidad": "m2/persona",
+     "nota": ""
+    },
+    {
+     "parametro": "CIRCULACION",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 1.5,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ARCHIVO_INTEGRADO",
+     "min": 4.0,
+     "rec_min": 4.0,
+     "rec_max": 10.0,
+     "unidad": "m2",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": 12.0,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-PRO-001",
+   "seccion": "21",
+   "espacio": "SALA_PROFESORES",
+   "space_type": "SALA_PROFESORES",
+   "titulo": "Sala de profesores",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 1.5,
+     "rec_min": 1.5,
+     "rec_max": 2.5,
+     "unidad": "m2/persona",
+     "nota": "por persona simultánea"
+    },
+    {
+     "parametro": "SALA_PEQUENA",
+     "min": 20.0,
+     "rec_min": 20.0,
+     "rec_max": 30.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "SALA_MEDIANA",
+     "min": 30.0,
+     "rec_min": 30.0,
+     "rec_max": 50.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "SALA_GRANDE",
+     "min": 50.0,
+     "rec_min": 50.0,
+     "rec_max": 80.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "MOBILIARIO",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "mesas, asientos, almacenamiento, casilleros, descanso y datos"
+    }
+   ],
+   "min_area_m2": 20.0,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-BIB-001",
+   "seccion": "22",
+   "espacio": "BIBLIOTECA",
+   "space_type": "LIBRARY",
+   "titulo": "Biblioteca escolar",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 0.1,
+     "rec_min": 0.1,
+     "rec_max": 0.3,
+     "unidad": "m2/alumno",
+     "nota": "referencia inicial total"
+    },
+    {
+     "parametro": "PEQUENA",
+     "min": 40.0,
+     "rec_min": 40.0,
+     "rec_max": 80.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "MEDIANA",
+     "min": 80.0,
+     "rec_min": 80.0,
+     "rec_max": 150.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "GRANDE",
+     "min": 150.0,
+     "rec_min": 150.0,
+     "rec_max": 300.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "ZONA_DE_LECTURA",
+     "min": 2.0,
+     "rec_min": 2.0,
+     "rec_max": 3.0,
+     "unidad": "m2/persona",
+     "nota": ""
+    },
+    {
+     "parametro": "PASILLO_ENTRE_ESTANTERIAS",
+     "min": 0.9,
+     "rec_min": 0.9,
+     "rec_max": 1.2,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "PASILLO_ACCESIBLE",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": null,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ESTANTERIA_PROFUNDIDAD",
+     "min": 0.3,
+     "rec_min": 0.3,
+     "rec_max": 0.45,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ESTANTERIA_ALTURA",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 2.1,
+     "unidad": "m",
+     "nota": "primaria 1.20-1.80 m; secundaria 1.80-2.10 m"
+    }
+   ],
+   "min_area_m2": 40.0,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-LAB-001",
+   "seccion": "23",
+   "espacio": "LABORATORIO_CIENCIAS",
+   "space_type": "LABORATORY",
+   "titulo": "Laboratorio de ciencias (secundaria)",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 60.0,
+     "rec_min": 60.0,
+     "rec_max": 90.0,
+     "unidad": "m2",
+     "nota": "laboratorio grande 90-120 m2"
+    },
+    {
+     "parametro": "SUPERFICIE_POR_ALUMNO",
+     "min": 2.0,
+     "rec_min": 2.0,
+     "rec_max": 3.0,
+     "unidad": "m2/alumno",
+     "nota": ""
+    },
+    {
+     "parametro": "MESA_TRABAJO",
+     "min": 0.6,
+     "rec_min": 0.6,
+     "rec_max": 0.9,
+     "unidad": "m",
+     "nota": "profundidad; longitud 1.20-1.80 m"
+    },
+    {
+     "parametro": "PASILLO",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 1.5,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "PASILLO_PRINCIPAL",
+     "min": 1.5,
+     "rec_min": 1.5,
+     "rec_max": 1.8,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "EQUIPAMIENTO",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "lavamanos, agua, drenaje, ventilación, almacenamiento, emergencia, extinción, mesas resistentes y superficies lavables"
+    }
+   ],
+   "min_area_m2": 60.0,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-LAB-002",
+   "seccion": "24",
+   "espacio": "LABORATORIO_COMPUTACION",
+   "space_type": "LAB_COMPUTACION",
+   "titulo": "Laboratorio de computación",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 50.0,
+     "rec_min": 50.0,
+     "rec_max": 80.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "SUPERFICIE_POR_ALUMNO",
+     "min": 1.5,
+     "rec_min": 1.5,
+     "rec_max": 2.5,
+     "unidad": "m2/alumno",
+     "nota": ""
+    },
+    {
+     "parametro": "PUESTO",
+     "min": 0.6,
+     "rec_min": 0.6,
+     "rec_max": 0.8,
+     "unidad": "m",
+     "nota": "ancho y profundidad"
+    },
+    {
+     "parametro": "SEPARACION",
+     "min": 1.0,
+     "rec_min": 1.0,
+     "rec_max": 1.2,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "PASILLO",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 1.5,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "PUESTO_DOCENTE",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 0.7,
+     "unidad": "m",
+     "nota": "aproximado 1.20 x 0.70 m"
+    }
+   ],
+   "min_area_m2": 50.0,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-TAL-001",
+   "seccion": "25",
+   "espacio": "TALLER_TECNOLOGICO",
+   "space_type": "TALLER_TECNOLOGICO",
+   "titulo": "Taller tecnológico",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 60.0,
+     "rec_min": 60.0,
+     "rec_max": 120.0,
+     "unidad": "m2",
+     "nota": "taller grande 120-250 m2"
+    },
+    {
+     "parametro": "ALTURA",
+     "min": 3.5,
+     "rec_min": 3.5,
+     "rec_max": 5.0,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ALTURA_MAQUINARIA",
+     "min": 4.0,
+     "rec_min": 4.0,
+     "rec_max": 6.0,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "PASILLO",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 1.8,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ZONA_MAQUINAS",
+     "min": 1.5,
+     "rec_min": 1.5,
+     "rec_max": 2.0,
+     "unidad": "m",
+     "nota": "alrededor, según equipo"
+    },
+    {
+     "parametro": "ALMACENAMIENTO",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "almacenamiento independiente obligatorio"
+    }
+   ],
+   "min_area_m2": 60.0,
+   "min_ancho_m": null,
+   "min_altura_m": 3.5
+  },
+  {
+   "id": "ED-LAB-003",
+   "seccion": "26",
+   "espacio": "LABORATORIO_ESPECIALIZADO",
+   "space_type": null,
+   "titulo": "Laboratorios especializados",
+   "items": [
+    {
+     "parametro": "TIPOS",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "química, física, biología, informática, electrónica, electricidad, mecánica, carpintería, metalmecánica, arte, gastronomía y agricultura"
+    },
+    {
+     "parametro": "REQUERIMIENTOS",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "AREA, ALTURA, PUESTOS, EQUIPAMIENTO, AGUA, DRENAJE, ELECTRICIDAD, VENTILACION, EXTRACCION, SEGURIDAD y ALMACENAMIENTO en cada laboratorio"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-ART-001",
+   "seccion": "27",
+   "espacio": "SALA_ARTE",
+   "space_type": "SALA_ARTE",
+   "titulo": "Sala de arte",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 50.0,
+     "rec_min": 50.0,
+     "rec_max": 80.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "LAVADEROS",
+     "min": 0.5,
+     "rec_min": 0.5,
+     "rec_max": 0.7,
+     "unidad": "m",
+     "nota": "ancho"
+    },
+    {
+     "parametro": "MESAS",
+     "min": 0.6,
+     "rec_min": 0.6,
+     "rec_max": 0.8,
+     "unidad": "m",
+     "nota": "profundidad"
+    },
+    {
+     "parametro": "CIRCULACION",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 1.5,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ALMACENAMIENTO",
+     "min": 6.0,
+     "rec_min": 6.0,
+     "rec_max": 15.0,
+     "unidad": "m2",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": 50.0,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-MUS-001",
+   "seccion": "28",
+   "espacio": "MUSICA",
+   "space_type": "SALA_MUSICA",
+   "titulo": "Sala de música",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 50.0,
+     "rec_min": 50.0,
+     "rec_max": 100.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "ALTURA",
+     "min": 3.0,
+     "rec_min": 3.0,
+     "rec_max": 4.5,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ALMACENAMIENTO",
+     "min": 6.0,
+     "rec_min": 6.0,
+     "rec_max": 15.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "ACUSTICA",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "tratamiento acústico contemplado (§90)"
+    }
+   ],
+   "min_area_m2": 50.0,
+   "min_ancho_m": null,
+   "min_altura_m": 3.0
+  },
+  {
+   "id": "ED-ACT-001",
+   "seccion": "29",
+   "espacio": "SALON_DE_ACTOS",
+   "space_type": "MULTIUSE_HALL",
+   "titulo": "Salón de actos",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 1.0,
+     "rec_min": 1.0,
+     "rec_max": 1.5,
+     "unidad": "m2/persona",
+     "nota": ""
+    },
+    {
+     "parametro": "PEQUENO",
+     "min": 100.0,
+     "rec_min": 100.0,
+     "rec_max": 200.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "MEDIANO",
+     "min": 200.0,
+     "rec_min": 200.0,
+     "rec_max": 400.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "GRANDE",
+     "min": 400.0,
+     "rec_min": 400.0,
+     "rec_max": 800.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "ESCENARIO",
+     "min": 6.0,
+     "rec_min": 6.0,
+     "rec_max": 12.0,
+     "unidad": "m",
+     "nota": "profundidad; ancho 6-15 m; altura 4-8 m"
+    }
+   ],
+   "min_area_m2": 100.0,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-GIM-001",
+   "seccion": "30",
+   "espacio": "GIMNASIO",
+   "space_type": "GYMNASIO",
+   "titulo": "Gimnasio",
+   "items": [
+    {
+     "parametro": "PEQUENO",
+     "min": 216.0,
+     "rec_min": 216.0,
+     "rec_max": null,
+     "unidad": "m2",
+     "nota": "12 x 18 m"
+    },
+    {
+     "parametro": "MEDIANO",
+     "min": 360.0,
+     "rec_min": 360.0,
+     "rec_max": null,
+     "unidad": "m2",
+     "nota": "15 x 24 m"
+    },
+    {
+     "parametro": "GRANDE",
+     "min": 540.0,
+     "rec_min": 540.0,
+     "rec_max": null,
+     "unidad": "m2",
+     "nota": "18 x 30 m"
+    },
+    {
+     "parametro": "ALTURA",
+     "min": 6.0,
+     "rec_min": 6.0,
+     "rec_max": 9.0,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "AREA_AUXILIAR",
+     "min": 20.0,
+     "rec_min": 20.0,
+     "rec_max": 50.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "ALMACEN_DEPORTIVO",
+     "min": 15.0,
+     "rec_min": 15.0,
+     "rec_max": 40.0,
+     "unidad": "m2",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": 216.0,
+   "min_ancho_m": 12.0,
+   "min_altura_m": 6.0
+  },
+  {
+   "id": "ED-CAN-001",
+   "seccion": "31",
+   "espacio": "CANCHA_MULTIDEPORTIVA",
+   "space_type": null,
+   "titulo": "Cancha multideportiva",
+   "items": [
+    {
+     "parametro": "DIMENSION",
+     "min": 420.0,
+     "rec_min": 420.0,
+     "rec_max": null,
+     "unidad": "m2",
+     "nota": "15 x 28 m"
+    },
+    {
+     "parametro": "VARIANTES",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "m",
+     "nota": "18 x 30 m y 20 x 40 m"
+    },
+    {
+     "parametro": "ADICIONES",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "zonas de seguridad, circulación, graderías, almacenamiento y vestuarios"
+    }
+   ],
+   "min_area_m2": 420.0,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-VES2-001",
+   "seccion": "32",
+   "espacio": "VESTUARIOS",
+   "space_type": "DRESSING_ROOM",
+   "titulo": "Vestuarios",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 1.5,
+     "rec_min": 1.5,
+     "rec_max": 2.5,
+     "unidad": "m2/persona",
+     "nota": "por persona simultánea"
+    },
+    {
+     "parametro": "BANCO",
+     "min": 0.4,
+     "rec_min": 0.4,
+     "rec_max": 0.5,
+     "unidad": "m",
+     "nota": "profundidad; altura 0.45-0.50 m"
+    },
+    {
+     "parametro": "PASILLO",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 1.5,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "CASILLERO",
+     "min": 0.3,
+     "rec_min": 0.3,
+     "rec_max": 0.45,
+     "unidad": "m",
+     "nota": "ancho; profundidad 0.45-0.60 m"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-DUC-001",
+   "seccion": "33",
+   "espacio": "DUCHAS",
+   "space_type": "BATHROOM",
+   "titulo": "Duchas",
+   "items": [
+    {
+     "parametro": "CABINA",
+     "min": 0.8,
+     "rec_min": 0.8,
+     "rec_max": 1.0,
+     "unidad": "m",
+     "nota": "0.80-1.00 x 0.80-1.20 m"
+    },
+    {
+     "parametro": "CIRCULACION",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 1.5,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "PISO",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "antideslizante"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-ENF-001",
+   "seccion": "34",
+   "espacio": "ENFERMERIA_ESCOLAR",
+   "space_type": "INFIRMARY",
+   "titulo": "Enfermería escolar",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 12.0,
+     "rec_min": 12.0,
+     "rec_max": 25.0,
+     "unidad": "m2",
+     "nota": "con observación 20-35 m2"
+    },
+    {
+     "parametro": "CAMILLA",
+     "min": 0.7,
+     "rec_min": 0.7,
+     "rec_max": 1.9,
+     "unidad": "m",
+     "nota": "0.70-0.80 x 1.90-2.10 m"
+    },
+    {
+     "parametro": "AREA_LIBRE_LATERAL",
+     "min": 0.8,
+     "rec_min": 0.8,
+     "rec_max": null,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "CONTENIDO",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "atención, camilla, lavamanos, almacenamiento, espera, botiquín y baño próximo"
+    }
+   ],
+   "min_area_m2": 12.0,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-AIS-001",
+   "seccion": "35",
+   "espacio": "AISLAMIENTO",
+   "space_type": "ISOLATION_ROOM",
+   "titulo": "Aislamiento / observación",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 8.0,
+     "rec_min": 8.0,
+     "rec_max": 12.0,
+     "unidad": "m2/cama",
+     "nota": ""
+    },
+    {
+     "parametro": "BANO_ASOCIADO",
+     "min": 3.0,
+     "rec_min": 3.0,
+     "rec_max": 5.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "ACCESO",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "acceso directo sin atravesar grandes zonas de estudiantes; ventilación natural o mecánica"
+    }
+   ],
+   "min_area_m2": 8.0,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-COM-001",
+   "seccion": "36",
+   "espacio": "COMEDOR_ESCOLAR",
+   "space_type": "DINING_HALL",
+   "titulo": "Comedor escolar",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 1.8,
+     "unidad": "m2/comensal",
+     "nota": "por comensal simultáneo (primaria 1.20-1.50; secundaria 1.20-1.80)"
+    },
+    {
+     "parametro": "SEPARACION_ENTRE_MESAS",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 1.5,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "PASILLO_PRINCIPAL",
+     "min": 1.5,
+     "rec_min": 1.5,
+     "rec_max": 1.8,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "PUERTAS_ALTA_CONCENTRACION",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 1.8,
+     "unidad": "m",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-COC-001",
+   "seccion": "37",
+   "espacio": "COCINA_ESCOLAR",
+   "space_type": "KITCHEN_INSTITUTIONAL",
+   "titulo": "Cocina escolar",
+   "items": [
+    {
+     "parametro": "FRACCION_COMEDOR",
+     "min": 25.0,
+     "rec_min": 25.0,
+     "rec_max": 40.0,
+     "unidad": "%",
+     "nota": "del área del comedor como programación inicial"
+    },
+    {
+     "parametro": "PEQUENA",
+     "min": 30.0,
+     "rec_min": 30.0,
+     "rec_max": 60.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "MEDIANA",
+     "min": 60.0,
+     "rec_min": 60.0,
+     "rec_max": 120.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "GRANDE",
+     "min": 120.0,
+     "rec_min": 120.0,
+     "rec_max": 250.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "SEPARAR",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "recepción, almacén seco, fríos, preparación, cocción, lavado, residuos y distribución"
+    }
+   ],
+   "min_area_m2": 30.0,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-ALM-001",
+   "seccion": "38",
+   "espacio": "ALMACEN_ALIMENTOS",
+   "space_type": "STOREROOM",
+   "titulo": "Almacén de alimentos",
+   "items": [
+    {
+     "parametro": "PEQUENO",
+     "min": 6.0,
+     "rec_min": 6.0,
+     "rec_max": 15.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "MEDIANO",
+     "min": 15.0,
+     "rec_min": 15.0,
+     "rec_max": 30.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "GRANDE",
+     "min": 30.0,
+     "rec_min": 30.0,
+     "rec_max": 60.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "PASILLO",
+     "min": 1.0,
+     "rec_min": 1.0,
+     "rec_max": 1.2,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ESTANTERIAS",
+     "min": 0.4,
+     "rec_min": 0.4,
+     "rec_max": 0.6,
+     "unidad": "m",
+     "nota": "profundidad"
+    }
+   ],
+   "min_area_m2": 6.0,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-SAN-001",
+   "seccion": "39",
+   "espacio": "SANITARIOS_PRIMARIA",
+   "space_type": "BATHROOM",
+   "titulo": "Servicios sanitarios de primaria",
+   "items": [
+    {
+     "parametro": "CUBICULO",
+     "min": 0.8,
+     "rec_min": 0.8,
+     "rec_max": 1.2,
+     "unidad": "m",
+     "nota": "0.80-0.90 x 1.20-1.50 m"
+    },
+    {
+     "parametro": "LAVAMANOS",
+     "min": 0.5,
+     "rec_min": 0.5,
+     "rec_max": 0.7,
+     "unidad": "m",
+     "nota": "ancho; profundidad 0.45-0.60 m"
+    },
+    {
+     "parametro": "ALTURA_LAVAMANOS",
+     "min": 0.65,
+     "rec_min": 0.65,
+     "rec_max": 0.85,
+     "unidad": "m",
+     "nota": "según edad"
+    },
+    {
+     "parametro": "CALCULO",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "alumnos, sexo, edad, turnos y capacidad: la cantidad la fija la normativa (REGLA_09)"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-SAN-002",
+   "seccion": "40",
+   "espacio": "SANITARIOS_SECUNDARIA",
+   "space_type": "BATHROOM",
+   "titulo": "Servicios sanitarios de secundaria",
+   "items": [
+    {
+     "parametro": "CUBICULO",
+     "min": 0.8,
+     "rec_min": 0.8,
+     "rec_max": 1.6,
+     "unidad": "m",
+     "nota": "0.80-0.90 x 1.20-1.60 m"
+    },
+    {
+     "parametro": "LAVAMANOS",
+     "min": 0.5,
+     "rec_min": 0.5,
+     "rec_max": 0.7,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "PASILLO",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 1.5,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "SEPARACION_APARATOS",
+     "min": 0.6,
+     "rec_min": 0.6,
+     "rec_max": 0.9,
+     "unidad": "m",
+     "nota": "según configuración"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-SAN-003",
+   "seccion": "41",
+   "espacio": "BANO_ACCESIBLE",
+   "space_type": "BATHROOM",
+   "titulo": "Baño accesible",
+   "items": [
+    {
+     "parametro": "DIMENSION",
+     "min": 1.5,
+     "rec_min": 1.8,
+     "rec_max": 2.2,
+     "unidad": "m",
+     "nota": "1.50 x 2.20 orientativa; preferida 1.80 x 2.20 m"
+    },
+    {
+     "parametro": "GIRO",
+     "min": 1.5,
+     "rec_min": 1.5,
+     "rec_max": null,
+     "unidad": "m",
+     "nota": "diámetro"
+    },
+    {
+     "parametro": "PUERTA",
+     "min": 0.9,
+     "rec_min": 0.9,
+     "rec_max": null,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "BARRAS",
+     "min": 0.7,
+     "rec_min": 0.7,
+     "rec_max": 0.8,
+     "unidad": "m",
+     "nota": "altura aproximada"
+    }
+   ],
+   "min_area_m2": 3.3,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-HIG-001",
+   "seccion": "42",
+   "espacio": "HIGIENE_CI",
+   "space_type": "HIGIENE_CI",
+   "titulo": "Higiene en círculo infantil",
+   "items": [
+    {
+     "parametro": "CONTENIDO",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "lavado de manos, cambio de pañales, inodoros infantiles, duchas cuando correspondan, almacenamiento, ropa limpia y ropa sucia"
+    },
+    {
+     "parametro": "ZONA_DE_CAMBIO",
+     "min": 0.7,
+     "rec_min": 0.7,
+     "rec_max": 0.8,
+     "unidad": "m",
+     "nota": "profundidad"
+    },
+    {
+     "parametro": "MESA_DE_CAMBIO",
+     "min": null,
+     "rec_min": 0.8,
+     "rec_max": 0.9,
+     "unidad": "m",
+     "nota": "altura según diseño y seguridad"
+    },
+    {
+     "parametro": "LAVAMANOS_INFANTIL",
+     "min": null,
+     "rec_min": 0.5,
+     "rec_max": 0.65,
+     "unidad": "m",
+     "nota": "altura según edad"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-ALM2-001",
+   "seccion": "43",
+   "espacio": "ALMACENAMIENTO_GENERAL",
+   "space_type": "STOREROOM",
+   "titulo": "Almacenamiento general",
+   "items": [
+    {
+     "parametro": "FRACCION_ZONA",
+     "min": 5.0,
+     "rec_min": 5.0,
+     "rec_max": 15.0,
+     "unidad": "%",
+     "nota": "del área útil de cada zona como referencia"
+    },
+    {
+     "parametro": "AULA",
+     "min": 2.0,
+     "rec_min": 2.0,
+     "rec_max": 6.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "LABORATORIO",
+     "min": 6.0,
+     "rec_min": 6.0,
+     "rec_max": 15.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "ARTE",
+     "min": 6.0,
+     "rec_min": 6.0,
+     "rec_max": 15.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "DEPORTES",
+     "min": 15.0,
+     "rec_min": 15.0,
+     "rec_max": 40.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "LIMPIEZA",
+     "min": 3.0,
+     "rec_min": 3.0,
+     "rec_max": 6.0,
+     "unidad": "m2",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": 2.0,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-LIM-001",
+   "seccion": "44",
+   "espacio": "CUARTO_LIMPIEZA",
+   "space_type": "CLEANING_ROOM",
+   "titulo": "Cuarto de limpieza",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 3.0,
+     "rec_min": 3.0,
+     "rec_max": 6.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "ANCHO",
+     "min": 1.5,
+     "rec_min": 1.5,
+     "rec_max": null,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "CONTENIDO",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "fregadero, almacenamiento, productos, punto de agua y drenaje"
+    },
+    {
+     "parametro": "SEGURIDAD",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "fuera del alcance directo de los niños (§89)"
+    }
+   ],
+   "min_area_m2": 3.0,
+   "min_ancho_m": 1.5,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-ESC-001",
+   "seccion": "45",
+   "espacio": "ESCALERAS",
+   "space_type": "STAIR",
+   "titulo": "Circulación vertical - escaleras",
+   "items": [
+    {
+     "parametro": "ANCHO_MINIMO_FUNCIONAL",
+     "min": 1.2,
+     "rec_min": 1.5,
+     "rec_max": 1.8,
+     "unidad": "m",
+     "nota": "alta ocupación 1.80-2.40 m; valores definitivos por ocupación y normativa de evacuación (§85)"
+    },
+    {
+     "parametro": "HUELLA",
+     "min": 0.28,
+     "rec_min": 0.28,
+     "rec_max": 0.32,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "CONTRAHUELLA",
+     "min": 0.15,
+     "rec_min": 0.15,
+     "rec_max": 0.17,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ALTURA_LIBRE",
+     "min": 2.1,
+     "rec_min": 2.1,
+     "rec_max": null,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "DESCANSO",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": null,
+     "unidad": "m",
+     "nota": "longitud >= ancho de escalera"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": 1.2,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-RAM-001",
+   "seccion": "46",
+   "espacio": "RAMPAS",
+   "space_type": null,
+   "titulo": "Rampas",
+   "items": [
+    {
+     "parametro": "ANCHO",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 1.5,
+     "unidad": "m",
+     "nota": "alta circulación 1.50-2.40 m"
+    },
+    {
+     "parametro": "PENDIENTE_MAXIMA",
+     "min": 8.33,
+     "rec_min": 5.0,
+     "rec_max": 8.33,
+     "unidad": "%",
+     "nota": "para determinados tramos; la definitiva se parametriza por longitud y legislación"
+    },
+    {
+     "parametro": "DESCANSO",
+     "min": 1.5,
+     "rec_min": 1.5,
+     "rec_max": 1.5,
+     "unidad": "m",
+     "nota": "1.50 x 1.50 m mínimo orientativo"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": 1.2,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-ASC-001",
+   "seccion": "47",
+   "espacio": "ASCENSORES",
+   "space_type": "CORE",
+   "titulo": "Ascensores (cuando sean necesarios)",
+   "items": [
+    {
+     "parametro": "CABINA_ACCESIBLE",
+     "min": 1.1,
+     "rec_min": 1.1,
+     "rec_max": 1.4,
+     "unidad": "m",
+     "nota": "1.10 x 1.40 mínimo; preferida 1.10 x 1.50 m"
+    },
+    {
+     "parametro": "PUERTA",
+     "min": 0.9,
+     "rec_min": 0.9,
+     "rec_max": null,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "VESTIBULO",
+     "min": 2.0,
+     "rec_min": 2.0,
+     "rec_max": 3.0,
+     "unidad": "m",
+     "nota": "profundidad; ancho 2.00-3.50 m"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-ALB-001",
+   "seccion": "48",
+   "espacio": "CAPACIDAD_ALBERGUE",
+   "space_type": null,
+   "titulo": "Capacidad del albergue escolar",
+   "items": [
+    {
+     "parametro": "ALBERGUE_PEQUENO",
+     "min": null,
+     "rec_min": 20,
+     "rec_max": 50,
+     "unidad": "plazas",
+     "nota": ""
+    },
+    {
+     "parametro": "ALBERGUE_MEDIO",
+     "min": null,
+     "rec_min": 51,
+     "rec_max": 150,
+     "unidad": "plazas",
+     "nota": ""
+    },
+    {
+     "parametro": "ALBERGUE_GRANDE",
+     "min": null,
+     "rec_min": 151,
+     "rec_max": 300,
+     "unidad": "plazas",
+     "nota": ""
+    },
+    {
+     "parametro": "ALBERGUE_MASIVO",
+     "min": null,
+     "rec_min": 301,
+     "rec_max": null,
+     "unidad": "plazas",
+     "nota": "más de 300 plazas"
+    },
+    {
+     "parametro": "PARAMETROS",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "plazas, sexo, edad, personal, horarios, comedor, baños, lavandería y enfermería"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-DOR-002",
+   "seccion": "49",
+   "espacio": "DORMITORIO_INDIVIDUAL",
+   "space_type": "BEDROOM",
+   "titulo": "Dormitorio individual de albergue",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 9.0,
+     "rec_min": 9.0,
+     "rec_max": 14.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "CON_BANO",
+     "min": 12.0,
+     "rec_min": 12.0,
+     "rec_max": 18.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "PUERTA",
+     "min": 0.8,
+     "rec_min": 0.8,
+     "rec_max": 0.9,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "VENTANA",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 1.8,
+     "unidad": "m",
+     "nota": "ancho"
+    }
+   ],
+   "min_area_m2": 9.0,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-DOR-003",
+   "seccion": "50",
+   "espacio": "DORMITORIO_2_PLAZAS",
+   "space_type": "BEDROOM",
+   "titulo": "Dormitorio de 2 plazas de albergue",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 14.0,
+     "rec_min": 14.0,
+     "rec_max": 20.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "CON_BANO",
+     "min": 18.0,
+     "rec_min": 18.0,
+     "rec_max": 24.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "SEPARACION_ENTRE_CAMAS",
+     "min": 0.8,
+     "rec_min": 0.8,
+     "rec_max": 1.2,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "CIRCULACION",
+     "min": 0.9,
+     "rec_min": 1.0,
+     "rec_max": 1.2,
+     "unidad": "m",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": 14.0,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-DOR-004",
+   "seccion": "51",
+   "espacio": "DORMITORIO_COLETIVO",
+   "space_type": "DORMITORIO_COLETIVO",
+   "titulo": "Dormitorio colectivo de albergue",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 4.0,
+     "rec_min": 4.0,
+     "rec_max": 6.0,
+     "unidad": "m2/persona",
+     "nota": ""
+    },
+    {
+     "parametro": "DORMITORIO_DE_4",
+     "min": 16.0,
+     "rec_min": 16.0,
+     "rec_max": 24.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "DORMITORIO_DE_6",
+     "min": 24.0,
+     "rec_min": 24.0,
+     "rec_max": 36.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "DORMITORIO_DE_8",
+     "min": 32.0,
+     "rec_min": 32.0,
+     "rec_max": 48.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "DORMITORIO_DE_10",
+     "min": 40.0,
+     "rec_min": 40.0,
+     "rec_max": 60.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "DIVISION",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "dividir los grandes en unidades menores cuando se pueda"
+    }
+   ],
+   "min_area_m2": 16.0,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-CAM-001",
+   "seccion": "52",
+   "espacio": "CAMA_ALBERGUE",
+   "space_type": null,
+   "titulo": "Camas y literas de albergue",
+   "items": [
+    {
+     "parametro": "CAMA_INDIVIDUAL",
+     "min": 0.9,
+     "rec_min": 0.9,
+     "rec_max": 2.0,
+     "unidad": "m",
+     "nota": "0.90-1.00 x 1.90-2.00 m; litera con las mismas cotas"
+    },
+    {
+     "parametro": "SEPARACION_LATERAL",
+     "min": 0.6,
+     "rec_min": 0.6,
+     "rec_max": null,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "CIRCULACION_PRINCIPAL",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": null,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "EVACUACION",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "las literas no deben dificultar la evacuación"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-CAS-001",
+   "seccion": "53",
+   "espacio": "CASILLEROS_ALBERGUE",
+   "space_type": null,
+   "titulo": "Casilleros de albergue",
+   "items": [
+    {
+     "parametro": "ANCHO",
+     "min": 0.3,
+     "rec_min": 0.3,
+     "rec_max": 0.45,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "PROFUNDIDAD",
+     "min": 0.45,
+     "rec_min": 0.45,
+     "rec_max": 0.6,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ALTURA",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 1.8,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "PASILLO",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": null,
+     "unidad": "m",
+     "nota": "mínimo funcional"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-EST-001",
+   "seccion": "54",
+   "espacio": "SALA_ESTUDIO",
+   "space_type": "SALA_ESTUDIO",
+   "titulo": "Sala de estudio del albergue",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 1.5,
+     "rec_min": 1.5,
+     "rec_max": 2.5,
+     "unidad": "m2/persona",
+     "nota": ""
+    },
+    {
+     "parametro": "PEQUENA",
+     "min": 20.0,
+     "rec_min": 20.0,
+     "rec_max": 30.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "MEDIANA",
+     "min": 30.0,
+     "rec_min": 30.0,
+     "rec_max": 60.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "GRANDE",
+     "min": 60.0,
+     "rec_min": 60.0,
+     "rec_max": 120.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "ACUSTICA",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "acústicamente separada de áreas recreativas (§90)"
+    }
+   ],
+   "min_area_m2": 20.0,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-EST2-001",
+   "seccion": "55",
+   "espacio": "SALA_DE_ESTAR",
+   "space_type": "SALA_CONVIVENCIA",
+   "titulo": "Sala de estar",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 1.5,
+     "rec_min": 1.5,
+     "rec_max": 3.0,
+     "unidad": "m2/persona",
+     "nota": "por persona simultánea"
+    },
+    {
+     "parametro": "PEQUENA",
+     "min": 20.0,
+     "rec_min": 20.0,
+     "rec_max": 30.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "MEDIANA",
+     "min": 30.0,
+     "rec_min": 30.0,
+     "rec_max": 60.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "GRANDE",
+     "min": 60.0,
+     "rec_min": 60.0,
+     "rec_max": 120.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "SEPARACION",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "descanso, televisión, juegos y estudio"
+    }
+   ],
+   "min_area_m2": 20.0,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-COM2-001",
+   "seccion": "56",
+   "espacio": "COMEDOR_ALBERGUE",
+   "space_type": "DINING_HALL",
+   "titulo": "Comedor de albergue",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 1.8,
+     "unidad": "m2/persona",
+     "nota": "por persona simultánea, según turnos"
+    },
+    {
+     "parametro": "EJEMPLO",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "150 plazas x 50% = 75 comensales: 90-135 m2"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-COC2-001",
+   "seccion": "57",
+   "espacio": "COCINA_ALBERGUE",
+   "space_type": "KITCHEN_INSTITUTIONAL",
+   "titulo": "Cocina de albergue",
+   "items": [
+    {
+     "parametro": "FRACCION_COMEDOR",
+     "min": 25.0,
+     "rec_min": 25.0,
+     "rec_max": 40.0,
+     "unidad": "%",
+     "nota": "del comedor como primera estimación"
+    },
+    {
+     "parametro": "SEPARAR",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "recepción, almacén seco, refrigeración, preparación, cocción, lavado, residuos y distribución"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-LAV-001",
+   "seccion": "58",
+   "espacio": "LAVANDERIA",
+   "space_type": "LAUNDRY",
+   "titulo": "Lavandería",
+   "items": [
+    {
+     "parametro": "PEQUENA",
+     "min": 10.0,
+     "rec_min": 10.0,
+     "rec_max": 20.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "MEDIANA",
+     "min": 20.0,
+     "rec_min": 20.0,
+     "rec_max": 40.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "GRANDE",
+     "min": 40.0,
+     "rec_min": 40.0,
+     "rec_max": 80.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "SEPARAR",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "ropa sucia, lavado, secado, planchado y ropa limpia (flujo del §102)"
+    },
+    {
+     "parametro": "CIRCULACION",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 1.5,
+     "unidad": "m",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": 10.0,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-BAN2-001",
+   "seccion": "59",
+   "espacio": "BANOS_COLECTIVOS",
+   "space_type": "BATHROOM",
+   "titulo": "Baños colectivos de albergue",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 0.8,
+     "rec_min": 0.8,
+     "rec_max": 1.5,
+     "unidad": "m2/persona",
+     "nota": "servida por turno como referencia"
+    },
+    {
+     "parametro": "DUCHA",
+     "min": 0.8,
+     "rec_min": 0.8,
+     "rec_max": 1.2,
+     "unidad": "m",
+     "nota": "0.80-1.00 x 0.80-1.20 m"
+    },
+    {
+     "parametro": "VESTUARIO",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 1.5,
+     "unidad": "m",
+     "nota": "circulación"
+    },
+    {
+     "parametro": "SEPARAR",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "WC, lavamanos, duchas y vestidores"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-ENF2-001",
+   "seccion": "60",
+   "espacio": "ENFERMERIA_ALBERGUE",
+   "space_type": "INFIRMARY",
+   "titulo": "Enfermería de albergue",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 15.0,
+     "rec_min": 15.0,
+     "rec_max": 30.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "CON_AISLAMIENTO",
+     "min": 25.0,
+     "rec_min": 25.0,
+     "rec_max": 45.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "CONTENIDO",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "recepción, camilla, lavamanos, almacenamiento, observación, baño y aislamiento"
+    }
+   ],
+   "min_area_m2": 15.0,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-ADM-001",
+   "seccion": "61",
+   "espacio": "ADMINISTRACION_ALBERGUE",
+   "space_type": "ADMINISTRATION",
+   "titulo": "Administración del albergue",
+   "items": [
+    {
+     "parametro": "DIRECCION",
+     "min": 12.0,
+     "rec_min": 12.0,
+     "rec_max": 20.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "ADMINISTRACION",
+     "min": 12.0,
+     "rec_min": 12.0,
+     "rec_max": 30.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "SALA_REUNIONES",
+     "min": 15.0,
+     "rec_min": 15.0,
+     "rec_max": 30.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "RECEPCION",
+     "min": 10.0,
+     "rec_min": 10.0,
+     "rec_max": 20.0,
+     "unidad": "m2",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": 10.0,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-MON-001",
+   "seccion": "62",
+   "espacio": "MONITORES",
+   "space_type": "MONITORES",
+   "titulo": "Sala de monitores / educadores",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 10.0,
+     "rec_min": 10.0,
+     "rec_max": 20.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "VARIOS_EDUCADORES",
+     "min": 20.0,
+     "rec_min": 20.0,
+     "rec_max": 40.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "CONTROL",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "control visual de las áreas comunes"
+    }
+   ],
+   "min_area_m2": 10.0,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-CON-001",
+   "seccion": "63",
+   "espacio": "CONVIVENCIA",
+   "space_type": "SALA_CONVIVENCIA",
+   "titulo": "Espacios de convivencia",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 1.5,
+     "rec_min": 1.5,
+     "rec_max": 3.0,
+     "unidad": "m2/persona",
+     "nota": "por persona simultánea"
+    },
+    {
+     "parametro": "ESPACIOS",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "juegos, lectura, televisión, reuniones, estudio, patio, terraza y jardín"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-DEP-001",
+   "seccion": "64",
+   "espacio": "DEPORTIVA_ALBERGUE",
+   "space_type": "GYMNASIO",
+   "titulo": "Área deportiva del albergue",
+   "items": [
+    {
+     "parametro": "CANCHA",
+     "min": 420.0,
+     "rec_min": 540.0,
+     "rec_max": null,
+     "unidad": "m2",
+     "nota": "15 x 28 m mínimo funcional; recomendable 18 x 30 m"
+    },
+    {
+     "parametro": "GIMNASIO",
+     "min": 216.0,
+     "rec_min": 216.0,
+     "rec_max": null,
+     "unidad": "m2",
+     "nota": "12 x 18 m mínimo"
+    },
+    {
+     "parametro": "ALTURA",
+     "min": 6.0,
+     "rec_min": 6.0,
+     "rec_max": 9.0,
+     "unidad": "m",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": 216.0,
+   "min_ancho_m": null,
+   "min_altura_m": 6.0
+  },
+  {
+   "id": "ED-ACC-001",
+   "seccion": "65",
+   "espacio": "ACCESOS",
+   "space_type": "ENTRANCE",
+   "titulo": "Accesos",
+   "items": [
+    {
+     "parametro": "PEATONAL_PRINCIPAL",
+     "min": 1.8,
+     "rec_min": 1.8,
+     "rec_max": 2.4,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ALTA_CONCENTRACION",
+     "min": 2.4,
+     "rec_min": 2.4,
+     "rec_max": 3.6,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ACCESO_DE_SERVICIO",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 2.4,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ACCESO_DE_VEHICULOS",
+     "min": 3.5,
+     "rec_min": 3.5,
+     "rec_max": 6.0,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "CONTROL",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "control de acceso (§88); 7 accesos separables (§1)"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": 1.8,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-CER-001",
+   "seccion": "66",
+   "espacio": "CERCAS_PERIMETRALES",
+   "space_type": null,
+   "titulo": "Cercas y control perimetral",
+   "items": [
+    {
+     "parametro": "ALTURA_INICIAL",
+     "min": 1.8,
+     "rec_min": 1.8,
+     "rec_max": 2.4,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ZONAS_INFANTILES",
+     "min": 1.5,
+     "rec_min": 1.5,
+     "rec_max": 2.0,
+     "unidad": "m",
+     "nota": "ajustando por seguridad y normativa"
+    },
+    {
+     "parametro": "EVITAR",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "escalabilidad fácil, puntas peligrosas, elementos cortantes y zonas de atrapamiento"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-VER-001",
+   "seccion": "67",
+   "espacio": "PATIOS_VERDES",
+   "space_type": null,
+   "titulo": "Patios y espacios verdes",
+   "items": [
+    {
+     "parametro": "VEGETACION",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "árboles de sombra, arbustos, césped, jardines y huertos pedagógicos"
+    },
+    {
+     "parametro": "ARBOL_EDIFICIO",
+     "min": 2.0,
+     "rec_min": 2.0,
+     "rec_max": 5.0,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ARBOL_INSTALACIONES",
+     "min": 2.0,
+     "rec_min": 2.0,
+     "rec_max": null,
+     "unidad": "m",
+     "nota": "ajustable por especie y raíces"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-HUE-001",
+   "seccion": "68",
+   "espacio": "HUERTO_ESCOLAR",
+   "space_type": null,
+   "titulo": "Huerto escolar",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 2.0,
+     "rec_min": 2.0,
+     "rec_max": 5.0,
+     "unidad": "m2/alumno",
+     "nota": "por alumno participante"
+    },
+    {
+     "parametro": "PEQUENO",
+     "min": 50.0,
+     "rec_min": 50.0,
+     "rec_max": 100.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "MEDIANO",
+     "min": 100.0,
+     "rec_min": 100.0,
+     "rec_max": 300.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "GRANDE",
+     "min": 300.0,
+     "rec_min": 300.0,
+     "rec_max": 1000.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "CONTAR_CON",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "agua, almacenamiento, senderos, sombra y zona de herramientas"
+    }
+   ],
+   "min_area_m2": 50.0,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-TRA-001",
+   "seccion": "69",
+   "espacio": "TRANSPORTE_ESCOLAR",
+   "space_type": null,
+   "titulo": "Transporte escolar",
+   "items": [
+    {
+     "parametro": "ZONA_DESCENSO",
+     "min": 3.0,
+     "rec_min": 3.0,
+     "rec_max": 5.0,
+     "unidad": "m",
+     "nota": "ancho"
+    },
+    {
+     "parametro": "LONGITUD",
+     "min": 10.0,
+     "rec_min": 10.0,
+     "rec_max": 20.0,
+     "unidad": "m",
+     "nota": "por posición, según vehículo"
+    },
+    {
+     "parametro": "SEPARAR",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "vehículos, peatones, bicicletas y servicios"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-EST3-001",
+   "seccion": "70",
+   "espacio": "ESTACIONAMIENTO",
+   "space_type": "PARKING",
+   "titulo": "Estacionamiento",
+   "items": [
+    {
+     "parametro": "PLAZA",
+     "min": 2.4,
+     "rec_min": 2.4,
+     "rec_max": 2.6,
+     "unidad": "m",
+     "nota": "2.40-2.60 x 4.80-5.50 m"
+    },
+    {
+     "parametro": "PLAZA_ACCESIBLE",
+     "min": 3.6,
+     "rec_min": 3.6,
+     "rec_max": 4.0,
+     "unidad": "m",
+     "nota": "3.60-4.00 x 5.00-5.50 m con zona lateral"
+    },
+    {
+     "parametro": "PASILLO_UNIDIRECCIONAL",
+     "min": 4.5,
+     "rec_min": 4.5,
+     "rec_max": 5.5,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "PASILLO_BIDIRECCIONAL",
+     "min": 5.5,
+     "rec_min": 5.5,
+     "rec_max": 7.0,
+     "unidad": "m",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": 11.52,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-BIC-001",
+   "seccion": "71",
+   "espacio": "BICICLETERO",
+   "space_type": "BICYCLE_PARKING",
+   "titulo": "Bicicletero",
+   "items": [
+    {
+     "parametro": "POR_BICICLETA",
+     "min": 0.6,
+     "rec_min": 0.6,
+     "rec_max": 0.8,
+     "unidad": "m",
+     "nota": "ancho; longitud 1.80-2.00 m"
+    },
+    {
+     "parametro": "CIRCULACION",
+     "min": 1.5,
+     "rec_min": 1.5,
+     "rec_max": 2.0,
+     "unidad": "m",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": 1.08,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-TEC-001",
+   "seccion": "72",
+   "espacio": "CUARTOS_TECNICOS",
+   "space_type": "ELECTRICAL_ROOM",
+   "titulo": "Cuartos técnicos",
+   "items": [
+    {
+     "parametro": "ELECTRICO",
+     "min": 8.0,
+     "rec_min": 8.0,
+     "rec_max": 20.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "TELECOMUNICACIONES",
+     "min": 6.0,
+     "rec_min": 6.0,
+     "rec_max": 15.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "BOMBAS",
+     "min": 8.0,
+     "rec_min": 8.0,
+     "rec_max": 20.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "PCI",
+     "min": 8.0,
+     "rec_min": 8.0,
+     "rec_max": 20.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "MANTENIMIENTO",
+     "min": 10.0,
+     "rec_min": 10.0,
+     "rec_max": 30.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "RESIDUOS",
+     "min": 6.0,
+     "rec_min": 6.0,
+     "rec_max": 20.0,
+     "unidad": "m2",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": 6.0,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-RES-001",
+   "seccion": "73",
+   "espacio": "CUARTO_RESIDUOS",
+   "space_type": "WASTE_ROOM",
+   "titulo": "Cuarto de residuos",
+   "items": [
+    {
+     "parametro": "ESCUELA_PEQUENA",
+     "min": 4.0,
+     "rec_min": 4.0,
+     "rec_max": 8.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "MEDIANA",
+     "min": 8.0,
+     "rec_min": 8.0,
+     "rec_max": 15.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "GRANDE",
+     "min": 15.0,
+     "rec_min": 15.0,
+     "rec_max": 30.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "PERMITIR",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "lavado, drenaje, ventilación, almacenamiento temporal y retirada independiente"
+    }
+   ],
+   "min_area_m2": 4.0,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-ELE-001",
+   "seccion": "74",
+   "espacio": "TOMACORRIENTES",
+   "space_type": null,
+   "titulo": "Tomacorrientes escolares",
+   "items": [
+    {
+     "parametro": "PUESTO_ALUMNO",
+     "min": 2.0,
+     "rec_min": 2.0,
+     "rec_max": 4.0,
+     "unidad": "tomas",
+     "nota": "según equipamiento"
+    },
+    {
+     "parametro": "LABORATORIO",
+     "min": 4.0,
+     "rec_min": 4.0,
+     "rec_max": 8.0,
+     "unidad": "tomas",
+     "nota": "por zona de trabajo"
+    },
+    {
+     "parametro": "COMPUTACION",
+     "min": 1.0,
+     "rec_min": 1.0,
+     "rec_max": null,
+     "unidad": "tomas",
+     "nota": "mínimo funcional por puesto, más reservas"
+    },
+    {
+     "parametro": "ALTURA_GENERAL",
+     "min": 0.3,
+     "rec_min": 0.3,
+     "rec_max": 0.45,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ALTURA_SOBRE_MOBILIARIO",
+     "min": 0.9,
+     "rec_min": 0.9,
+     "rec_max": 1.2,
+     "unidad": "m",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-LUZ-001",
+   "seccion": "76",
+   "espacio": "ILUMINACION_NATURAL_AULAS",
+   "space_type": null,
+   "titulo": "Profundidad de aulas con iluminación lateral",
+   "items": [
+    {
+     "parametro": "PROFUNDIDAD_ORIENTATIVA",
+     "min": 6.0,
+     "rec_min": 6.0,
+     "rec_max": 10.0,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "MAXIMA_INICIAL",
+     "min": 10.0,
+     "rec_min": 10.0,
+     "rec_max": 12.0,
+     "unidad": "m",
+     "nota": "aulas más profundas: patios, lucernarios, doble orientación, claraboyas o atrios"
+    },
+    {
+     "parametro": "EVALUAR",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "orientación, acristalado, obstrucciones, protección solar y deslumbramiento"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-SEN-001",
+   "seccion": "86",
+   "espacio": "SEÑALIZACION",
+   "space_type": null,
+   "titulo": "Señalización",
+   "items": [
+    {
+     "parametro": "ALTURA_ORIENTATIVA",
+     "min": 2.0,
+     "rec_min": 2.0,
+     "rec_max": 2.4,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "DIRECTORIOS",
+     "min": 1.4,
+     "rec_min": 1.4,
+     "rec_max": 1.7,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "MAPAS",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 1.7,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "SEÑALIZACION_INFANTIL",
+     "min": 1.0,
+     "rec_min": 1.0,
+     "rec_max": 1.4,
+     "unidad": "m",
+     "nota": "según edad"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-CCTV-001",
+   "seccion": "87",
+   "espacio": "CCTV",
+   "space_type": null,
+   "titulo": "CCTV escolar",
+   "items": [
+    {
+     "parametro": "ALTURA_INTERIOR",
+     "min": 2.5,
+     "rec_min": 2.5,
+     "rec_max": 3.5,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ALTURA_EXTERIOR",
+     "min": 3.0,
+     "rec_min": 3.0,
+     "rec_max": 5.0,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "CIRCULO_INFANTIL",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "priorizar accesos, perímetro, circulaciones, patios y zonas de entrega/recogida, evitando la privacidad infantil"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-CAC-001",
+   "seccion": "88",
+   "espacio": "CONTROL_DE_ACCESO",
+   "space_type": null,
+   "titulo": "Control de acceso",
+   "items": [
+    {
+     "parametro": "PUERTA_CONTROLADA",
+     "min": 0.9,
+     "rec_min": 0.9,
+     "rec_max": 1.2,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ACCESO_PRINCIPAL",
+     "min": 1.8,
+     "rec_min": 1.8,
+     "rec_max": 2.4,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ACCESO_ACCESIBLE",
+     "min": 0.9,
+     "rec_min": 0.9,
+     "rec_max": null,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "VESTIBULO_DE_CONTROL",
+     "min": 2.0,
+     "rec_min": 2.0,
+     "rec_max": 4.0,
+     "unidad": "m",
+     "nota": "profundidad"
+    },
+    {
+     "parametro": "PERFILES",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "estudiantes, personal, visitantes, servicios y emergencias"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": 0.9,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-BIO-001",
+   "seccion": "97",
+   "espacio": "BIOCLIMATICA",
+   "space_type": null,
+   "titulo": "Protección solar escolar",
+   "items": [
+    {
+     "parametro": "ALEROS",
+     "min": 0.6,
+     "rec_min": 0.6,
+     "rec_max": 1.5,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "PROTECCION_VERTICAL",
+     "min": 0.3,
+     "rec_min": 0.3,
+     "rec_max": 1.0,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "SEPARACION_ELEMENTOS",
+     "min": 0.3,
+     "rec_min": 0.3,
+     "rec_max": 1.5,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ESTRATEGIAS",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "ventilación cruzada, aleros, galerías, patios, vegetación, cubiertas ventiladas y fachadas sombreadas"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-PRE-001",
+   "seccion": "104-105",
+   "espacio": "PUNTO_DE_REUNION",
+   "space_type": null,
+   "titulo": "Punto de reunión",
+   "items": [
+    {
+     "parametro": "AREA_POR_PERSONA",
+     "min": 0.5,
+     "rec_min": 0.5,
+     "rec_max": 1.0,
+     "unidad": "m2/persona",
+     "nota": ""
+    },
+    {
+     "parametro": "FORMULA",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "AREA_REUNION = POBLACION_EVACUADA x AREA_PERSONA"
+    },
+    {
+     "parametro": "UBICACION",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "fuera del edificio, alejado de riesgos y de la circulación vehicular, con capacidad y señalización"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-PLE-001",
+   "seccion": "94",
+   "espacio": "PLENUM_TECHOS",
+   "space_type": null,
+   "titulo": "Plenum de falsos techos",
+   "items": [
+    {
+     "parametro": "PLENUM",
+     "min": 0.3,
+     "rec_min": 0.3,
+     "rec_max": 0.6,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ALTA_CONCENTRACION_INSTALACIONES",
+     "min": 0.6,
+     "rec_min": 0.6,
+     "rec_max": 1.2,
+     "unidad": "m",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-CAR-001",
+   "seccion": "95",
+   "espacio": "CARPINTERIA",
+   "space_type": null,
+   "titulo": "Carpintería escolar",
+   "items": [
+    {
+     "parametro": "PUERTA_AULA",
+     "min": 0.9,
+     "rec_min": 0.9,
+     "rec_max": 1.2,
+     "unidad": "m",
+     "nota": "x 2.10 m de alto"
+    },
+    {
+     "parametro": "PUERTA_DOBLE",
+     "min": 1.4,
+     "rec_min": 1.4,
+     "rec_max": 1.8,
+     "unidad": "m",
+     "nota": "x 2.10 m"
+    },
+    {
+     "parametro": "PUERTA_ALTA_CIRCULACION",
+     "min": 1.8,
+     "rec_min": 1.8,
+     "rec_max": 2.4,
+     "unidad": "m",
+     "nota": "x 2.10-2.40 m"
+    },
+    {
+     "parametro": "VENTANA_MODULAR",
+     "min": 0.6,
+     "rec_min": 0.6,
+     "rec_max": 1.5,
+     "unidad": "m",
+     "nota": "ancho; altura 1.20-2.00 m"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": 0.9,
+   "min_altura_m": null
+  },
+  {
+   "id": "ED-ACC2-001",
+   "seccion": "96",
+   "espacio": "ACCESIBILIDAD",
+   "space_type": null,
+   "titulo": "Accesibilidad continua",
+   "items": [
+    {
+     "parametro": "RUTA_ACCESIBLE",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 1.5,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "RUTA_ALTA_CIRCULACION",
+     "min": 1.5,
+     "rec_min": 1.5,
+     "rec_max": 2.4,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "PUERTA",
+     "min": 0.9,
+     "rec_min": 0.9,
+     "rec_max": null,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "GIRO",
+     "min": 1.5,
+     "rec_min": 1.5,
+     "rec_max": null,
+     "unidad": "m",
+     "nota": "diámetro"
+    },
+    {
+     "parametro": "CONTINUIDAD",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "acceso, aulas, administración, baños, biblioteca, comedor, deportes y exteriores"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": 0.9,
+   "min_altura_m": null
+  }
+ ],
+ "relaciones": [
+  {
+   "familia": "ESCUELA_PRIMARIA",
+   "a": "ACCESO",
+   "b": "CONTROL",
+   "nivel": "3"
+  },
+  {
+   "familia": "ESCUELA_PRIMARIA",
+   "a": "CONTROL",
+   "b": "ADMINISTRACION",
+   "nivel": "2"
+  },
+  {
+   "familia": "ESCUELA_PRIMARIA",
+   "a": "AULA",
+   "b": "AULA",
+   "nivel": "2"
+  },
+  {
+   "familia": "ESCUELA_PRIMARIA",
+   "a": "AULA",
+   "b": "PATIO",
+   "nivel": "2"
+  },
+  {
+   "familia": "ESCUELA_PRIMARIA",
+   "a": "AULA",
+   "b": "SANITARIOS",
+   "nivel": "3"
+  },
+  {
+   "familia": "ESCUELA_PRIMARIA",
+   "a": "AULA",
+   "b": "BIBLIOTECA",
+   "nivel": "2"
+  },
+  {
+   "familia": "ESCUELA_PRIMARIA",
+   "a": "AULA",
+   "b": "DEPORTES",
+   "nivel": "2"
+  },
+  {
+   "familia": "ESCUELA_PRIMARIA",
+   "a": "COCINA",
+   "b": "COMEDOR",
+   "nivel": "3"
+  },
+  {
+   "familia": "ESCUELA_PRIMARIA",
+   "a": "MANTENIMIENTO",
+   "b": "SERVICIO",
+   "nivel": "2"
+  },
+  {
+   "familia": "ESCUELA_PRIMARIA",
+   "a": "RESIDUOS",
+   "b": "ACCESO_SERVICIO",
+   "nivel": "2"
+  },
+  {
+   "familia": "ESCUELA_PRIMARIA",
+   "a": "ESTUDIANTES",
+   "b": "CARGA",
+   "nivel": "0"
+  },
+  {
+   "familia": "ESCUELA_PRIMARIA",
+   "a": "COCINA",
+   "b": "BASURA",
+   "nivel": "0"
+  },
+  {
+   "familia": "ESCUELA_PRIMARIA",
+   "a": "ROPA_LIMPIA",
+   "b": "ROPA_SUCIA",
+   "nivel": "0"
+  },
+  {
+   "familia": "ESCUELA_PRIMARIA",
+   "a": "RESIDUOS",
+   "b": "PUBLICO",
+   "nivel": "0"
+  },
+  {
+   "familia": "ESCUELA_SECUNDARIA",
+   "a": "AULAS_GENERALES",
+   "b": "LABORATORIOS",
+   "nivel": "2"
+  },
+  {
+   "familia": "ESCUELA_SECUNDARIA",
+   "a": "LABORATORIOS",
+   "b": "TALLERES",
+   "nivel": "2"
+  },
+  {
+   "familia": "ESCUELA_SECUNDARIA",
+   "a": "TALLERES",
+   "b": "BIBLIOTECA",
+   "nivel": "1"
+  },
+  {
+   "familia": "ESCUELA_SECUNDARIA",
+   "a": "BIBLIOTECA",
+   "b": "DEPORTES",
+   "nivel": "1"
+  },
+  {
+   "familia": "ESCUELA_SECUNDARIA",
+   "a": "LABORATORIOS",
+   "b": "ALMACEN",
+   "nivel": "2"
+  },
+  {
+   "familia": "ESCUELA_SECUNDARIA",
+   "a": "AULAS_GENERALES",
+   "b": "SANITARIOS",
+   "nivel": "3"
+  },
+  {
+   "familia": "ESCUELA_SECUNDARIA",
+   "a": "AULAS_GENERALES",
+   "b": "PATIO",
+   "nivel": "2"
+  },
+  {
+   "familia": "ESCUELA_SECUNDARIA",
+   "a": "COCINA",
+   "b": "COMEDOR",
+   "nivel": "3"
+  },
+  {
+   "familia": "ESCUELA_SECUNDARIA",
+   "a": "ESTUDIANTES",
+   "b": "CARGA",
+   "nivel": "0"
+  },
+  {
+   "familia": "ESCUELA_SECUNDARIA",
+   "a": "COCINA",
+   "b": "BASURA",
+   "nivel": "0"
+  },
+  {
+   "familia": "ESCUELA_SECUNDARIA",
+   "a": "ROPA_LIMPIA",
+   "b": "ROPA_SUCIA",
+   "nivel": "0"
+  },
+  {
+   "familia": "ESCUELA_SECUNDARIA",
+   "a": "RESIDUOS",
+   "b": "PUBLICO",
+   "nivel": "0"
+  },
+  {
+   "familia": "CIRCULO_INFANTIL",
+   "a": "AULA",
+   "b": "HIGIENE",
+   "nivel": "3"
+  },
+  {
+   "familia": "CIRCULO_INFANTIL",
+   "a": "AULA",
+   "b": "JUEGO_EXTERIOR",
+   "nivel": "3"
+  },
+  {
+   "familia": "CIRCULO_INFANTIL",
+   "a": "AULA",
+   "b": "DESCANSO",
+   "nivel": "3"
+  },
+  {
+   "familia": "CIRCULO_INFANTIL",
+   "a": "COCINA",
+   "b": "COMEDOR",
+   "nivel": "3"
+  },
+  {
+   "familia": "CIRCULO_INFANTIL",
+   "a": "COMEDOR",
+   "b": "SERVICIO",
+   "nivel": "2"
+  },
+  {
+   "familia": "CIRCULO_INFANTIL",
+   "a": "ACCESO",
+   "b": "RECEPCION",
+   "nivel": "3"
+  },
+  {
+   "familia": "CIRCULO_INFANTIL",
+   "a": "RECEPCION",
+   "b": "CONTROL",
+   "nivel": "2"
+  },
+  {
+   "familia": "CIRCULO_INFANTIL",
+   "a": "CONTROL",
+   "b": "AULA",
+   "nivel": "2"
+  },
+  {
+   "familia": "CIRCULO_INFANTIL",
+   "a": "SERVICIO",
+   "b": "ESTUDIANTES",
+   "nivel": "0"
+  },
+  {
+   "familia": "CIRCULO_INFANTIL",
+   "a": "ESTUDIANTES",
+   "b": "CARGA",
+   "nivel": "0"
+  },
+  {
+   "familia": "CIRCULO_INFANTIL",
+   "a": "COCINA",
+   "b": "BASURA",
+   "nivel": "0"
+  },
+  {
+   "familia": "CIRCULO_INFANTIL",
+   "a": "ROPA_LIMPIA",
+   "b": "ROPA_SUCIA",
+   "nivel": "0"
+  },
+  {
+   "familia": "ALBERGUE_ESCOLAR",
+   "a": "ACCESO",
+   "b": "CONTROL",
+   "nivel": "3"
+  },
+  {
+   "familia": "ALBERGUE_ESCOLAR",
+   "a": "CONTROL",
+   "b": "ADMINISTRACION",
+   "nivel": "2"
+  },
+  {
+   "familia": "ALBERGUE_ESCOLAR",
+   "a": "ADMINISTRACION",
+   "b": "DORMITORIOS",
+   "nivel": "2"
+  },
+  {
+   "familia": "ALBERGUE_ESCOLAR",
+   "a": "DORMITORIOS",
+   "b": "BANOS",
+   "nivel": "3"
+  },
+  {
+   "familia": "ALBERGUE_ESCOLAR",
+   "a": "BANOS",
+   "b": "DUCHAS",
+   "nivel": "2"
+  },
+  {
+   "familia": "ALBERGUE_ESCOLAR",
+   "a": "DORMITORIOS",
+   "b": "ESTUDIO",
+   "nivel": "2"
+  },
+  {
+   "familia": "ALBERGUE_ESCOLAR",
+   "a": "DORMITORIOS",
+   "b": "CONVIVENCIA",
+   "nivel": "2"
+  },
+  {
+   "familia": "ALBERGUE_ESCOLAR",
+   "a": "COCINA",
+   "b": "COMEDOR",
+   "nivel": "3"
+  },
+  {
+   "familia": "ALBERGUE_ESCOLAR",
+   "a": "COMEDOR",
+   "b": "SERVICIO",
+   "nivel": "2"
+  },
+  {
+   "familia": "ALBERGUE_ESCOLAR",
+   "a": "ENFERMERIA",
+   "b": "AISLAMIENTO",
+   "nivel": "3"
+  },
+  {
+   "familia": "ALBERGUE_ESCOLAR",
+   "a": "DORMITORIOS",
+   "b": "RUIDO",
+   "nivel": "0"
+  },
+  {
+   "familia": "ALBERGUE_ESCOLAR",
+   "a": "ESTUDIANTES",
+   "b": "CARGA",
+   "nivel": "0"
+  },
+  {
+   "familia": "ALBERGUE_ESCOLAR",
+   "a": "COCINA",
+   "b": "BASURA",
+   "nivel": "0"
+  },
+  {
+   "familia": "ALBERGUE_ESCOLAR",
+   "a": "ROPA_LIMPIA",
+   "b": "ROPA_SUCIA",
+   "nivel": "0"
+  }
+ ],
+ "escala_relaciones": {
+  "0": "NO RECOMENDADA",
+  "1": "POSIBLE",
+  "2": "RECOMENDADA",
+  "3": "PRIORITARIA"
+ },
+ "relacion_a_space": {
+  "ACCESO": "ENTRANCE",
+  "CONTROL": "SECURITY_ROOM",
+  "RECEPCION": "WAITING_ROOM",
+  "ADMINISTRACION": "ADMINISTRATION",
+  "AULA": "CLASSROOM",
+  "AULAS_GENERALES": "CLASSROOM",
+  "HIGIENE": "HIGIENE_CI",
+  "JUEGO_EXTERIOR": "JUEGO_EXTERIOR",
+  "DESCANSO": "DORMITORIO_COLETIVO",
+  "COCINA": "KITCHEN_INSTITUTIONAL",
+  "COMEDOR": "DINING_HALL",
+  "SERVICIO": "STOREROOM",
+  "MANTENIMIENTO": "STOREROOM",
+  "RESIDUOS": "WASTE_ROOM",
+  "ACCESO_SERVICIO": "STOREROOM",
+  "PATIO": "PATIO",
+  "SANITARIOS": "BATHROOM",
+  "BANOS": "BATHROOM",
+  "DUCHAS": "BATHROOM",
+  "BIBLIOTECA": "LIBRARY",
+  "DEPORTES": "GYMNASIO",
+  "LABORATORIOS": "LABORATORY",
+  "TALLERES": "TALLER_TECNOLOGICO",
+  "DORMITORIOS": "BEDROOM",
+  "ESTUDIO": "SALA_ESTUDIO",
+  "CONVIVENCIA": "SALA_CONVIVENCIA",
+  "ENFERMERIA": "INFIRMARY",
+  "AISLAMIENTO": "ISOLATION_ROOM",
+  "ALMACEN": "STOREROOM",
+  "ALIMENTOS": "STOREROOM",
+  "CARGA": "LOADING_DOCK",
+  "BASURA": "WASTE_ROOM",
+  "ROPA_LIMPIA": "CLEAN_LINEN",
+  "ROPA_SUCIA": "SOILED_LINEN",
+  "ESTUDIANTES": "__ESTUDIANTES__",
+  "PUBLICO": "__PUBLICO__",
+  "RUIDO": "__RUIDO__"
+ },
+ "relacion_a_space_familia": {
+  "CIRCULO_INFANTIL": {
+   "AULA": "AULA_INFANTIL"
+  }
+ },
+ "programa_minimo": {
+  "ESCUELA_PRIMARIA": [
+   {
+    "item": "ACCESO",
+    "space_type": "ENTRANCE",
+    "nombre": "Acceso",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "RECEPCION_CONTROL",
+    "space_type": "WAITING_ROOM",
+    "nombre": "Recepción y control",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "DIRECCION",
+    "space_type": "OFFICE",
+    "nombre": "Dirección",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "SECRETARIA",
+    "space_type": "OFFICE",
+    "nombre": "Secretaría",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "SALA_PROFESORES",
+    "space_type": "SALA_PROFESORES",
+    "nombre": "Sala de profesores",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "AULAS",
+    "space_type": "CLASSROOM",
+    "nombre": "Aulas",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "BIBLIOTECA",
+    "space_type": "LIBRARY",
+    "nombre": "Biblioteca",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "BANOS",
+    "space_type": "BATHROOM",
+    "nombre": "Baños",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "ENFERMERIA",
+    "space_type": "INFIRMARY",
+    "nombre": "Enfermería",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "COMEDOR",
+    "space_type": "DINING_HALL",
+    "nombre": "Comedor",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "COCINA",
+    "space_type": "KITCHEN_INSTITUTIONAL",
+    "nombre": "Cocina",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "ALMACEN",
+    "space_type": "STOREROOM",
+    "nombre": "Almacén",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "PATIO",
+    "space_type": "PATIO",
+    "nombre": "Patio escolar",
+    "es_local": true,
+    "es_exterior": true
+   },
+   {
+    "item": "AREA_DEPORTIVA",
+    "space_type": "GYMNASIO",
+    "nombre": "Área deportiva",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "LIMPIEZA",
+    "space_type": "CLEANING_ROOM",
+    "nombre": "Cuarto de limpieza",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "RESIDUOS",
+    "space_type": "WASTE_ROOM",
+    "nombre": "Cuarto de residuos",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "CUARTO_ELECTRICO",
+    "space_type": "ELECTRICAL_ROOM",
+    "nombre": "Cuarto eléctrico",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "CUARTO_HIDRAULICO",
+    "space_type": "PUMP_ROOM",
+    "nombre": "Cuarto hidráulico",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "SISTEMA_CONTRA_INCENDIOS",
+    "space_type": "",
+    "nombre": "Sistema contra incendios",
+    "es_local": false,
+    "es_exterior": false
+   },
+   {
+    "item": "ESPACIO_EXTERIOR",
+    "space_type": "JUEGO_EXTERIOR",
+    "nombre": "Espacio exterior",
+    "es_local": true,
+    "es_exterior": true
+   }
+  ],
+  "ESCUELA_SECUNDARIA": [
+   {
+    "item": "ACCESO",
+    "space_type": "ENTRANCE",
+    "nombre": "Acceso",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "ADMINISTRACION",
+    "space_type": "ADMINISTRATION",
+    "nombre": "Administración",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "AULAS",
+    "space_type": "CLASSROOM",
+    "nombre": "Aulas",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "BIBLIOTECA",
+    "space_type": "LIBRARY",
+    "nombre": "Biblioteca",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "LABORATORIO_CIENCIAS",
+    "space_type": "LABORATORY",
+    "nombre": "Laboratorio de ciencias",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "LABORATORIO_INFORMATICO",
+    "space_type": "LAB_COMPUTACION",
+    "nombre": "Laboratorio informático",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "TALLERES",
+    "space_type": "TALLER_TECNOLOGICO",
+    "nombre": "Talleres",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "ARTE",
+    "space_type": "SALA_ARTE",
+    "nombre": "Sala de arte",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "MUSICA",
+    "space_type": "SALA_MUSICA",
+    "nombre": "Sala de música",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "COMEDOR",
+    "space_type": "DINING_HALL",
+    "nombre": "Comedor",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "COCINA",
+    "space_type": "KITCHEN_INSTITUTIONAL",
+    "nombre": "Cocina",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "ENFERMERIA",
+    "space_type": "INFIRMARY",
+    "nombre": "Enfermería",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "BANOS",
+    "space_type": "BATHROOM",
+    "nombre": "Baños",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "VESTUARIOS",
+    "space_type": "DRESSING_ROOM",
+    "nombre": "Vestuarios",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "GIMNASIO_DEPORTE",
+    "space_type": "GYMNASIO",
+    "nombre": "Gimnasio / deporte",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "PATIOS",
+    "space_type": "PATIO",
+    "nombre": "Patios",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "ALMACENES",
+    "space_type": "STOREROOM",
+    "nombre": "Almacenes",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "CUARTOS_TECNICOS",
+    "space_type": "ELECTRICAL_ROOM",
+    "nombre": "Cuartos técnicos",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "RESIDUOS",
+    "space_type": "WASTE_ROOM",
+    "nombre": "Residuos",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "SEGURIDAD",
+    "space_type": "SECURITY_ROOM",
+    "nombre": "Seguridad",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "EVACUACION",
+    "space_type": "",
+    "nombre": "Rutas de evacuación",
+    "es_local": false,
+    "es_exterior": false
+   }
+  ],
+  "CIRCULO_INFANTIL": [
+   {
+    "item": "ACCESO_CONTROLADO",
+    "space_type": "ENTRANCE",
+    "nombre": "Acceso controlado",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "RECEPCION",
+    "space_type": "WAITING_ROOM",
+    "nombre": "Recepción",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "DIRECCION",
+    "space_type": "OFFICE",
+    "nombre": "Dirección",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "AULAS_INFANTILES",
+    "space_type": "AULA_INFANTIL",
+    "nombre": "Aulas infantiles",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "SALAS_CUNAS",
+    "space_type": "SALA_CUNA",
+    "nombre": "Salas de cunas",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "DESCANSO",
+    "space_type": "DORMITORIO_COLETIVO",
+    "nombre": "Descanso",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "HIGIENE",
+    "space_type": "HIGIENE_CI",
+    "nombre": "Higiene",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "CAMBIO",
+    "space_type": "HIGIENE_CI",
+    "nombre": "Zona de cambio",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "COMEDOR",
+    "space_type": "DINING_HALL",
+    "nombre": "Comedor",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "COCINA",
+    "space_type": "KITCHEN_INSTITUTIONAL",
+    "nombre": "Cocina",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "ALMACEN",
+    "space_type": "STOREROOM",
+    "nombre": "Almacén",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "ENFERMERIA",
+    "space_type": "INFIRMARY",
+    "nombre": "Enfermería",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "AISLAMIENTO",
+    "space_type": "ISOLATION_ROOM",
+    "nombre": "Aislamiento",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "JUEGOS_INTERIORES",
+    "space_type": "JUEGO_INTERIOR",
+    "nombre": "Juegos interiores",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "JUEGOS_EXTERIORES",
+    "space_type": "JUEGO_EXTERIOR",
+    "nombre": "Juegos exteriores",
+    "es_local": true,
+    "es_exterior": true
+   },
+   {
+    "item": "PATIO",
+    "space_type": "PATIO",
+    "nombre": "Patio",
+    "es_local": true,
+    "es_exterior": true
+   },
+   {
+    "item": "JARDINES",
+    "space_type": "JUEGO_EXTERIOR",
+    "nombre": "Jardines",
+    "es_local": true,
+    "es_exterior": true
+   },
+   {
+    "item": "LIMPIEZA",
+    "space_type": "CLEANING_ROOM",
+    "nombre": "Limpieza",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "LAVANDERIA",
+    "space_type": "LAUNDRY",
+    "nombre": "Lavandería",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "CUARTOS_TECNICOS",
+    "space_type": "ELECTRICAL_ROOM",
+    "nombre": "Cuartos técnicos",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "RESIDUOS",
+    "space_type": "WASTE_ROOM",
+    "nombre": "Residuos",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "CONTROL_SEGURIDAD",
+    "space_type": "SECURITY_ROOM",
+    "nombre": "Control de seguridad",
+    "es_local": true,
+    "es_exterior": false
+   }
+  ],
+  "ALBERGUE_ESCOLAR": [
+   {
+    "item": "ACCESO",
+    "space_type": "ENTRANCE",
+    "nombre": "Acceso",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "RECEPCION",
+    "space_type": "WAITING_ROOM",
+    "nombre": "Recepción",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "CONTROL",
+    "space_type": "SECURITY_ROOM",
+    "nombre": "Control",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "ADMINISTRACION",
+    "space_type": "ADMINISTRATION",
+    "nombre": "Administración",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "DORMITORIOS",
+    "space_type": "BEDROOM",
+    "nombre": "Dormitorios",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "BANOS",
+    "space_type": "BATHROOM",
+    "nombre": "Baños",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "DUCHAS",
+    "space_type": "BATHROOM",
+    "nombre": "Baño con duchas",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "ESTUDIO",
+    "space_type": "SALA_ESTUDIO",
+    "nombre": "Estudio",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "CONVIVENCIA",
+    "space_type": "SALA_CONVIVENCIA",
+    "nombre": "Convivencia",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "COMEDOR",
+    "space_type": "DINING_HALL",
+    "nombre": "Comedor",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "COCINA",
+    "space_type": "KITCHEN_INSTITUTIONAL",
+    "nombre": "Cocina",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "ALMACEN",
+    "space_type": "STOREROOM",
+    "nombre": "Almacén",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "LAVANDERIA",
+    "space_type": "LAUNDRY",
+    "nombre": "Lavandería",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "ENFERMERIA",
+    "space_type": "INFIRMARY",
+    "nombre": "Enfermería",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "AISLAMIENTO",
+    "space_type": "ISOLATION_ROOM",
+    "nombre": "Aislamiento",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "EDUCADORES",
+    "space_type": "MONITORES",
+    "nombre": "Sala de educadores",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "DEPORTE",
+    "space_type": "GYMNASIO",
+    "nombre": "Deporte",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "PATIO",
+    "space_type": "PATIO",
+    "nombre": "Patio",
+    "es_local": true,
+    "es_exterior": true
+   },
+   {
+    "item": "MANTENIMIENTO",
+    "space_type": "STOREROOM",
+    "nombre": "Mantenimiento",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "RESIDUOS",
+    "space_type": "WASTE_ROOM",
+    "nombre": "Residuos",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "CUARTOS_TECNICOS",
+    "space_type": "ELECTRICAL_ROOM",
+    "nombre": "Cuartos técnicos",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "SEGURIDAD",
+    "space_type": "SECURITY_ROOM",
+    "nombre": "Seguridad",
+    "es_local": true,
+    "es_exterior": false
+   },
+   {
+    "item": "EVACUACION",
+    "space_type": "",
+    "nombre": "Rutas de evacuación",
+    "es_local": false,
+    "es_exterior": false
+   }
+  ]
+ },
+ "reglas_validacion": [
+  {
+   "id": "REGLA_01",
+   "regla": "AREA_AULA >= AREA_MIN",
+   "check": "E01"
+  },
+  {
+   "id": "REGLA_02",
+   "regla": "ANCHO_AULA >= ANCHO_MIN",
+   "check": "E02"
+  },
+  {
+   "id": "REGLA_03",
+   "regla": "ALTURA >= ALTURA_MIN",
+   "check": "E03"
+  },
+  {
+   "id": "REGLA_04",
+   "regla": "ANCHO_PUERTA >= PUERTA_MIN",
+   "check": "E04"
+  },
+  {
+   "id": "REGLA_05",
+   "regla": "RUTA_ACCESIBLE = CONTINUA",
+   "check": "motor de accesibilidad"
+  },
+  {
+   "id": "REGLA_06",
+   "regla": "BAÑO_ACCESIBLE = TRUE cuando sea requerido",
+   "check": "motor de accesibilidad"
+  },
+  {
+   "id": "REGLA_07",
+   "regla": "SALIDA_EVACUACION >= ANCHO_CALCULADO",
+   "check": "EM07"
+  },
+  {
+   "id": "REGLA_08",
+   "regla": "CAPACIDAD_COMEDOR >= DEMANDA_SIMULTANEA",
+   "check": "EM06"
+  },
+  {
+   "id": "REGLA_09",
+   "regla": "NUM_SANITARIOS >= CALCULO_NORMATIVO",
+   "check": "RC05"
+  },
+  {
+   "id": "REGLA_10",
+   "regla": "AREA_DORMITORIO >= PLAZAS x AREA_POR_PERSONA",
+   "check": "EM05"
+  },
+  {
+   "id": "REGLA_11",
+   "regla": "SI TIPO = PRIMARIA Y ALUMNOS > 300 ENTONCES NUM_AULAS >= CEIL(ALUMNOS / 25)",
+   "check": "EM04"
+  }
+ ],
+ "conflictos": [
+  {
+   "id": "CONFLICTO_01",
+   "condicion": "AULA demasiado pequeña",
+   "severidad": "ERROR_CRITICO",
+   "check": "E01"
+  },
+  {
+   "id": "CONFLICTO_02",
+   "condicion": "AULA demasiado profunda",
+   "severidad": "ADVERTENCIA",
+   "check": "E06"
+  },
+  {
+   "id": "CONFLICTO_03",
+   "condicion": "pasillo insuficiente",
+   "severidad": "ERROR",
+   "check": "E05"
+  },
+  {
+   "id": "CONFLICTO_04",
+   "condicion": "puerta insuficiente",
+   "severidad": "ERROR",
+   "check": "E04"
+  },
+  {
+   "id": "CONFLICTO_05",
+   "condicion": "baño insuficiente",
+   "severidad": "ERROR",
+   "check": "EM01"
+  },
+  {
+   "id": "CONFLICTO_06",
+   "condicion": "rampa demasiado inclinada",
+   "severidad": "ERROR_CRITICO",
+   "check": "motor de rampas"
+  },
+  {
+   "id": "CONFLICTO_07",
+   "condicion": "escalera incompatible",
+   "severidad": "ERROR_CRITICO",
+   "check": "EM07"
+  },
+  {
+   "id": "CONFLICTO_08",
+   "condicion": "falta de acceso accesible",
+   "severidad": "ERROR_CRITICO",
+   "check": "motor de accesibilidad"
+  },
+  {
+   "id": "CONFLICTO_09",
+   "condicion": "falta de salida",
+   "severidad": "ERROR_CRITICO",
+   "check": "RC03"
+  },
+  {
+   "id": "CONFLICTO_10",
+   "condicion": "comedor insuficiente",
+   "severidad": "ERROR",
+   "check": "EM06"
+  },
+  {
+   "id": "CONFLICTO_11",
+   "condicion": "dormitorio sobreocupado",
+   "severidad": "ERROR_CRITICO",
+   "check": "EM05"
+  },
+  {
+   "id": "CONFLICTO_12",
+   "condicion": "cocina insuficiente",
+   "severidad": "ERROR",
+   "check": "E01"
+  },
+  {
+   "id": "CONFLICTO_13",
+   "condicion": "cruce de circulación limpia/sucia",
+   "severidad": "ERROR",
+   "check": "EM03"
+  },
+  {
+   "id": "CONFLICTO_14",
+   "condicion": "falta de ventilación",
+   "severidad": "ADVERTENCIA",
+   "check": "RC01"
+  },
+  {
+   "id": "CONFLICTO_15",
+   "condicion": "falta de iluminación",
+   "severidad": "ADVERTENCIA",
+   "check": "RC01"
+  },
+  {
+   "id": "CONFLICTO_16",
+   "condicion": "falta de almacenamiento",
+   "severidad": "ADVERTENCIA",
+   "check": "EM01"
+  },
+  {
+   "id": "CONFLICTO_17",
+   "condicion": "espacio infantil inseguro",
+   "severidad": "ERROR",
+   "check": "EM10"
+  },
+  {
+   "id": "CONFLICTO_18",
+   "condicion": "falta de ruta de evacuación",
+   "severidad": "ERROR_CRITICO",
+   "check": "RC03"
+  }
+ ],
+ "climas": {
+  "CLIMA_CALIDO_HUMEDO": [
+   "ventilación cruzada",
+   "sombra",
+   "galerías",
+   "cubiertas ventiladas",
+   "vegetación",
+   "reducción de ganancia solar"
+  ],
+  "CLIMA_CALIDO_SECO": [
+   "sombra",
+   "masa térmica",
+   "patios",
+   "ventilación nocturna",
+   "control solar"
+  ],
+  "CLIMA_TEMPLADO": [
+   "mixto: protección solar de verano y control de invierno"
+  ],
+  "CLIMA_FRIO": [
+   "aislamiento",
+   "control de infiltraciones",
+   "ganancia solar controlada",
+   "vestíbulos",
+   "reducción de puentes térmicos"
+  ],
+  "CLIMA_MIXTO": [
+   "combinar estrategias por temporada"
+  ]
+ },
+ "materiales": {
+  "pisos": [
+   {
+    "zona": "AULAS",
+    "opciones": [
+     "porcelanato",
+     "gres",
+     "cerámica",
+     "PVC/vinílico",
+     "linóleo"
+    ],
+    "espesores_mm": {
+     "ceramico": [
+      8,
+      12
+     ],
+     "porcelanato": [
+      8,
+      12
+     ],
+     "pvc": [
+      2,
+      5
+     ]
+    }
+   },
+   {
+    "zona": "CIRCULO_INFANTIL",
+    "requisitos": [
+     "antideslizante",
+     "lavable",
+     "no tóxica",
+     "resistente al desgaste"
+    ]
+   },
+   {
+    "zona": "COCINAS",
+    "requisitos": [
+     "impermeable",
+     "antideslizante"
+    ]
+   },
+   {
+    "zona": "BAÑOS",
+    "requisitos": [
+     "cerámica/porcelanato/gres antideslizante"
+    ]
+   }
+  ],
+  "paredes": [
+   {
+    "solucion": "mampostería",
+    "espesor_m": [
+     0.1,
+     0.2
+    ]
+   },
+   {
+    "solucion": "bloque",
+    "espesor_m": [
+     0.1,
+     0.2
+    ]
+   },
+   {
+    "solucion": "tabique ligero",
+    "espesor_m": [
+     0.075,
+     0.15
+    ]
+   },
+   {
+    "solucion": "tabique acústico",
+    "espesor_m": [
+     0.1,
+     0.2
+    ]
+   },
+   {
+    "solucion": "revestimiento cerámico",
+    "espesor_mm": [
+     8,
+     12
+    ]
+   },
+   {
+    "solucion": "placas de yeso",
+    "nota": "12.5 mm por placa"
+   },
+   {
+    "nota": "en zonas húmedas, revestimiento impermeable"
+   }
+  ],
+  "techos": [
+   {
+    "solucion": "losa de hormigón armado"
+   },
+   {
+    "solucion": "cubierta metálica"
+   },
+   {
+    "solucion": "cerchas"
+   },
+   {
+    "solucion": "paneles"
+   },
+   {
+    "solucion": "falso techo / plafón registrable",
+    "plenum_m": [
+     0.3,
+     0.6
+    ],
+    "alta_concentracion_m": [
+     0.6,
+     1.2
+    ]
+   }
+  ],
+  "higiene": {
+   "flags": [
+    "MATERIAL_LAVABLE",
+    "MATERIAL_ANTIDESLIZANTE",
+    "MATERIAL_RESISTENTE_HUMEDAD",
+    "MATERIAL_APTO_INFANTIL"
+   ],
+   "nota": "superficies lavables, resistentes, no tóxicas, no porosas y resistentes a desinfectantes (§103, OMS)"
+  }
+ },
+ "seguridad_infantil": {
+  "prohibido": [
+   "esquinas cortantes",
+   "barandas escalables",
+   "huecos peligrosos",
+   "enchufes accesibles sin protección",
+   "vidrios peligrosos",
+   "desniveles sin protección",
+   "acceso infantil a cocinas",
+   "acceso infantil a productos químicos"
+  ],
+  "debe_existir": [
+   "control visual",
+   "cierres seguros",
+   "protección de ventanas",
+   "protección de escaleras",
+   "control de accesos"
+  ],
+  "ambito": "CIRCULO_INFANTIL y ESCUELA_PRIMARIA (§89)"
+ },
+ "prioridades": {
+  "P01": "SEGURIDAD INFANTIL",
+  "P02": "SEGURIDAD DE VIDA",
+  "P03": "EVACUACIÓN",
+  "P04": "ACCESIBILIDAD",
+  "P05": "INCENDIOS",
+  "P06": "HIGIENE Y SALUD (OMS)",
+  "P07": "FUNCIONALIDAD DOCENTE",
+  "P08": "CONFORT BIOCLIMÁTICO",
+  "P09": "MANTENIMIENTO",
+  "P10": "EFICIENCIA",
+  "P11": "ECONOMÍA",
+  "P12": "ESTÉTICA"
+ },
+ "normativa": [
+  "PAIS",
+  "REGION",
+  "MUNICIPIO",
+  "TIPO_EDUCACIONAL",
+  "NORMATIVA_EDUCATIVA_NACIONAL",
+  "NORMATIVA_ESTRUCTURAL",
+  "NORMATIVA_ELECTRICA",
+  "NORMATIVA_INCENDIOS",
+  "NORMATIVA_ACCESIBILIDAD",
+  "NORMATIVA_SANITARIA",
+  "NORMATIVA_ACUSTICA",
+  "NORMATIVA_SEGURIDAD_INFANTIL"
+ ],
+ "fuentes": [
+  "FUENTE_ESCOLARES = OMS - Global Standards for Health-Promoting Schools",
+  "FUENTE_AGUA_SANEAMIENTO = OMS/UNICEF - Water, Sanitation and Hygiene standards for schools",
+  "FUENTE_ESCUELAS_AMIGAS = UNICEF - Child-Friendly Schools Manual",
+  "FUENTE_GENERAL_EVACUACION = normativa de evacuación seleccionada (§85: por población y ocupación)",
+  "FUENTE_ACCESIBILIDAD = normativa nacional de accesibilidad (§96)",
+  "FUENTE_INCENDIOS = normativa nacional de incendios (§83)",
+  "FUENTE_EDUCATIVA = normas nacionales de educación como fuente principal (§124)"
+ ],
+ "documentacion": [
+  "01_PROGRAMA_ARQUITECTONICO",
+  "02_CUADRO_DE_AREAS",
+  "03_CUADRO_DE_LOCALES",
+  "04_CUADRO_DE_PUERTAS",
+  "05_CUADRO_DE_VENTANAS",
+  "06_CUADRO_DE_ACABADOS",
+  "07_CUADRO_DE_EQUIPAMIENTO",
+  "08_CUADRO_DE_SANITARIOS",
+  "09_CUADRO_DE_ILUMINACION",
+  "10_CUADRO_DE_CARGAS",
+  "11_CUADRO_DE_INSTALACIONES",
+  "12_CUADRO_DE_EVACUACION",
+  "13_CUADRO_DE_NORMAS"
+ ],
+ "requiere_calculo": [
+  {
+   "tema": "CLIMATIZACION",
+   "seccion": "78",
+   "motivo": "Q_TOTAL = transmisión + solar + personas + iluminación + equipos + aire exterior; no se fija sección de conductos sin cálculo"
+  },
+  {
+   "tema": "SISTEMA_CONTRA_INCENDIOS",
+   "seccion": "83-84",
+   "motivo": "detección, alarma, extintores, hidrantes y rociadores según normativa; no hay distancias universales para detectores o rociadores"
+  },
+  {
+   "tema": "EVACUACION_POR_POBLACION",
+   "seccion": "85",
+   "motivo": "anchos y salidas por POBLACION y OCUPACION; el motor informa, la normativa manda"
+  },
+  {
+   "tema": "CCTV_COBERTURA",
+   "seccion": "87",
+   "motivo": "FOV, resolución, distancia, ángulo, altura y solapamiento por cálculo; alturas 2.50-3.50 m interiores y 3.00-5.00 m exteriores"
+  },
+  {
+   "tema": "ACUSTICA",
+   "seccion": "90-91",
+   "motivo": "aislamiento aéreo, de impacto y de instalaciones entre aulas, música, gimnasio, comedor y dormitorios; dormitorios lejos de talleres, cocinas, máquinas y descarga"
+  },
+  {
+   "tema": "ELECTRICIDAD_E_HIDRAULICA",
+   "seccion": "74/79-81",
+   "motivo": "carga, demanda, circuitos, tableros, consumo, caudal y aparatos sanitarios por cálculo; tomas 2-4 por puesto de alumno"
+  }
+ ]
+}

@@ -1,0 +1,3198 @@
+{
+ "format": "ARQ_GEN_COMERCIAL_SPECS",
+ "version": "1.0",
+ "source": "Especificaciones técnicas y dimensionales - Centros Comerciales y Edificios de Oficinas v2.0 (104 secciones)",
+ "advertencia": "Los valores indicados como RECOMENDADO son criterios de diseño orientativos y no sustituyen la normativa local (nota general del documento). Los MÍNIMO DE REFERENCIA se sustituyen por el parámetro de la normativa seleccionada (§97: cada parámetro puede sobrescribirse).",
+ "principio": {
+  "cotas": [
+   "COTA_MINIMA_NORMATIVA",
+   "COTA_MINIMA_FUNCIONAL",
+   "COTA_RECOMENDADA",
+   "COTA_OPTIMIZADA",
+   "COTA_MAXIMA",
+   "COTA_RESULTANTE_DEL_CALCULO"
+  ],
+  "regla": "Ninguna cota queda grabada como valor inmodificable cuando depende de una norma (§101); nunca se confunde el mínimo legal con la dimensión arquitectónicamente recomendable (§103).",
+  "prioridades": {
+   "P01": "SEGURIDAD DE VIDA",
+   "P02": "EVACUACIÓN",
+   "P03": "ACCESIBILIDAD",
+   "P04": "INCENDIOS",
+   "P05": "ESTRUCTURA",
+   "P06": "INSTALACIONES",
+   "P07": "FUNCIONALIDAD",
+   "P08": "CONFORT",
+   "P09": "MANTENIMIENTO",
+   "P10": "EFICIENCIA",
+   "P11": "ECONOMÍA",
+   "P12": "ESTÉTICA"
+  }
+ },
+ "tipologias": [
+  {
+   "clave": "CC-01",
+   "nombre": "Galería comercial pequeña",
+   "familia": "CENTRO_COMERCIAL"
+  },
+  {
+   "clave": "CC-02",
+   "nombre": "Centro comercial mediano",
+   "familia": "CENTRO_COMERCIAL"
+  },
+  {
+   "clave": "CC-03",
+   "nombre": "Centro comercial grande",
+   "familia": "CENTRO_COMERCIAL"
+  },
+  {
+   "clave": "CC-04",
+   "nombre": "Centro comercial cerrado",
+   "familia": "CENTRO_COMERCIAL"
+  },
+  {
+   "clave": "CC-05",
+   "nombre": "Centro comercial abierto",
+   "familia": "CENTRO_COMERCIAL"
+  },
+  {
+   "clave": "CC-06",
+   "nombre": "Centro comercial mixto",
+   "familia": "CENTRO_COMERCIAL"
+  },
+  {
+   "clave": "CC-07",
+   "nombre": "Centro comercial + oficinas",
+   "familia": "CENTRO_COMERCIAL"
+  },
+  {
+   "clave": "CC-08",
+   "nombre": "Centro comercial + entretenimiento",
+   "familia": "CENTRO_COMERCIAL"
+  },
+  {
+   "clave": "CC-09",
+   "nombre": "Centro comercial + restauración",
+   "familia": "CENTRO_COMERCIAL"
+  },
+  {
+   "clave": "CC-10",
+   "nombre": "Centro comercial + estacionamiento",
+   "familia": "CENTRO_COMERCIAL"
+  },
+  {
+   "clave": "OF-01",
+   "nombre": "Edificio administrativo pequeño",
+   "familia": "OFICINAS"
+  },
+  {
+   "clave": "OF-02",
+   "nombre": "Edificio administrativo mediano",
+   "familia": "OFICINAS"
+  },
+  {
+   "clave": "OF-03",
+   "nombre": "Edificio corporativo",
+   "familia": "OFICINAS"
+  },
+  {
+   "clave": "OF-04",
+   "nombre": "Torre de oficinas",
+   "familia": "OFICINAS"
+  },
+  {
+   "clave": "OF-05",
+   "nombre": "Oficina tradicional",
+   "familia": "OFICINAS"
+  },
+  {
+   "clave": "OF-06",
+   "nombre": "Planta abierta",
+   "familia": "OFICINAS"
+  },
+  {
+   "clave": "OF-07",
+   "nombre": "Coworking",
+   "familia": "OFICINAS"
+  },
+  {
+   "clave": "OF-08",
+   "nombre": "Oficina modular",
+   "familia": "OFICINAS"
+  },
+  {
+   "clave": "OF-09",
+   "nombre": "Oficina + comercio",
+   "familia": "OFICINAS"
+  },
+  {
+   "clave": "OF-10",
+   "nombre": "Uso mixto",
+   "familia": "OFICINAS"
+  }
+ ],
+ "cuadros": [
+  {
+   "id": "CC-GEN-001",
+   "seccion": "3.01",
+   "espacio": "CENTRO_COMERCIAL",
+   "space_type": null,
+   "titulo": "Altura libre de centro comercial",
+   "items": [
+    {
+     "parametro": "ALTURA_LIBRE",
+     "min": 3.0,
+     "rec_min": 3.2,
+     "rec_max": 4.5,
+     "unidad": "m",
+     "nota": "grandes atrios: 6.00-15.00 m o más"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": 3.0
+  },
+  {
+   "id": "OF-GEN-002",
+   "seccion": "3.01",
+   "espacio": "OFICINAS",
+   "space_type": null,
+   "titulo": "Altura libre de oficinas",
+   "items": [
+    {
+     "parametro": "ALTURA_LIBRE",
+     "min": 2.6,
+     "rec_min": 2.7,
+     "rec_max": 3.0,
+     "unidad": "m",
+     "nota": "oficinas premium: 2.80-3.20 m"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": 2.6
+  },
+  {
+   "id": "OF-GEN-003",
+   "seccion": "3.02",
+   "espacio": "ALTURA_ENTREPISO",
+   "space_type": null,
+   "titulo": "Altura entre pisos",
+   "items": [
+    {
+     "parametro": "OFICINAS",
+     "min": null,
+     "rec_min": 3.3,
+     "rec_max": 4.2,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "CENTRO_COMERCIAL",
+     "min": null,
+     "rec_min": 4.0,
+     "rec_max": 5.5,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "CON_GRANDES_INSTALACIONES",
+     "min": null,
+     "rec_min": 4.5,
+     "rec_max": 6.0,
+     "unidad": "m",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "CC-ATR-001",
+   "seccion": "23",
+   "espacio": "ATRIO",
+   "space_type": "ATRIUM",
+   "titulo": "Atrios",
+   "items": [
+    {
+     "parametro": "ATRIO_PEQUENO",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "m",
+     "nota": "8 x 8 m"
+    },
+    {
+     "parametro": "ATRIO_MEDIO",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "m",
+     "nota": "10 x 15 m"
+    },
+    {
+     "parametro": "ATRIO_GRANDE",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "m",
+     "nota": "15 x 20 m o superior"
+    },
+    {
+     "parametro": "ALTURA",
+     "min": 6.0,
+     "rec_min": 6.0,
+     "rec_max": 15.0,
+     "unidad": "m",
+     "nota": "comprobar evacuación, humo, rociadores, iluminación, acústica y ventilación"
+    }
+   ],
+   "min_area_m2": 64.0,
+   "min_ancho_m": 8.0,
+   "min_altura_m": 6.0
+  },
+  {
+   "id": "OF-VEST-001",
+   "seccion": "5.02",
+   "espacio": "VESTIBULO",
+   "space_type": "VESTIBULE",
+   "titulo": "Vestíbulo de acceso",
+   "items": [
+    {
+     "parametro": "PROFUNDIDAD",
+     "min": 4.0,
+     "rec_min": 4.0,
+     "rec_max": 8.0,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ANCHO",
+     "min": 4.0,
+     "rec_min": 4.0,
+     "rec_max": 8.0,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ALTURA",
+     "min": 3.5,
+     "rec_min": 3.5,
+     "rec_max": 5.0,
+     "unidad": "m",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": 16.0,
+   "min_ancho_m": 4.0,
+   "min_altura_m": 3.5
+  },
+  {
+   "id": "CC-ACC-001",
+   "seccion": "5.01",
+   "espacio": "ACCESO",
+   "space_type": "ENTRANCE",
+   "titulo": "Puertas de acceso principal",
+   "items": [
+    {
+     "parametro": "PUERTA_PEATONAL",
+     "min": 0.9,
+     "rec_min": 0.9,
+     "rec_max": 1.2,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "PUERTA_PRINCIPAL_SIMPLE",
+     "min": 1.0,
+     "rec_min": 1.0,
+     "rec_max": 1.2,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "PUERTA_PRINCIPAL_DOBLE",
+     "min": 1.8,
+     "rec_min": 1.8,
+     "rec_max": 2.4,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ACCESO_ALTA_DEMANDA",
+     "min": 2.4,
+     "rec_min": 2.4,
+     "rec_max": 4.8,
+     "unidad": "m",
+     "nota": "conjuntos de puertas múltiples en gran flujo"
+    },
+    {
+     "parametro": "ALTURA",
+     "min": 2.1,
+     "rec_min": 2.1,
+     "rec_max": 2.4,
+     "unidad": "m",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": 0.9,
+   "min_altura_m": null
+  },
+  {
+   "id": "CC-CIRC-001",
+   "seccion": "6.01",
+   "espacio": "GALERIA_PRINCIPAL",
+   "space_type": "GALLERY",
+   "titulo": "Galería comercial principal",
+   "items": [
+    {
+     "parametro": "ANCHO_MINIMO_DE_DISENO",
+     "min": 3.0,
+     "rec_min": 4.0,
+     "rec_max": 6.0,
+     "unidad": "m",
+     "nota": "gran centro comercial: 6.00-10.00 m"
+    },
+    {
+     "parametro": "GALERIA_SECUNDARIA",
+     "min": 2.4,
+     "rec_min": 2.4,
+     "rec_max": 4.0,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ALTA_AFLUENCIA",
+     "min": 5.0,
+     "rec_min": 5.0,
+     "rec_max": 8.0,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ALTURA_LIBRE",
+     "min": 2.7,
+     "rec_min": 3.2,
+     "rec_max": 4.5,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "RECORRIDO_LIBRE_CON_MOBILIARIO",
+     "min": 2.4,
+     "rec_min": 2.4,
+     "rec_max": null,
+     "unidad": "m",
+     "nota": "zonas de alta concentración >= 3.00 m"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": 3.0,
+   "min_altura_m": 2.7
+  },
+  {
+   "id": "CC-LOC-001",
+   "seccion": "7.01",
+   "espacio": "LOCAL_PEQUENO",
+   "space_type": "RETAIL_LOCAL",
+   "titulo": "Local comercial pequeño",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 15.0,
+     "rec_min": 15.0,
+     "rec_max": 40.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "FRENTE",
+     "min": 3.0,
+     "rec_min": 3.0,
+     "rec_max": 5.0,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "PROFUNDIDAD",
+     "min": 4.0,
+     "rec_min": 4.0,
+     "rec_max": 10.0,
+     "unidad": "m",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": 15.0,
+   "min_ancho_m": 3.0,
+   "min_altura_m": null
+  },
+  {
+   "id": "CC-LOC-002",
+   "seccion": "7.02",
+   "espacio": "LOCAL_MEDIANO",
+   "space_type": "RETAIL_LOCAL",
+   "titulo": "Local comercial mediano",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 40.0,
+     "rec_min": 40.0,
+     "rec_max": 100.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "FRENTE",
+     "min": 5.0,
+     "rec_min": 5.0,
+     "rec_max": 10.0,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "PROFUNDIDAD",
+     "min": 6.0,
+     "rec_min": 6.0,
+     "rec_max": 15.0,
+     "unidad": "m",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": 40.0,
+   "min_ancho_m": 5.0,
+   "min_altura_m": null
+  },
+  {
+   "id": "CC-LOC-003",
+   "seccion": "7.03",
+   "espacio": "LOCAL_GRANDE",
+   "space_type": "RETAIL_LOCAL",
+   "titulo": "Local comercial grande",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 100.0,
+     "rec_min": 100.0,
+     "rec_max": 500.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "FRENTE",
+     "min": 8.0,
+     "rec_min": 8.0,
+     "rec_max": 20.0,
+     "unidad": "m",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": 100.0,
+   "min_ancho_m": 8.0,
+   "min_altura_m": null
+  },
+  {
+   "id": "CC-LOC-004",
+   "seccion": "7.04",
+   "espacio": "TIENDA_ANCLA",
+   "space_type": "TIENDA_ANCLA",
+   "titulo": "Tienda ancla",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 500.0,
+     "rec_min": 500.0,
+     "rec_max": 5000.0,
+     "unidad": "m2",
+     "nota": "las tiendas ancla deberán calcularse individualmente"
+    },
+    {
+     "parametro": "ALTURA_LIBRE",
+     "min": 3.0,
+     "rec_min": 3.0,
+     "rec_max": 4.0,
+     "unidad": "m",
+     "nota": "locales con equipos: 3.50-5.00 m"
+    }
+   ],
+   "min_area_m2": 500.0,
+   "min_ancho_m": null,
+   "min_altura_m": 3.0
+  },
+  {
+   "id": "CC-ESC-001",
+   "seccion": "8",
+   "espacio": "ESCAPARATE",
+   "space_type": null,
+   "titulo": "Escaparates",
+   "items": [
+    {
+     "parametro": "ANCHO",
+     "min": 2.0,
+     "rec_min": 2.0,
+     "rec_max": 10.0,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ALTURA",
+     "min": 2.4,
+     "rec_min": 2.4,
+     "rec_max": 4.0,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ZONA_DE_EXHIBICION",
+     "min": 0.6,
+     "rec_min": 0.6,
+     "rec_max": 1.2,
+     "unidad": "m",
+     "nota": "no reducir la circulación requerida"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "CC-ALM-001",
+   "seccion": "9",
+   "espacio": "ALMACEN",
+   "space_type": "WAREHOUSE",
+   "titulo": "Almacenes comerciales",
+   "items": [
+    {
+     "parametro": "LOCAL_PEQUENO",
+     "min": 5.0,
+     "rec_min": 5.0,
+     "rec_max": 15.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "LOCAL_MEDIANO",
+     "min": 10.0,
+     "rec_min": 10.0,
+     "rec_max": 40.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "LOCAL_GRANDE",
+     "min": 20.0,
+     "rec_min": 20.0,
+     "rec_max": 100.0,
+     "unidad": "m2",
+     "nota": "o según actividad"
+    },
+    {
+     "parametro": "PASILLO",
+     "min": 0.9,
+     "rec_min": 0.9,
+     "rec_max": 1.2,
+     "unidad": "m",
+     "nota": "con carro 1.20-1.50 m; con equipos de manipulación 1.80-3.00 m"
+    },
+    {
+     "parametro": "ALTURA",
+     "min": 2.7,
+     "rec_min": 2.7,
+     "rec_max": 4.5,
+     "unidad": "m",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": 5.0,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "OF-OFI-001",
+   "seccion": "10.01",
+   "espacio": "OFICINA_PEQUENA",
+   "space_type": "OFFICE",
+   "titulo": "Oficina individual pequeña",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 8.0,
+     "rec_min": 8.0,
+     "rec_max": 12.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "COTA_RECOMENDADA",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "m",
+     "nota": "3.00 x 3.00 m / 3.00 x 4.00 m"
+    }
+   ],
+   "min_area_m2": 8.0,
+   "min_ancho_m": 2.8,
+   "min_altura_m": null
+  },
+  {
+   "id": "OF-OFI-002",
+   "seccion": "10.02",
+   "espacio": "OFICINA_MEDIA",
+   "space_type": "OFFICE",
+   "titulo": "Oficina media",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 12.0,
+     "rec_min": 12.0,
+     "rec_max": 20.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "DIMENSIONES",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "m",
+     "nota": "3.50 x 4.00 m / 4.00 x 5.00 m"
+    }
+   ],
+   "min_area_m2": 12.0,
+   "min_ancho_m": 3.0,
+   "min_altura_m": null
+  },
+  {
+   "id": "OF-OFI-003",
+   "seccion": "10.03",
+   "espacio": "DESPACHO_EJECUTIVO",
+   "space_type": "OFFICE",
+   "titulo": "Despacho ejecutivo",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 18.0,
+     "rec_min": 18.0,
+     "rec_max": 30.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "DIMENSIONES",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "m",
+     "nota": "4.00 x 5.00 m / 5.00 x 6.00 m"
+    }
+   ],
+   "min_area_m2": 18.0,
+   "min_ancho_m": 3.5,
+   "min_altura_m": null
+  },
+  {
+   "id": "OF-ABI-001",
+   "seccion": "11",
+   "espacio": "OFICINA_ABIERTA",
+   "space_type": "OPEN_OFFICE",
+   "titulo": "Oficina de planta abierta",
+   "items": [
+    {
+     "parametro": "SUPERFICIE_POR_PUESTO",
+     "min": 8.0,
+     "rec_min": 8.0,
+     "rec_max": 12.0,
+     "unidad": "m2/puesto",
+     "nota": "alta densidad 6-8 m2/puesto; confortable 10-14 m2"
+    },
+    {
+     "parametro": "MODULO_DE_TRABAJO",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 1.5,
+     "unidad": "m",
+     "nota": "módulos 1.20 / 1.40 / 1.50 m"
+    },
+    {
+     "parametro": "SEPARACION_ENTRE_PUESTOS",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 1.8,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "PASILLO_PRINCIPAL",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 1.8,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "PASILLO_SECUNDARIO",
+     "min": 0.9,
+     "rec_min": 0.9,
+     "rec_max": 1.2,
+     "unidad": "m",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "OF-COW-001",
+   "seccion": "12",
+   "espacio": "COWORKING",
+   "space_type": "COWORKING",
+   "titulo": "Coworking",
+   "items": [
+    {
+     "parametro": "PUESTO_INDIVIDUAL",
+     "min": 4.0,
+     "rec_min": 4.0,
+     "rec_max": 8.0,
+     "unidad": "m2/puesto",
+     "nota": "confortable 6-10 m2/puesto"
+    },
+    {
+     "parametro": "SALA_PEQUENA",
+     "min": 8.0,
+     "rec_min": 8.0,
+     "rec_max": 12.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "SALA_MEDIA",
+     "min": 12.0,
+     "rec_min": 12.0,
+     "rec_max": 25.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "SALA_GRANDE",
+     "min": 25.0,
+     "rec_min": 25.0,
+     "rec_max": 60.0,
+     "unidad": "m2",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "OF-REU-001",
+   "seccion": "13",
+   "espacio": "SALA_REUNIONES",
+   "space_type": "MEETING_ROOM",
+   "titulo": "Salas de reuniones",
+   "items": [
+    {
+     "parametro": "SALA_4_PERSONAS",
+     "min": 8.0,
+     "rec_min": 8.0,
+     "rec_max": 10.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "SALA_6_PERSONAS",
+     "min": 10.0,
+     "rec_min": 10.0,
+     "rec_max": 14.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "SALA_8_PERSONAS",
+     "min": 14.0,
+     "rec_min": 14.0,
+     "rec_max": 18.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "SALA_10_12_PERSONAS",
+     "min": 18.0,
+     "rec_min": 18.0,
+     "rec_max": 25.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "SALA_15_20_PERSONAS",
+     "min": 25.0,
+     "rec_min": 25.0,
+     "rec_max": 40.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "SALA_20_30_PERSONAS",
+     "min": 40.0,
+     "rec_min": 40.0,
+     "rec_max": 60.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "ANCHO_RECOMENDADO",
+     "min": 3.0,
+     "rec_min": 3.0,
+     "rec_max": 6.0,
+     "unidad": "m",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": 8.0,
+   "min_ancho_m": 2.6,
+   "min_altura_m": null
+  },
+  {
+   "id": "OF-CON-001",
+   "seccion": "14",
+   "espacio": "SALA_CONFERENCIAS",
+   "space_type": "CONFERENCE_ROOM",
+   "titulo": "Sala de conferencias",
+   "items": [
+    {
+     "parametro": "SUPERFICIE_POR_PERSONA",
+     "min": 1.0,
+     "rec_min": 1.0,
+     "rec_max": 1.5,
+     "unidad": "m2/persona",
+     "nota": ""
+    },
+    {
+     "parametro": "ALTURA",
+     "min": 3.0,
+     "rec_min": 3.0,
+     "rec_max": 4.5,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "PASILLO_PRINCIPAL",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 1.8,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "PASILLO_SECUNDARIO",
+     "min": 0.9,
+     "rec_min": 0.9,
+     "rec_max": 1.2,
+     "unidad": "m",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": 3.0
+  },
+  {
+   "id": "OF-REC-001",
+   "seccion": "15",
+   "espacio": "RECEPCION",
+   "space_type": "RECEPTION",
+   "titulo": "Recepción de oficinas",
+   "items": [
+    {
+     "parametro": "RECEPCION_PEQUENA",
+     "min": 10.0,
+     "rec_min": 10.0,
+     "rec_max": 20.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "RECEPCION_MEDIA",
+     "min": 20.0,
+     "rec_min": 20.0,
+     "rec_max": 40.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "RECEPCION_CORPORATIVA",
+     "min": 30.0,
+     "rec_min": 30.0,
+     "rec_max": 80.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "MOSTRADOR_ALTURA",
+     "min": 0.72,
+     "rec_min": 0.72,
+     "rec_max": 0.9,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "MOSTRADOR_PROFUNDIDAD",
+     "min": 0.6,
+     "rec_min": 0.6,
+     "rec_max": 0.9,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "AREA_DE_ESPERA",
+     "min": 1.5,
+     "rec_min": 1.5,
+     "rec_max": 3.0,
+     "unidad": "m2/persona",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": 10.0,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "OF-CIR-001",
+   "seccion": "16",
+   "espacio": "CIRCULACIONES_OFICINAS",
+   "space_type": "CORRIDOR",
+   "titulo": "Circulaciones de oficinas",
+   "items": [
+    {
+     "parametro": "PASILLO_PRINCIPAL",
+     "min": 1.5,
+     "rec_min": 1.5,
+     "rec_max": 2.4,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "PASILLO_SECUNDARIO",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 1.5,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "PASILLO_LOCAL",
+     "min": 1.0,
+     "rec_min": 1.0,
+     "rec_max": 1.2,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "CIRCULACION_DE_SERVICIO",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 1.8,
+     "unidad": "m",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": 1.5,
+   "min_altura_m": null
+  },
+  {
+   "id": "OF-EVA-001",
+   "seccion": "17",
+   "espacio": "EVACUACION",
+   "space_type": null,
+   "titulo": "Circulaciones de evacuación (ancho por ocupación)",
+   "items": [
+    {
+     "parametro": "ANCHO_REQUERIDO",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "m",
+     "nota": "CAPACIDAD_DE_EVACUACION x FACTOR_NORMATIVO: nunca una cota fija cuando la normativa exige dimensionar por ocupación"
+    },
+    {
+     "parametro": "ESC_MINIMO_IBC",
+     "min": 1.118,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "m",
+     "nota": "IBC 2024: 1.118 m general; 0.914 m sirviendo a menos de 50 ocupantes"
+    },
+    {
+     "parametro": "ALTURA_RUTA_IBC",
+     "min": 2.286,
+     "rec_min": 2.4,
+     "rec_max": 3.0,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "PASILLO_COMERCIAL",
+     "min": 1.5,
+     "rec_min": 1.5,
+     "rec_max": 2.4,
+     "unidad": "m",
+     "nota": "grandes flujos: 2.40-4.00 m"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": 1.118,
+   "min_altura_m": 2.286
+  },
+  {
+   "id": "CC-ESC-002",
+   "seccion": "18",
+   "espacio": "ESCALERAS",
+   "space_type": "STAIR",
+   "titulo": "Escaleras",
+   "items": [
+    {
+     "parametro": "ANCHO",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 1.8,
+     "unidad": "m",
+     "nota": "gran flujo 1.80-2.40 m; IBC 1.118 m general y 0.914 m para menos de 50 ocupantes"
+    },
+    {
+     "parametro": "HUELLA",
+     "min": 0.28,
+     "rec_min": 0.28,
+     "rec_max": 0.32,
+     "unidad": "m",
+     "nota": "IBC 0.279 m"
+    },
+    {
+     "parametro": "CONTRAHUELLA",
+     "min": 0.15,
+     "rec_min": 0.15,
+     "rec_max": 0.17,
+     "unidad": "m",
+     "nota": "máximo IBC 0.178 m"
+    },
+    {
+     "parametro": "RELACION_BLONDEL",
+     "min": 0.6,
+     "rec_min": 0.6,
+     "rec_max": 0.64,
+     "unidad": "m",
+     "nota": "2 x contrahuella + huella"
+    },
+    {
+     "parametro": "DESCANSO",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 1.8,
+     "unidad": "m",
+     "nota": "longitud >= ancho de escalera"
+    },
+    {
+     "parametro": "ALTURA_LIBRE",
+     "min": 2.1,
+     "rec_min": 2.1,
+     "rec_max": null,
+     "unidad": "m",
+     "nota": "referencia IBC 2.032 m"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": 1.118,
+   "min_altura_m": null
+  },
+  {
+   "id": "CC-RAM-001",
+   "seccion": "19",
+   "espacio": "RAMPAS_PEATONALES",
+   "space_type": "RAMP",
+   "titulo": "Rampas peatonales",
+   "items": [
+    {
+     "parametro": "PENDIENTE_MAXIMA",
+     "min": 8.33,
+     "rec_min": 5.0,
+     "rec_max": 8.33,
+     "unidad": "%",
+     "nota": "criterio de accesibilidad frecuente"
+    },
+    {
+     "parametro": "ANCHO",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 1.5,
+     "unidad": "m",
+     "nota": "gran flujo 1.50-2.40 m; IBC evacuación 0.914 m"
+    },
+    {
+     "parametro": "DESCANSOS",
+     "min": 1.5,
+     "rec_min": 1.5,
+     "rec_max": null,
+     "unidad": "m",
+     "nota": "IBC: descansos de 1.525 m en las condiciones establecidas"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": 1.2,
+   "min_altura_m": null
+  },
+  {
+   "id": "CC-PAS-001",
+   "seccion": "20",
+   "espacio": "PASAMANOS",
+   "space_type": null,
+   "titulo": "Pasamanos",
+   "items": [
+    {
+     "parametro": "ALTURA",
+     "min": 0.85,
+     "rec_min": 0.85,
+     "rec_max": 0.95,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "SEPARACION_DE_PARED",
+     "min": 0.04,
+     "rec_min": 0.04,
+     "rec_max": 0.06,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "DIAMETRO",
+     "min": 0.032,
+     "rec_min": 0.032,
+     "rec_max": 0.05,
+     "unidad": "m",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "CC-ASC-001",
+   "seccion": "21",
+   "espacio": "ASCENSORES",
+   "space_type": "CORE",
+   "titulo": "Ascensores",
+   "items": [
+    {
+     "parametro": "CABINA_ACCESIBLE",
+     "min": 1.54,
+     "rec_min": 1.6500000000000001,
+     "rec_max": 2.3100000000000005,
+     "unidad": "m2",
+     "nota": "1.10 x 1.40 m mínimo orientativo; preferible 1.10 x 1.50 / 1.10 x 2.10 m"
+    },
+    {
+     "parametro": "PUERTA",
+     "min": 0.8,
+     "rec_min": 0.8,
+     "rec_max": 0.9,
+     "unidad": "m",
+     "nota": "preferible 0.90 m"
+    },
+    {
+     "parametro": "VESTIBULO_PROFUNDIDAD",
+     "min": 2.0,
+     "rec_min": 2.0,
+     "rec_max": 3.0,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "VESTIBULO_ANCHO",
+     "min": 2.0,
+     "rec_min": 2.0,
+     "rec_max": 3.5,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ASCENSOR_DE_SERVICIO",
+     "min": 2.8,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "m2",
+     "nota": "1.40 x 2.00 m o superior según cargas"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "CC-EME-001",
+   "seccion": "22",
+   "espacio": "ESCALERAS_MECANICAS",
+   "space_type": null,
+   "titulo": "Escaleras mecánicas",
+   "items": [
+    {
+     "parametro": "ANCHO_DE_ESCALON",
+     "min": 0.6,
+     "rec_min": 1.0,
+     "rec_max": null,
+     "unidad": "m",
+     "nota": "escalones 0.60 / 0.80 / 1.00 m; 1.00 m para alta demanda"
+    },
+    {
+     "parametro": "ANCHO_TOTAL",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 1.6,
+     "unidad": "m",
+     "nota": "según modelo y configuración"
+    },
+    {
+     "parametro": "ZONA_DE_DESEMBARQUE",
+     "min": 2.5,
+     "rec_min": 3.0,
+     "rec_max": 4.0,
+     "unidad": "m",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "CC-SAN-001",
+   "seccion": "25",
+   "espacio": "SANITARIOS",
+   "space_type": "BATHROOM",
+   "titulo": "Sanitarios",
+   "items": [
+    {
+     "parametro": "CABINA_WC",
+     "min": 0.8,
+     "rec_min": 0.8,
+     "rec_max": 0.9,
+     "unidad": "m",
+     "nota": "profundidad 1.20-1.60 m"
+    },
+    {
+     "parametro": "CABINA_AMPLIADA",
+     "min": 0.9,
+     "rec_min": 0.9,
+     "rec_max": 1.2,
+     "unidad": "m",
+     "nota": "profundidad 1.50-1.80 m"
+    },
+    {
+     "parametro": "LAVAMANOS",
+     "min": 0.5,
+     "rec_min": 0.5,
+     "rec_max": 0.7,
+     "unidad": "m",
+     "nota": "profundidad 0.45-0.60 m; altura 0.80-0.85 m"
+    },
+    {
+     "parametro": "PASILLO_SANITARIO",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 1.5,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "SANITARIO_ACCESIBLE",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "m",
+     "nota": "área de giro 1.50 m de diámetro como referencia"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "CC-VES-001",
+   "seccion": "26",
+   "espacio": "VESTIDORES",
+   "space_type": "DRESSING_ROOM",
+   "titulo": "Vestidores de personal",
+   "items": [
+    {
+     "parametro": "BANCO_ALTURA",
+     "min": 0.45,
+     "rec_min": 0.45,
+     "rec_max": 0.5,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "BANCO_PROFUNDIDAD",
+     "min": 0.4,
+     "rec_min": 0.4,
+     "rec_max": 0.5,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "PASILLO",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 1.5,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "LOCKER",
+     "min": 0.3,
+     "rec_min": 0.3,
+     "rec_max": 0.45,
+     "unidad": "m",
+     "nota": "profundidad 0.45-0.60 m"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "OF-COM-001",
+   "seccion": "27",
+   "espacio": "COMEDOR_PERSONAL",
+   "space_type": "DINING_HALL",
+   "titulo": "Comedores de personal",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 1.5,
+     "unidad": "m2/persona",
+     "nota": ""
+    },
+    {
+     "parametro": "MESA_ANCHO",
+     "min": 0.7,
+     "rec_min": 0.7,
+     "rec_max": 0.9,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "PASO_ENTRE_MESAS",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 1.5,
+     "unidad": "m",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "OF-CAF-001",
+   "seccion": "28",
+   "espacio": "CAFETERIA",
+   "space_type": "CAFETERIA",
+   "titulo": "Cafeterías",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 2.0,
+     "unidad": "m2/persona",
+     "nota": ""
+    },
+    {
+     "parametro": "MESAS_PROFUNDIDAD",
+     "min": 0.7,
+     "rec_min": 0.7,
+     "rec_max": 0.9,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "PASILLOS",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 1.5,
+     "unidad": "m",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "CC-RES-001",
+   "seccion": "29",
+   "espacio": "RESTAURANTE",
+   "space_type": "RESTAURANT",
+   "titulo": "Restaurantes",
+   "items": [
+    {
+     "parametro": "COMEDOR",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 1.8,
+     "unidad": "m2/persona",
+     "nota": ""
+    },
+    {
+     "parametro": "COCINA",
+     "min": null,
+     "rec_min": 25.0,
+     "rec_max": 40.0,
+     "unidad": "%",
+     "nota": "del área del comedor como referencia inicial"
+    },
+    {
+     "parametro": "ALMACEN",
+     "min": null,
+     "rec_min": 5.0,
+     "rec_max": 10.0,
+     "unidad": "%",
+     "nota": ""
+    },
+    {
+     "parametro": "CIRCULACION",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": null,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ZONA_DE_MESAS",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 1.5,
+     "unidad": "m",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "CC-COC-001",
+   "seccion": "30",
+   "espacio": "COCINA_COMERCIAL",
+   "space_type": "COMMERCIAL_KITCHEN",
+   "titulo": "Cocinas comerciales",
+   "items": [
+    {
+     "parametro": "PASILLO_DE_TRABAJO",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 1.5,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "DOS_LINEAS_DE_EQUIPOS",
+     "min": 1.5,
+     "rec_min": 1.5,
+     "rec_max": 1.8,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ALTURA",
+     "min": 2.7,
+     "rec_min": 2.7,
+     "rec_max": 3.5,
+     "unidad": "m",
+     "nota": "extracción, aire, drenaje, agua, electricidad, gas si corresponde, protección contra incendios y almacenamiento"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "CC-LIM-001",
+   "seccion": "31",
+   "espacio": "CUARTO_LIMPIEZA",
+   "space_type": "CLEANING_ROOM",
+   "titulo": "Cuarto de limpieza",
+   "items": [
+    {
+     "parametro": "SUPERFICIE",
+     "min": 3.0,
+     "rec_min": 3.0,
+     "rec_max": 6.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "ANCHO",
+     "min": 1.5,
+     "rec_min": 1.5,
+     "rec_max": 2.0,
+     "unidad": "m",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": 3.0,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "CC-TEC-001",
+   "seccion": "32",
+   "espacio": "CUARTOS_TECNICOS",
+   "space_type": null,
+   "titulo": "Cuartos técnicos",
+   "items": [
+    {
+     "parametro": "CUARTO_ELECTRICO",
+     "min": 8.0,
+     "rec_min": 8.0,
+     "rec_max": 20.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "CUARTO_TELECOMUNICACIONES",
+     "min": 6.0,
+     "rec_min": 6.0,
+     "rec_max": 15.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "CUARTO_HVAC",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "m2",
+     "nota": "según capacidad de equipos"
+    },
+    {
+     "parametro": "CUARTO_BOMBAS",
+     "min": 8.0,
+     "rec_min": 8.0,
+     "rec_max": 20.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "CUARTO_INCENDIO",
+     "min": 8.0,
+     "rec_min": 8.0,
+     "rec_max": 20.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "CUARTO_SERVIDORES",
+     "min": 10.0,
+     "rec_min": 10.0,
+     "rec_max": 30.0,
+     "unidad": "m2",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "CC-DUC-001",
+   "seccion": "33",
+   "espacio": "DUCTOS_VERTICALES",
+   "space_type": null,
+   "titulo": "Ductos verticales",
+   "items": [
+    {
+     "parametro": "DUCTO_PEQUENO",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "m",
+     "nota": "0.30 x 0.60 m"
+    },
+    {
+     "parametro": "DUCTO_MEDIO",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "m",
+     "nota": "0.60 x 1.00 m"
+    },
+    {
+     "parametro": "DUCTO_GRANDE",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "m",
+     "nota": "1.00 x 1.50 m"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "CC-FTE-001",
+   "seccion": "34",
+   "espacio": "FALSOS_TECHOS",
+   "space_type": null,
+   "titulo": "Falsos techos (altura del pleno)",
+   "items": [
+    {
+     "parametro": "PLENO",
+     "min": 0.3,
+     "rec_min": 0.3,
+     "rec_max": 0.6,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "INSTALACIONES_INTENSIVAS",
+     "min": 0.6,
+     "rec_min": 0.6,
+     "rec_max": 1.2,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "OFICINAS",
+     "min": 0.4,
+     "rec_min": 0.4,
+     "rec_max": 0.6,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "CENTROS_COMERCIALES",
+     "min": 0.6,
+     "rec_min": 0.6,
+     "rec_max": 1.0,
+     "unidad": "m",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "CC-MUR-001",
+   "seccion": "37",
+   "espacio": "MUROS_INTERIORES",
+   "space_type": null,
+   "titulo": "Muros interiores (espesor)",
+   "items": [
+    {
+     "parametro": "MAMPOSTERIA",
+     "min": 0.1,
+     "rec_min": 0.1,
+     "rec_max": 0.2,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "DRYWALL",
+     "min": 0.075,
+     "rec_min": 0.075,
+     "rec_max": 0.15,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "DIVISION_ACUSTICA",
+     "min": 0.1,
+     "rec_min": 0.1,
+     "rec_max": 0.2,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "MURO_DE_HORMIGON",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "m",
+     "nota": "según cálculo estructural"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "CC-PUE-001",
+   "seccion": "40",
+   "espacio": "PUERTAS_INTERIORES",
+   "space_type": null,
+   "titulo": "Puertas interiores",
+   "items": [
+    {
+     "parametro": "OFICINAS_DESPACHOS",
+     "min": 0.8,
+     "rec_min": 0.8,
+     "rec_max": 0.9,
+     "unidad": "m",
+     "nota": "altura 2.10 m"
+    },
+    {
+     "parametro": "SALAS",
+     "min": 0.9,
+     "rec_min": 0.9,
+     "rec_max": 1.0,
+     "unidad": "m",
+     "nota": "altura 2.10 m"
+    },
+    {
+     "parametro": "PUERTA_DOBLE",
+     "min": 1.4,
+     "rec_min": 1.4,
+     "rec_max": 1.8,
+     "unidad": "m",
+     "nota": "altura 2.10 m"
+    },
+    {
+     "parametro": "PUERTA_DE_SERVICIO",
+     "min": 0.9,
+     "rec_min": 0.9,
+     "rec_max": 1.2,
+     "unidad": "m",
+     "nota": "altura 2.10 m"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": 0.8,
+   "min_altura_m": null
+  },
+  {
+   "id": "CC-CFU-001",
+   "seccion": "41",
+   "espacio": "PUERTAS_CORTAFUEGO",
+   "space_type": null,
+   "titulo": "Puertas cortafuego",
+   "items": [
+    {
+     "parametro": "ANCHO_POR_HOJA",
+     "min": 0.9,
+     "rec_min": 0.9,
+     "rec_max": 1.2,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ALTURA",
+     "min": 2.1,
+     "rec_min": 2.1,
+     "rec_max": 2.4,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "RESISTENCIA",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "min",
+     "nota": "30 / 60 / 90 / 120 min según el estudio contra incendios"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": 0.9,
+   "min_altura_m": null
+  },
+  {
+   "id": "CC-VEN-001",
+   "seccion": "42",
+   "espacio": "VENTANAS",
+   "space_type": null,
+   "titulo": "Ventanas",
+   "items": [
+    {
+     "parametro": "ANTEPECHO",
+     "min": 0.8,
+     "rec_min": 0.8,
+     "rec_max": 1.1,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ALTURA_DE_VENTANA",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 2.0,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ANCHO_MODULAR",
+     "min": 0.6,
+     "rec_min": 0.6,
+     "rec_max": 1.5,
+     "unidad": "m",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "CC-EST-001",
+   "seccion": "45",
+   "espacio": "ESTACIONAMIENTO",
+   "space_type": "PARKING",
+   "titulo": "Estacionamientos",
+   "items": [
+    {
+     "parametro": "PLAZA",
+     "min": 2.4,
+     "rec_min": 2.4,
+     "rec_max": 2.6,
+     "unidad": "m",
+     "nota": "longitud 4.80-5.50 m; vehículo grande 2.60 x 5.20 m"
+    },
+    {
+     "parametro": "PLAZA_ACCESIBLE",
+     "min": 3.6,
+     "rec_min": 3.6,
+     "rec_max": 4.0,
+     "unidad": "m",
+     "nota": "longitud 5.00-5.50 m incluyendo zona lateral"
+    },
+    {
+     "parametro": "PASILLO_DOBLE_SENTIDO",
+     "min": 5.5,
+     "rec_min": 5.5,
+     "rec_max": 7.0,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "PASILLO_UN_SENTIDO",
+     "min": 4.5,
+     "rec_min": 4.5,
+     "rec_max": 5.5,
+     "unidad": "m",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": 11.52,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "CC-RVE-001",
+   "seccion": "46",
+   "espacio": "RAMPAS_VEHICULARES",
+   "space_type": null,
+   "titulo": "Rampas vehiculares",
+   "items": [
+    {
+     "parametro": "PENDIENTE",
+     "min": 12.0,
+     "rec_min": 12.0,
+     "rec_max": 15.0,
+     "unidad": "%",
+     "nota": "máxima según normativa y condición"
+    },
+    {
+     "parametro": "TRANSICIONES",
+     "min": 1.5,
+     "rec_min": 1.5,
+     "rec_max": 3.0,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ANCHO_UN_SENTIDO",
+     "min": 3.0,
+     "rec_min": 3.0,
+     "rec_max": 3.5,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ANCHO_DOBLE_SENTIDO",
+     "min": 5.5,
+     "rec_min": 5.5,
+     "rec_max": 7.0,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ALTURA_LIBRE",
+     "min": 2.2,
+     "rec_min": 2.2,
+     "rec_max": 2.4,
+     "unidad": "m",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "CC-CAR-001",
+   "seccion": "47",
+   "espacio": "CARGA_Y_DESCARGA",
+   "space_type": "LOADING_DOCK",
+   "titulo": "Carga y descarga",
+   "items": [
+    {
+     "parametro": "ANDEN_PROFUNDIDAD",
+     "min": 3.0,
+     "rec_min": 3.0,
+     "rec_max": 6.0,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ANDEN_ANCHO",
+     "min": 3.0,
+     "rec_min": 3.0,
+     "rec_max": 4.0,
+     "unidad": "m",
+     "nota": "por posición"
+    },
+    {
+     "parametro": "ANDEN_ALTURA",
+     "min": 1.0,
+     "rec_min": 1.0,
+     "rec_max": 1.3,
+     "unidad": "m",
+     "nota": "según vehículo"
+    },
+    {
+     "parametro": "CIRCULACION_CAMIONES",
+     "min": 6.0,
+     "rec_min": 6.0,
+     "rec_max": 12.0,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "RADIO_DE_GIRO",
+     "min": 12.0,
+     "rec_min": 12.0,
+     "rec_max": 15.0,
+     "unidad": "m",
+     "nota": "vehículos pesados; comprobar con vehículo de diseño"
+    }
+   ],
+   "min_area_m2": 9.0,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "CC-RES2-001",
+   "seccion": "48",
+   "espacio": "RESIDUOS",
+   "space_type": "WASTE_ROOM",
+   "titulo": "Áreas de residuos",
+   "items": [
+    {
+     "parametro": "CUARTO_PEQUENO",
+     "min": 4.0,
+     "rec_min": 4.0,
+     "rec_max": 8.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "CUARTO_MEDIO",
+     "min": 8.0,
+     "rec_min": 8.0,
+     "rec_max": 20.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "CUARTO_GRANDE",
+     "min": 20.0,
+     "rec_min": 20.0,
+     "rec_max": 50.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "ALTURA",
+     "min": 2.7,
+     "rec_min": 2.7,
+     "rec_max": 3.5,
+     "unidad": "m",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": 4.0,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "CC-LOG-001",
+   "seccion": "49",
+   "espacio": "CIRCULACION_LOGISTICA",
+   "space_type": null,
+   "titulo": "Circulación logística",
+   "items": [
+    {
+     "parametro": "PEATON_CARRO",
+     "min": 1.5,
+     "rec_min": 1.5,
+     "rec_max": 2.0,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "VEHICULOS_INTERNOS",
+     "min": 2.0,
+     "rec_min": 2.0,
+     "rec_max": 3.0,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "TRAFICO_INTENSIVO",
+     "min": 3.0,
+     "rec_min": 3.0,
+     "rec_max": 4.0,
+     "unidad": "m",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "CC-TOM-001",
+   "seccion": "53",
+   "espacio": "TOMACORRIENTES_OFICINAS",
+   "space_type": null,
+   "titulo": "Tomacorrientes en oficinas",
+   "items": [
+    {
+     "parametro": "PUESTO_TRABAJO",
+     "min": null,
+     "rec_min": 4.0,
+     "rec_max": 8.0,
+     "unidad": "tomas",
+     "nota": "2-4 tomas de datos por puesto"
+    },
+    {
+     "parametro": "ALTURA_GENERAL",
+     "min": 0.3,
+     "rec_min": 0.3,
+     "rec_max": 0.45,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ALTURA_SOBRE_MESAS",
+     "min": 0.9,
+     "rec_min": 0.9,
+     "rec_max": 1.2,
+     "unidad": "m",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "OF-DAT-001",
+   "seccion": "55",
+   "espacio": "RED_DE_DATOS",
+   "space_type": "TELECOM_ROOM",
+   "titulo": "Red de datos",
+   "items": [
+    {
+     "parametro": "RACK_PEQUENO",
+     "min": 6.0,
+     "rec_min": 6.0,
+     "rec_max": 12.0,
+     "unidad": "U",
+     "nota": ""
+    },
+    {
+     "parametro": "RACK_MEDIO",
+     "min": 18.0,
+     "rec_min": 18.0,
+     "rec_max": 27.0,
+     "unidad": "U",
+     "nota": ""
+    },
+    {
+     "parametro": "RACK_GRANDE",
+     "min": 42.0,
+     "rec_min": 42.0,
+     "rec_max": null,
+     "unidad": "U",
+     "nota": ""
+    },
+    {
+     "parametro": "ANCHO_ESTANDAR",
+     "min": null,
+     "rec_min": 19.0,
+     "rec_max": null,
+     "unidad": "pulgadas",
+     "nota": ""
+    },
+    {
+     "parametro": "CUARTO_TELECOMUNICACIONES",
+     "min": 6.0,
+     "rec_min": 6.0,
+     "rec_max": 15.0,
+     "unidad": "m2",
+     "nota": "según cantidad de racks y mantenimiento"
+    }
+   ],
+   "min_area_m2": 6.0,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "CC-CCTV-001",
+   "seccion": "56",
+   "espacio": "CCTV",
+   "space_type": null,
+   "titulo": "CCTV",
+   "items": [
+    {
+     "parametro": "ALTURA_INTERIORES",
+     "min": 2.5,
+     "rec_min": 2.5,
+     "rec_max": 3.5,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ALTURA_EXTERIORES",
+     "min": 3.0,
+     "rec_min": 3.0,
+     "rec_max": 5.0,
+     "unidad": "m",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "CC-CAC-001",
+   "seccion": "57",
+   "espacio": "CONTROL_DE_ACCESO",
+   "space_type": null,
+   "titulo": "Control de acceso",
+   "items": [
+    {
+     "parametro": "TORNIQUETE",
+     "min": 0.55,
+     "rec_min": 0.55,
+     "rec_max": 0.65,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "PASO_ACCESIBLE",
+     "min": 0.9,
+     "rec_min": 0.9,
+     "rec_max": null,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "PUERTA_CONTROLADA",
+     "min": 0.9,
+     "rec_min": 0.9,
+     "rec_max": 1.2,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "VESTIBULO_DE_CONTROL",
+     "min": 2.0,
+     "rec_min": 2.0,
+     "rec_max": 4.0,
+     "unidad": "m",
+     "nota": "profundidad"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": 0.9,
+   "min_altura_m": null
+  },
+  {
+   "id": "CC-SEN-001",
+   "seccion": "64",
+   "espacio": "SEÑALIZACION",
+   "space_type": null,
+   "titulo": "Señalización",
+   "items": [
+    {
+     "parametro": "ALTURA_DE_SEÑALES",
+     "min": 2.0,
+     "rec_min": 2.0,
+     "rec_max": 2.4,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "SEÑAL_SOBRE_PUERTA",
+     "min": 2.0,
+     "rec_min": 2.0,
+     "rec_max": 2.2,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "SEÑALIZACION_DE_LOCALES",
+     "min": 1.5,
+     "rec_min": 1.5,
+     "rec_max": 2.2,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "DIRECTORIO_PRINCIPAL",
+     "min": 1.4,
+     "rec_min": 1.4,
+     "rec_max": 1.7,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "MAPAS",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 1.7,
+     "unidad": "m",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "CC-ACC-002",
+   "seccion": "66",
+   "espacio": "ACCESIBILIDAD",
+   "space_type": null,
+   "titulo": "Accesibilidad y espacio de giro",
+   "items": [
+    {
+     "parametro": "ANCHO_RUTA",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 1.5,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "PUERTA",
+     "min": 0.9,
+     "rec_min": 0.9,
+     "rec_max": null,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "RADIO_DE_GIRO",
+     "min": 1.5,
+     "rec_min": 1.5,
+     "rec_max": null,
+     "unidad": "m",
+     "nota": "sanitarios, vestíbulos, ascensores, maniobra"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": 0.9,
+   "min_altura_m": null
+  },
+  {
+   "id": "CC-PAR-001",
+   "seccion": "70",
+   "espacio": "PARASOLES",
+   "space_type": null,
+   "titulo": "Parasoles",
+   "items": [
+    {
+     "parametro": "PROFUNDIDAD",
+     "min": 0.6,
+     "rec_min": 0.6,
+     "rec_max": 1.5,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "PANELES_VERTICALES",
+     "min": 0.3,
+     "rec_min": 0.3,
+     "rec_max": 1.0,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "SEPARACION",
+     "min": 0.3,
+     "rec_min": 0.3,
+     "rec_max": 1.5,
+     "unidad": "m",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "CC-CUB-001",
+   "seccion": "71",
+   "espacio": "CUBIERTAS",
+   "space_type": null,
+   "titulo": "Cubiertas",
+   "items": [
+    {
+     "parametro": "PENDIENTE_PLANA",
+     "min": 1.0,
+     "rec_min": 1.0,
+     "rec_max": 3.0,
+     "unidad": "%",
+     "nota": ""
+    },
+    {
+     "parametro": "ALEROS",
+     "min": 0.6,
+     "rec_min": 0.6,
+     "rec_max": 1.5,
+     "unidad": "m",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "OF-TOR-001",
+   "seccion": "86",
+   "espacio": "EDIFICIO_EN_TORRE",
+   "space_type": null,
+   "titulo": "Edificio en torre",
+   "items": [
+    {
+     "parametro": "PLANTA",
+     "min": 500.0,
+     "rec_min": 500.0,
+     "rec_max": 2500.0,
+     "unidad": "m2",
+     "nota": "por nivel de oficina según tipología"
+    },
+    {
+     "parametro": "PROFUNDIDAD_DE_PLANTA",
+     "min": 12.0,
+     "rec_min": 12.0,
+     "rec_max": 18.0,
+     "unidad": "m",
+     "nota": "desde núcleo/fachada como rango inicial"
+    },
+    {
+     "parametro": "NUCLEO",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "",
+     "nota": "ascensores, escaleras, sanitarios, ductos e instalaciones agrupados"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "OF-COR-001",
+   "seccion": "87",
+   "espacio": "OFICINAS_CORPORATIVAS",
+   "space_type": null,
+   "titulo": "Oficinas corporativas",
+   "items": [
+    {
+     "parametro": "AREA_POR_EMPLEADO",
+     "min": 8.0,
+     "rec_min": 8.0,
+     "rec_max": 15.0,
+     "unidad": "m2/persona",
+     "nota": ""
+    },
+    {
+     "parametro": "DIRECCION",
+     "min": 18.0,
+     "rec_min": 18.0,
+     "rec_max": 30.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "SALA_REUNIONES",
+     "min": 1.5,
+     "rec_min": 1.5,
+     "rec_max": 2.0,
+     "unidad": "m2/persona",
+     "nota": ""
+    },
+    {
+     "parametro": "RECEPCION",
+     "min": 20.0,
+     "rec_min": 20.0,
+     "rec_max": 50.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "AREA_DE_DESCANSO",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 2.0,
+     "unidad": "m2/persona",
+     "nota": ""
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "OF-COW2-001",
+   "seccion": "88",
+   "espacio": "COWORKING_DETALLE",
+   "space_type": null,
+   "titulo": "Coworking (detalle)",
+   "items": [
+    {
+     "parametro": "AREA_POR_USUARIO",
+     "min": 6.0,
+     "rec_min": 6.0,
+     "rec_max": 12.0,
+     "unidad": "m2/usuario",
+     "nota": ""
+    },
+    {
+     "parametro": "CABINA_INDIVIDUAL",
+     "min": 2.0,
+     "rec_min": 2.0,
+     "rec_max": 4.0,
+     "unidad": "m2",
+     "nota": ""
+    },
+    {
+     "parametro": "SALAS",
+     "min": null,
+     "rec_min": null,
+     "rec_max": null,
+     "unidad": "m2",
+     "nota": "pequeña 8-12; media 12-25; grande 25-60"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  },
+  {
+   "id": "CC-MAN-001",
+   "seccion": "83",
+   "espacio": "MANTENIMIENTO",
+   "space_type": null,
+   "titulo": "Mantenimiento y cuartos de máquinas",
+   "items": [
+    {
+     "parametro": "ANCHO_DE_ACCESO_TECNICO",
+     "min": 0.9,
+     "rec_min": 0.9,
+     "rec_max": null,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "PASO_DE_MANTENIMIENTO",
+     "min": 0.9,
+     "rec_min": 0.9,
+     "rec_max": 1.2,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "PASO_TECNICO",
+     "min": 1.2,
+     "rec_min": 1.2,
+     "rec_max": 1.5,
+     "unidad": "m",
+     "nota": ""
+    },
+    {
+     "parametro": "ALTURA_LIBRE_TECNICA",
+     "min": 2.1,
+     "rec_min": 2.1,
+     "rec_max": null,
+     "unidad": "m",
+     "nota": "cuando sea transitable"
+    },
+    {
+     "parametro": "ESPACIO_LIBRE_EQUIPOS",
+     "min": 0.8,
+     "rec_min": 0.8,
+     "rec_max": 1.2,
+     "unidad": "m",
+     "nota": "espacio de mantenimiento como referencia inicial"
+    }
+   ],
+   "min_area_m2": null,
+   "min_ancho_m": null,
+   "min_altura_m": null
+  }
+ ],
+ "relaciones": [
+  {
+   "familia": "CENTRO_COMERCIAL",
+   "a": "ACCESO",
+   "b": "VESTIBULO",
+   "nivel": "3"
+  },
+  {
+   "familia": "CENTRO_COMERCIAL",
+   "a": "VESTIBULO",
+   "b": "GALERIA",
+   "nivel": "3"
+  },
+  {
+   "familia": "CENTRO_COMERCIAL",
+   "a": "GALERIA",
+   "b": "LOCALES",
+   "nivel": "3"
+  },
+  {
+   "familia": "CENTRO_COMERCIAL",
+   "a": "GALERIA",
+   "b": "SANITARIOS",
+   "nivel": "2"
+  },
+  {
+   "familia": "CENTRO_COMERCIAL",
+   "a": "GALERIA",
+   "b": "ASCENSORES",
+   "nivel": "3"
+  },
+  {
+   "familia": "CENTRO_COMERCIAL",
+   "a": "GALERIA",
+   "b": "ESCALERAS",
+   "nivel": "3"
+  },
+  {
+   "familia": "CENTRO_COMERCIAL",
+   "a": "LOCALES",
+   "b": "ALMACEN",
+   "nivel": "3"
+  },
+  {
+   "familia": "CENTRO_COMERCIAL",
+   "a": "ALMACEN",
+   "b": "CARGA",
+   "nivel": "3"
+  },
+  {
+   "familia": "CENTRO_COMERCIAL",
+   "a": "RESTAURANTE",
+   "b": "COCINA",
+   "nivel": "3"
+  },
+  {
+   "familia": "CENTRO_COMERCIAL",
+   "a": "COCINA",
+   "b": "SERVICIO",
+   "nivel": "3"
+  },
+  {
+   "familia": "CENTRO_COMERCIAL",
+   "a": "RESIDUOS",
+   "b": "PUBLICO",
+   "nivel": "0"
+  },
+  {
+   "familia": "CENTRO_COMERCIAL",
+   "a": "CARGA",
+   "b": "PUBLICO",
+   "nivel": "0"
+  },
+  {
+   "familia": "OFICINAS",
+   "a": "RECEPCION",
+   "b": "SALAS",
+   "nivel": "3"
+  },
+  {
+   "familia": "OFICINAS",
+   "a": "RECEPCION",
+   "b": "OFICINAS",
+   "nivel": "2"
+  },
+  {
+   "familia": "OFICINAS",
+   "a": "OFICINAS",
+   "b": "SANITARIOS",
+   "nivel": "3"
+  },
+  {
+   "familia": "OFICINAS",
+   "a": "OFICINAS",
+   "b": "DESCANSO",
+   "nivel": "3"
+  },
+  {
+   "familia": "OFICINAS",
+   "a": "OFICINAS",
+   "b": "SERVIDORES",
+   "nivel": "2"
+  },
+  {
+   "familia": "OFICINAS",
+   "a": "DIRECCION",
+   "b": "RECEPCION",
+   "nivel": "3"
+  },
+  {
+   "familia": "OFICINAS",
+   "a": "DIRECCION",
+   "b": "TRABAJO",
+   "nivel": "2"
+  },
+  {
+   "familia": "OFICINAS",
+   "a": "TECNICOS",
+   "b": "PUBLICO",
+   "nivel": "0"
+  }
+ ],
+ "escala_relaciones": {
+  "0": "NO RECOMENDADA",
+  "1": "POSIBLE",
+  "2": "RECOMENDADA",
+  "3": "PRIORITARIA"
+ },
+ "relacion_a_space": {
+  "ACCESO": "ENTRANCE",
+  "VESTIBULO": "VESTIBULE",
+  "GALERIA": "GALLERY",
+  "LOCALES": "RETAIL_LOCAL",
+  "SANITARIOS": "BATHROOM",
+  "ASCENSORES": "CORE",
+  "ESCALERAS": "STAIR",
+  "ALMACEN": "WAREHOUSE",
+  "CARGA": "LOADING_DOCK",
+  "RESTAURANTE": "RESTAURANT",
+  "COCINA": "COMMERCIAL_KITCHEN",
+  "SERVICIO": "STOREROOM",
+  "RESIDUOS": "WASTE_ROOM",
+  "PUBLICO": "__PUBLICO__",
+  "RECEPCION": "RECEPTION",
+  "SALAS": "MEETING_ROOM",
+  "OFICINAS": "OFFICE",
+  "DESCANSO": "CAFETERIA",
+  "SERVIDORES": "SERVER_ROOM",
+  "DIRECCION": "OFFICE",
+  "TRABAJO": "OPEN_OFFICE",
+  "TECNICOS": "__TECNICOS__"
+ },
+ "programa_minimo": {
+  "CENTRO_COMERCIAL": [
+   {
+    "item": "ACCESO",
+    "space_type": "ENTRANCE",
+    "nombre": "Acceso",
+    "es_local": true
+   },
+   {
+    "item": "VESTIBULO",
+    "space_type": "VESTIBULE",
+    "nombre": "Vestíbulo",
+    "es_local": true
+   },
+   {
+    "item": "GALERIA",
+    "space_type": "GALLERY",
+    "nombre": "Galería principal",
+    "es_local": true
+   },
+   {
+    "item": "LOCALES",
+    "space_type": "RETAIL_LOCAL",
+    "nombre": "Locales comerciales",
+    "es_local": true
+   },
+   {
+    "item": "TIENDAS_ANCLA",
+    "space_type": "TIENDA_ANCLA",
+    "nombre": "Tienda ancla",
+    "es_local": true
+   },
+   {
+    "item": "SANITARIOS",
+    "space_type": "BATHROOM",
+    "nombre": "Sanitarios públicos",
+    "es_local": true
+   },
+   {
+    "item": "ESCALERAS",
+    "space_type": "STAIR",
+    "nombre": "Escaleras",
+    "es_local": false
+   },
+   {
+    "item": "ASCENSORES",
+    "space_type": "CORE",
+    "nombre": "Ascensores",
+    "es_local": false
+   },
+   {
+    "item": "ADMINISTRACION",
+    "space_type": "ADMINISTRATION",
+    "nombre": "Administración",
+    "es_local": true
+   },
+   {
+    "item": "SEGURIDAD",
+    "space_type": "SECURITY_ROOM",
+    "nombre": "Seguridad",
+    "es_local": true
+   },
+   {
+    "item": "CUARTOS_TECNICOS",
+    "space_type": "ELECTRICAL_ROOM",
+    "nombre": "Cuartos técnicos",
+    "es_local": true
+   },
+   {
+    "item": "CARGA_DESCARGA",
+    "space_type": "LOADING_DOCK",
+    "nombre": "Carga y descarga",
+    "es_local": true
+   },
+   {
+    "item": "ALMACEN",
+    "space_type": "WAREHOUSE",
+    "nombre": "Almacén",
+    "es_local": true
+   },
+   {
+    "item": "RESIDUOS",
+    "space_type": "WASTE_ROOM",
+    "nombre": "Residuos",
+    "es_local": true
+   },
+   {
+    "item": "ESTACIONAMIENTO",
+    "space_type": "PARKING",
+    "nombre": "Estacionamiento",
+    "es_local": true
+   }
+  ],
+  "OFICINAS": [
+   {
+    "item": "ACCESO",
+    "space_type": "ENTRANCE",
+    "nombre": "Acceso",
+    "es_local": true
+   },
+   {
+    "item": "RECEPCION",
+    "space_type": "RECEPTION",
+    "nombre": "Recepción",
+    "es_local": true
+   },
+   {
+    "item": "ESPERA",
+    "space_type": "WAITING_ROOM",
+    "nombre": "Espera",
+    "es_local": true
+   },
+   {
+    "item": "OFICINAS",
+    "space_type": "OFFICE",
+    "nombre": "Oficinas",
+    "es_local": true
+   },
+   {
+    "item": "PLANTA_ABIERTA",
+    "space_type": "OPEN_OFFICE",
+    "nombre": "Planta abierta",
+    "es_local": true
+   },
+   {
+    "item": "DESPACHOS",
+    "space_type": "OFFICE",
+    "nombre": "Despachos de dirección",
+    "es_local": true
+   },
+   {
+    "item": "SALAS_REUNIONES",
+    "space_type": "MEETING_ROOM",
+    "nombre": "Salas de reuniones",
+    "es_local": true
+   },
+   {
+    "item": "SALA_CONFERENCIAS",
+    "space_type": "CONFERENCE_ROOM",
+    "nombre": "Sala de conferencias",
+    "es_local": true
+   },
+   {
+    "item": "SANITARIOS",
+    "space_type": "BATHROOM",
+    "nombre": "Sanitarios",
+    "es_local": true
+   },
+   {
+    "item": "COMEDOR",
+    "space_type": "DINING_HALL",
+    "nombre": "Comedor de personal",
+    "es_local": true
+   },
+   {
+    "item": "DESCANSO",
+    "space_type": "CAFETERIA",
+    "nombre": "Descanso",
+    "es_local": true
+   },
+   {
+    "item": "SERVIDORES",
+    "space_type": "SERVER_ROOM",
+    "nombre": "Servidores",
+    "es_local": true
+   },
+   {
+    "item": "TELECOMUNICACIONES",
+    "space_type": "TELECOM_ROOM",
+    "nombre": "Telecomunicaciones",
+    "es_local": true
+   },
+   {
+    "item": "CUARTOS_TECNICOS",
+    "space_type": "ELECTRICAL_ROOM",
+    "nombre": "Cuartos técnicos",
+    "es_local": true
+   },
+   {
+    "item": "SEGURIDAD",
+    "space_type": "SECURITY_ROOM",
+    "nombre": "Seguridad",
+    "es_local": true
+   },
+   {
+    "item": "ESTACIONAMIENTO",
+    "space_type": "PARKING",
+    "nombre": "Estacionamiento",
+    "es_local": true
+   }
+  ]
+ },
+ "porcentajes_area": [
+  {
+   "familia": "CENTRO_COMERCIAL",
+   "bloque": "AREA_COMERCIAL",
+   "min": 45,
+   "max": 65,
+   "space_types": [
+    "RETAIL_LOCAL",
+    "TIENDA_ANCLA"
+   ]
+  },
+  {
+   "familia": "CENTRO_COMERCIAL",
+   "bloque": "CIRCULACION",
+   "min": 15,
+   "max": 25,
+   "space_types": [
+    "GALLERY",
+    "VESTIBULE",
+    "ATRIUM",
+    "CORRIDOR",
+    "ENTRANCE"
+   ]
+  },
+  {
+   "familia": "CENTRO_COMERCIAL",
+   "bloque": "SERVICIO",
+   "min": 5,
+   "max": 12,
+   "space_types": [
+    "WAREHOUSE",
+    "STOREROOM",
+    "CLEANING_ROOM",
+    "WASTE_ROOM",
+    "DRESSING_ROOM",
+    "COMMERCIAL_KITCHEN",
+    "LOADING_DOCK"
+   ]
+  },
+  {
+   "familia": "CENTRO_COMERCIAL",
+   "bloque": "TECNICA",
+   "min": 3,
+   "max": 8,
+   "space_types": [
+    "ELECTRICAL_ROOM",
+    "TELECOM_ROOM",
+    "HVAC_ROOM",
+    "SERVER_ROOM",
+    "PUMP_ROOM",
+    "SECURITY_ROOM"
+   ]
+  },
+  {
+   "familia": "CENTRO_COMERCIAL",
+   "bloque": "ADMINISTRACION",
+   "min": 2,
+   "max": 5,
+   "space_types": [
+    "ADMINISTRATION",
+    "OFFICE"
+   ]
+  },
+  {
+   "familia": "OFICINAS",
+   "bloque": "AREA_TRABAJO",
+   "min": 45,
+   "max": 65,
+   "space_types": [
+    "OFFICE",
+    "OPEN_OFFICE",
+    "COWORKING",
+    "MEETING_ROOM",
+    "CONFERENCE_ROOM"
+   ]
+  },
+  {
+   "familia": "OFICINAS",
+   "bloque": "CIRCULACION",
+   "min": 12,
+   "max": 20,
+   "space_types": [
+    "CORRIDOR",
+    "VESTIBULE",
+    "ENTRANCE",
+    "ATRIUM"
+   ]
+  },
+  {
+   "familia": "OFICINAS",
+   "bloque": "SERVICIOS",
+   "min": 8,
+   "max": 15,
+   "space_types": [
+    "BATHROOM",
+    "LAVATORY",
+    "DINING_HALL",
+    "CAFETERIA",
+    "DRESSING_ROOM",
+    "CLEANING_ROOM",
+    "WASTE_ROOM"
+   ]
+  },
+  {
+   "familia": "OFICINAS",
+   "bloque": "TECNICA",
+   "min": 3,
+   "max": 8,
+   "space_types": [
+    "ELECTRICAL_ROOM",
+    "TELECOM_ROOM",
+    "SERVER_ROOM",
+    "PUMP_ROOM",
+    "HVAC_ROOM",
+    "SECURITY_ROOM"
+   ]
+  },
+  {
+   "familia": "OFICINAS",
+   "bloque": "AREAS_COMUNES",
+   "min": 5,
+   "max": 15,
+   "space_types": [
+    "RECEPTION",
+    "WAITING_ROOM",
+    "MULTIUSE_HALL"
+   ]
+  }
+ ],
+ "eficiencia_planta": {
+  "OFICINAS": [
+   75,
+   90
+  ],
+  "CENTRO_COMERCIAL": [
+   65,
+   85
+  ]
+ },
+ "conflictos": [
+  {
+   "id": "CONFLICTO_01",
+   "condicion": "SI ANCHO_CIRCULACION < ANCHO_REQUERIDO",
+   "severidad": "ERROR_CRITICO",
+   "check": "COM005"
+  },
+  {
+   "id": "CONFLICTO_02",
+   "condicion": "SI RUTA_ACCESIBLE NO_EXISTE",
+   "severidad": "ERROR_CRITICO",
+   "check": "COM026"
+  },
+  {
+   "id": "CONFLICTO_03",
+   "condicion": "SI SALIDA_EVACUACION_INSUFICIENTE",
+   "severidad": "ERROR_CRITICO",
+   "check": "COM006"
+  },
+  {
+   "id": "CONFLICTO_04",
+   "condicion": "SI ALTURA_LIBRE < ALTURA_MINIMA",
+   "severidad": "ERROR_CRITICO",
+   "check": "COM004"
+  },
+  {
+   "id": "CONFLICTO_05",
+   "condicion": "SI AREA_TECNICA < AREA_EQUIPO + MANTENIMIENTO",
+   "severidad": "ADVERTENCIA",
+   "check": "COM014"
+  },
+  {
+   "id": "CONFLICTO_06",
+   "condicion": "SI PUERTA_OBSTRUYE_CIRCULACION",
+   "severidad": "ADVERTENCIA",
+   "check": "COM010"
+  },
+  {
+   "id": "CONFLICTO_07",
+   "condicion": "SI CIRCULACION_PUBLICA < COTA_REQUERIDA",
+   "severidad": "ERROR",
+   "check": "COM012"
+  }
+ ],
+ "prioridades": {
+  "P01": "SEGURIDAD DE VIDA",
+  "P02": "EVACUACIÓN",
+  "P03": "ACCESIBILIDAD",
+  "P04": "INCENDIOS",
+  "P05": "ESTRUCTURA",
+  "P06": "INSTALACIONES",
+  "P07": "FUNCIONALIDAD",
+  "P08": "CONFORT",
+  "P09": "MANTENIMIENTO",
+  "P10": "EFICIENCIA",
+  "P11": "ECONOMÍA",
+  "P12": "ESTÉTICA"
+ },
+ "normativa": [
+  "PAIS",
+  "REGION",
+  "MUNICIPIO",
+  "TIPO_EDIFICIO",
+  "NORMATIVA_ESTRUCTURAL",
+  "NORMATIVA_ELECTRICA",
+  "NORMATIVA_INCENDIOS",
+  "NORMATIVA_ACCESIBILIDAD",
+  "NORMATIVA_SANITARIA",
+  "NORMATIVA_ENERGETICA",
+  "NORMATIVA_ACUSTICA",
+  "NORMATIVA_ESTACIONAMIENTO"
+ ],
+ "fuentes": [
+  "FUENTE_GENERAL_EVACUACION = IBC 2024 / capítulo de medios de evacuación",
+  "FUENTE_GENERAL_ACCESIBILIDAD = normativa de accesibilidad correspondiente al país",
+  "FUENTE_ESTACIONAMIENTO = normativa urbana/local correspondiente",
+  "FUENTE_ESTRUCTURAL = normativa estructural nacional",
+  "FUENTE_ELECTRICA = normativa eléctrica nacional",
+  "FUENTE_INCENDIOS = normativa contra incendios seleccionada"
+ ],
+ "documentacion": [
+  "01_MEMORIA_DESCRIPTIVA",
+  "02_PROGRAMA_ARQUITECTONICO",
+  "03_CUADRO_DE_AREAS",
+  "04_CUADRO_DE_COTAS",
+  "05_CUADRO_DE_LOCALES",
+  "06_CUADRO_DE_PUERTAS",
+  "07_CUADRO_DE_VENTANAS",
+  "08_CUADRO_DE_ACABADOS",
+  "09_CUADRO_DE_ILUMINACION",
+  "10_CUADRO_DE_EQUIPOS",
+  "11_CUADRO_DE_INSTALACIONES",
+  "12_CUADRO_DE_MATERIALES",
+  "13_MEDICIONES",
+  "14_PRESUPUESTO",
+  "15_REGLAS_DE_VALIDACION",
+  "16_INFORME_DE_ERRORES",
+  "17_INFORME_DE_ACCESIBILIDAD",
+  "18_INFORME_DE_EVACUACION",
+  "19_INFORME_DE_INCENDIOS",
+  "20_INFORME_DE_COMPATIBILIDAD"
+ ],
+ "requiere_calculo": [
+  {
+   "tema": "CLIMATIZACION",
+   "seccion": "50-51",
+   "motivo": "carga térmica, caudal y sección de conducto por cálculo; espacio técnico sobre falso techo 0.40-1.20 m"
+  },
+  {
+   "tema": "DETECCION_DE_INCENDIOS",
+   "seccion": "58",
+   "motivo": "ubicación de detectores según superficie, altura, geometría, obstáculos y riesgo: no hay distancia universal"
+  },
+  {
+   "tema": "ROCIADORES",
+   "seccion": "59",
+   "motivo": "número, separación, cobertura, diámetro, caudal y presión según la norma de protección seleccionada"
+  },
+  {
+   "tema": "CCTV_COBERTURA",
+   "seccion": "56",
+   "motivo": "campo visual, distancia, resolución, ángulo y solapamiento por cálculo; alturas 2.50-3.50 m interiores y 3.00-5.00 m exteriores"
+  },
+  {
+   "tema": "ESCALERAS_MECANICAS",
+   "seccion": "22",
+   "motivo": "dimensiones definitivas del fabricante y normativa; desembarque >= 2.50 m (preferible 3.00-4.00 m)"
+  },
+  {
+   "tema": "EVACUACION_POR_OCUPACION",
+   "seccion": "17/61",
+   "motivo": "ancho = capacidad de evacuación x factor normativo (IBC 2024); el motor informa, la normativa manda"
+  },
+  {
+   "tema": "EXTINTORES",
+   "seccion": "60",
+   "motivo": "tipo, capacidad y distancia máxima de recorrido de la normativa seleccionada"
+  },
+  {
+   "tema": "DRENAJE_PLUVIAL",
+   "seccion": "72",
+   "motivo": "Q = C·i·A con intensidad de lluvia local; ya calculado por el motor de pluviales de ARQ_GEN"
+  }
+ ]
+}

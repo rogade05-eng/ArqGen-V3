@@ -1,0 +1,131 @@
+{
+  "format": "ARQ_GEN_DETALLES_REGION",
+  "code": "mexico",
+  "nombre": "México",
+  "edicion": "edición mexicana",
+  "referencias": "Reglamento de Construcciones para la Ciudad de México (RCDF) y Normas Técnicas Complementarias (diseño por sismo, mampostería); práctica constructiva de la República: block, castillos y dalas, losa reticular de vigueta, azotea impermeabilizada.",
+  "disclaimer": "Detalles de referencia para proyectar; verifica siempre el reglamento de construcción de tu municipio y la norma técnica aplicable.",
+  "criterio": "País sísmico con mano de obra de mampostería confinada: el block de 14 cm con castillos y dalas manda, la losa reticular de vigueta es el entrepiso estándar y la azotea plana impermeabilizada con prefabricado es costumbre (espacio habitable extra).",
+  "retirar": [],
+  "overrides": {
+    "detalles": [
+      {
+        "id": "muros/muro_confinado_block14",
+        "categoria": "muros",
+        "nombre": "Muro de block de hormigón 14 cm confinado",
+        "resumen": "El muro mexicano por excelencia: block de 14 cm confinado con castillos y dalas de concreto, capaz de trabajar en sismo.",
+        "sentido": "de exterior a interior",
+        "capas": [
+          {"nombre": "Aplanado exterior", "espesor_mm": 10, "material": "mortero cemento-arena frotachado"},
+          {"nombre": "Block de hormigón", "espesor_mm": 140, "material": "block 14×20×40 asentado a hilada con mortero 1:5"},
+          {"nombre": "Aplanado interior", "espesor_mm": 10, "material": "mortero + finito para pintura"}
+        ],
+        "usos": ["Vivienda", "Escuela", "Centro comunitario"],
+        "norma": "NTC de mampostería (RCDF): castillos 15×15 cm cada ≤ 4 m y en extremos/vanos; dalas de confinamiento en entrepisos y cada 1,2–1,8 m de altura; concreto f'c ≥ 150 kg/cm2.",
+        "notas": [
+          "El confinamiento (castillos + dalas) hace que el muro trabaje con la estructura: sin él, el muro solo es tabique.",
+          "En altura sísmica alta, los muros divisorios de más de 2,44 m llevan dalas intermedias y amarres al pórtico."
+        ],
+        "tags": ["sismo", "confinado", "block"]
+      },
+      {
+        "id": "muros/nodo_castillo_dala",
+        "categoria": "muros",
+        "nombre": "Nodo castillo–dala del confinamiento",
+        "resumen": "El nudo que ata todo: castillo de 15×15 armado con 4 varillas #3 y estribos #2 cada 10 cm, empalmado con la dala.",
+        "sentido": "de exterior a interior",
+        "capas": [
+          {"nombre": "Aplanado", "espesor_mm": 10, "material": "mortero sobre el block"},
+          {"nombre": "Castillo de concreto armado", "espesor_mm": 150, "material": "15×15 cm, f'c 200 kg/cm2, 4 varillas #3, estribos #2 @ 0,10"},
+          {"nombre": "Aplanado", "espesor_mm": 10, "material": "mortero cara interna"}
+        ],
+        "usos": ["Vivienda", "Escuela"],
+        "norma": "El castillo se vacía DESPUÉS de albañilar 4–5 hiladas (no apilado en seco); la dala se vacía monolítica con él en el nudo.",
+        "notas": [
+          "Vaciado por tramos de altura de entrepiso; vibrar con aguja fina sin desplazar el armado.",
+          "Dejar las barbas (varillas de espera) limpias para el castillo del piso siguiente."
+        ],
+        "tags": ["sismo", "confinado", "nodo"]
+      },
+      {
+        "id": "entrepisos/losa_vigueta_reticular_mx",
+        "categoria": "entrepisos",
+        "nombre": "Losa reticular de vigueta y bovedilla",
+        "resumen": "El entrepiso estándar mexicano: viguetas pretensadas cada 0,60–0,80 m, bovedillas de arcilla, capa de compresión y contrapiso.",
+        "sentido": "de abajo arriba",
+        "capas": [
+          {"nombre": "Empaste de cielorraso", "espesor_mm": 10, "material": "emplaste sobre bovedilla"},
+          {"nombre": "Bovedilla de arcilla", "espesor_mm": 150, "material": "bovedilla 15 cm entre viguetas"},
+          {"nombre": "Capa de compresión", "espesor_mm": 50, "material": "concreto f'c 200 con malla electrosoldada"},
+          {"nombre": "Contrapiso / rasante", "espesor_mm": 20, "material": "mortero de nivelación"}
+        ],
+        "usos": ["Vivienda", "Local comercial"],
+        "norma": "Nervios con refuerzo según luz (viguetas pretensadas de fábrica o armadas en obra); apuntalamiento triple hasta que la capa alcance su resistencia.",
+        "notas": [
+          "La bovedilla no es estructural: solo relleno entre nervios; no apoyar cargas puntuales sin nervio debajo.",
+          "Instalaciones eléctricas y de agua pasan bajo bovedillas o en chaflanes, nunca cortando nervios."
+        ],
+        "tags": ["reticular", "vigueta", "economico"]
+      },
+      {
+        "id": "cubiertas/cubierta_plana_losa",
+        "categoria": "cubiertas",
+        "nombre": "Azotea plana impermeabilizada (prefabricado 4 mm)",
+        "resumen": "Edición México de la azotea transitable: losa con pendiente al 1,5–2%, prefabricado asfáltico de 4 mm y acabado reflejo.",
+        "sentido": "de arriba abajo",
+        "capas": [
+          {"nombre": "Acabado reflejo (aluminio o pintura)", "espesor_mm": 1, "material": "aluminio en pasta o pintura blanca reflectiva"},
+          {"nombre": "Prefabricado asfáltico de 4 mm", "espesor_mm": 4, "material": "lámina soldada con soplete, remates 200 mm"},
+          {"nombre": "Capa de pendiente", "espesor_mm": 40, "material": "mortero al 1,5–2% hacia bajadas"},
+          {"nombre": "Losa de hormigón armado", "espesor_mm": 150, "material": "HA (soporte), reticular o maciza"},
+          {"nombre": "Aplanado de cielorraso", "espesor_mm": 10, "material": "emplaste"}
+        ],
+        "usos": ["Vivienda", "Hotel", "Oficina"],
+        "norma": "Chaflanes en encuentros con muros (sombrerete), coladeras con colador y ficha; la azotea suele alojar tinaco, tanque estacionario y calentador.",
+        "notas": [
+          "El reflejo baja la temperatura del prefabricado y alarga su vida: no es opcional en clima caliente.",
+          "Revisar y resanar cada 2–3 años antes de que la lámina se cuartee."
+        ],
+        "tags": ["plana", "azotea", "impermeable"]
+      },
+      {
+        "id": "muros/muro_ladrillo_recocido_mx",
+        "categoria": "muros",
+        "nombre": "Tabique de ladrillo recocido",
+        "resumen": "Tabique económico de ladrillo recocido de cocción artesanal, muy común en vivienda económica del interior del país.",
+        "sentido": "de exterior a interior",
+        "capas": [
+          {"nombre": "Aplanado exterior", "espesor_mm": 10, "material": "mortero cemento-arena"},
+          {"nombre": "Ladrillo recocido a hilada", "espesor_mm": 140, "material": "ladrillo rojo artesanal 14×7×3 a canto o a hilada"},
+          {"nombre": "Aplanado interior", "espesor_mm": 10, "material": "mortero + finito"}
+        ],
+        "usos": ["Vivienda económica", "Anexo", "Cuarto auxiliar"],
+        "norma": "Mortero 1:5; por su variabilidad artesanal, siempre tabique (no portante) salvo verificación con el calculista.",
+        "notas": [
+          "Remojar el ladrillo antes de asentarlo: el recocido roba mucha agua al mortero.",
+          "Refuerzo con alambre recocido cada 4 hiladas si el tabique pasa de 2,44 m."
+        ],
+        "tags": ["economico", "tabique", "ladrillo"]
+      },
+      {
+        "id": "cimentaciones/cadena_desplante_mx",
+        "categoria": "cimentaciones",
+        "nombre": "Cadena de desplante sobre planta tipo",
+        "resumen": "Fundación típica de vivienda mexicana en suelo firme: planta tipo de concreto pobre y cadena de desplante armada que recibe los muros.",
+        "sentido": "de abajo arriba",
+        "capas": [
+          {"nombre": "Planta tipo (piso pobre)", "espesor_mm": 50, "material": "concreto pobre 1:3:6 sobre terreno compactado"},
+          {"nombre": "Cadena de desplante", "espesor_mm": 200, "material": "concreto f'c 150 armado con rejilla o varillas longitudinales"},
+          {"nombre": "Mortero de asiento de muros", "espesor_mm": 20, "material": "mortero 1:4 para nivelar la primera hilada"}
+        ],
+        "usos": ["Vivienda", "Anexo"],
+        "norma": "Válida solo en suelos de capacidad media-alta sin humedad crítica; en suelo blando o relleno, zapatas o platea por calculista.",
+        "notas": [
+          "La cadena corre bajo TODOS los muros, incluidos divisorios, para repartir asientos.",
+          "Verificar profundidad de zona vegetal: retirarla antes de compactar."
+        ],
+        "tags": ["economico", "cadena", "vivienda"]
+      }
+    ]
+  }
+}

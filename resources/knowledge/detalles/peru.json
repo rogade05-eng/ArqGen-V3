@@ -1,0 +1,100 @@
+{
+  "format": "ARQ_GEN_DETALLES_REGION",
+  "code": "peru",
+  "nombre": "Perú",
+  "edicion": "edición peruana (RNE)",
+  "referencias": "Reglamento Nacional de Edificaciones (RNE): Norma E.030 Diseño Sismorresistente, E.060 Concreto Armado, E.070 Albañilería, EM.110 Vivienda.",
+  "disclaimer": "Detalles de referencia según el RNE; la zona sísmica (Z3-Z4 en la mayor parte del país) y la edad del suelo obligan a verificar cada diseño con un calculista colegiado.",
+  "criterio": "Albañilería confinada con ladrillo cocido para vivienda, losa aligerada de 20 cm con ladrillo tejar, viga de cimentación con sobrecimiento impermeabilizado, azotea tarrajeada con brea en la costa y teja andina sobre correas en la sierra.",
+  "retirar": [],
+  "overrides": {
+    "detalles": [
+      {
+        "id": "muros/muro_bloque_enlucido",
+        "categoria": "muros",
+        "nombre": "Muro de albañilería confinada (RNE E.070)",
+        "resumen": "Muro de ladrillo cocido KK tarrajeado por ambas caras, confinado con columnas y vigas sísmicas coladas después del albañilería: el sistema sismorresistente peruano de vivienda.",
+        "sentido": "de exterior a interior",
+        "capas": [
+          {"nombre": "Tarrajeo exterior + finito", "espesor_mm": 15, "material": "mortero cemento-arena 1:5 con pañete fino"},
+          {"nombre": "Ladrillo cocido KK (23x13x9)", "espesor_mm": 130, "material": "ladrillo de arcilla asentado con mortero 1:5, juntas 1.5 cm"},
+          {"nombre": "Tarrajeo interior + finito", "espesor_mm": 15, "material": "mortero 1:5 con finito pulido"}
+        ],
+        "usos": ["Vivienda", "Colegio", "Centro de salud"],
+        "norma": "RNE E.070: confinamiento con columnas de 15x15 cm en extremos y encuentros, vigas sísmicas en cada nivel, muros no confinados limitados a 1.75H; E.030 dicta la cuantía mínima y los estribos en zonas Z3-Z4.",
+        "notas": ["El confinamiento se cuela DESPUÉS de levantar el muro, dejando dentelladuras o mechas para el anclaje.",
+                  "Verifica la densidad y absorción del ladrillo: la norma exige unidades con resistencia mínima según la zona sísmica."],
+        "tags": ["sismo", "e070", "confinada", "ladrillo"]
+      },
+      {
+        "id": "entrepisos/losa_vigueta_bovedilla",
+        "categoria": "entrepisos",
+        "nombre": "Losa aligerada de 20 cm (RNE E.060)",
+        "resumen": "Losa aligerada bidireccional con ladrillo tejar hueco y viguetas, torta de compresión y tarrajeo bajo techo: el entrepiso peruano por excelencia.",
+        "sentido": "de arriba abajo",
+        "capas": [
+          {"nombre": "Torta de compresión", "espesor_mm": 50, "material": "concreto f'c 175-210 con malla electrosoldada"},
+          {"nombre": "Aligerado: tejar + viguetas", "espesor_mm": 200, "material": "ladrillo tejar hueco 12x23x5, viguetas a 40 cm con concreto f'c 210"},
+          {"nombre": "Tarrajeo de techo", "espesor_mm": 15, "material": "mortero cemento-arena con acabado fino"}
+        ],
+        "usos": ["Vivienda", "Edificio residencial", "Oficina"],
+        "norma": "RNE E.060: espesor mínimo 20 cm, luces libres ≤ 6 m con refuerzo en bandas y negativos sobre apoyos; E.030 para conexiones sísmicas con los muros y columnas.",
+        "notas": ["Coloca la malla a media altura de la torta y respeta los negativos sobre columnas y muros.",
+                  "Los aligerados con tejar exigen comprobación de corte en viguetas cercanas a vanos grandes."],
+        "tags": ["aligerada", "tejar", "e060", "entrepiso"]
+      },
+      {
+        "id": "cubiertas/cubierta_plana_losa",
+        "categoria": "cubiertas",
+        "nombre": "Azotea de losa tarrajeada con brea (RNE)",
+        "resumen": "Azotea de losa con paqueteo de frotachado en pendiente, brea asfáltica caliente en dos manos y pañete de protección: la impermeabilización clásica de la costa peruana.",
+        "sentido": "de arriba abajo",
+        "capas": [
+          {"nombre": "Pañete de protección", "espesor_mm": 10, "material": "mortero con cemento blanco o aluminio en polvo"},
+          {"nombre": "Brea asfáltica caliente (2 manos)", "espesor_mm": 6, "material": "asfalto oxidado grado 85/25 con malla intermedia opcional"},
+          {"nombre": "Frotachado con pendiente", "espesor_mm": 40, "material": "mortero 1:4 con pendiente 1-2% hacia el sumidero"},
+          {"nombre": "Losa de azotea", "espesor_mm": 200, "material": "aligerado o maciza de HA (ver entrepisos)"}
+        ],
+        "usos": ["Vivienda", "Edificio residencial", "Taller"],
+        "norma": "RNE EM.110 y práctica de obra: pendiente mínima 1% hacia sumideros; E.060 para la losa soporte; mantén la impermeabilización subida 30 cm por petos y bajantes.",
+        "notas": ["La brea se aplica en caliente sobre el frotachado seco y limpio; protege del sol con pañete reflectivo para que no flow.",
+                  "Coloca bajadas de 4' mínimas y canales de gato en los encuentros con petos."],
+        "tags": ["azotea", "brea", "impermeable", "costa"]
+      },
+      {
+        "id": "cimentaciones/viga_sobrecimiento_e070",
+        "categoria": "cimentaciones",
+        "nombre": "Viga de cimentación y sobrecimiento (RNE E.060/E.070)",
+        "resumen": "Viga de cimentación de HA corrida bajo el muro, sobrecimiento impermeabilizado sobre el nivel de piso y solado de limpieza: el desplante peruano típico.",
+        "sentido": "de abajo arriba",
+        "capas": [
+          {"nombre": "Solado de limpieza", "espesor_mm": 50, "material": "concreto pobre 1:12 sobre suelo compactado"},
+          {"nombre": "Viga de cimentación de HA", "espesor_mm": 250, "material": "concreto f'c 175-210, sección 25x40 sobre zapata corrida"},
+          {"nombre": "Sobrecimiento impermeabilizado", "espesor_mm": 300, "material": "concreto o ladrillo tarrajeado con brea o impermeabilizante cementoso"}
+        ],
+        "usos": ["Vivienda", "Colegio", "Almacén"],
+        "norma": "RNE E.060 (viga de cimentación: refuerzo longitudinal mínimo y estribos) y E.070 (sobrecimiento como confinamiento inferior del muro); E.050 suelos para la profundidad de desplante.",
+        "notas": ["El sobrecimiento sube al menos 30 cm sobre el piso terminado para cortar la humedad capilar y el salpicado de lluvia.",
+                  "Ancla la viga a las zapatas con las mechas del acero de espera; no la dejes apoyada solo sobre relleno."],
+        "tags": ["viga", "sobrecimiento", "e060", "e070"]
+      },
+      {
+        "id": "cubiertas/cubierta_teja_andina",
+        "categoria": "cubiertas",
+        "nombre": "Cubierta de teja andina sobre correas (sierra)",
+        "resumen": "Teja andina de concreto o barro sobre correas de eucalipto y tirantería de madera: la cubierta inclinada de la sierra peruana.",
+        "sentido": "de arriba abajo",
+        "capas": [
+          {"nombre": "Teja andina", "espesor_mm": 25, "material": "teja de concreto o barro encajonada, embarrada o clavada"},
+          {"nombre": "Correas de eucalipto", "espesor_mm": 50, "material": "eucalipto tratado, espaciamiento según la teja (35-40 cm)"},
+          {"nombre": "Tirantes y pares", "espesor_mm": 70, "material": "madera rolliza o aserrada con pendiente 30-40%"}
+        ],
+        "usos": ["Vivienda rural", "Turismo rural", "Almacén de sierra"],
+        "norma": "RNE EM.110 (cubiertas: pendiente y fijación según la zona climática) y práctica constructiva de la sierra; E.030 cuida los voladizos y anclajes frente a viento y sismo.",
+        "notas": ["Embarrado tradicional con barro y paja sobre roleado de caña en las cubiertas históricas; hoy se fija con alambre o clavos.",
+                  "Trata la madera contra el gorgojo y prevé canaletas: la lluvia de sierra es intensa y concentrada."],
+        "tags": ["teja", "andina", "sierra", "eucalipto"]
+      }
+    ]
+  }
+}

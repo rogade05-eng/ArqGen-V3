@@ -1,0 +1,5123 @@
+{
+ "format": "ARQ_GEN_HOSPITAL_SPECS",
+ "version": "1.0",
+ "source": "Especificaciones técnicas integrales para locales hospitalarios v1.0 (criterios FGI, ASHRAE/ASHE 170, IAEA, OMS, AusHFG, NFPA; ver fuentes).",
+ "advertencia": "Base técnica de programación y diseño: los valores dimensionales, eléctricos, hidráulicos, de ventilación, radioprotección, gases medicinales y protección contra incendios deben verificarse para el proyecto específico y contrastarse con la normativa vigente de la jurisdicción. No sustituyen cálculos de estructura, electricidad, HVAC, hidráulica, gases, radioprotección, incendios ni los requisitos del fabricante. Las cotas tipo B/C/D/F nunca son normativa.",
+ "clasificacion_cotas": {
+  "A": "Normativa: valor exigido por norma o autoridad",
+  "B": "Mínimo de programación",
+  "C": "Recomendado",
+  "D": "Equipo: determinado por fabricante",
+  "E": "Cálculo: resultado de ingeniería",
+  "F": "Programa médico: según pacientes, puestos y turnos",
+  "nota": "Nunca convertir automáticamente una cota tipo B, C, D o F en normativa."
+ },
+ "prioridad": {
+  "OPERATING_ROOM": "critica",
+  "ICU": "critica",
+  "ICU_PEDIATRIC": "critica",
+  "NICU": "critica",
+  "CATH_LAB": "critica",
+  "STERILIZATION_ROOM": "critica",
+  "ISOLATION_ROOM": "critica",
+  "BLOOD_BANK": "critica",
+  "MICROBIOLOGY_LAB": "critica",
+  "MOLECULAR_BIOLOGY_LAB": "critica",
+  "ANATOMY_PATHOLOGY": "critica",
+  "NEONATOLOGY": "critica",
+  "MEDICAL_GAS_PLANT": "critica",
+  "ELECTRICAL_ROOM": "critica",
+  "GENERATOR_ROOM": "critica",
+  "UPS_ROOM": "critica",
+  "EMERGENCY_ROOM": "alta",
+  "PROGRESSIVE_CARE": "alta",
+  "WARD": "alta",
+  "CT_ROOM": "alta",
+  "IMAGING_ROOM": "alta",
+  "FLUOROSCOPY_ROOM": "alta",
+  "RECOVERY_ROOM": "alta",
+  "PREOP_ROOM": "alta",
+  "ENDOSCOPY_ROOM": "alta",
+  "DIALYSIS_ROOM": "alta",
+  "PHARMACY": "alta",
+  "STERILE_PHARMACY": "alta",
+  "DELIVERY_ROOM": "alta",
+  "PEDIATRICS": "alta",
+  "STERILE_STORE": "alta",
+  "AUTOPSY_ROOM": "alta",
+  "PUMP_ROOM": "alta",
+  "NUCLEAR_MEDICINE": "alta",
+  "CONSULTATION_ROOM": "media",
+  "LABORATORY": "media",
+  "WAITING_ROOM": "media",
+  "ADMISSION": "media",
+  "ULTRASOUND_ROOM": "media",
+  "SAMPLE_COLLECTION": "media",
+  "PROCEDURE_ROOM": "media",
+  "REHABILITATION": "media",
+  "HYDROTHERAPY": "media",
+  "DENTISTRY": "media",
+  "OPHTHALMOLOGY": "media",
+  "DERMATOLOGY": "media",
+  "CARDIOLOGY": "media",
+  "FORENSIC_PATHOLOGY": "media",
+  "MORGUE": "media",
+  "KITCHEN_INSTITUTIONAL": "media",
+  "LAUNDRY": "media",
+  "SERVER_ROOM": "media",
+  "ADMINISTRATION": "baja",
+  "CLINICAL_ARCHIVE": "baja",
+  "STOREROOM": "baja",
+  "WAREHOUSE": "baja",
+  "WASTE_ROOM": "baja",
+  "CLEAN_LINEN": "baja",
+  "SOILED_LINEN": "baja",
+  "CLEANING_ROOM": "baja",
+  "BATHROOM": "baja",
+  "OFFICE": "baja"
+ },
+ "flujos": [
+  "pacientes ambulatorios",
+  "pacientes encamados",
+  "personal",
+  "visitantes",
+  "material limpio",
+  "material estéril",
+  "material contaminado",
+  "ropa limpia",
+  "ropa sucia",
+  "alimentos",
+  "medicamentos",
+  "residuos comunes",
+  "residuos biológicos",
+  "cadáveres",
+  "suministros técnicos"
+ ],
+ "fichas": {
+  "ANATOMY_PATHOLOGY": {
+   "ref": "3.1",
+   "titulo": "ANATOMÍA PATOLÓGICA",
+   "campos": {
+    "función": [
+     "Recepción, procesamiento, estudio y conservación de muestras biológicas y",
+     "tejidos."
+    ],
+    "relaciones": [
+     "- próxima a recepción de muestras;",
+     "- conexión controlada con laboratorios;",
+     "- relación funcional con quirófano;",
+     "- acceso controlado a almacenamiento;",
+     "- circuito independiente para residuos biológicos;",
+     "- conexión controlada con morgue/autopsias."
+    ],
+    "arquitectura": [
+     "- sectorización entre recepción, procesamiento y administración;",
+     "- superficies resistentes a químicos;",
+     "- mobiliario fijo lavable;",
+     "- circulación que evite cruzar muestras limpias y contaminadas;",
+     "- almacenamiento suficiente para reactivos y consumibles."
+    ],
+    "electricidad": [
+     "- circuitos independientes para equipos;",
+     "- tomas sobre mesetas;",
+     "- circuitos de emergencia para equipos críticos;",
+     "- protección contra sobretensión;",
+     "- puesta a tierra;",
+     "- datos y comunicación."
+    ],
+    "iluminación": [
+     "- iluminación general uniforme;",
+     "- iluminación de tarea sobre mesas;",
+     "- evitar reflejos en microscopios;",
+     "- iluminación de emergencia."
+    ],
+    "hidráulica/sanitaria": [
+     "- lavamanos;",
+     "- agua potable;",
+     "- drenaje compatible con proceso;",
+     "- fregaderos técnicos;",
+     "- no descargar reactivos peligrosos sin tratamiento/procedimiento."
+    ],
+    "hvac": [
+     "- extracción localizada donde se manipulen vapores;",
+     "- ventilación suficiente;",
+     "- separación de áreas con riesgo químico o biológico;",
+     "- evitar retorno de aire contaminado hacia zonas limpias."
+    ],
+    "higiene": [
+     "- superficies no porosas;",
+     "- limpieza húmeda;",
+     "- almacenamiento de residuos diferenciado;",
+     "- estaciones de lavado."
+    ],
+    "equipamiento": [
+     "microscopios, procesadores, estaciones de inclusión, equipos de tinción,",
+     "campanas/extracción, refrigeradores, archivadores, mesas de trabajo."
+    ],
+    "bioclimática": [
+     "iluminación natural preferible en oficinas y áreas no críticas; evitar",
+     "radiación solar directa sobre muestras, reactivos y equipos."
+    ]
+   }
+  },
+  "AUTOPSY_ROOM": {
+   "ref": "3.2",
+   "titulo": "SALA DE AUTOPSIAS",
+   "campos": {
+    "función": [
+     "Examen post mortem y procedimientos médico-legales o clínicos autorizados."
+    ],
+    "relaciones": [
+     "- conexión con morgue;",
+     "- acceso técnico independiente;",
+     "- circulación de cadáveres separada de pacientes y público;",
+     "- salida controlada hacia almacenamiento/entrega."
+    ],
+    "arquitectura": [
+     "- espacio amplio para mesa de autopsia y maniobra;",
+     "- puertas de dimensiones compatibles con carros;",
+     "- superficies lavables;",
+     "- paredes protegidas contra impacto;",
+     "- drenaje de piso según proceso;",
+     "- zócalos sanitarios;",
+     "- almacenamiento de instrumental."
+    ],
+    "electricidad": [
+     "- circuitos protegidos;",
+     "- tomas para equipamiento;",
+     "- iluminación de tarea;",
+     "- emergencia;",
+     "- puesta a tierra y equipotencialidad."
+    ],
+    "iluminación": [
+     "- iluminación general de alta uniformidad;",
+     "- iluminación de procedimiento;",
+     "- emergencia."
+    ],
+    "hidráulica": [
+     "- agua fría y caliente;",
+     "- duchas o dispositivos de lavado donde corresponda;",
+     "- lavamanos;",
+     "- drenaje de piso;",
+     "- control de retorno/contaminación."
+    ],
+    "hvac": [
+     "- presión negativa respecto a áreas limpias;",
+     "- extracción directa al exterior cuando corresponda;",
+     "- evitar recirculación incompatible;",
+     "- control de olores y aerosoles."
+    ],
+    "higiene": [
+     "- superficies resistentes a desinfectantes;",
+     "- limpieza con manguera o sistema compatible;",
+     "- almacenamiento de EPP;",
+     "- gestión diferenciada de residuos biológicos."
+    ]
+   }
+  },
+  "MORGUE": {
+   "ref": "3.3",
+   "titulo": "MORGUE / DEPÓSITO DE CADÁVERES",
+   "campos": {
+    "función": [
+     "Recepción, identificación, conservación temporal y entrega controlada."
+    ],
+    "relaciones": [
+     "- acceso independiente;",
+     "- relación directa con anatomía patológica/autopsias;",
+     "- próxima a circulación de servicio;",
+     "- alejada de salas de espera pública;",
+     "- evitar cruce con alimentos y áreas de pacientes."
+    ],
+    "arquitectura": [
+     "- cámara frigorífica dimensionada por capacidad;",
+     "- espacio de maniobra;",
+     "- área de identificación;",
+     "- área de entrega;",
+     "- superficies lavables;",
+     "- drenaje;",
+     "- puertas robustas."
+    ],
+    "electricidad": [
+     "- alimentación confiable para refrigeración;",
+     "- alarma de temperatura;",
+     "- respaldo eléctrico;",
+     "- iluminación de emergencia."
+    ],
+    "hvac": [
+     "- ventilación y control de olores;",
+     "- presión y extracción según proceso;",
+     "- no descargar hacia áreas ocupadas."
+    ],
+    "hidráulica": [
+     "- lavamanos;",
+     "- punto de limpieza;",
+     "- drenaje de piso donde corresponda."
+    ],
+    "higiene": [
+     "- superficies impermeables;",
+     "- control de plagas;",
+     "- separación de residuos."
+    ],
+    "seguridad": [
+     "- acceso restringido;",
+     "- control de identificación;",
+     "- privacidad visual;",
+     "- circuito de entrega independiente."
+    ]
+   }
+  },
+  "OPERATING_ROOM": {
+   "ref": "3.4",
+   "titulo": "QUIRÓFANO GENERAL",
+   "campos": {
+    "función": [
+     "Procedimientos quirúrgicos bajo condiciones controladas."
+    ],
+    "relaciones": [
+     "Debe vincularse con:",
+     "- preoperatorio;",
+     "- recuperación;",
+     "- anestesia;",
+     "- esterilización;",
+     "- depósitos limpios;",
+     "- circulación restringida;",
+     "- soporte diagnóstico.",
+     "Debe separarse de:",
+     "- circulación pública;",
+     "- residuos generales;",
+     "- ropa sucia;",
+     "- alimentación."
+    ],
+    "arquitectura": [
+     "- geometría regular;",
+     "- espacio perimetral alrededor de mesa quirúrgica;",
+     "- puertas amplias;",
+     "- puertas correderas o soluciones compatibles con flujo hospitalario;",
+     "- revestimientos continuos;",
+     "- esquinas sanitarias;",
+     "- cielos sellados;",
+     "- penetraciones de instalaciones controladas;",
+     "- evitar elementos que acumulen polvo."
+    ],
+    "dimensionamiento": [
+     "Dimensionar según mesa quirúrgica, equipo de anestesia, torre quirúrgica,",
+     "arco en C, lámparas, personal, carros y procedimientos."
+    ],
+    "electricidad": [
+     "- circuitos esenciales;",
+     "- alimentación normal y alternativa;",
+     "- UPS para cargas seleccionadas;",
+     "- numerosos tomacorrientes distribuidos;",
+     "- equipotencialidad;",
+     "- protección contra sobretensión;",
+     "- circuitos independientes para equipos;",
+     "- sistemas de comunicación y llamada."
+    ],
+    "iluminación": [
+     "- iluminación general;",
+     "- iluminación quirúrgica de alta calidad;",
+     "- iluminación regulable;",
+     "- emergencia;",
+     "- evitar sombras y deslumbramiento."
+    ],
+    "gases": [
+     "- oxígeno;",
+     "- aire medicinal;",
+     "- vacío;",
+     "- otros gases únicamente según especialidad;",
+     "- evacuación de gases anestésicos donde corresponda;",
+     "- alarmas de área;",
+     "- válvulas sectorizadas."
+    ],
+    "hvac": [
+     "Como referencia ASHRAE 170-2021, la tabla publicada por ASHRAE muestra",
+     "para quirófano relación positiva, mínimo de 4 ACH de aire exterior y",
+     "20 ACH totales, con 20-60 % de humedad relativa y 20-24 °C. Estos valores",
+     "deben verificarse contra la edición normativa adoptada por el proyecto."
+    ],
+    "presión": [
+     "positiva respecto a áreas adyacentes, salvo una estrategia especial",
+     "justificada y normativamente aprobada."
+    ],
+    "higiene": [
+     "- superficies no porosas;",
+     "- limpieza frecuente;",
+     "- mínimos elementos sobresalientes;",
+     "- lavamanos quirúrgico en acceso;",
+     "- almacenamiento controlado."
+    ],
+    "bioclimática": [
+     "no depender de ventilación natural para el control sanitario del quirófano.",
+     "Usar protección solar y eficiencia energética del envolvente sin comprometer",
+     "HVAC."
+    ]
+   }
+  },
+  "PREOP_ROOM": {
+   "ref": "3.5",
+   "titulo": "PREOPERATORIO",
+   "campos": {
+    "función": [
+     "Preparación inmediata del paciente antes del procedimiento."
+    ],
+    "requisitos": [
+     "- relación directa con quirófanos;",
+     "- privacidad;",
+     "- espacio para cama/camilla;",
+     "- monitorización;",
+     "- gases medicinales según procedimiento;",
+     "- tomas eléctricas esenciales;",
+     "- iluminación general y de examen;",
+     "- lavamanos;",
+     "- control térmico;",
+     "- posibilidad de aislamiento."
+    ]
+   }
+  },
+  "RECOVERY_ROOM": {
+   "ref": "3.6",
+   "titulo": "RECUPERACIÓN POSTANESTÉSICA",
+   "campos": {
+    "función": [
+     "Recuperación inmediata posterior a anestesia."
+    ],
+    "relaciones": [
+     "directa con quirófanos y circulación controlada."
+    ],
+    "arquitectura": [
+     "- puestos de recuperación;",
+     "- visibilidad desde estación de enfermería;",
+     "- espacio para camillas;",
+     "- separación visual entre pacientes;",
+     "- acceso rápido a emergencia."
+    ],
+    "electricidad": [
+     "- tomas por puesto;",
+     "- circuitos esenciales;",
+     "- monitorización;",
+     "- llamada;",
+     "- respaldo."
+    ],
+    "gases": [
+     "- oxígeno;",
+     "- aire medicinal;",
+     "- vacío;",
+     "- según procedimiento."
+    ],
+    "hvac": [
+     "- control de temperatura;",
+     "- ventilación según categoría normativa;",
+     "- evitar contaminación cruzada."
+    ]
+   }
+  },
+  "CT_ROOM": {
+   "ref": "3.7",
+   "titulo": "TOMOGRAFÍA COMPUTARIZADA",
+   "campos": {
+    "función": [
+     "Diagnóstico mediante tomografía."
+    ],
+    "subáreas": [
+     "- sala de TC;",
+     "- control;",
+     "- preparación/espera;",
+     "- vestidor;",
+     "- área técnica;",
+     "- recuperación cuando proceda."
+    ],
+    "arquitectura": [
+     "- espacio alrededor del gantry;",
+     "- circulación de camilla;",
+     "- visibilidad desde control;",
+     "- acceso técnico independiente;",
+     "- puertas amplias;",
+     "- control de luz cuando sea necesario."
+    ],
+    "radiación": [
+     "La protección debe calcularse específicamente según equipo, carga de",
+     "trabajo, ocupación de áreas contiguas, orientación del haz y normativa",
+     "nacional. No usar un espesor fijo de plomo como regla universal."
+    ],
+    "electricidad": [
+     "- alimentación dedicada;",
+     "- capacidad según fabricante;",
+     "- protección;",
+     "- tierra;",
+     "- UPS para cargas que lo requieran;",
+     "- control de temperatura del equipo."
+    ],
+    "hvac": [
+     "- temperatura y humedad dentro del rango especificado por fabricante;",
+     "- disipación térmica del equipo;",
+     "- ventilación del local."
+    ],
+    "iluminación": [
+     "- regulable;",
+     "- baja interferencia visual;",
+     "- iluminación de paciente;",
+     "- emergencia."
+    ]
+   }
+  },
+  "IMAGING_ROOM": {
+   "ref": "3.8",
+   "titulo": "RAYOS X",
+   "campos": {
+    "función": [
+     "Radiografía diagnóstica."
+    ],
+    "subáreas": [
+     "- sala de examen;",
+     "- control;",
+     "- vestidor;",
+     "- espera;",
+     "- área técnica."
+    ],
+    "arquitectura": [
+     "- espacio para posicionamiento;",
+     "- acceso de camilla;",
+     "- control visual;",
+     "- protección del operador."
+    ],
+    "radiación": [
+     "Diseñar blindaje mediante cálculo de radioprotección considerando:",
+     "- kVp;",
+     "- mA;",
+     "- tiempo;",
+     "- workload;",
+     "- uso;",
+     "- distancia;",
+     "- ocupación;",
+     "- barreras primarias;",
+     "- barreras secundarias;",
+     "- áreas adyacentes.",
+     "La IAEA recomienda integrar la protección radiológica desde la etapa de",
+     "diseño y ajustar el blindaje al equipo, carga de trabajo y ocupación."
+    ],
+    "electricidad": [
+     "- circuito dedicado;",
+     "- potencia del generador;",
+     "- protección;",
+     "- puesta a tierra;",
+     "- parada de emergencia según diseño."
+    ],
+    "iluminación": [
+     "- uniforme;",
+     "- control de reflejos;",
+     "- luz de paciente;",
+     "- emergencia."
+    ]
+   }
+  },
+  "FLUOROSCOPY_ROOM": {
+   "ref": "3.9",
+   "titulo": "FLUOROSCOPIA / RADIOLOGÍA INTERVENCIONISTA",
+   "campos": {
+    "requisitos": [
+     "- sala de mayor superficie que una radiografía convencional cuando el",
+     "procedimiento lo requiera;",
+     "- espacio para arco/equipo;",
+     "- anestesia;",
+     "- personal alrededor del paciente;",
+     "- carro de paro;",
+     "- almacenamiento;",
+     "- control técnico."
+    ],
+    "radiación": [
+     "- blindaje específico;",
+     "- barreras estructurales;",
+     "- mamparas;",
+     "- pantallas suspendidas;",
+     "- cortinas plomadas cuando correspondan;",
+     "- dosimetría y control radiológico.",
+     "La IAEA señala que las salas mayores facilitan posicionamiento, movimiento",
+     "de equipos y pacientes y pueden contribuir a reducir exposición secundaria.",
+     "El diseño debe considerar tiempo, distancia y blindaje."
+    ],
+    "electricidad": [
+     "- alimentación dedicada;",
+     "- tomas para equipos auxiliares;",
+     "- emergencia;",
+     "- equipotencialidad."
+    ],
+    "gases": [
+     "- oxígeno;",
+     "- aire medicinal;",
+     "- vacío según procedimiento."
+    ],
+    "hvac": [
+     "- control térmico;",
+     "- ventilación;",
+     "- extracción de gases anestésicos si se utiliza anestesia."
+    ]
+   }
+  },
+  "MRI_ROOM": {
+   "ref": "3.10",
+   "titulo": "RESONANCIA MAGNÉTICA",
+   "campos": {
+    "zonificación": [
+     "- zona pública;",
+     "- zona controlada;",
+     "- sala de exploración;",
+     "- sala de control;",
+     "- sala técnica;",
+     "- preparación;",
+     "- vestidor;",
+     "- recuperación."
+    ],
+    "arquitectura": [
+     "- control de acceso;",
+     "- evitar entrada accidental de objetos ferromagnéticos;",
+     "- circulación de camillas compatible;",
+     "- espacio técnico del fabricante."
+    ],
+    "requisitos especiales": [
+     "- blindaje RF según fabricante;",
+     "- seguridad magnética;",
+     "- control de objetos;",
+     "- sistemas de quench según diseño;",
+     "- ventilación de sala técnica;",
+     "- señalización."
+    ],
+    "electricidad": [
+     "- alimentación dedicada;",
+     "- puesta a tierra;",
+     "- UPS para sistemas especificados;",
+     "- compatibilidad electromagnética."
+    ]
+   }
+  },
+  "ULTRASOUND_ROOM": {
+   "ref": "3.11",
+   "titulo": "ECOGRAFÍA",
+   "campos": {
+    "requisitos": [
+     "- privacidad;",
+     "- cama de examen;",
+     "- espacio de maniobra;",
+     "- control de luz;",
+     "- tomas eléctricas;",
+     "- lavamanos cuando corresponda;",
+     "- iluminación regulable;",
+     "- aislamiento acústico moderado;",
+     "- almacenamiento de consumibles."
+    ]
+   }
+  },
+  "ICU": {
+   "ref": "3.12",
+   "titulo": "UCI ADULTOS",
+   "campos": {
+    "función": [
+     "Atención de pacientes críticos."
+    ],
+    "organización": [
+     "- puestos individuales o agrupados;",
+     "- estación de enfermería;",
+     "- aislamiento;",
+     "- preparación de medicamentos;",
+     "- almacenes;",
+     "- equipos;",
+     "- apoyo limpio;",
+     "- apoyo sucio;",
+     "- área de familiares."
+    ],
+    "arquitectura": [
+     "- visibilidad;",
+     "- espacio alrededor de cama;",
+     "- acceso simultáneo de personal;",
+     "- posibilidad de intubación y reanimación;",
+     "- separación visual;",
+     "- superficies hospitalarias;",
+     "- control de ruido."
+    ],
+    "electricidad": [
+     "- alta disponibilidad;",
+     "- múltiples tomas;",
+     "- circuitos esenciales;",
+     "- respaldo;",
+     "- UPS para equipos seleccionados;",
+     "- monitorización;",
+     "- llamada;",
+     "- datos."
+    ],
+    "gases": [
+     "- oxígeno;",
+     "- aire medicinal;",
+     "- vacío;",
+     "- gases adicionales según clínica."
+    ],
+    "hvac": [
+     "- temperatura estable;",
+     "- humedad controlada;",
+     "- ventilación según categoría;",
+     "- habitaciones de aislamiento con presión negativa;",
+     "- habitaciones de protección cuando procedan."
+    ],
+    "higiene": [
+     "- lavamanos;",
+     "- superficies continuas;",
+     "- acceso a desinfectantes;",
+     "- separación de limpio/sucio."
+    ],
+    "bioclimática": [
+     "- luz natural y vistas preferibles en puestos compatibles;",
+     "- protección solar;",
+     "- control de deslumbramiento;",
+     "- no comprometer control ambiental."
+    ]
+   }
+  },
+  "ICU_PEDIATRIC": {
+   "ref": "3.13",
+   "titulo": "UCI PEDIÁTRICA",
+   "campos": {}
+  },
+  "NICU": {
+   "ref": "3.14",
+   "titulo": "UCI NEONATAL",
+   "campos": {
+    "requisitos": [
+     "- control térmico elevado;",
+     "- control de humedad según necesidades clínicas;",
+     "- iluminación regulable;",
+     "- baja carga acústica;",
+     "- espacio para incubadora;",
+     "- gases medicinales;",
+     "- tomas eléctricas;",
+     "- respaldo;",
+     "- lavamanos;",
+     "- control de acceso;",
+     "- zonas de higiene."
+    ]
+   }
+  },
+  "PROGRESSIVE_CARE": {
+   "ref": "3.15",
+   "titulo": "CUIDADOS PROGRESIVOS / INTERMEDIOS",
+   "campos": {
+    "requisitos": [
+     "- puestos monitorizables;",
+     "- estación de enfermería;",
+     "- oxígeno;",
+     "- vacío;",
+     "- electricidad esencial;",
+     "- iluminación regulable;",
+     "- baño accesible;",
+     "- circulación para cama;",
+     "- posibilidad de aislamiento."
+    ]
+   }
+  },
+  "ISOLATION_ROOM": {
+   "ref": "3.16",
+   "titulo": "AISLAMIENTO DE PACIENTES",
+   "campos": {
+    "tipos": [
+     "- aislamiento de contacto;",
+     "- gotas;",
+     "- transmisión aérea;",
+     "- protección del paciente."
+    ],
+    "requisitos": [
+     "- antecámara cuando corresponda;",
+     "- lavamanos;",
+     "- control de presión;",
+     "- puerta autocierre;",
+     "- señalización;",
+     "- extracción independiente cuando proceda.",
+     "Como referencia, ASHRAE 170 muestra para salas AII una relación negativa,",
+     "12 ACH totales y 2 ACH exteriores en la tabla publicada para 2021. La",
+     "configuración exacta debe comprobarse con la edición normativa adoptada."
+    ]
+   }
+  },
+  "STERILIZATION_ROOM": {
+   "ref": "3.17",
+   "titulo": "CENTRAL DE ESTERILIZACIÓN / CSSD",
+   "campos": {
+    "principio fundamental": [
+     "Flujo unidireccional desde contaminado hacia limpio y estéril."
+    ],
+    "zonas": [
+     "1. recepción contaminada;",
+     "2. descontaminación;",
+     "3. lavado;",
+     "4. inspección;",
+     "5. preparación;",
+     "6. empaque;",
+     "7. esterilización;",
+     "8. almacenamiento estéril;",
+     "9. distribución.",
+     "NUNCA permitir retorno del material contaminado hacia almacenamiento estéril."
+    ],
+    "arquitectura": [
+     "- barreras físicas o funcionales;",
+     "- esclusas cuando sean necesarias;",
+     "- superficies lavables;",
+     "- pisos antideslizantes;",
+     "- drenajes en áreas húmedas;",
+     "- puertas compatibles con carros."
+    ],
+    "electricidad": [
+     "- cargas elevadas de autoclaves;",
+     "- circuitos dedicados;",
+     "- respaldo de controles;",
+     "- equipotencialidad;",
+     "- protección contra humedad."
+    ],
+    "vapor": [
+     "- generación central o local;",
+     "- calidad de vapor;",
+     "- drenaje de condensado;",
+     "- aislamiento térmico."
+    ],
+    "agua": [
+     "- agua potable;",
+     "- agua tratada según proceso;",
+     "- agua para equipos;",
+     "- drenajes de alta temperatura donde corresponda."
+    ],
+    "hvac": [
+     "- control de temperatura/humedad;",
+     "- presión y flujo según zona;",
+     "- separación de contaminado y limpio;",
+     "- extracción donde se generen vapor o contaminantes."
+    ],
+    "equipamiento": [
+     "lavadoras, ultrasonido, mesas de inspección, termoselladoras, esterilizadores,",
+     "carros, estanterías, sistemas de trazabilidad."
+    ]
+   }
+  },
+  "LABORATORY": {
+   "ref": "3.18",
+   "titulo": "LABORATORIO CLÍNICO GENERAL",
+   "campos": {
+    "zonas": [
+     "- recepción;",
+     "- toma de muestras;",
+     "- procesamiento;",
+     "- hematología;",
+     "- bioquímica;",
+     "- inmunología;",
+     "- almacenamiento;",
+     "- lavado;",
+     "- residuos."
+    ],
+    "requisitos": [
+     "- mesetas resistentes;",
+     "- lavamanos;",
+     "- extracción localizada donde proceda;",
+     "- almacenamiento;",
+     "- refrigeración;",
+     "- electricidad confiable;",
+     "- iluminación de tarea;",
+     "- ventilación.",
+     "OMS recomienda que los laboratorios dispongan de espacio suficiente para",
+     "trabajo y limpieza, superficies lisas y lavables, mesetas impermeables,",
+     "almacenamiento adecuado, lavamanos y suministro eléctrico fiable."
+    ]
+   }
+  },
+  "MICROBIOLOGY_LAB": {
+   "ref": "3.19",
+   "titulo": "MICROBIOLOGÍA",
+   "campos": {
+    "requisitos": [
+     "- separación de preparación y procesamiento;",
+     "- control de aerosoles;",
+     "- cabinas de seguridad biológica según riesgo;",
+     "- lavamanos;",
+     "- superficies descontaminables;",
+     "- ventilación;",
+     "- almacenamiento de muestras;",
+     "- gestión de residuos biológicos;",
+     "- refrigeración;",
+     "- electricidad de respaldo para equipos críticos."
+    ]
+   }
+  },
+  "MOLECULAR_BIOLOGY_LAB": {
+   "ref": "3.20",
+   "titulo": "BIOLOGÍA MOLECULAR",
+   "campos": {
+    "principio": [
+     "Separar áreas de preparación, extracción, amplificación y análisis para",
+     "evitar contaminación cruzada."
+    ],
+    "requisitos": [
+     "- flujo controlado;",
+     "- presión/ventilación según proceso;",
+     "- superficies descontaminables;",
+     "- electricidad estable;",
+     "- UPS para equipos sensibles;",
+     "- refrigeración;",
+     "- almacenamiento seguro."
+    ]
+   }
+  },
+  "BLOOD_BANK": {
+   "ref": "3.21",
+   "titulo": "BANCO DE SANGRE",
+   "campos": {
+    "zonas": [
+     "- recepción;",
+     "- selección/donación;",
+     "- recuperación;",
+     "- procesamiento;",
+     "- serología;",
+     "- inmunohematología;",
+     "- almacenamiento;",
+     "- distribución."
+    ],
+    "electricidad": [
+     "- refrigeradores/congeladores con alimentación prioritaria;",
+     "- alarmas;",
+     "- respaldo;",
+     "- monitorización de temperatura;",
+     "- UPS cuando sea requerida por el equipo."
+    ],
+    "hvac": [
+     "- estabilidad térmica;",
+     "- evitar exposición solar directa;",
+     "- ventilación compatible con actividad."
+    ],
+    "arquitectura": [
+     "- flujo controlado de donantes;",
+     "- privacidad;",
+     "- higiene;",
+     "- accesibilidad;",
+     "- separación de público y procesamiento."
+    ]
+   }
+  },
+  "SAMPLE_COLLECTION": {
+   "ref": "3.22",
+   "titulo": "TOMA DE MUESTRAS",
+   "campos": {
+    "requisitos": [
+     "- privacidad;",
+     "- sillón/camilla;",
+     "- lavamanos;",
+     "- superficie de trabajo;",
+     "- contenedores de residuos;",
+     "- iluminación de tarea;",
+     "- ventilación;",
+     "- tomas eléctricas;",
+     "- acceso universal."
+    ]
+   }
+  },
+  "EMERGENCY_ROOM": {
+   "ref": "3.23",
+   "titulo": "URGENCIAS / EMERGENCIA",
+   "campos": {
+    "zonas": [
+     "- acceso ambulancias;",
+     "- recepción;",
+     "- triaje;",
+     "- espera;",
+     "- consulta;",
+     "- reanimación;",
+     "- observación;",
+     "- procedimientos;",
+     "- aislamiento;",
+     "- enfermería;",
+     "- apoyo diagnóstico;",
+     "- depósitos;",
+     "- residuos."
+    ],
+    "reanimación": [
+     "- acceso inmediato;",
+     "- espacio perimetral;",
+     "- gases medicinales;",
+     "- electricidad esencial;",
+     "- iluminación de procedimiento;",
+     "- carro de paro;",
+     "- monitorización."
+    ],
+    "flujos": [
+     "Separar, en lo posible:",
+     "- ambulancias;",
+     "- pacientes ambulatorios;",
+     "- personal;",
+     "- residuos;",
+     "- suministros."
+    ]
+   }
+  },
+  "WARD": {
+   "ref": "3.24",
+   "titulo": "HOSPITALIZACIÓN GENERAL",
+   "campos": {
+    "habitaciones": [
+     "- individual;",
+     "- doble;",
+     "- múltiple;",
+     "- aislamiento."
+    ],
+    "requisitos": [
+     "- acceso de cama;",
+     "- espacio de acompañante;",
+     "- sanitario accesible;",
+     "- lavamanos;",
+     "- gases según nivel;",
+     "- tomas eléctricas;",
+     "- llamada;",
+     "- iluminación general;",
+     "- iluminación de lectura;",
+     "- iluminación nocturna;",
+     "- emergencia;",
+     "- control solar;",
+     "- acústica."
+    ]
+   }
+  },
+  "CONSULTATION_ROOM": {
+   "ref": "3.25",
+   "titulo": "CONSULTORIO MÉDICO",
+   "campos": {
+    "zonas": [
+     "- entrevista;",
+     "- exploración;",
+     "- lavamanos;",
+     "- almacenamiento;",
+     "- escritorio;",
+     "- camilla."
+    ],
+    "requisitos": [
+     "- privacidad acústica;",
+     "- iluminación general;",
+     "- iluminación de examen;",
+     "- ventilación;",
+     "- accesibilidad;",
+     "- tomas eléctricas;",
+     "- datos."
+    ]
+   }
+  },
+  "PROCEDURE_ROOM": {
+   "ref": "3.26",
+   "titulo": "SALA DE PROCEDIMIENTOS",
+   "campos": {
+    "requisitos": [
+     "- espacio para camilla;",
+     "- circulación alrededor;",
+     "- lavamanos;",
+     "- superficies lavables;",
+     "- iluminación de procedimiento;",
+     "- tomas;",
+     "- gases según procedimiento;",
+     "- residuos diferenciados;",
+     "- posibilidad de emergencia."
+    ]
+   }
+  },
+  "ENDOSCOPY_ROOM": {
+   "ref": "3.27",
+   "titulo": "ENDOSCOPIA",
+   "campos": {
+    "zonas": [
+     "- recepción;",
+     "- preparación;",
+     "- procedimiento;",
+     "- recuperación;",
+     "- lavado/descontaminación;",
+     "- almacenamiento;",
+     "- personal."
+    ],
+    "requisitos": [
+     "- separación de endoscopios sucios y procesados;",
+     "- extracción;",
+     "- ventilación específica;",
+     "- gases;",
+     "- electricidad;",
+     "- agua;",
+     "- drenajes;",
+     "- superficies descontaminables.",
+     "Para procedimientos con generación importante de aerosoles, la estrategia",
+     "de ventilación debe evaluarse específicamente."
+    ]
+   }
+  },
+  "DIALYSIS_ROOM": {
+   "ref": "3.28",
+   "titulo": "HEMODIÁLISIS",
+   "campos": {
+    "requisitos": [
+     "- puestos de diálisis;",
+     "- estación de enfermería;",
+     "- agua tratada;",
+     "- drenajes;",
+     "- electricidad esencial;",
+     "- oxígeno según necesidad;",
+     "- aislamiento;",
+     "- almacenamiento;",
+     "- preparación de medicamentos;",
+     "- control térmico."
+    ],
+    "sistema de agua": [
+     "Debe diseñarse específicamente para diálisis, incluyendo tratamiento,",
+     "distribución, monitorización, mantenimiento y control microbiológico."
+    ]
+   }
+  },
+  "PHARMACY": {
+   "ref": "3.29",
+   "titulo": "FARMACIA HOSPITALARIA",
+   "campos": {
+    "zonas": [
+     "- recepción;",
+     "- almacenamiento;",
+     "- dispensación;",
+     "- preparación;",
+     "- refrigeración;",
+     "- medicamentos controlados;",
+     "- administración."
+    ],
+    "requisitos": [
+     "- control de acceso;",
+     "- control de temperatura/humedad;",
+     "- refrigeradores monitorizados;",
+     "- electricidad de respaldo para equipos críticos;",
+     "- almacenamiento seguro;",
+     "- limpieza."
+    ]
+   }
+  },
+  "STERILE_PHARMACY": {
+   "ref": "3.30",
+   "titulo": "FARMACIA DE PREPARACIÓN ESTÉRIL",
+   "campos": {
+    "requisitos": [
+     "- anteárea;",
+     "- preparación;",
+     "- control de acceso;",
+     "- superficies continuas;",
+     "- presión diferencial según proceso;",
+     "- filtración;",
+     "- control de partículas;",
+     "- higiene estricta;",
+     "- lavamanos fuera o en ubicación compatible con clasificación;",
+     "- electricidad de respaldo.",
+     "Debe diseñarse conforme a la norma farmacéutica específica aplicable,",
+     "no únicamente como una farmacia convencional."
+    ]
+   }
+  },
+  "REHABILITATION": {
+   "ref": "3.31",
+   "titulo": "REHABILITACIÓN / FISIOTERAPIA",
+   "campos": {
+    "locales": [
+     "- gimnasio;",
+     "- mecanoterapia;",
+     "- electroterapia;",
+     "- terapia ocupacional;",
+     "- evaluación;",
+     "- hidroterapia;",
+     "- vestuarios."
+    ],
+    "requisitos": [
+     "- superficies antideslizantes;",
+     "- accesibilidad;",
+     "- barras y elementos de apoyo;",
+     "- ventilación;",
+     "- iluminación natural cuando sea posible;",
+     "- almacenamiento;",
+     "- drenajes en zonas húmedas."
+    ]
+   }
+  },
+  "HYDROTHERAPY": {
+   "ref": "3.32",
+   "titulo": "HIDROTERAPIA",
+   "campos": {
+    "requisitos": [
+     "- control de humedad;",
+     "- extracción;",
+     "- tratamiento de agua;",
+     "- superficies antideslizantes;",
+     "- drenajes;",
+     "- vestuarios;",
+     "- duchas;",
+     "- accesibilidad;",
+     "- protección eléctrica;",
+     "- control térmico."
+    ]
+   }
+  },
+  "DELIVERY_ROOM": {
+   "ref": "3.33",
+   "titulo": "OBSTETRICIA / PARTOS",
+   "campos": {
+    "zonas": [
+     "- admisión;",
+     "- evaluación;",
+     "- trabajo de parto;",
+     "- parto;",
+     "- recuperación;",
+     "- apoyo neonatal;",
+     "- enfermería;",
+     "- depósitos;",
+     "- lavado."
+    ],
+    "requisitos": [
+     "- acceso rápido a quirófano cuando exista;",
+     "- gases;",
+     "- electricidad esencial;",
+     "- iluminación regulable;",
+     "- agua;",
+     "- lavamanos;",
+     "- superficies lavables;",
+     "- control térmico;",
+     "- privacidad."
+    ]
+   }
+  },
+  "NEONATOLOGY": {
+   "ref": "3.34",
+   "titulo": "NEONATOLOGÍA",
+   "campos": {
+    "requisitos": [
+     "- control térmico;",
+     "- iluminación regulable;",
+     "- bajo ruido;",
+     "- gases medicinales;",
+     "- electricidad redundante;",
+     "- lavamanos;",
+     "- control de acceso;",
+     "- espacio alrededor de incubadoras;",
+     "- almacenamiento;",
+     "- apoyo familiar."
+    ]
+   }
+  },
+  "PEDIATRICS": {
+   "ref": "3.35",
+   "titulo": "PEDIATRÍA",
+   "campos": {
+    "requisitos": [
+     "- seguridad infantil;",
+     "- acompañamiento;",
+     "- mobiliario apropiado;",
+     "- control de temperatura;",
+     "- iluminación natural;",
+     "- acústica;",
+     "- higiene;",
+     "- aislamiento;",
+     "- gases según nivel clínico."
+    ]
+   }
+  },
+  "DENTISTRY": {
+   "ref": "3.36",
+   "titulo": "ODONTOLOGÍA HOSPITALARIA",
+   "campos": {
+    "requisitos": [
+     "- sillón;",
+     "- instrumental;",
+     "- lavamanos;",
+     "- agua;",
+     "- drenaje;",
+     "- aspiración;",
+     "- aire comprimido según equipo;",
+     "- electricidad;",
+     "- iluminación de procedimiento;",
+     "- esterilización cercana."
+    ]
+   }
+  },
+  "OPHTHALMOLOGY": {
+   "ref": "3.37",
+   "titulo": "OFTALMOLOGÍA",
+   "campos": {
+    "requisitos": [
+     "- control de iluminación;",
+     "- oscurecimiento en pruebas específicas;",
+     "- equipos delicados;",
+     "- tomas eléctricas;",
+     "- climatización;",
+     "- almacenamiento;",
+     "- privacidad."
+    ]
+   }
+  },
+  "DERMATOLOGY": {
+   "ref": "3.38",
+   "titulo": "DERMATOLOGÍA",
+   "campos": {
+    "requisitos": [
+     "- consulta;",
+     "- exploración;",
+     "- procedimientos;",
+     "- lavamanos;",
+     "- iluminación de examen;",
+     "- extracción localizada cuando proceda;",
+     "- almacenamiento."
+    ]
+   }
+  },
+  "CARDIOLOGY": {
+   "ref": "3.39",
+   "titulo": "CARDIOLOGÍA / PRUEBAS FUNCIONALES",
+   "campos": {
+    "locales": [
+     "- ECG;",
+     "- ecocardiografía;",
+     "- prueba de esfuerzo;",
+     "- Holter;",
+     "- consulta."
+    ],
+    "requisitos": [
+     "- privacidad;",
+     "- camilla;",
+     "- monitorización;",
+     "- electricidad;",
+     "- emergencia;",
+     "- control acústico;",
+     "- climatización."
+    ]
+   }
+  },
+  "CATH_LAB": {
+   "ref": "3.40",
+   "titulo": "HEMODINAMIA",
+   "campos": {
+    "requisitos": [
+     "- sala de procedimiento;",
+     "- control;",
+     "- recuperación;",
+     "- preparación;",
+     "- almacenamiento;",
+     "- gases;",
+     "- electricidad esencial;",
+     "- radioprotección;",
+     "- blindajes;",
+     "- pantallas protectoras;",
+     "- HVAC;",
+     "- control de infecciones."
+    ]
+   }
+  },
+  "NUCLEAR_MEDICINE": {
+   "ref": "3.41",
+   "titulo": "MEDICINA NUCLEAR",
+   "campos": {
+    "zonas": [
+     "- recepción;",
+     "- espera controlada;",
+     "- preparación;",
+     "- inyección;",
+     "- adquisición;",
+     "- control;",
+     "- almacenamiento de radioisótopos;",
+     "- residuos;",
+     "- descontaminación."
+    ],
+    "requisitos": [
+     "- protección radiológica;",
+     "- control de acceso;",
+     "- blindaje calculado;",
+     "- superficies descontaminables;",
+     "- gestión de residuos radiactivos;",
+     "- ventilación según radiofármaco;",
+     "- monitorización.",
+     "Debe desarrollarse conforme a la autoridad reguladora nuclear/radiológica",
+     "correspondiente."
+    ]
+   }
+  },
+  "FORENSIC_PATHOLOGY": {
+   "ref": "3.42",
+   "titulo": "LABORATORIO DE ANATOMÍA PATOLÓGICA FORENSE",
+   "campos": {
+    "requisitos": [
+     "- control de acceso;",
+     "- recepción de muestras/cadáveres;",
+     "- cadena de custodia;",
+     "- áreas de trabajo;",
+     "- almacenamiento seguro;",
+     "- extracción;",
+     "- superficies lavables;",
+     "- gestión diferenciada de residuos;",
+     "- electricidad confiable."
+    ]
+   }
+  },
+  "MEDICAL_GAS_PLANT": {
+   "ref": "3.43",
+   "titulo": "CENTRAL DE GASES MEDICINALES",
+   "campos": {
+    "sistemas": [
+     "- oxígeno;",
+     "- aire medicinal;",
+     "- vacío;",
+     "- óxido nitroso cuando proceda;",
+     "- dióxido de carbono u otros gases según uso."
+    ],
+    "requisitos": [
+     "- ventilación;",
+     "- seguridad contra incendios;",
+     "- separación de fuentes;",
+     "- señalización;",
+     "- alarmas;",
+     "- válvulas;",
+     "- accesibilidad de mantenimiento;",
+     "- protección contra impacto;",
+     "- control de cilindros;",
+     "- continuidad de suministro.",
+     "El diseño debe seguir la norma de gases medicinales adoptada y las",
+     "especificaciones del proveedor."
+    ]
+   }
+  },
+  "ELECTRICAL_ROOM": {
+   "ref": "3.44",
+   "titulo": "CUARTO ELÉCTRICO HOSPITALARIO",
+   "campos": {
+    "requisitos": [
+     "- acceso técnico;",
+     "- separación de agua;",
+     "- ventilación;",
+     "- iluminación;",
+     "- espacio de maniobra;",
+     "- protección contra incendio;",
+     "- puesta a tierra;",
+     "- tableros identificados;",
+     "- reserva de crecimiento;",
+     "- separación de circuitos críticos."
+    ]
+   }
+  },
+  "GENERATOR_ROOM": {
+   "ref": "3.45",
+   "titulo": "GRUPO ELECTRÓGENO",
+   "campos": {
+    "requisitos": [
+     "- ventilación;",
+     "- extracción de gases;",
+     "- combustible;",
+     "- insonorización;",
+     "- protección contra incendio;",
+     "- acceso de mantenimiento;",
+     "- transferencia automática;",
+     "- drenaje;",
+     "- aislamiento de vibraciones."
+    ]
+   }
+  },
+  "UPS_ROOM": {
+   "ref": "3.46",
+   "titulo": "UPS",
+   "campos": {
+    "requisitos": [
+     "- sala con control térmico;",
+     "- ventilación;",
+     "- baterías según tecnología;",
+     "- monitoreo;",
+     "- bypass;",
+     "- mantenimiento;",
+     "- circuitos dedicados;",
+     "- separación de humedad."
+    ]
+   }
+  },
+  "PUMP_ROOM": {
+   "ref": "3.47",
+   "titulo": "CUARTO DE BOMBAS",
+   "campos": {
+    "requisitos": [
+     "- drenaje;",
+     "- impermeabilización;",
+     "- ventilación;",
+     "- espacio de mantenimiento;",
+     "- control de vibraciones;",
+     "- electricidad;",
+     "- protección contra inundación;",
+     "- acceso técnico."
+    ]
+   }
+  },
+  "KITCHEN_INSTITUTIONAL": {
+   "ref": "3.48",
+   "titulo": "COCINA HOSPITALARIA",
+   "campos": {
+    "zonas": [
+     "- recepción;",
+     "- almacenamiento seco;",
+     "- refrigeración;",
+     "- preparación;",
+     "- cocción;",
+     "- lavado;",
+     "- distribución;",
+     "- residuos."
+    ],
+    "flujos": [
+     "alimentos limpios y residuos deben circular por rutas compatibles con",
+     "control sanitario."
+    ],
+    "requisitos": [
+     "- extracción de cocina;",
+     "- agua fría/caliente;",
+     "- drenajes;",
+     "- trampas según proceso;",
+     "- superficies lavables;",
+     "- control de plagas;",
+     "- cámaras frigoríficas;",
+     "- electricidad/gas según sistema."
+    ]
+   }
+  },
+  "LAUNDRY": {
+   "ref": "3.49",
+   "titulo": "LAVANDERÍA",
+   "campos": {
+    "zonas": [
+     "- recepción sucia;",
+     "- clasificación;",
+     "- lavado;",
+     "- secado;",
+     "- planchado;",
+     "- almacenamiento limpio;",
+     "- despacho."
+    ],
+    "principio": [
+     "Separar físicamente o funcionalmente ropa sucia y limpia."
+    ],
+    "requisitos": [
+     "- agua;",
+     "- vapor o energía térmica;",
+     "- drenajes;",
+     "- ventilación;",
+     "- extracción;",
+     "- electricidad;",
+     "- pisos resistentes;",
+     "- control de humedad."
+    ]
+   }
+  },
+  "WASTE_ROOM": {
+   "ref": "3.50",
+   "titulo": "DEPÓSITO DE RESIDUOS HOSPITALARIOS",
+   "campos": {
+    "zonas": [
+     "- residuos comunes;",
+     "- residuos biológicos;",
+     "- residuos cortopunzantes;",
+     "- residuos químicos;",
+     "- residuos especiales."
+    ],
+    "requisitos": [
+     "- acceso de servicio;",
+     "- separación;",
+     "- superficies lavables;",
+     "- drenaje;",
+     "- ventilación;",
+     "- control de plagas;",
+     "- limpieza;",
+     "- señalización;",
+     "- acceso restringido."
+    ]
+   }
+  },
+  "WAREHOUSE": {
+   "ref": "3.51",
+   "titulo": "ALMACÉN GENERAL",
+   "campos": {
+    "requisitos": [
+     "- circulación de carros;",
+     "- estanterías;",
+     "- control de humedad;",
+     "- ventilación;",
+     "- protección contra incendio;",
+     "- separación de materiales incompatibles;",
+     "- reserva para crecimiento;",
+     "- acceso logístico."
+    ]
+   }
+  },
+  "STERILE_STORE": {
+   "ref": "3.52",
+   "titulo": "ALMACÉN ESTÉRIL",
+   "campos": {
+    "requisitos": [
+     "- acceso restringido;",
+     "- superficies limpias;",
+     "- estanterías;",
+     "- protección de paquetes;",
+     "- control ambiental;",
+     "- separación de paredes/suelo;",
+     "- ausencia de tuberías que generen riesgo sobre material estéril;",
+     "- flujo directo a distribución."
+    ]
+   }
+  },
+  "CLEAN_LINEN": {
+   "ref": "3.53",
+   "titulo": "ROPA LIMPIA",
+   "campos": {
+    "requisitos": [
+     "- almacenamiento seco;",
+     "- control de polvo;",
+     "- estanterías;",
+     "- acceso controlado;",
+     "- circulación separada de ropa sucia."
+    ]
+   }
+  },
+  "SOILED_LINEN": {
+   "ref": "3.54",
+   "titulo": "ROPA SUCIA",
+   "campos": {
+    "requisitos": [
+     "- ventilación;",
+     "- contenedores cerrados;",
+     "- superficies lavables;",
+     "- drenaje donde corresponda;",
+     "- circulación independiente."
+    ]
+   }
+  },
+  "CLEANING_ROOM": {
+   "ref": "3.55",
+   "titulo": "LIMPIEZA / CUARTO DE SERVICIO",
+   "campos": {
+    "requisitos": [
+     "- fregadero de servicio;",
+     "- almacenamiento de productos;",
+     "- ventilación;",
+     "- agua fría/caliente cuando proceda;",
+     "- drenaje;",
+     "- separación de alimentos y material clínico;",
+     "- acceso de personal de limpieza."
+    ]
+   }
+  },
+  "ADMINISTRATION": {
+   "ref": "3.56",
+   "titulo": "ADMINISTRACIÓN HOSPITALARIA",
+   "campos": {
+    "requisitos": [
+     "- iluminación natural;",
+     "- iluminación artificial;",
+     "- ventilación;",
+     "- datos;",
+     "- electricidad;",
+     "- privacidad acústica;",
+     "- archivo;",
+     "- accesibilidad."
+    ]
+   }
+  },
+  "CLINICAL_ARCHIVE": {
+   "ref": "3.57",
+   "titulo": "ARCHIVO CLÍNICO",
+   "campos": {
+    "requisitos": [
+     "- control de humedad;",
+     "- protección contra incendio;",
+     "- seguridad;",
+     "- control de acceso;",
+     "- circulación;",
+     "- protección de documentos;",
+     "- sistema digital de respaldo cuando corresponda."
+    ]
+   }
+  },
+  "WAITING_ROOM": {
+   "ref": "3.58",
+   "titulo": "SALA DE ESPERA",
+   "campos": {
+    "requisitos": [
+     "- accesibilidad;",
+     "- asientos;",
+     "- espacio para sillas de ruedas;",
+     "- iluminación;",
+     "- ventilación;",
+     "- señalización;",
+     "- sanitarios próximos;",
+     "- acústica;",
+     "- circulación sin obstáculos."
+    ]
+   }
+  },
+  "ADMISSION": {
+   "ref": "3.59",
+   "titulo": "ADMISIÓN",
+   "campos": {
+    "requisitos": [
+     "- mostradores accesibles;",
+     "- privacidad;",
+     "- datos;",
+     "- electricidad;",
+     "- iluminación;",
+     "- sala de espera asociada;",
+     "- señalización."
+    ]
+   }
+  },
+  "BATHROOM": {
+   "ref": "3.60",
+   "titulo": "SANITARIOS HOSPITALARIOS",
+   "campos": {
+    "requisitos": [
+     "- accesibilidad;",
+     "- barras;",
+     "- pisos antideslizantes;",
+     "- ventilación;",
+     "- extracción;",
+     "- lavamanos;",
+     "- agua caliente cuando proceda;",
+     "- drenaje;",
+     "- materiales lavables;",
+     "- alarma de emergencia en sanitarios asistidos."
+    ]
+   }
+  }
+ },
+ "cotas_cuadro": {
+  "14.1": {
+   "ref": "14.1",
+   "titulo": "CRITERIOS GENERALES DE COTAS",
+   "items": [
+    {
+     "nombre": "Altura libre general en áreas administrativas",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "MIN 2.40 m",
+      "REC 2.70 m"
+     ]
+    },
+    {
+     "nombre": "Altura libre en áreas clínicas convencionales",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "MIN 2.40 m",
+      "REC 2.70-3.00 m"
+     ]
+    },
+    {
+     "nombre": "Altura en áreas con grandes equipos",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "EQ; verificar fabricante, instalaciones y mantenimiento"
+     ]
+    },
+    {
+     "nombre": "Puerta de consultorio",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "MIN 0.90 m de paso libre"
+     ]
+    },
+    {
+     "nombre": "Puerta de habitación hospitalaria",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "MIN 1.10-1.20 m de paso libre cuando deba circular cama"
+     ]
+    },
+    {
+     "nombre": "Puerta de áreas críticas/camillas",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "REC 1.20-1.40 m de paso libre",
+      "En áreas de equipos especiales puede requerirse mayor dimensión"
+     ]
+    },
+    {
+     "nombre": "Pasillo peatonal",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "MIN 1.50 m como criterio preliminar",
+      "REC 1.80 m o superior en circulación hospitalaria principal"
+     ]
+    },
+    {
+     "nombre": "Pasillo de cama",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "REC 2.40 m cuando deba permitir circulación simultánea y maniobra"
+     ]
+    },
+    {
+     "nombre": "Radio de giro de silla de ruedas",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "1.50 m como referencia de diseño accesible"
+     ]
+    },
+    {
+     "nombre": "Área de transferencia lateral de cama",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "MIN 0.90 m",
+      "REC 1.20-1.50 m en áreas críticas"
+     ]
+    },
+    {
+     "nombre": "Área de trabajo clínico junto a cama",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "REC 1.50 m en el lado de trabajo principal para cuidados críticos",
+      "La dimensión debe comprobarse con equipamiento real"
+     ]
+    }
+   ]
+  },
+  "14.2": {
+   "ref": "14.2",
+   "titulo": "ANATOMÍA PATOLÓGICA",
+   "items": [
+    {
+     "nombre": "Recepción de muestras",
+     "min_m2": {
+      "min": 8.0,
+      "max": 12.0
+     },
+     "rec_m2": {
+      "min": 12.0,
+      "max": 16.0
+     },
+     "cota_tipica": "3.00 x 4.00 m o 3.50 x 4.00 m",
+     "notas": []
+    },
+    {
+     "nombre": "Área de macroscopía",
+     "min_m2": {
+      "min": 12.0
+     },
+     "rec_m2": {
+      "min": 15.0,
+      "max": 20.0
+     },
+     "cota_tipica": "3.50 x 4.50 m",
+     "notas": [
+      "Mesa/cabina: EQ"
+     ]
+    },
+    {
+     "nombre": "Histología",
+     "min_m2": {
+      "min": 15.0
+     },
+     "rec_m2": {
+      "min": 18.0,
+      "max": 25.0
+     },
+     "cota_tipica": "4.00 x 5.00 m",
+     "notas": []
+    },
+    {
+     "nombre": "Citología",
+     "min_m2": {
+      "min": 12.0
+     },
+     "rec_m2": {
+      "min": 15.0,
+      "max": 20.0
+     },
+     "cota_tipica": "3.50 x 4.50 m",
+     "notas": []
+    },
+    {
+     "nombre": "Microscopía",
+     "min_m2": {
+      "min": 9.0
+     },
+     "rec_m2": {
+      "min": 12.0,
+      "max": 15.0
+     },
+     "cota_tipica": "3.00 x 4.00 m",
+     "notas": []
+    },
+    {
+     "nombre": "Almacén de muestras",
+     "min_m2": {
+      "min": 8.0
+     },
+     "rec_m2": {
+      "min": 10.0,
+      "max": 15.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Altura libre",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "REC 2.70-3.00 m"
+     ]
+    },
+    {
+     "nombre": "Puerta",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "0.90 m para personal",
+      "1.20 m si circulan carros"
+     ]
+    }
+   ]
+  },
+  "14.3": {
+   "ref": "14.3",
+   "titulo": "MORGUE",
+   "items": [
+    {
+     "nombre": "Recepción técnica de cadáveres",
+     "min_m2": {
+      "min": 10.0
+     },
+     "rec_m2": {
+      "min": 12.0,
+      "max": 16.0
+     },
+     "cota_tipica": "3.00 x 4.00 m",
+     "notas": []
+    },
+    {
+     "nombre": "Cámara frigorífica",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "Dimensionar por número de cuerpos",
+      "Módulo preliminar por posición: 0.90-1.00 m de ancho x 2.30-2.50 m",
+      "de largo, sujeto a fabricante y sistema de bandejas"
+     ]
+    },
+    {
+     "nombre": "Área de maniobra frente a cámaras",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "REC 1.80-2.40 m"
+     ]
+    },
+    {
+     "nombre": "Sala de preparación",
+     "min_m2": {
+      "min": 12.0
+     },
+     "rec_m2": {
+      "min": 16.0,
+      "max": 24.0
+     },
+     "cota_tipica": "4.00 x 5.00 m",
+     "notas": []
+    },
+    {
+     "nombre": "Sala de autopsias",
+     "min_m2": {
+      "min": 20.0
+     },
+     "rec_m2": {
+      "min": 25.0,
+      "max": 35.0
+     },
+     "cota_tipica": "5.00 x 6.00 m",
+     "notas": [
+      "En configuraciones complejas puede requerirse mayor superficie"
+     ]
+    },
+    {
+     "nombre": "Puerta",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "MIN 1.20 m",
+      "REC 1.40-1.60 m para carros y camillas"
+     ]
+    },
+    {
+     "nombre": "Altura",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "REC 2.70-3.00 m"
+     ]
+    }
+   ]
+  },
+  "14.4": {
+   "ref": "14.4",
+   "titulo": "QUIRÓFANO GENERAL",
+   "items": [
+    {
+     "nombre": "Referencia FGI",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "mínimo hospitalario publicado para OR: 400 ft² ≈ 37.2 m² y dimensión",
+      "mínima de 20 ft ≈ 6.10 m en la guía FGI 2018",
+      "Para proyecto actual debe verificarse la edición normativa adoptada"
+     ]
+    },
+    {
+     "nombre": "Cota base",
+     "min_m2": {
+      "min": 37.2
+     },
+     "rec_m2": {
+      "min": 42.25
+     },
+     "cota_tipica": "6.10 x 6.10 m",
+     "notas": [
+      "REC para alta complejidad: 7.00 x 7.00 m ≈ 49 m²"
+     ]
+    },
+    {
+     "nombre": "Quirófano híbrido/especial",
+     "min_m2": {
+      "min": 55.7
+     },
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "REC 7.50 x 7.50 m o superior, según equipo"
+     ]
+    },
+    {
+     "nombre": "Mesa quirúrgica",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "EQ"
+     ]
+    },
+    {
+     "nombre": "Dejar espacio alrededor para",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "- anestesia;",
+      "- cirujano;",
+      "- ayudantes;",
+      "- torre;",
+      "- carro;",
+      "- arco en C;",
+      "- circulación;",
+      "- equipos de emergencia"
+     ]
+    },
+    {
+     "nombre": "Holgura lateral",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "REC 1.20 m mínimo en configuraciones mayores"
+     ]
+    },
+    {
+     "nombre": "Holgura de cabecera",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "REC 1.20 m o superior"
+     ]
+    },
+    {
+     "nombre": "Holgura al pie",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "REC 1.20 m o superior"
+     ]
+    },
+    {
+     "nombre": "Puerta",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "MIN 1.20 m",
+      "REC 1.40-1.60 m para puertas principales de quirófano"
+     ]
+    },
+    {
+     "nombre": "Altura libre",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "REC 2.70-3.00 m"
+     ]
+    }
+   ]
+  },
+  "14.5": {
+   "ref": "14.5",
+   "titulo": "LAVADO QUIRÚRGICO",
+   "items": [
+    {
+     "nombre": "Lavamanos quirúrgico",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "Dimensionar por número de puestos"
+     ]
+    },
+    {
+     "nombre": "Cota preliminar por puesto",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "0.60-0.75 m de frente"
+     ]
+    },
+    {
+     "nombre": "Fondo",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "0.55-0.70 m"
+     ]
+    },
+    {
+     "nombre": "Área frente a lavamanos",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "REC 1.50 m"
+     ]
+    },
+    {
+     "nombre": "Espacio de circulación",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "REC 1.80-2.40 m"
+     ]
+    },
+    {
+     "nombre": "Local",
+     "min_m2": {
+      "min": 6.0
+     },
+     "rec_m2": {
+      "min": 8.0,
+      "max": 12.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    }
+   ]
+  },
+  "14.6": {
+   "ref": "14.6",
+   "titulo": "PREOPERATORIO",
+   "items": [
+    {
+     "nombre": "Puesto de preparación",
+     "min_m2": {
+      "min": 8.0,
+      "max": 10.0
+     },
+     "rec_m2": {
+      "min": 10.0,
+      "max": 12.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Cota preliminar",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "3.00 x 3.50 m = 10.5 m²"
+     ]
+    },
+    {
+     "nombre": "Separación entre puestos",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "REC 1.20 m o separación mediante cortina/panel según modelo"
+     ]
+    },
+    {
+     "nombre": "Pasillo",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "REC 1.80-2.40 m"
+     ]
+    }
+   ]
+  },
+  "14.7": {
+   "ref": "14.7",
+   "titulo": "RECUPERACIÓN POSTANESTÉSICA",
+   "items": [
+    {
+     "nombre": "Puesto PACU",
+     "min_m2": {
+      "min": 9.0
+     },
+     "rec_m2": {
+      "min": 10.0,
+      "max": 12.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Separación entre camillas",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "REC 1.20 m o según modelo asistencial"
+     ]
+    },
+    {
+     "nombre": "Espacio de trabajo lateral",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "REC 1.20-1.50 m"
+     ]
+    },
+    {
+     "nombre": "Pasillo",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "REC 2.40 m"
+     ]
+    },
+    {
+     "nombre": "Estación de enfermería",
+     "min_m2": {
+      "min": 8.0
+     },
+     "rec_m2": {
+      "min": 10.0,
+      "max": 15.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    }
+   ]
+  },
+  "14.8": {
+   "ref": "14.8",
+   "titulo": "TOMOGRAFÍA",
+   "items": [
+    {
+     "nombre": "Sala de TC",
+     "min_m2": {
+      "min": 30.0
+     },
+     "rec_m2": {
+      "min": 35.0,
+      "max": 45.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Cota típica",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "5.50 x 6.00 m = 33 m²",
+      "REC 6.00 x 7.00 m = 42 m²"
+     ]
+    },
+    {
+     "nombre": "Control",
+     "min_m2": {
+      "min": 8.0
+     },
+     "rec_m2": {
+      "min": 10.0,
+      "max": 12.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Sala técnica",
+     "min_m2": {
+      "min": 8.0
+     },
+     "rec_m2": {
+      "min": 10.0,
+      "max": 15.0
+     },
+     "cota_tipica": "",
+     "notas": [
+      "EQ"
+     ]
+    },
+    {
+     "nombre": "Área de preparación",
+     "min_m2": {
+      "min": 8.0
+     },
+     "rec_m2": {
+      "min": 10.0,
+      "max": 12.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Puerta de sala",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "REC 1.20-1.40 m",
+      "Para camilla y equipos especiales: EQ"
+     ]
+    },
+    {
+     "nombre": "Blindaje",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "NO establecer por espesor fijo",
+      "Calcular según carga de trabajo, energía, ocupación, distancia y",
+      "configuración del equipo"
+     ]
+    }
+   ]
+  },
+  "14.9": {
+   "ref": "14.9",
+   "titulo": "RAYOS X",
+   "items": [
+    {
+     "nombre": "Sala radiográfica",
+     "min_m2": {
+      "min": 20.0
+     },
+     "rec_m2": {
+      "min": 24.0,
+      "max": 30.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Cota típica",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "4.50 x 5.00 m = 22.5 m²",
+      "REC 5.00 x 6.00 m = 30 m²"
+     ]
+    },
+    {
+     "nombre": "Control",
+     "min_m2": {
+      "min": 6.0
+     },
+     "rec_m2": {
+      "min": 8.0,
+      "max": 10.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Vestidor",
+     "min_m2": {
+      "min": 2.0
+     },
+     "rec_m2": {
+      "min": 2.0,
+      "max": 3.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Pasillo de acceso",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "REC 1.80 m"
+     ]
+    },
+    {
+     "nombre": "Puerta",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "REC 1.20-1.40 m"
+     ]
+    },
+    {
+     "nombre": "Blindaje",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "CALCULAR, no fijar arbitrariamente"
+     ]
+    }
+   ]
+  },
+  "14.10": {
+   "ref": "14.10",
+   "titulo": "FLUOROSCOPIA",
+   "items": [
+    {
+     "nombre": "Sala",
+     "min_m2": {
+      "min": 25.0
+     },
+     "rec_m2": {
+      "min": 30.0,
+      "max": 40.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Cota típica",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "5.00 x 6.00 m = 30 m²"
+     ]
+    },
+    {
+     "nombre": "Para procedimientos complejos",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "REC 6.00 x 7.00 m = 42 m² o superior"
+     ]
+    },
+    {
+     "nombre": "Control",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "8-12 m²"
+     ]
+    },
+    {
+     "nombre": "Área técnica",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "EQ"
+     ]
+    },
+    {
+     "nombre": "Puerta",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "1.20-1.40 m mínimo preliminar"
+     ]
+    },
+    {
+     "nombre": "Área de maniobra",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "REC 1.50 m alrededor de zonas de trabajo cuando el procedimiento lo",
+      "requiera"
+     ]
+    }
+   ]
+  },
+  "14.11": {
+   "ref": "14.11",
+   "titulo": "RESONANCIA MAGNÉTICA",
+   "items": [
+    {
+     "nombre": "Sala de equipo",
+     "min_m2": {
+      "min": 30.0,
+      "max": 40.0
+     },
+     "rec_m2": {
+      "min": 40.0,
+      "max": 50.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Control",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "10-15 m²"
+     ]
+    },
+    {
+     "nombre": "Preparación",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "8-12 m²"
+     ]
+    },
+    {
+     "nombre": "Vestidor",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "2-3 m² por unidad"
+     ]
+    },
+    {
+     "nombre": "Sala técnica",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "EQ; típicamente 10-20 m² según sistema"
+     ]
+    },
+    {
+     "nombre": "Zonas de seguridad",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "Deben establecerse según el sistema de cuatro zonas y la política de",
+      "seguridad magnética del establecimiento"
+     ]
+    },
+    {
+     "nombre": "Blindaje RF",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "EQ"
+     ]
+    }
+   ]
+  },
+  "14.12": {
+   "ref": "14.12",
+   "titulo": "ECOGRAFÍA",
+   "items": [
+    {
+     "nombre": "Sala de ecografía",
+     "min_m2": {
+      "min": 12.0
+     },
+     "rec_m2": {
+      "min": 14.0,
+      "max": 18.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Cota típica",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "3.50 x 4.00 m = 14 m²"
+     ]
+    },
+    {
+     "nombre": "Para ecografía obstétrica o procedimientos",
+     "min_m2": null,
+     "rec_m2": {
+      "min": 16.0,
+      "max": 20.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Vestidor",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "2-3 m²"
+     ]
+    }
+   ]
+  },
+  "14.13": {
+   "ref": "14.13",
+   "titulo": "UCI ADULTOS",
+   "items": [
+    {
+     "nombre": "Puesto individual",
+     "min_m2": null,
+     "rec_m2": {
+      "min": 18.0,
+      "max": 25.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Habitación cerrada UCI",
+     "min_m2": null,
+     "rec_m2": {
+      "min": 20.0,
+      "max": 25.0
+     },
+     "cota_tipica": "",
+     "notas": [
+      "Debe comprobarse con cama, ventilador, monitores, bombas, familiares y",
+      "equipamiento de emergencia"
+     ]
+    },
+    {
+     "nombre": "Holguras de referencia de diseño contemporáneo",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "lado de trabajo: 1.50 m;",
+      "lado visitante: 1.20 m;",
+      "cabecera o pie: 0.90 m como mínimo funcional citado por AusHFG"
+     ]
+    },
+    {
+     "nombre": "En configuraciones abiertas, corredor clínico posterior",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "2.40 m"
+     ]
+    },
+    {
+     "nombre": "Habitación de aislamiento",
+     "min_m2": null,
+     "rec_m2": {
+      "min": 20.0,
+      "max": 25.0
+     },
+     "cota_tipica": "",
+     "notas": [
+      "requiera"
+     ]
+    },
+    {
+     "nombre": "Baño accesible",
+     "min_m2": {
+      "min": 4.5
+     },
+     "rec_m2": {
+      "min": 5.0,
+      "max": 6.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Estación de enfermería",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "10-20 m² según número de puestos"
+     ]
+    }
+   ]
+  },
+  "14.14": {
+   "ref": "14.14",
+   "titulo": "UCI PEDIÁTRICA",
+   "items": [
+    {
+     "nombre": "Puesto",
+     "min_m2": null,
+     "rec_m2": {
+      "min": 16.0,
+      "max": 22.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Habitación individual",
+     "min_m2": null,
+     "rec_m2": {
+      "min": 18.0,
+      "max": 24.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Área familiar",
+     "min_m2": null,
+     "rec_m2": {
+      "min": 4.0,
+      "max": 6.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    }
+   ]
+  },
+  "14.15": {
+   "ref": "14.15",
+   "titulo": "UCI NEONATAL",
+   "items": [
+    {
+     "nombre": "Puesto abierto",
+     "min_m2": null,
+     "rec_m2": {
+      "min": 12.0,
+      "max": 16.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Habitación individual",
+     "min_m2": null,
+     "rec_m2": {
+      "min": 16.0,
+      "max": 20.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Área de trabajo",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "REC 1.20-1.50 m alrededor del equipo donde se requiera"
+     ]
+    }
+   ]
+  },
+  "14.16": {
+   "ref": "14.16",
+   "titulo": "CUIDADOS PROGRESIVOS",
+   "items": [
+    {
+     "nombre": "Habitación individual",
+     "min_m2": null,
+     "rec_m2": {
+      "min": 16.0,
+      "max": 20.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Con sanitario",
+     "min_m2": null,
+     "rec_m2": {
+      "min": 20.0,
+      "max": 24.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Puesto abierto",
+     "min_m2": null,
+     "rec_m2": {
+      "min": 12.0,
+      "max": 16.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Sanitario",
+     "min_m2": {
+      "min": 4.5
+     },
+     "rec_m2": {
+      "min": 5.0,
+      "max": 6.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    }
+   ]
+  },
+  "14.17": {
+   "ref": "14.17",
+   "titulo": "AISLAMIENTO",
+   "items": [
+    {
+     "nombre": "Habitación",
+     "min_m2": null,
+     "rec_m2": {
+      "min": 16.0,
+      "max": 20.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Antecámara",
+     "min_m2": {
+      "min": 4.0
+     },
+     "rec_m2": {
+      "min": 5.0,
+      "max": 6.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Sanitario",
+     "min_m2": {
+      "min": 4.5
+     },
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Puerta",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "1.10-1.20 m para cama"
+     ]
+    },
+    {
+     "nombre": "Presión",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "determinar mediante HVAC y modelo de aislamiento"
+     ]
+    }
+   ]
+  },
+  "14.18": {
+   "ref": "14.18",
+   "titulo": "CENTRAL DE ESTERILIZACIÓN",
+   "items": [
+    {
+     "nombre": "General",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "La superficie total depende de volumen de instrumental, número de quirófanos,",
+      "turnos y tecnología"
+     ]
+    },
+    {
+     "nombre": "Recepción contaminada",
+     "min_m2": null,
+     "rec_m2": {
+      "min": 15.0,
+      "max": 25.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Lavado",
+     "min_m2": null,
+     "rec_m2": {
+      "min": 20.0,
+      "max": 30.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Descontaminación",
+     "min_m2": null,
+     "rec_m2": {
+      "min": 15.0,
+      "max": 25.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Preparación/empaque",
+     "min_m2": null,
+     "rec_m2": {
+      "min": 20.0,
+      "max": 35.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Esterilización",
+     "min_m2": null,
+     "rec_m2": {
+      "min": 15.0,
+      "max": 30.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Almacén estéril",
+     "min_m2": null,
+     "rec_m2": {
+      "min": 20.0,
+      "max": 40.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Despacho",
+     "min_m2": null,
+     "rec_m2": {
+      "min": 10.0,
+      "max": 20.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Pasillos de carros",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "REC 2.40 m"
+     ]
+    },
+    {
+     "nombre": "Puertas",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "1.20-1.40 m; aumentar según carros"
+     ]
+    },
+    {
+     "nombre": "Cotas de equipos",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "EQ. Autoclaves y lavadoras deben instalarse según fabricante, dejando",
+      "espacio frontal, lateral, superior y posterior de mantenimiento"
+     ]
+    }
+   ]
+  },
+  "14.19": {
+   "ref": "14.19",
+   "titulo": "LABORATORIO CLÍNICO",
+   "items": [
+    {
+     "nombre": "Recepción",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "8-12 m²"
+     ]
+    },
+    {
+     "nombre": "Toma de muestras",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "8-10 m² por puesto"
+     ]
+    },
+    {
+     "nombre": "Laboratorio general",
+     "min_m2": {
+      "min": 12.0
+     },
+     "rec_m2": {
+      "min": 18.0,
+      "max": 30.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Hematología",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "15-25 m²"
+     ]
+    },
+    {
+     "nombre": "Bioquímica",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "15-25 m²"
+     ]
+    },
+    {
+     "nombre": "Microbiología",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "20-35 m²"
+     ]
+    },
+    {
+     "nombre": "Lavado",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "8-12 m²"
+     ]
+    },
+    {
+     "nombre": "Almacén",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "8-15 m²"
+     ]
+    },
+    {
+     "nombre": "Mesetas",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "profundidad típica 0.60-0.75 m"
+     ]
+    },
+    {
+     "nombre": "Pasillo entre mesetas",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "MIN 1.20 m",
+      "REC 1.50 m"
+     ]
+    }
+   ]
+  },
+  "14.20": {
+   "ref": "14.20",
+   "titulo": "BIOLOGÍA MOLECULAR",
+   "items": [
+    {
+     "nombre": "Preparación",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "12-15 m²"
+     ]
+    },
+    {
+     "nombre": "Extracción",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "12-18 m²"
+     ]
+    },
+    {
+     "nombre": "Amplificación",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "12-18 m²"
+     ]
+    },
+    {
+     "nombre": "Análisis",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "12-18 m²",
+      "Cada área debe evaluarse para evitar contaminación cruzada"
+     ]
+    },
+    {
+     "nombre": "Pasillos",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "1.20-1.50 m"
+     ]
+    }
+   ]
+  },
+  "14.21": {
+   "ref": "14.21",
+   "titulo": "BANCO DE SANGRE",
+   "items": [
+    {
+     "nombre": "Recepción",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "8-12 m²"
+     ]
+    },
+    {
+     "nombre": "Sala de donación",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "6-8 m² por puesto como programación preliminar"
+     ]
+    },
+    {
+     "nombre": "Recuperación",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "4-6 m² por puesto"
+     ]
+    },
+    {
+     "nombre": "Procesamiento",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "15-25 m²"
+     ]
+    },
+    {
+     "nombre": "Inmunohematología",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "15-25 m²"
+     ]
+    },
+    {
+     "nombre": "Almacén refrigerado",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "EQ según capacidad"
+     ]
+    },
+    {
+     "nombre": "Área de circulación",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "1.50-1.80 m"
+     ]
+    }
+   ]
+  },
+  "14.22": {
+   "ref": "14.22",
+   "titulo": "URGENCIAS",
+   "items": [
+    {
+     "nombre": "Triaje",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "8-12 m² por puesto"
+     ]
+    },
+    {
+     "nombre": "Consulta",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "10-12 m²"
+     ]
+    },
+    {
+     "nombre": "Box de atención",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "10-14 m²"
+     ]
+    },
+    {
+     "nombre": "Box de aislamiento",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "14-18 m² + antecámara si corresponde"
+     ]
+    },
+    {
+     "nombre": "Reanimación",
+     "min_m2": null,
+     "rec_m2": {
+      "min": 30.0,
+      "max": 40.0
+     },
+     "cota_tipica": "",
+     "notas": [
+      "25-35 m² por sala como programación preliminar"
+     ]
+    },
+    {
+     "nombre": "Observación",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "10-12 m² por puesto"
+     ]
+    },
+    {
+     "nombre": "Circulación de camillas",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "REC 2.40 m"
+     ]
+    },
+    {
+     "nombre": "Acceso ambulancias",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "dimensionar para vehículo real y radios de giro"
+     ]
+    }
+   ]
+  },
+  "14.23": {
+   "ref": "14.23",
+   "titulo": "HABITACIÓN HOSPITALARIA INDIVIDUAL",
+   "items": [
+    {
+     "nombre": "Habitación sin sanitario",
+     "min_m2": {
+      "min": 12.0,
+      "max": 14.0
+     },
+     "rec_m2": {
+      "min": 16.0,
+      "max": 20.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Habitación con sanitario",
+     "min_m2": null,
+     "rec_m2": {
+      "min": 18.0,
+      "max": 24.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Zona lateral de cama",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "MIN 0.90 m",
+      "REC 1.20 m"
+     ]
+    },
+    {
+     "nombre": "Pie de cama",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "MIN 1.20 m",
+      "REC 1.50 m"
+     ]
+    },
+    {
+     "nombre": "Sanitario",
+     "min_m2": {
+      "min": 4.5
+     },
+     "rec_m2": {
+      "min": 5.0,
+      "max": 6.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Puerta",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "1.10-1.20 m"
+     ]
+    },
+    {
+     "nombre": "Ventana",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "REC antepecho compatible con vista del paciente",
+      "La cota exacta depende del modelo de cama y estrategia de seguridad"
+     ]
+    }
+   ]
+  },
+  "14.24": {
+   "ref": "14.24",
+   "titulo": "HABITACIÓN DOBLE",
+   "items": [
+    {
+     "nombre": "Área clínica",
+     "min_m2": null,
+     "rec_m2": {
+      "min": 18.0,
+      "max": 24.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Con sanitario",
+     "min_m2": null,
+     "rec_m2": {
+      "min": 24.0,
+      "max": 30.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Separación entre camas",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "REC 1.20 m mínimo de zona útil cuando el equipamiento lo permita"
+     ]
+    },
+    {
+     "nombre": "Lado de trabajo",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "1.20-1.50 m"
+     ]
+    }
+   ]
+  },
+  "14.25": {
+   "ref": "14.25",
+   "titulo": "CONSULTORIO MÉDICO",
+   "items": [
+    {
+     "nombre": "General",
+     "min_m2": {
+      "min": 10.0
+     },
+     "rec_m2": {
+      "min": 12.0,
+      "max": 14.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Cota típica",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "3.00 x 4.00 m = 12 m²"
+     ]
+    },
+    {
+     "nombre": "Consultorio con exploración amplia",
+     "min_m2": null,
+     "rec_m2": {
+      "min": 14.0,
+      "max": 16.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Puerta",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "0.90 m mínimo de paso libre"
+     ]
+    },
+    {
+     "nombre": "Área alrededor de camilla",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "REC 0.90-1.20 m"
+     ]
+    }
+   ]
+  },
+  "14.26": {
+   "ref": "14.26",
+   "titulo": "SALA DE PROCEDIMIENTOS",
+   "items": [
+    {
+     "nombre": "General",
+     "min_m2": {
+      "min": 12.0
+     },
+     "rec_m2": {
+      "min": 14.0,
+      "max": 18.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Procedimiento con anestesia/equipos",
+     "min_m2": null,
+     "rec_m2": {
+      "min": 18.0,
+      "max": 25.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Puerta",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "1.20 m"
+     ]
+    }
+   ]
+  },
+  "14.27": {
+   "ref": "14.27",
+   "titulo": "ENDOSCOPIA",
+   "items": [
+    {
+     "nombre": "Sala de procedimiento",
+     "min_m2": {
+      "min": 18.0
+     },
+     "rec_m2": {
+      "min": 20.0,
+      "max": 25.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Preparación",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "10-12 m²"
+     ]
+    },
+    {
+     "nombre": "Recuperación",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "8-10 m² por puesto"
+     ]
+    },
+    {
+     "nombre": "Lavado/procesamiento",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "15-25 m²"
+     ]
+    },
+    {
+     "nombre": "Almacenamiento",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "10-15 m²"
+     ]
+    }
+   ]
+  },
+  "14.28": {
+   "ref": "14.28",
+   "titulo": "HEMODIÁLISIS",
+   "items": [
+    {
+     "nombre": "Puesto",
+     "min_m2": null,
+     "rec_m2": {
+      "min": 8.0,
+      "max": 12.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Habitación aislada",
+     "min_m2": null,
+     "rec_m2": {
+      "min": 12.0,
+      "max": 16.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Estación de enfermería",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "10-15 m²"
+     ]
+    },
+    {
+     "nombre": "Tratamiento de agua",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "EQ; dimensionar por número de puestos y sistema"
+     ]
+    },
+    {
+     "nombre": "Circulación",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "1.50-2.40 m según configuración"
+     ]
+    }
+   ]
+  },
+  "14.29": {
+   "ref": "14.29",
+   "titulo": "FARMACIA",
+   "items": [
+    {
+     "nombre": "Recepción",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "10-15 m²"
+     ]
+    },
+    {
+     "nombre": "Dispensación",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "15-25 m²"
+     ]
+    },
+    {
+     "nombre": "Almacén",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "20-40 m² según inventario"
+     ]
+    },
+    {
+     "nombre": "Refrigeración",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "EQ"
+     ]
+    },
+    {
+     "nombre": "Medicamentos controlados",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "6-10 m²"
+     ]
+    },
+    {
+     "nombre": "Preparación",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "12-20 m²"
+     ]
+    }
+   ]
+  },
+  "14.30": {
+   "ref": "14.30",
+   "titulo": "FARMACIA ESTÉRIL",
+   "items": [
+    {
+     "nombre": "Anteárea",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "6-10 m²"
+     ]
+    },
+    {
+     "nombre": "Preparación",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "12-20 m²"
+     ]
+    },
+    {
+     "nombre": "Almacén",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "10-20 m²"
+     ]
+    },
+    {
+     "nombre": "Esclusas",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "4-8 m² según sistema"
+     ]
+    },
+    {
+     "nombre": "Dimensiones definitivas",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "según clasificación, flujo, equipo y norma farmacéutica aplicable"
+     ]
+    }
+   ]
+  },
+  "14.31": {
+   "ref": "14.31",
+   "titulo": "REHABILITACIÓN",
+   "items": [
+    {
+     "nombre": "Gimnasio",
+     "min_m2": {
+      "min": 40.0
+     },
+     "rec_m2": {
+      "min": 60.0,
+      "max": 100.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Mecanoterapia",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "20-40 m²"
+     ]
+    },
+    {
+     "nombre": "Electroterapia",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "10-20 m²"
+     ]
+    },
+    {
+     "nombre": "Terapia ocupacional",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "20-40 m²"
+     ]
+    },
+    {
+     "nombre": "Cabina de tratamiento",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "8-12 m²"
+     ]
+    },
+    {
+     "nombre": "Hidroterapia",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "EQ; dimensionar vaso, circulación, vestuarios y equipos"
+     ]
+    }
+   ]
+  },
+  "14.32": {
+   "ref": "14.32",
+   "titulo": "OBSTETRICIA / PARTO",
+   "items": [
+    {
+     "nombre": "Sala de trabajo de parto",
+     "min_m2": null,
+     "rec_m2": {
+      "min": 16.0,
+      "max": 20.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Sala de parto",
+     "min_m2": null,
+     "rec_m2": {
+      "min": 20.0,
+      "max": 30.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Parto con equipamiento complejo",
+     "min_m2": null,
+     "rec_m2": {
+      "min": 25.0,
+      "max": 35.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Reanimación neonatal",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "8-12 m²"
+     ]
+    },
+    {
+     "nombre": "Recuperación",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "10-12 m² por puesto"
+     ]
+    }
+   ]
+  },
+  "14.33": {
+   "ref": "14.33",
+   "titulo": "NEONATOLOGÍA",
+   "items": [
+    {
+     "nombre": "Puesto",
+     "min_m2": null,
+     "rec_m2": {
+      "min": 12.0,
+      "max": 16.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Habitación individual",
+     "min_m2": null,
+     "rec_m2": {
+      "min": 16.0,
+      "max": 20.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Área de trabajo",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "1.20-1.50 m alrededor de incubadora donde se requiera"
+     ]
+    }
+   ]
+  },
+  "14.34": {
+   "ref": "14.34",
+   "titulo": "PEDIATRÍA",
+   "items": [
+    {
+     "nombre": "Habitación individual",
+     "min_m2": null,
+     "rec_m2": {
+      "min": 16.0,
+      "max": 20.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Habitación con acompañante",
+     "min_m2": null,
+     "rec_m2": {
+      "min": 20.0,
+      "max": 24.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Sanitario",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "5-6 m²"
+     ]
+    },
+    {
+     "nombre": "Área de juego",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "1.5-2.5 m² por niño como criterio de programación preliminar, según",
+      "modelo asistencial"
+     ]
+    }
+   ]
+  },
+  "14.35": {
+   "ref": "14.35",
+   "titulo": "ODONTOLOGÍA",
+   "items": [
+    {
+     "nombre": "Box dental",
+     "min_m2": {
+      "min": 9.0
+     },
+     "rec_m2": {
+      "min": 10.0,
+      "max": 12.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Cota típica",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "3.00 x 3.50 m = 10.5 m²"
+     ]
+    },
+    {
+     "nombre": "Circulación",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "1.20-1.50 m"
+     ]
+    }
+   ]
+  },
+  "14.36": {
+   "ref": "14.36",
+   "titulo": "OFTALMOLOGÍA",
+   "items": [
+    {
+     "nombre": "Consulta",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "10-12 m²"
+     ]
+    },
+    {
+     "nombre": "Exploración",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "12-16 m²"
+     ]
+    },
+    {
+     "nombre": "Pruebas con oscurecimiento",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "12-16 m²"
+     ]
+    }
+   ]
+  },
+  "14.37": {
+   "ref": "14.37",
+   "titulo": "CARDIOLOGÍA",
+   "items": [
+    {
+     "nombre": "ECG",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "8-10 m²"
+     ]
+    },
+    {
+     "nombre": "Ecocardiografía",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "12-16 m²"
+     ]
+    },
+    {
+     "nombre": "Prueba de esfuerzo",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "15-20 m²"
+     ]
+    },
+    {
+     "nombre": "Recuperación",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "8-10 m² por puesto"
+     ]
+    }
+   ]
+  },
+  "14.38": {
+   "ref": "14.38",
+   "titulo": "HEMODINAMIA",
+   "items": [
+    {
+     "nombre": "Sala",
+     "min_m2": null,
+     "rec_m2": {
+      "min": 35.0,
+      "max": 50.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Control",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "10-15 m²"
+     ]
+    },
+    {
+     "nombre": "Preparación",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "10-15 m²"
+     ]
+    },
+    {
+     "nombre": "Recuperación",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "10-12 m² por puesto"
+     ]
+    },
+    {
+     "nombre": "Depósito",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "10-15 m²"
+     ]
+    },
+    {
+     "nombre": "Blindaje",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "calcular según equipo y radioprotección"
+     ]
+    }
+   ]
+  },
+  "14.39": {
+   "ref": "14.39",
+   "titulo": "MEDICINA NUCLEAR",
+   "items": [
+    {
+     "nombre": "Sala de gammacámara",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "30-40 m² preliminar"
+     ]
+    },
+    {
+     "nombre": "Control",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "8-12 m²"
+     ]
+    },
+    {
+     "nombre": "Preparación/inyección",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "10-15 m²"
+     ]
+    },
+    {
+     "nombre": "Espera controlada",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "10-20 m² según capacidad"
+     ]
+    },
+    {
+     "nombre": "Almacén de radioisótopos",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "EQ y normativa"
+     ]
+    },
+    {
+     "nombre": "Residuos",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "EQ y normativa"
+     ]
+    },
+    {
+     "nombre": "Blindaje",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "calcular específicamente"
+     ]
+    }
+   ]
+  },
+  "14.40": {
+   "ref": "14.40",
+   "titulo": "CENTRAL DE GASES MEDICINALES",
+   "items": [
+    {
+     "nombre": "Dimensión",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "EQ según fuentes, bancos de cilindros, tanques y capacidad"
+     ]
+    },
+    {
+     "nombre": "Como reserva de proyecto",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "prever espacio de mantenimiento y sustitución de cilindros"
+     ]
+    },
+    {
+     "nombre": "Pasillo de mantenimiento",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "MIN 1.20 m",
+      "REC 1.50 m"
+     ]
+    },
+    {
+     "nombre": "Altura",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "EQ según fuente y fabricante"
+     ]
+    }
+   ]
+  },
+  "14.41": {
+   "ref": "14.41",
+   "titulo": "CUARTO ELÉCTRICO",
+   "items": [
+    {
+     "nombre": "Dimensión",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "EQ según cantidad de tableros"
+     ]
+    },
+    {
+     "nombre": "Criterio preliminar",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "12-20 m² para cuarto sectorial",
+      "20-40 m² para cuarto principal, sujeto a carga"
+     ]
+    },
+    {
+     "nombre": "Frente de tableros",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "mantener espacio de operación conforme a norma eléctrica aplicable"
+     ]
+    },
+    {
+     "nombre": "No ubicar",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "- tuberías de agua sobre tableros;",
+      "- almacenamiento no eléctrico;",
+      "- combustibles"
+     ]
+    }
+   ]
+  },
+  "14.42": {
+   "ref": "14.42",
+   "titulo": "GRUPO ELECTRÓGENO",
+   "items": [
+    {
+     "nombre": "Dimensión",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "EQ según potencia y fabricante"
+     ]
+    },
+    {
+     "nombre": "Prever",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "- espacio de mantenimiento;",
+      "- circulación;",
+      "- ventilación;",
+      "- escape;",
+      "- combustible;",
+      "- transferencia;",
+      "- aislamiento de vibraciones"
+     ]
+    }
+   ]
+  },
+  "14.43": {
+   "ref": "14.43",
+   "titulo": "UPS",
+   "items": [
+    {
+     "nombre": "Dimensión",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "EQ según potencia y baterías"
+     ]
+    },
+    {
+     "nombre": "Prever",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "- espacio frontal;",
+      "- espacio lateral;",
+      "- ventilación;",
+      "- acceso de mantenimiento;",
+      "- posible ampliación"
+     ]
+    }
+   ]
+  },
+  "14.44": {
+   "ref": "14.44",
+   "titulo": "CUARTO DE BOMBAS",
+   "items": [
+    {
+     "nombre": "MIN preliminar",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "12-15 m² para instalaciones pequeñas"
+     ]
+    },
+    {
+     "nombre": "REC",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "15-30 m² para sistemas hospitalarios de mayor complejidad"
+     ]
+    },
+    {
+     "nombre": "Pasillo técnico",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "MIN 1.20 m",
+      "REC 1.50 m"
+     ]
+    }
+   ]
+  },
+  "14.45": {
+   "ref": "14.45",
+   "titulo": "COCINA HOSPITALARIA",
+   "items": [
+    {
+     "nombre": "Recepción",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "10-20 m²"
+     ]
+    },
+    {
+     "nombre": "Almacén seco",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "15-30 m²"
+     ]
+    },
+    {
+     "nombre": "Cámara refrigerada",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "EQ"
+     ]
+    },
+    {
+     "nombre": "Preparación",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "20-40 m²"
+     ]
+    },
+    {
+     "nombre": "Cocción",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "20-40 m²"
+     ]
+    },
+    {
+     "nombre": "Lavado",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "15-25 m²"
+     ]
+    },
+    {
+     "nombre": "Despacho",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "15-25 m²"
+     ]
+    },
+    {
+     "nombre": "Circulación de carros",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "1.50-2.40 m"
+     ]
+    }
+   ]
+  },
+  "14.46": {
+   "ref": "14.46",
+   "titulo": "LAVANDERÍA",
+   "items": [
+    {
+     "nombre": "Recepción sucia",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "15-25 m²"
+     ]
+    },
+    {
+     "nombre": "Clasificación",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "15-25 m²"
+     ]
+    },
+    {
+     "nombre": "Lavado",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "20-40 m²"
+     ]
+    },
+    {
+     "nombre": "Secado",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "15-25 m²"
+     ]
+    },
+    {
+     "nombre": "Planchado",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "15-25 m²"
+     ]
+    },
+    {
+     "nombre": "Ropa limpia",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "20-40 m²"
+     ]
+    },
+    {
+     "nombre": "Circulación",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "1.50-2.40 m"
+     ]
+    }
+   ]
+  },
+  "14.47": {
+   "ref": "14.47",
+   "titulo": "DEPÓSITO DE RESIDUOS",
+   "items": [
+    {
+     "nombre": "Residuos generales",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "8-15 m²"
+     ]
+    },
+    {
+     "nombre": "Residuos sanitarios",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "10-20 m²"
+     ]
+    },
+    {
+     "nombre": "Residuos especiales",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "EQ según volumen y normativa"
+     ]
+    },
+    {
+     "nombre": "Área de maniobra",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "1.50-2.40 m"
+     ]
+    },
+    {
+     "nombre": "Puerta",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "1.20-1.40 m"
+     ]
+    }
+   ]
+  },
+  "14.48": {
+   "ref": "14.48",
+   "titulo": "ALMACÉN GENERAL",
+   "items": [
+    {
+     "nombre": "Pequeño",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "15-25 m²"
+     ]
+    },
+    {
+     "nombre": "Mediano",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "30-60 m²"
+     ]
+    },
+    {
+     "nombre": "Grande",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "60-150 m² o según programa"
+     ]
+    },
+    {
+     "nombre": "Pasillo entre estanterías",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "MIN 1.20 m",
+      "REC 1.50-1.80 m",
+      "Para carros: 1.80-2.40 m"
+     ]
+    }
+   ]
+  },
+  "14.49": {
+   "ref": "14.49",
+   "titulo": "ALMACÉN ESTÉRIL",
+   "items": [
+    {
+     "nombre": "General",
+     "min_m2": {
+      "min": 15.0
+     },
+     "rec_m2": {
+      "min": 20.0,
+      "max": 40.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Pasillos",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "1.20-1.50 m"
+     ]
+    },
+    {
+     "nombre": "Área de transferencia",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "1.50-1.80 m"
+     ]
+    }
+   ]
+  },
+  "14.50": {
+   "ref": "14.50",
+   "titulo": "CUARTO DE LIMPIEZA",
+   "items": [
+    {
+     "nombre": "General",
+     "min_m2": {
+      "min": 3.0
+     },
+     "rec_m2": {
+      "min": 4.0,
+      "max": 6.0
+     },
+     "cota_tipica": "",
+     "notas": []
+    },
+    {
+     "nombre": "Cota típica",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "2.00 x 2.50 m = 5 m²"
+     ]
+    },
+    {
+     "nombre": "Debe permitir",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "- fregadero;",
+      "- almacenamiento vertical;",
+      "- cubos;",
+      "- productos;",
+      "- drenaje;",
+      "- ventilación"
+     ]
+    }
+   ]
+  },
+  "14.51": {
+   "ref": "14.51",
+   "titulo": "SALA DE ESPERA",
+   "items": [
+    {
+     "nombre": "Área preliminar",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "1.50-2.00 m² por persona sentada, incluyendo circulación según",
+      "configuración"
+     ]
+    },
+    {
+     "nombre": "Pasillos",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "1.50-1.80 m"
+     ]
+    },
+    {
+     "nombre": "Espacio para silla de ruedas",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "1.50 x 1.50 m por posición de giro cuando se requiera"
+     ]
+    }
+   ]
+  },
+  "14.52": {
+   "ref": "14.52",
+   "titulo": "ADMISIÓN",
+   "items": [
+    {
+     "nombre": "Puesto",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "4-6 m² por estación"
+     ]
+    },
+    {
+     "nombre": "Mostrador",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "profundidad aproximada 0.60-0.75 m"
+     ]
+    },
+    {
+     "nombre": "Circulación",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "1.50-1.80 m"
+     ]
+    }
+   ]
+  },
+  "14.53": {
+   "ref": "14.53",
+   "titulo": "SANITARIO ACCESIBLE",
+   "items": [
+    {
+     "nombre": "Cota de referencia",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "1.80 x 2.20 m ≈ 4.0 m² como mínimo geométrico preliminar, pero debe",
+      "adaptarse a la normativa de accesibilidad vigente y al espacio de giro,",
+      "transferencia y barras"
+     ]
+    },
+    {
+     "nombre": "REC",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "2.20 x 2.40 m ≈ 5.28 m²"
+     ]
+    },
+    {
+     "nombre": "Área de giro",
+     "min_m2": null,
+     "rec_m2": null,
+     "cota_tipica": "",
+     "notas": [
+      "1.50 m de diámetro como referencia"
+     ]
+    }
+   ]
+  }
+ },
+ "cotas_de_tipo": {
+  "ANATOMY_PATHOLOGY": [
+   "14.2",
+   null
+  ],
+  "MORGUE": [
+   "14.3",
+   null
+  ],
+  "AUTOPSY_ROOM": [
+   "14.3",
+   "Sala de autopsias"
+  ],
+  "OPERATING_ROOM": [
+   "14.4",
+   "Cota base"
+  ],
+  "PREOP_ROOM": [
+   "14.6",
+   "Puesto de preparación"
+  ],
+  "RECOVERY_ROOM": [
+   "14.7",
+   "Puesto PACU"
+  ],
+  "CT_ROOM": [
+   "14.8",
+   "Sala de TC"
+  ],
+  "IMAGING_ROOM": [
+   "14.9",
+   "Sala radiográfica"
+  ],
+  "FLUOROSCOPY_ROOM": [
+   "14.10",
+   "Sala"
+  ],
+  "MRI_ROOM": [
+   "14.11",
+   "Sala de equipo"
+  ],
+  "ULTRASOUND_ROOM": [
+   "14.12",
+   "Sala de ecografía"
+  ],
+  "ICU": [
+   "14.13",
+   null
+  ],
+  "ICU_PEDIATRIC": [
+   "14.14",
+   null
+  ],
+  "NICU": [
+   "14.15",
+   null
+  ],
+  "PROGRESSIVE_CARE": [
+   "14.16",
+   null
+  ],
+  "ISOLATION_ROOM": [
+   "14.17",
+   "Habitación"
+  ],
+  "STERILIZATION_ROOM": [
+   "14.18",
+   null
+  ],
+  "LABORATORY": [
+   "14.19",
+   "Laboratorio general"
+  ],
+  "MOLECULAR_BIOLOGY_LAB": [
+   "14.20",
+   null
+  ],
+  "BLOOD_BANK": [
+   "14.21",
+   null
+  ],
+  "EMERGENCY_ROOM": [
+   "14.22",
+   null
+  ],
+  "WARD": [
+   "14.23",
+   null
+  ],
+  "CONSULTATION_ROOM": [
+   "14.25",
+   null
+  ],
+  "PROCEDURE_ROOM": [
+   "14.26",
+   null
+  ],
+  "ENDOSCOPY_ROOM": [
+   "14.27",
+   "Sala de procedimiento"
+  ],
+  "DIALYSIS_ROOM": [
+   "14.28",
+   null
+  ],
+  "PHARMACY": [
+   "14.29",
+   null
+  ],
+  "STERILE_PHARMACY": [
+   "14.30",
+   "Preparación"
+  ],
+  "REHABILITATION": [
+   "14.31",
+   "Gimnasio"
+  ],
+  "HYDROTHERAPY": [
+   "14.31",
+   "Hidroterapia"
+  ],
+  "DELIVERY_ROOM": [
+   "14.32",
+   "Sala de parto"
+  ],
+  "NEONATOLOGY": [
+   "14.33",
+   null
+  ],
+  "PEDIATRICS": [
+   "14.34",
+   null
+  ],
+  "DENTISTRY": [
+   "14.35",
+   "Box dental"
+  ],
+  "OPHTHALMOLOGY": [
+   "14.36",
+   null
+  ],
+  "CARDIOLOGY": [
+   "14.37",
+   null
+  ],
+  "CATH_LAB": [
+   "14.38",
+   "Sala"
+  ],
+  "NUCLEAR_MEDICINE": [
+   "14.39",
+   "Sala de gammacámara"
+  ],
+  "MEDICAL_GAS_PLANT": [
+   "14.40",
+   null
+  ],
+  "ELECTRICAL_ROOM": [
+   "14.41",
+   null
+  ],
+  "GENERATOR_ROOM": [
+   "14.42",
+   null
+  ],
+  "UPS_ROOM": [
+   "14.43",
+   null
+  ],
+  "PUMP_ROOM": [
+   "14.44",
+   null
+  ],
+  "KITCHEN_INSTITUTIONAL": [
+   "14.45",
+   null
+  ],
+  "LAUNDRY": [
+   "14.46",
+   null
+  ],
+  "WASTE_ROOM": [
+   "14.47",
+   null
+  ],
+  "WAREHOUSE": [
+   "14.48",
+   null
+  ],
+  "STERILE_STORE": [
+   "14.49",
+   null
+  ],
+  "CLEANING_ROOM": [
+   "14.50",
+   null
+  ],
+  "WAITING_ROOM": [
+   "14.51",
+   null
+  ],
+  "ADMISSION": [
+   "14.52",
+   null
+  ],
+  "BATHROOM": [
+   "14.53",
+   null
+  ],
+  "CLEAN_LINEN": [
+   "14.46",
+   "Ropa limpia"
+  ],
+  "SOILED_LINEN": [
+   "14.46",
+   "Recepción sucia"
+  ],
+  "NURSE_STATION": [
+   "14.7",
+   "Estación de enfermería"
+  ],
+  "CORRIDOR": [
+   "14.1",
+   "Pasillo de cama"
+  ]
+ },
+ "cotas_puertas": [
+  {
+   "nombre": "Puerta de consultorio",
+   "valor": "0.90 m libre"
+  },
+  {
+   "nombre": "Puerta de sanitario accesible",
+   "valor": "0.90 m libre"
+  },
+  {
+   "nombre": "Puerta de habitación",
+   "valor": "1.10-1.20 m libre"
+  },
+  {
+   "nombre": "Puerta de aislamiento",
+   "valor": "1.20 m libre como criterio preliminar"
+  },
+  {
+   "nombre": "Puerta de quirófano",
+   "valor": "1.40 m REC cuando el sistema y flujo lo requieran"
+  },
+  {
+   "nombre": "Puerta de radiología",
+   "valor": "1.20-1.40 m"
+  },
+  {
+   "nombre": "Puerta de morgue",
+   "valor": "1.40-1.60 m cuando circulen carros"
+  },
+  {
+   "nombre": "Puerta de almacén",
+   "valor": "1.20 m mínimo preliminar; ajustar a carro"
+  },
+  {
+   "nombre": "Pasillo principal",
+   "valor": "1.80-2.40 m"
+  },
+  {
+   "nombre": "Pasillo crítico/camas",
+   "valor": "2.40 m REC"
+  },
+  {
+   "nombre": "Giro de cama",
+   "valor": "comprobar mediante trazado real del modelo de cama"
+  },
+  {
+   "nombre": "Giro de carro",
+   "valor": "comprobar mediante radio real del carro"
+  }
+ ],
+ "cotas_mobiliario": [
+  {
+   "nombre": "Meseta de laboratorio",
+   "valor": "profundidad 0.60-0.75 m"
+  },
+  {
+   "nombre": "Altura típica de trabajo",
+   "valor": "0.85-0.90 m, ajustable al proceso"
+  },
+  {
+   "nombre": "Armario bajo",
+   "valor": "0.60-0.75 m de profundidad"
+  },
+  {
+   "nombre": "Estantería",
+   "valor": "0.40-0.60 m de profundidad según material"
+  },
+  {
+   "nombre": "Escritorio",
+   "valor": "0.60-0.80 m de profundidad"
+  },
+  {
+   "nombre": "Lavamanos",
+   "valor": "0.50-0.60 m de profundidad típica Debe garantizar accesibilidad cuando corresponda"
+  },
+  {
+   "nombre": "Cama hospitalaria",
+   "valor": "EQ; no fijar una dimensión única Programar el espacio considerando cama extendida, barandas, colchón, equipos y accesorios"
+  },
+  {
+   "nombre": "Camilla",
+   "valor": "EQ; verificar longitud, ancho y radio de giro"
+  },
+  {
+   "nombre": "Carro de paro",
+   "valor": "EQ; prever estacionamiento sin bloquear circulación"
+  },
+  {
+   "nombre": "Torres quirúrgicas",
+   "valor": "EQ; prever radio de movimiento y conexión a techo"
+  },
+  {
+   "nombre": "Equipos de diagnóstico",
+   "valor": ""
+  },
+  {
+   "nombre": "EQ; considerar",
+   "valor": "- instalación; - mantenimiento; - disipación térmica; - acceso de sustitución; - blindaje; - vibración; - ruido"
+  }
+ ],
+ "checklist_validacion": [
+  "SUPERFICIE >= SUPERFICIE_MIN",
+  "ANCHO >= ANCHO_MIN",
+  "ALTURA >= ALTURA_MIN",
+  "PUERTA >= PUERTA_MIN",
+  "PASILLO >= PASILLO_MIN",
+  "RADIO_GIRO >= RADIO_REQUERIDO",
+  "HOLGURA_CAMA >= HOLGURA_REQUERIDA",
+  "EQUIPO CABE EN EL LOCAL",
+  "EQUIPO PUEDE INGRESAR POR LAS PUERTAS",
+  "EQUIPO PUEDE SER SUSTITUIDO",
+  "EQUIPO TIENE ÁREA DE MANTENIMIENTO",
+  "INSTALACIONES CABEN",
+  "CIRCULACIÓN NO SE BLOQUEA",
+  "ACCESIBILIDAD VERIFICADA",
+  "EVACUACIÓN VERIFICADA",
+  "HVAC VERIFICADO",
+  "ELECTRICIDAD VERIFICADA",
+  "HIDRÁULICA VERIFICADA",
+  "SANITARIA VERIFICADA",
+  "GASES VERIFICADOS",
+  "RADIOPROTECCIÓN VERIFICADA",
+  "INCENDIOS VERIFICADO",
+  "NORMA LOCAL VERIFICADA"
+ ],
+ "fuentes": [
+  "Facility Guidelines Institute (FGI): Guidelines for Design and Construction of Hospitals.",
+  "FGI: dimensiones mínimas publicadas de salas de examen, procedimiento, quirófano e imagen.",
+  "Australasian Health Facility Guidelines (AusHFG): UCI, imagen médica, quirófanos, patología y esterilización.",
+  "ANSI/ASHRAE/ASHE Standard 170: ventilación de establecimientos sanitarios (quirófano: presión positiva, 4 ACH aire exterior, 20 ACH totales, 20-60 % HR, 20-24 °C).",
+  "IAEA: principios de protección radiológica e instalaciones de radiología médica (blindaje según carga de trabajo y ocupación).",
+  "OMS: higiene, prevención de infecciones y diseño sanitario.",
+  "NFPA 99 y NFPA 101: instalaciones sanitarias y seguridad vital.",
+  "IEC 60364 y normas nacionales equivalentes (instalaciones eléctricas).",
+  "Normativas nacionales y locales aplicables al proyecto."
+ ]
+}

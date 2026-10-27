@@ -1,0 +1,1057 @@
+{
+  "code": "residential_full_v1",
+  "name": "Plantilla residencial completa (obra + instalaciones)",
+  "currency": "CUP",
+  "indirect_pct": 18.0,
+  "other_pct": 3.0,
+  "price_list": "GENERAL",
+  "chapters": [
+    {
+      "code": "01",
+      "name": "OBRA CIVIL",
+      "items": [
+        {
+          "code": "01.01",
+          "description": "Mampostería de bloque 20 cm, mortero cemento-arena",
+          "unit": "m3",
+          "quantity_source": {
+            "kind": "qto_formula",
+            "qto_formula": "WALL_VOLUME",
+            "aggregate": "SUM"
+          },
+          "performance": 4.0,
+          "resources": [
+            {
+              "resource_code": "BLOQUE-20",
+              "factor": 72.0,
+              "waste_pct": 5.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "CEMENTO",
+              "factor": 18.0,
+              "waste_pct": 3.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "ARENA",
+              "factor": 0.09,
+              "waste_pct": 5.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "MO-ALBANIL",
+              "factor": 1.6,
+              "waste_pct": 0.0,
+              "kind": "LABOR"
+            },
+            {
+              "resource_code": "MO-AYUDANTE",
+              "factor": 1.6,
+              "waste_pct": 0.0,
+              "kind": "LABOR"
+            }
+          ]
+        },
+        {
+          "code": "01.02",
+          "description": "Enlucido vertical interior de muros",
+          "unit": "m2",
+          "quantity_source": {
+            "kind": "qto_formula",
+            "qto_formula": "WALL_AREA_NET",
+            "aggregate": "SUM"
+          },
+          "performance": 12.0,
+          "resources": [
+            {
+              "resource_code": "CEMENTO",
+              "factor": 4.2,
+              "waste_pct": 3.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "ARENA",
+              "factor": 0.025,
+              "waste_pct": 5.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "MO-ALBANIL",
+              "factor": 0.5,
+              "waste_pct": 0.0,
+              "kind": "LABOR"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "02",
+      "name": "CARPINTERÍA",
+      "items": [
+        {
+          "code": "02.01",
+          "description": "Suministro y colocación de puertas interiores",
+          "unit": "und",
+          "quantity_source": {
+            "kind": "count_type",
+            "entity_type": "DOOR"
+          },
+          "performance": 3.0,
+          "resources": [
+            {
+              "resource_code": "PUERTA-MADERA",
+              "factor": 1.0,
+              "waste_pct": 0.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "MO-CARPINTERO",
+              "factor": 2.0,
+              "waste_pct": 0.0,
+              "kind": "LABOR"
+            }
+          ]
+        },
+        {
+          "code": "02.02",
+          "description": "Suministro y colocación de ventanas de aluminio",
+          "unit": "und",
+          "quantity_source": {
+            "kind": "count_type",
+            "entity_type": "WINDOW"
+          },
+          "performance": 2.0,
+          "resources": [
+            {
+              "resource_code": "VENTANA-ALUMINIO",
+              "factor": 1.0,
+              "waste_pct": 0.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "MO-CARPINTERO",
+              "factor": 3.0,
+              "waste_pct": 0.0,
+              "kind": "LABOR"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "03",
+      "name": "INSTALACIÓN ELÉCTRICA",
+      "items": [
+        {
+          "code": "03.01",
+          "description": "Canalización eléctrica en tubo conduit PVC 25 mm",
+          "unit": "m",
+          "quantity_source": {
+            "kind": "qto_formula",
+            "qto_formula": "CONDUIT_LENGTH",
+            "aggregate": "SUM"
+          },
+          "performance": 25.0,
+          "resources": [
+            {
+              "resource_code": "TUBO-PVC-25",
+              "factor": 1.05,
+              "waste_pct": 3.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "MO-ELECTRICISTA",
+              "factor": 0.08,
+              "waste_pct": 0.0,
+              "kind": "LABOR"
+            }
+          ]
+        },
+        {
+          "code": "03.02",
+          "description": "Cableado en conductor de cobre 2,5 mm²",
+          "unit": "m",
+          "quantity_source": {
+            "kind": "qto_formula",
+            "qto_formula": "CONDUCTOR_LENGTH",
+            "aggregate": "SUM"
+          },
+          "performance": 40.0,
+          "resources": [
+            {
+              "resource_code": "CABLE-25MM",
+              "factor": 1.05,
+              "waste_pct": 5.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "MO-ELECTRICISTA",
+              "factor": 0.04,
+              "waste_pct": 0.0,
+              "kind": "LABOR"
+            }
+          ]
+        },
+        {
+          "code": "03.03",
+          "description": "Tablero de distribución con protecciones",
+          "unit": "und",
+          "quantity_source": {
+            "kind": "qto_formula",
+            "qto_formula": "PANEL_COUNT",
+            "aggregate": "SUM"
+          },
+          "performance": 1.0,
+          "resources": [
+            {
+              "resource_code": "TABLERO-PANEL",
+              "factor": 1.0,
+              "waste_pct": 0.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "MO-ELECTRICISTA",
+              "factor": 2.0,
+              "waste_pct": 0.0,
+              "kind": "LABOR"
+            }
+          ]
+        },
+        {
+          "code": "03.04",
+          "description": "Tomacorrientes y luminarias",
+          "unit": "und",
+          "quantity_source": {
+            "kind": "qto_formula",
+            "qto_formula": "TERMINAL_COUNT",
+            "aggregate": "SUM"
+          },
+          "performance": 8.0,
+          "resources": [
+            {
+              "resource_code": "TOMA-CORRIENTE",
+              "factor": 0.45,
+              "waste_pct": 0.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "LUMINARIA-LED",
+              "factor": 0.55,
+              "waste_pct": 0.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "MO-ELECTRICISTA",
+              "factor": 0.25,
+              "waste_pct": 0.0,
+              "kind": "LABOR"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "04",
+      "name": "INSTALACIÓN SANITARIA",
+      "items": [
+        {
+          "code": "04.01",
+          "description": "Tubería de agua fría PVC 19 mm",
+          "unit": "m",
+          "quantity_source": {
+            "kind": "qto_formula",
+            "qto_formula": "PIPE_LENGTH",
+            "aggregate": "SUM"
+          },
+          "performance": 20.0,
+          "resources": [
+            {
+              "resource_code": "TUBO-PVC-19",
+              "factor": 1.05,
+              "waste_pct": 4.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "MO-PLOMERO",
+              "factor": 0.09,
+              "waste_pct": 0.0,
+              "kind": "LABOR"
+            }
+          ]
+        },
+        {
+          "code": "04.02",
+          "description": "Aparatos sanitarios con llave de paso",
+          "unit": "und",
+          "quantity_source": {
+            "kind": "qto_formula",
+            "qto_formula": "FIXTURE_COUNT",
+            "aggregate": "SUM"
+          },
+          "performance": 1.5,
+          "resources": [
+            {
+              "resource_code": "APARATO-SANITARIO",
+              "factor": 1.0,
+              "waste_pct": 0.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "LLAVE-PASO",
+              "factor": 1.0,
+              "waste_pct": 0.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "MO-PLOMERO",
+              "factor": 2.0,
+              "waste_pct": 0.0,
+              "kind": "LABOR"
+            }
+          ]
+        },
+        {
+          "code": "04.03",
+          "description": "Red de desagüe en tubería PVC 50/110 mm",
+          "unit": "m",
+          "quantity_source": {
+            "kind": "qto_formula",
+            "qto_formula": "DRAIN_LENGTH",
+            "aggregate": "SUM"
+          },
+          "performance": 18.0,
+          "resources": [
+            {
+              "resource_code": "TUBO-PVC-110",
+              "factor": 0.6,
+              "waste_pct": 4.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "TUBO-PVC-50",
+              "factor": 0.45,
+              "waste_pct": 4.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "MO-PLOMERO",
+              "factor": 0.1,
+              "waste_pct": 0.0,
+              "kind": "LABOR"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "05",
+      "name": "CLIMATIZACIÓN Y VENTILACIÓN",
+      "items": [
+        {
+          "code": "05.01",
+          "description": "Suministro y montaje de equipos split de pared",
+          "unit": "und",
+          "quantity_source": {
+            "kind": "qto_formula",
+            "qto_formula": "COOLING_UNITS",
+            "aggregate": "SUM"
+          },
+          "performance": 2.0,
+          "resources": [
+            {
+              "resource_code": "SPLIT-12000",
+              "factor": 1.0,
+              "waste_pct": 0.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "MO-HVAC",
+              "factor": 1.5,
+              "waste_pct": 0.0,
+              "kind": "LABOR"
+            }
+          ]
+        },
+        {
+          "code": "05.02",
+          "description": "Ductería de extracción en chapa galvanizada",
+          "unit": "m",
+          "quantity_source": {
+            "kind": "qto_formula",
+            "qto_formula": "DUCT_LENGTH",
+            "aggregate": "SUM"
+          },
+          "performance": 8.0,
+          "resources": [
+            {
+              "resource_code": "DUCTO-GALV",
+              "factor": 1.05,
+              "waste_pct": 5.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "MO-HVAC",
+              "factor": 0.2,
+              "waste_pct": 0.0,
+              "kind": "LABOR"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "06",
+      "name": "INSTALACIONES COMPLEMENTARIAS",
+      "items": [
+        {
+          "code": "06.01",
+          "description": "Sumidero de cubierta PVC 75 mm",
+          "unit": "und",
+          "quantity_source": {
+            "kind": "qto_formula",
+            "qto_formula": "ROOF_DRAIN_COUNT",
+            "aggregate": "SUM"
+          },
+          "performance": 1.5,
+          "resources": [
+            {
+              "resource_code": "SUMIDERO-CUB",
+              "factor": 1.0,
+              "waste_pct": 0.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "MO-PLOMERO",
+              "factor": 0.4,
+              "waste_pct": 0.0,
+              "kind": "MATERIAL"
+            }
+          ]
+        },
+        {
+          "code": "06.02",
+          "description": "Canalón galvanizado 150x75 mm sobre cubierta",
+          "unit": "m",
+          "quantity_source": {
+            "kind": "qto_formula",
+            "qto_formula": "GUTTER_LENGTH",
+            "aggregate": "SUM"
+          },
+          "performance": 12.0,
+          "resources": [
+            {
+              "resource_code": "CANALON-GALV",
+              "factor": 1.05,
+              "waste_pct": 5.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "MO-PLOMERO",
+              "factor": 0.08,
+              "waste_pct": 0.0,
+              "kind": "MATERIAL"
+            }
+          ]
+        },
+        {
+          "code": "06.03",
+          "description": "Red pluvial vertical y horizontal PVC 75 mm",
+          "unit": "m",
+          "quantity_source": {
+            "kind": "qto_formula",
+            "qto_formula": "DRAIN_LENGTH",
+            "aggregate": "SUM"
+          },
+          "performance": 10.0,
+          "resources": [
+            {
+              "resource_code": "TUBO-PVC-75",
+              "factor": 1.05,
+              "waste_pct": 5.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "MO-PLOMERO",
+              "factor": 0.1,
+              "waste_pct": 0.0,
+              "kind": "MATERIAL"
+            }
+          ]
+        },
+        {
+          "code": "06.04",
+          "description": "Tanque de retención pluvial instalado",
+          "unit": "m3",
+          "quantity_source": {
+            "kind": "qto_formula",
+            "qto_formula": "STORM_TANK_VOLUME",
+            "aggregate": "SUM"
+          },
+          "performance": 3.0,
+          "resources": [
+            {
+              "resource_code": "TANQUE-2000",
+              "factor": 0.85,
+              "waste_pct": 0.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "MO-PLOMERO",
+              "factor": 1.2,
+              "waste_pct": 0.0,
+              "kind": "MATERIAL"
+            }
+          ]
+        },
+        {
+          "code": "06.05",
+          "description": "Tubería de gas cobre con soldadura y prueba",
+          "unit": "m",
+          "quantity_source": {
+            "kind": "qto_formula",
+            "qto_formula": "GAS_PIPE_LENGTH",
+            "aggregate": "SUM"
+          },
+          "performance": 8.0,
+          "resources": [
+            {
+              "resource_code": "TUBERIA-GAS",
+              "factor": 1.05,
+              "waste_pct": 5.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "MO-PLOMERO",
+              "factor": 0.15,
+              "waste_pct": 0.0,
+              "kind": "MATERIAL"
+            }
+          ]
+        },
+        {
+          "code": "06.06",
+          "description": "Aparato de gas con regulador y llave de paso",
+          "unit": "und",
+          "quantity_source": {
+            "kind": "qto_formula",
+            "qto_formula": "GAS_APPLIANCE_COUNT",
+            "aggregate": "SUM"
+          },
+          "performance": 2.0,
+          "resources": [
+            {
+              "resource_code": "LLAVE-GAS",
+              "factor": 1.0,
+              "waste_pct": 0.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "REGULADOR-GAS",
+              "factor": 0.5,
+              "waste_pct": 0.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "CALEFON-GAS",
+              "factor": 0.5,
+              "waste_pct": 0.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "ENCIMERA-GAS",
+              "factor": 0.5,
+              "waste_pct": 0.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "MO-PLOMERO",
+              "factor": 1.0,
+              "waste_pct": 0.0,
+              "kind": "MATERIAL"
+            }
+          ]
+        },
+        {
+          "code": "06.07",
+          "description": "Canalización de telecomunicaciones PVC 25 mm",
+          "unit": "m",
+          "quantity_source": {
+            "kind": "qto_formula",
+            "qto_formula": "TELECOM_CONDUIT_LENGTH",
+            "aggregate": "SUM"
+          },
+          "performance": 25.0,
+          "resources": [
+            {
+              "resource_code": "TUBO-TELECOM",
+              "factor": 1.05,
+              "waste_pct": 5.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "MO-ELECTRICISTA",
+              "factor": 0.05,
+              "waste_pct": 0.0,
+              "kind": "MATERIAL"
+            }
+          ]
+        },
+        {
+          "code": "06.08",
+          "description": "Cableado estructurado Cat6 certificado",
+          "unit": "m",
+          "quantity_source": {
+            "kind": "qto_formula",
+            "qto_formula": "TELECOM_CABLE_LENGTH",
+            "aggregate": "SUM"
+          },
+          "performance": 30.0,
+          "resources": [
+            {
+              "resource_code": "CABLE-CAT6",
+              "factor": 1.08,
+              "waste_pct": 8.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "MO-ELECTRICISTA",
+              "factor": 0.04,
+              "waste_pct": 0.0,
+              "kind": "MATERIAL"
+            }
+          ]
+        },
+        {
+          "code": "06.09",
+          "description": "Roseta RJ45 Cat6 con faceplate",
+          "unit": "und",
+          "quantity_source": {
+            "kind": "qto_formula",
+            "qto_formula": "TELECOM_OUTLET_COUNT",
+            "aggregate": "SUM"
+          },
+          "performance": 3.0,
+          "resources": [
+            {
+              "resource_code": "ROS-RJ45",
+              "factor": 1.0,
+              "waste_pct": 0.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "MO-ELECTRICISTA",
+              "factor": 0.5,
+              "waste_pct": 0.0,
+              "kind": "MATERIAL"
+            }
+          ]
+        },
+        {
+          "code": "06.10",
+          "description": "Rack de pared 12U con patch panel y switch",
+          "unit": "und",
+          "quantity_source": {
+            "kind": "qto_formula",
+            "qto_formula": "RACK_COUNT",
+            "aggregate": "SUM"
+          },
+          "performance": 1.0,
+          "resources": [
+            {
+              "resource_code": "RACK-PARED",
+              "factor": 1.0,
+              "waste_pct": 0.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "PATCH-24",
+              "factor": 1.0,
+              "waste_pct": 0.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "SWITCH-24",
+              "factor": 1.0,
+              "waste_pct": 0.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "MO-ELECTRICISTA",
+              "factor": 3.0,
+              "waste_pct": 0.0,
+              "kind": "MATERIAL"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "07",
+      "name": "ESTRUCTURA",
+      "items": [
+        {
+          "code": "07.01",
+          "description": "Hormigón f'c 210 kg/cm2 en pilares, mezclado y colocado",
+          "unit": "m3",
+          "quantity_source": {
+            "kind": "qto_formula",
+            "qto_formula": "CONCRETE_VOLUME",
+            "aggregate": "SUM"
+          },
+          "performance": 3.5,
+          "resources": [
+            {
+              "resource_code": "CEMENTO",
+              "factor": 7.8,
+              "waste_pct": 2.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "ARENA",
+              "factor": 0.52,
+              "waste_pct": 4.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "PIEDRA",
+              "factor": 0.78,
+              "waste_pct": 4.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "MO-HORMIGONERO",
+              "factor": 1.2,
+              "waste_pct": 0.0,
+              "kind": "LABOR"
+            },
+            {
+              "resource_code": "MO-AYUDANTE",
+              "factor": 1.8,
+              "waste_pct": 0.0,
+              "kind": "LABOR"
+            },
+            {
+              "resource_code": "HORMIGONERA",
+              "factor": 0.25,
+              "waste_pct": 0.0,
+              "kind": "EQUIPMENT"
+            }
+          ]
+        },
+        {
+          "code": "07.02",
+          "description": "Encofrado y desencofrado de pilares y vigas",
+          "unit": "m2",
+          "quantity_source": {
+            "kind": "qto_formula",
+            "qto_formula": "FORMWORK_AREA",
+            "aggregate": "SUM"
+          },
+          "performance": 14.0,
+          "resources": [
+            {
+              "resource_code": "ENCOFRADO",
+              "factor": 0.35,
+              "waste_pct": 8.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "MO-CARPINTERO",
+              "factor": 0.25,
+              "waste_pct": 0.0,
+              "kind": "LABOR"
+            }
+          ]
+        },
+        {
+          "code": "07.03",
+          "description": "Acero estructural y de refuerzo, montado",
+          "unit": "kg",
+          "quantity_source": {
+            "kind": "qto_formula",
+            "qto_formula": "STEEL_WEIGHT",
+            "aggregate": "SUM"
+          },
+          "performance": 150.0,
+          "resources": [
+            {
+              "resource_code": "ACERO-CA",
+              "factor": 1.05,
+              "waste_pct": 3.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "MO-HORMIGONERO",
+              "factor": 0.02,
+              "waste_pct": 0.0,
+              "kind": "LABOR"
+            },
+            {
+              "resource_code": "MO-AYUDANTE",
+              "factor": 0.02,
+              "waste_pct": 0.0,
+              "kind": "LABOR"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "08",
+      "name": "SEGURIDAD",
+      "items": [
+        {
+          "code": "08.01",
+          "description": "Cableado de seguridad en tubería PVC",
+          "unit": "m",
+          "quantity_source": {
+            "kind": "qto_formula",
+            "qto_formula": "SEC_CABLE_LENGTH",
+            "aggregate": "SUM"
+          },
+          "performance": 30.0,
+          "resources": [
+            {
+              "resource_code": "CABLE-SEC",
+              "factor": 1.08,
+              "waste_pct": 8.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "TUBO-PVC-25",
+              "factor": 0.5,
+              "waste_pct": 5.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "MO-SEGURIDAD",
+              "factor": 0.05,
+              "waste_pct": 0.0,
+              "kind": "LABOR"
+            }
+          ]
+        },
+        {
+          "code": "08.02",
+          "description": "Cámaras IP con lente y soporte",
+          "unit": "und",
+          "quantity_source": {
+            "kind": "qto_formula",
+            "qto_formula": "CAMERA_COUNT",
+            "aggregate": "SUM"
+          },
+          "performance": 2.0,
+          "resources": [
+            {
+              "resource_code": "CAMARA-IP",
+              "factor": 1.0,
+              "waste_pct": 0.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "MO-SEGURIDAD",
+              "factor": 1.5,
+              "waste_pct": 0.0,
+              "kind": "LABOR"
+            }
+          ]
+        },
+        {
+          "code": "08.03",
+          "description": "Grabador NVR y switch PoE",
+          "unit": "und",
+          "quantity_source": {
+            "kind": "qto_formula",
+            "qto_formula": "RECORDER_COUNT",
+            "aggregate": "SUM"
+          },
+          "performance": 1.0,
+          "resources": [
+            {
+              "resource_code": "NVR-16CH",
+              "factor": 1.0,
+              "waste_pct": 0.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "POE-SWITCH",
+              "factor": 1.0,
+              "waste_pct": 0.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "MO-SEGURIDAD",
+              "factor": 3.0,
+              "waste_pct": 0.0,
+              "kind": "LABOR"
+            }
+          ]
+        },
+        {
+          "code": "08.04",
+          "description": "Detectores de incendio y pulsadores",
+          "unit": "und",
+          "quantity_source": {
+            "kind": "qto_formula",
+            "qto_formula": "FIRE_DETECTOR_COUNT",
+            "aggregate": "SUM"
+          },
+          "performance": 1.5,
+          "resources": [
+            {
+              "resource_code": "DETECTOR-HUMO",
+              "factor": 0.8,
+              "waste_pct": 0.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "PULSADOR-ALARMA",
+              "factor": 0.2,
+              "waste_pct": 0.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "MO-SEGURIDAD",
+              "factor": 0.8,
+              "waste_pct": 0.0,
+              "kind": "LABOR"
+            }
+          ]
+        },
+        {
+          "code": "08.05",
+          "description": "Sirenas y señalización sonora",
+          "unit": "und",
+          "quantity_source": {
+            "kind": "qto_formula",
+            "qto_formula": "SOUNDER_COUNT",
+            "aggregate": "SUM"
+          },
+          "performance": 1.5,
+          "resources": [
+            {
+              "resource_code": "SIRENA-INT",
+              "factor": 1.0,
+              "waste_pct": 0.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "MO-SEGURIDAD",
+              "factor": 1.0,
+              "waste_pct": 0.0,
+              "kind": "LABOR"
+            }
+          ]
+        },
+        {
+          "code": "08.06",
+          "description": "Detectores volumétricos PIR",
+          "unit": "und",
+          "quantity_source": {
+            "kind": "qto_formula",
+            "qto_formula": "PIR_COUNT",
+            "aggregate": "SUM"
+          },
+          "performance": 1.5,
+          "resources": [
+            {
+              "resource_code": "PIR-CABLE",
+              "factor": 1.0,
+              "waste_pct": 0.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "MO-SEGURIDAD",
+              "factor": 1.0,
+              "waste_pct": 0.0,
+              "kind": "LABOR"
+            }
+          ]
+        },
+        {
+          "code": "08.07",
+          "description": "Contactos magnéticos en vanos",
+          "unit": "und",
+          "quantity_source": {
+            "kind": "qto_formula",
+            "qto_formula": "CONTACT_COUNT",
+            "aggregate": "SUM"
+          },
+          "performance": 2.0,
+          "resources": [
+            {
+              "resource_code": "CONTACTO-MAG",
+              "factor": 1.0,
+              "waste_pct": 0.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "MO-SEGURIDAD",
+              "factor": 0.8,
+              "waste_pct": 0.0,
+              "kind": "LABOR"
+            }
+          ]
+        },
+        {
+          "code": "08.08",
+          "description": "Control de acceso: lector y cerradura fail-safe",
+          "unit": "und",
+          "quantity_source": {
+            "kind": "qto_formula",
+            "qto_formula": "READER_COUNT",
+            "aggregate": "SUM"
+          },
+          "performance": 2.0,
+          "resources": [
+            {
+              "resource_code": "LECTOR-RFID",
+              "factor": 1.0,
+              "waste_pct": 0.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "CERRADURA-MAG",
+              "factor": 1.0,
+              "waste_pct": 0.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "MO-SEGURIDAD",
+              "factor": 2.5,
+              "waste_pct": 0.0,
+              "kind": "LABOR"
+            }
+          ]
+        },
+        {
+          "code": "08.09",
+          "description": "Sensores de valla perimetral",
+          "unit": "und",
+          "quantity_source": {
+            "kind": "qto_formula",
+            "qto_formula": "FENCE_SENSOR_COUNT",
+            "aggregate": "SUM"
+          },
+          "performance": 2.5,
+          "resources": [
+            {
+              "resource_code": "SENSOR-VALLA",
+              "factor": 1.0,
+              "waste_pct": 0.0,
+              "kind": "MATERIAL"
+            },
+            {
+              "resource_code": "MO-SEGURIDAD",
+              "factor": 1.2,
+              "waste_pct": 0.0,
+              "kind": "LABOR"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
