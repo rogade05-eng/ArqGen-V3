@@ -409,7 +409,7 @@ class TestGanchosPrograma(ARQGenTestCase):
         super().tearDown()
 
     def test_version_coherente_con_v3430(self):
-        self.assertEqual(APP_VERSION, "3.47.0")
+        self.assertEqual(APP_VERSION, "3.50.0")
 
     def test_selector_de_ajuste_existe_y_por_defecto_minimo(self):
         w = self.window

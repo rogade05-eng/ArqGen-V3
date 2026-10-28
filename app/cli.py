@@ -734,6 +734,8 @@ def _build_parser() -> argparse.ArgumentParser:
     p = sub.add_parser("demo", help="Crear el proyecto de demostración")
     p.add_argument("--out", default=os.path.join("output", "demo.arqgen"))
     p = sub.add_parser("selftest", help="Verificación integral interna")
+    p = sub.add_parser("rpc", help="Servidor JSON-RPC del sidecar (FASE A Tauri): "
+                       "lee peticiones de stdin y responde por stdout")
     from app.cli_fases import add_parsers as add_v13_parsers
     add_v13_parsers(sub)
 
@@ -2919,6 +2921,11 @@ def run(argv: Optional[List[str]] = None) -> int:
     argv = list(sys.argv[1:] if argv is None else argv)
     parser = _build_parser()
     args = parser.parse_args(argv)
+    # FASE A Tauri: el sidecar arranca LEAN (sin bootstrap del catálogo:
+    # la generación lo carga bajo demanda) y toma el control de stdin.
+    if getattr(args, "command", None) == "rpc":
+        from app.rpc_server import main as rpc_main
+        return rpc_main()
     setup_logging(args.log_dir, level=args.log_level)
     logger = get_logger("arqgen.cli")
 

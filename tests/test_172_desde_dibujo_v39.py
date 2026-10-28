@@ -799,7 +799,7 @@ class TestGanchosVentana39(ARQGenTestCase):
         self.assertNotEqual(c3, c2)
 
     def test_version_coherente_con_v3410(self):
-        self.assertEqual(APP_VERSION, "3.47.0")
+        self.assertEqual(APP_VERSION, "3.50.0")
 
 
 if __name__ == "__main__":  # pragma: no cover

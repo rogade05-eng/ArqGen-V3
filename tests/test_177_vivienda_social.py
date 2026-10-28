@@ -360,7 +360,7 @@ class TestInformeYContratos(unittest.TestCase):
         self.assertIsNone(pet3.chaflanes)
 
     def test_version_coherente_con_v3430(self):
-        self.assertEqual(APP_VERSION, "3.47.0")
+        self.assertEqual(APP_VERSION, "3.50.0")
 
 
 # ---------------------------------------------------------------------------

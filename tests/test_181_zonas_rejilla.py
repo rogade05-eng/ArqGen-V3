@@ -187,7 +187,7 @@ class TestAplicarZonas(ARQGenTestCase):
 class TestContratos(unittest.TestCase):
 
     def test_version_3440(self):
-        self.assertEqual(APP_VERSION, "3.47.0")
+        self.assertEqual(APP_VERSION, "3.50.0")
 
 
 if __name__ == "__main__":

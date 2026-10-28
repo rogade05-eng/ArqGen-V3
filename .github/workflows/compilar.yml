@@ -9,9 +9,16 @@
 #  y, si se empuja una etiqueta v* (p. ej. v3.47.0), un Release permanente.
 #
 #  Notas de diseno:
-#  - La suite completa (2.579 pruebas) corre en modo INFORMATIVO: si alguna
-#    falla en el entorno CI, no bloquea el ejecutable; el filtro de calidad
-#    que SI bloquea es el selftest del propio .exe (96 checks).
+#  - La suite completa corre en modo INFORMATIVO: si alguna prueba falla en
+#    el entorno CI, no bloquea el ejecutable; el filtro de calidad que SI
+#    bloquea es el selftest del propio .exe.
+#  - POLITICA DEL REPO: todas las actions van PINNED a un SHA completo de
+#    commit (el repo rechaza refs por tag). SHA resueltos del remoto oficial:
+#      checkout v4.4.0          -> 11d5960a326750d5838078e36cf38b85af677262
+#      setup-python v5.6.0      -> a26af69be951a213d495a4c3e4e4022e16d87065
+#      upload-artifact v4.6.2   -> ea165f8d65b6e75b540449e92b4886f43607fa02
+#      download-artifact v4.3.0 -> d3f86a106a0bac45b974a628896c90dbdf5c8093
+#      gh-release v2.6.2        -> 3bb12739c298aeb8a4eeaf626c5b8d85266b0e65
 #  - El exclusor de bindings Qt del spec es imprescindible: ezdxf importa
 #    ezdxf.addons.xqt (PySide6/PyQt5) y el runner tiene varios bindings
 #    preinstalados; el spec los excluye igual que 03_COMPILAR.bat.
@@ -41,10 +48,10 @@ jobs:
     timeout-minutes: 150
     steps:
       - name: Descargar el codigo del repositorio
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
 
       - name: Instalar Python 3.13
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
         with:
           python-version: '3.13'
           cache: 'pip'
@@ -55,6 +62,16 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -r requirements.txt -r requirements-build.txt
           python -m pip show pyinstaller ezdxf openpyxl
+
+      - name: 'Acelerador Rust FASE B (opcional: si falla, el exe va en modo Python)'
+        continue-on-error: true
+        shell: pwsh
+        run: |
+          python -m pip install maturin
+          maturin build --release -m rust/arqgen_core/Cargo.toml -o target_wheels
+          $w = Get-ChildItem target_wheels\*.whl | Select-Object -First 1
+          python -m pip install $w
+          python -c "import arqgen_core; print('Acelerador Rust compilado:', arqgen_core.version())"
 
       - name: 'Etapa 1 - Suite de pruebas (informativa, no bloquea)'
         if: ${{ github.event_name != 'workflow_dispatch' || inputs.pruebas }}
@@ -79,12 +96,12 @@ jobs:
         shell: pwsh
         run: python -m PyInstaller --noconfirm --clean ARQ_GEN.spec
 
-      - name: 'Etapa 3 - Verificar el ejecutable (selftest 96 checks + recursos)'
+      - name: 'Etapa 3 - Verificar el ejecutable (selftest 103 checks + recursos)'
         shell: pwsh
         env:
           PYTHONIOENCODING: utf-8
         run: |
-          python compilar_bundle.py --verify-only --dist dist
+          python compilar_bundle.py --verify-only --dist dist 2>&1 | Tee-Object -FilePath logs_selftest_exe.txt
           if ($LASTEXITCODE -ne 0) {
             throw "El selftest del ejecutable fallo. ARQ_GEN.exe no es fiable; revise el log de este paso."
           }
@@ -99,7 +116,7 @@ jobs:
           Compress-Archive -Path 'dist\ARQ_GEN' -DestinationPath 'ARQ_GEN_Windows_x64.zip' -Force
 
       - name: Subir el ejecutable (artefacto del run)
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: ARQ_GEN_Windows_x64
           path: ARQ_GEN_Windows_x64.zip
@@ -108,7 +125,7 @@ jobs:
 
       - name: Subir el log de pruebas (si se ejecutaron)
         if: ${{ always() && hashFiles('logs_pruebas_ci.txt') != '' }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: logs_pruebas_ci
           path: logs_pruebas_ci.txt
@@ -124,6 +141,12 @@ jobs:
           $lineas += ''
           if ($env:EXE_MB) { $lineas += "- Ejecutable: **dist/ARQ_GEN/ARQ_GEN.exe generado y verificado ($($env:EXE_MB) MB)**" }
           if ($env:PRUEBAS_TXT) { $lineas += "- Suite de pruebas: $($env:PRUEBAS_TXT)" }
+          $ace = (Select-String -Path logs_selftest_exe.txt -Pattern 'acelerador Rust FASE B' |
+                    Select-Object -First 1).Line
+          if ($ace) { $lineas += ('- ' + $ace.Substring(0, [Math]::Min(150, $ace.Length))) }
+          $fasec = (Select-String -Path logs_selftest_exe.txt -Pattern 'sidecar FASE C' |
+                    Select-Object -First 1).Line
+          if ($fasec) { $lineas += ('- FASE C (UI web): ' + $fasec.Substring(0, [Math]::Min(150, $fasec.Length))) }
           $lineas += '- Descarga: seccion **Artifacts** de esta pagina -> ARQ_GEN_Windows_x64'
           $lineas += '- Dentro del ZIP: carpeta ARQ_GEN con ARQ_GEN.exe (Windows 10/11 64 bits)'
           Add-Content -Path $env:GITHUB_STEP_SUMMARY -Value ($lineas -join [Environment]::NewLine)
@@ -137,12 +160,12 @@ jobs:
       contents: write
     steps:
       - name: Descargar el artefacto compilado
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         with:
           name: ARQ_GEN_Windows_x64
 
       - name: Publicar el Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2.6.2
         with:
           files: ARQ_GEN_Windows_x64.zip
           body: |

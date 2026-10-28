@@ -24,6 +24,7 @@ Cero dependencias nuevas, cero IA, puro cálculo determinista.
 
 from __future__ import annotations
 
+import os
 from typing import Any, Dict, List, Optional, Tuple
 
 PT = Tuple[float, float]
@@ -206,13 +207,25 @@ def comparten_banda(a: Dict[str, float], b: Dict[str, float],
 
 
 def contenedores_de(poligono: List[PT], margen: float = 0.0,
-                    min_lado: float = 1.0) -> Dict[str, Any]:
+                    min_lado: float = 1.0,
+                    usar_rust: Optional[bool] = None) -> Dict[str, Any]:
     """Contenedores del polígono según su naturaleza. Devuelve:
     estrategia (rectangulo | descompuesto | inscrito), contenedores
     [{x0,y0,x1,y1,ancho,fondo,area}] YA DESCONTADO EL MARGEN,
     area_contenedores (con margen), area_aprovechable (bruta, sin
     margen, lo que la descomposición tesa del polígono) y avisos
-    honestos."""
+    honestos.
+
+    FASE B (v3.49.0): con usar_rust=True (o ARQ_GEN_ACELERADOR=rust) y el
+    crate arqgen_core instalado, el cálculo corre en el núcleo Rust con
+    paridad 1:1 (vigilada por test_190). Por defecto el camino es Python:
+    el determinismo del motor no cambia."""
+    if usar_rust is None:
+        usar_rust = os.environ.get("ARQ_GEN_ACELERADOR", "").strip().lower() == "rust"
+    if usar_rust:
+        from core import acelerador
+        if acelerador.disponible():
+            return acelerador.contenedores_de_rust(poligono, margen, min_lado)
     m = max(0.0, float(margen or 0.0))
     avisos: List[str] = []
     if _es_ortogonal(poligono):

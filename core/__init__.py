@@ -8,5 +8,5 @@ goes through public services (spec section 3).
 """
 
 APP_NAME = "ARQ GEN"
-APP_VERSION = "3.47.0"
+APP_VERSION = "3.50.0"
 API_VERSION = "1.0"

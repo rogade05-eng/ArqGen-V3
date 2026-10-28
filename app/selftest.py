@@ -10,6 +10,7 @@ from __future__ import annotations
 import math
 import os
 import re
+import shutil
 import struct
 import sys
 import tempfile
@@ -5022,6 +5023,293 @@ def run_selftest(console: bool = True) -> Tuple[bool, List[str]]:
                       "largos_alas desiguales y plan_radial con "
                       "niveles: la estrella radial del hospital "
                       "oncológico y la planta tipo repetida)")
+    except Exception as exc:  # noqa: BLE001
+        ok = False
+        checks.append(f"FALLO: {type(exc).__name__}: {exc}")
+        logger.error("Selftest falló: %s\n%s", exc, traceback.format_exc())
+
+    # 97. SIDECAR JSON-RPC FASE A TAURI v3.48.0: el canal stdin/stdout
+    # que el shell Tauri habla con el motor responde ping con la versión,
+    # rechaza métodos desconocidos con -32601 y genera una planta completa
+    # (locales con polígono y aprovechamiento) por generar_quick.
+    try:
+        from app.rpc_server import handle_call
+        _r97 = handle_call({"jsonrpc": "2.0", "id": 1, "method": "ping",
+                            "params": {}})
+        assert _r97.get("result", {}).get("pong") is True, \
+            "el ping del sidecar responde pong"
+        assert _r97["result"]["app_version"] == "3.50.0", \
+            "el ping informa la versión del motor"
+        _r97b = handle_call({"jsonrpc": "2.0", "id": 2,
+                             "method": "metodo_inexistente", "params": {}})
+        assert _r97b.get("error", {}).get("code") == -32601, \
+            "método desconocido devuelve -32601"
+        _r97c = handle_call({
+            "jsonrpc": "2.0", "id": 3, "method": "generar_quick",
+            "params": {"texto": "dormitorio, bano, cocina, sala, patio",
+                       "contorno": [[0, 0], [24, 0], [24, 12], [0, 12]]}})
+        _res97 = _r97c.get("result") or {}
+        _loc97 = _res97.get("reparto", [{}])[0].get("locales") or []
+        assert _res97.get("niveles") == 1 and _loc97, \
+            "generar_quick produce una planta con locales"
+        assert all(len(l.get("poligono") or []) >= 3 for l in _loc97), \
+            "todos los locales llegan con polígono dibujable"
+        assert float(_res97["totales"]["aprovechamiento_pct"]) > 0, \
+            "el aprovechamiento llega con un porcentaje positivo"
+        checks.append("sidecar JSON-RPC v3.49.0: OK (ping con versión, "
+                      "-32601 en método desconocido y generar_quick con "
+                      "locales poligonales y aprovechamiento: el canal "
+                      "Tauri <-> motor de la FASE A)")
+    except Exception as exc:  # noqa: BLE001
+        ok = False
+        checks.append(f"FALLO: {type(exc).__name__}: {exc}")
+        logger.error("Selftest falló: %s\n%s", exc, traceback.format_exc())
+
+    # 98. ACELERADOR RUST FASE B v3.49.0: paridad del encaje al polígono
+    # entre el núcleo Rust (crate arqgen_core, opt-in) y el camino Python,
+    # con informe honesto del modo disponible (rust | python).
+    try:
+        from core import acelerador as _ace98
+        from domain import encaje as _encaje98
+        _polyL98 = [(0, 0), (18, 0), (18, 14), (12, 14), (12, 6), (0, 6)]
+        _py98 = _encaje98.contenedores_de(_polyL98, margen=0.3)
+        _rs98 = _encaje98.contenedores_de(_polyL98, margen=0.3, usar_rust=True)
+        assert _py98["estrategia"] == _rs98["estrategia"] == "descompuesto", \
+            "misma estrategia en ambos caminos"
+        assert len(_py98["contenedores"]) == len(_rs98["contenedores"]), \
+            "mismo número de contenedores"
+        for _cp98, _cr98 in zip(_py98["contenedores"], _rs98["contenedores"]):
+            assert all(abs(_cp98[k] - _cr98[k]) <= 1e-9 for k in
+                       ("x0", "y0", "x1", "y1", "ancho", "fondo", "area")), \
+                "paridad de contenedor Rust<->Python"
+        assert _py98["avisos"] == _rs98["avisos"], "avisos idénticos"
+        _modo98 = _ace98.modo()
+        assert _modo98 in ("rust", "python"), "modo del acelerador informado"
+        if _modo98 == "rust":
+            _det98 = (f"crate arqgen_core {_ace98.version_rust()} presente, "
+                      "paridad del encaje L verificada; hot loop ~49x más "
+                      "rápido cuando se activa con ARQ_GEN_ACELERADOR=rust")
+        else:
+            _det98 = ("sin crate: camino Python puro; el switch opt-in es "
+                      "inerte y seguro (cae a Python sin explotar)")
+        checks.append(f"acelerador Rust FASE B v3.49.0: OK ({_det98})")
+    except Exception as exc:  # noqa: BLE001
+        ok = False
+        checks.append(f"FALLO: {type(exc).__name__}: {exc}")
+        logger.error("Selftest falló: %s\n%s", exc, traceback.format_exc())
+
+    # 99. XLSX NATIVO FASE B v3.49.0: el libro Cantidades se escribe con
+    # el escritor disponible (Rust si el crate está, openpyxl si no) y se
+    # relee sin pérdidas con el mismo formato (fill 2F5496, freeze A2).
+    try:
+        from types import SimpleNamespace as _NS99
+        _hojas99 = [{
+            "titulo": "Cantidades",
+            "headers": ["Objeto", "Bruta", "Final"],
+            "filas": [["A-01", 2.5, 3.75], ["B-02", 10.0, 10.0]],
+            "anchos": [16, 10, 10],
+        }]
+        _ruta99 = os.path.join(tempfile.gettempdir(), "arqgen_selftest_99.xlsx")
+        from exporters.xlsx_exporter import XLSXExporter as _X99
+        _escrito_rust99 = False
+        if _ace98.disponible():
+            import arqgen_core as _core99
+            _core99.xlsx_escribir(_ruta99, _hojas99)
+            _escrito_rust99 = True
+        else:
+            _X99()._exportar_openpyxl(_NS99(emit=lambda *a, **k: None),
+                                      _ruta99, _hojas99)
+        assert os.path.isfile(_ruta99) and os.path.getsize(_ruta99) > 500, \
+            "el XLSX existe y tiene contenido"
+        try:
+            import openpyxl as _openpyxl99
+            _wb99 = _openpyxl99.load_workbook(_ruta99)
+            _ws99 = _wb99["Cantidades"]
+            assert _ws99["A1"].value == "Objeto", "cabecera legible"
+            assert abs(_ws99["C2"].value - 3.75) < 1e-9, "valor numérico legible"
+            assert _ws99["A1"].fill.fgColor.rgb in ("FF2F5496", "002F5496"), \
+                "formato azul de cabecera"
+            assert _ws99.freeze_panes == "A2", "pane congelado en A2"
+            _det99 = (f"escritor {'Rust' if _escrito_rust99 else 'openpyxl'}: "
+                      "relectura con valores y formato íntegros")
+        except ImportError:  # sin openpyxl solo puede haber Rust
+            assert _escrito_rust99, "sin openpyxl el escritor debe ser Rust"
+            _det99 = "escritor Rust: libro válido (openpyxl no instalado)"
+        checks.append(f"XLSX nativo FASE B v3.49.0: OK ({_det99})")
+    except Exception as exc:  # noqa: BLE001
+        ok = False
+        checks.append(f"FALLO: {type(exc).__name__}: {exc}")
+        logger.error("Selftest falló: %s\n%s", exc, traceback.format_exc())
+
+    # 100. POLÍTICA OPT-IN DEL ACELERADOR v3.49.0: por defecto el motor
+    # es Python puro (determinismo v3.48.0 intacto); con la variable de
+    # entorno activa el switch de encaje delega en el puente y el
+    # resultado es el mismo (con o sin crate).
+    try:
+        from core import APP_VERSION as _v100
+        assert _v100 == "3.50.0", "versión del motor informada"
+        _prev100 = os.environ.get("ARQ_GEN_ACELERADOR")
+        try:
+            os.environ["ARQ_GEN_ACELERADOR"] = "rust"
+            _con100 = _encaje98.contenedores_de(_polyL98, margen=0.3)
+            assert _con100["estrategia"] == "descompuesto", \
+                "con env rust el encaje sigue produciendo contenedores"
+            assert all(abs(_con100["contenedores"][0][k]
+                           - _py98["contenedores"][0][k]) <= 1e-9
+                       for k in ("x0", "y0", "x1", "y1", "ancho", "fondo", "area")), \
+                "resultado idéntico con el switch activo"
+        finally:
+            if _prev100 is None:
+                os.environ.pop("ARQ_GEN_ACELERADOR", None)
+            else:
+                os.environ["ARQ_GEN_ACELERADOR"] = _prev100
+        checks.append("política opt-in del acelerador v3.49.0: OK "
+                      "(por defecto Python puro; ARQ_GEN_ACELERADOR=rust "
+                      "activa el núcleo Rust con resultado idéntico)")
+    except Exception as exc:  # noqa: BLE001
+        ok = False
+        checks.append(f"FALLO: {type(exc).__name__}: {exc}")
+        logger.error("Selftest falló: %s\n%s", exc, traceback.format_exc())
+
+    # 101. SIDECAR FASE C v3.50.0: catálogo DNA + formas especiales por
+    # JSON-RPC (radial con polígonos sectoriales y métricas explicadas).
+    try:
+        import core as _core101
+        from app.rpc_server import handle_call as _hc101
+        assert _core101.APP_VERSION == "3.50.0", "versión del motor informada"
+        _cat101 = _hc101({"jsonrpc": "2.0", "id": 1, "method": "catalogo",
+                          "params": {}})
+        _res101 = _cat101.get("result") or {}
+        assert _res101.get("total", 0) >= 100 and _res101.get("tipos"), \
+            "el catálogo DNA llega completo por RPC (>= 100 usos)"
+        _cod101 = {t["code"] for t in _res101["tipos"]}
+        assert {"ENTRANCE", "OFFICE", "BEDROOM", "LAVATORY"} <= _cod101, \
+            "usos base presentes en el catálogo"
+        _fich101 = [{"space_type": "ENTRANCE", "cantidad": 1},
+                    {"space_type": "OFFICE", "cantidad": 4},
+                    {"space_type": "LAVATORY", "cantidad": 2}]
+        _rad101 = _hc101({"jsonrpc": "2.0", "id": 2,
+                          "method": "generar_radial",
+                          "params": {"fichas": _fich101,
+                                     "radio_ext": 14.0, "sectores": 8,
+                                     "corredor_m": 1.6, "radio_nucleo": 3.0,
+                                     "niveles": 2}}).get("result") or {}
+        assert _rad101.get("tipo") == "radial" and _rad101["niveles"] == 2, \
+            "generar_radial repite la planta tipo en 2 niveles"
+        _loc101 = _rad101["reparto"][0]["locales"]
+        assert _loc101 and all(len(l["poligono"]) >= 3 for l in _loc101), \
+            "los sectores radiales llegan con polígono dibujable"
+        assert _rad101.get("id"), "el análisis queda en la sesión (id)"
+        _met101 = _rad101.get("metricas") or {}
+        assert float(_met101.get("puntuacion", 0)) > 0, \
+            "métricas explicadas (puntuación) en el resultado RPC"
+        checks.append("sidecar FASE C v3.50.0: OK (catálogo DNA >= 100 "
+                      "usos, generar_radial con sectores poligonales en "
+                      "2 niveles, sesión con id y métricas explicadas)")
+    except Exception as exc:  # noqa: BLE001
+        ok = False
+        checks.append(f"FALLO: {type(exc).__name__}: {exc}")
+        logger.error("Selftest falló: %s\n%s", exc, traceback.format_exc())
+
+    # 102. EXPORTAR DESDE LA UI FASE C v3.50.0: aplicar_exportar convierte
+    # el análisis de la sesión en ARCHIVOS reales (IFC + DXF + XLSX) en una
+    # carpeta temporal, con instantánea de proyecto reabrible.
+    try:
+        from app.rpc_server import handle_call as _hc102
+        _fich102 = [{"space_type": "ENTRANCE", "cantidad": 1},
+                    {"space_type": "OFFICE", "cantidad": 3},
+                    {"space_type": "LAVATORY", "cantidad": 1}]
+        _r102 = _hc102({"jsonrpc": "2.0", "id": 1,
+                        "method": "generar_edificacion",
+                        "params": {"fichas": _fich102,
+                                   "contorno": [[0, 0], [20, 0], [20, 11],
+                                                [0, 11]]}}).get("result") or {}
+        _id102 = _r102.get("id")
+        assert _id102, "generar_edificacion guarda el análisis en sesión"
+        _carp102 = tempfile.mkdtemp(prefix="arqgen_selftest_102_")
+        try:
+            _exp102 = _hc102({"jsonrpc": "2.0", "id": 2,
+                              "method": "aplicar_exportar",
+                              "params": {"id": _id102,
+                                         "carpeta": _carp102,
+                                         "nombre_base": "selftest_fase_c",
+                                         "formatos": ["IFC", "DXF", "XLSX"],
+                                         "trazar_muros": True,
+                                         "con_proyecto": True}}).get("result") or {}
+            _arch102 = _exp102.get("archivos") or {}
+            assert {"IFC", "DXF", "XLSX"} <= set(_arch102), \
+                "aplicar_exportar escribe IFC, DXF y XLSX reales"
+            for _f102, _i102 in _arch102.items():
+                assert _i102["bytes"] > 200 and os.path.isfile(_i102["ruta"]), \
+                    f"{_f102} existe en disco con contenido"
+            _proy102 = _exp102.get("proyecto") or {}
+            assert _proy102.get("bytes", 0) > 200, \
+                "la instantánea del proyecto se escribe junto al paquete"
+            _ab102 = _hc102({"jsonrpc": "2.0", "id": 3,
+                             "method": "proyecto_abrir",
+                             "params": {"ruta": _proy102["ruta"]}}).get("result") or {}
+            assert _ab102.get("nombre") == "selftest_fase_c", \
+                "proyecto_abrir lee la instantánea exportada"
+            assert int((_ab102.get("recuentos") or {}).get("SPACE", 0)) >= 1, \
+                "la instantánea contiene espacios del edificio aplicado"
+        finally:
+            shutil.rmtree(_carp102, ignore_errors=True)
+        checks.append("exportar desde la UI FASE C v3.50.0: OK "
+                      "(aplicar_exportar escribe IFC+DXF+XLSX en disco y "
+                      "proyecto_abrir rele la instantánea del proyecto)")
+    except Exception as exc:  # noqa: BLE001
+        ok = False
+        checks.append(f"FALLO: {type(exc).__name__}: {exc}")
+        logger.error("Selftest falló: %s\n%s", exc, traceback.format_exc())
+
+    # 103. COMPUESTOS FASE C v3.50.0: multi-ala y rejilla tipo llegan por
+    # RPC con alas/celdas resumidas y se aplican/exportan como un edificio.
+    try:
+        from app.rpc_server import handle_call as _hc103
+        _fich103 = [{"space_type": "ENTRANCE", "cantidad": 1},
+                    {"space_type": "OFFICE", "cantidad": 4},
+                    {"space_type": "LAVATORY", "cantidad": 2}]
+        _zon103 = _hc103({"jsonrpc": "2.0", "id": 1, "method": "generar_zonas",
+                          "params": {"fichas": _fich103,
+                                     "zonas": [
+                                         {"contorno": [[0, 0], [18, 0],
+                                                       [18, 12], [0, 12]],
+                                          "rol": "ala norte"},
+                                         {"contorno": [[0, 0], [16, 0],
+                                                       [16, 10], [0, 10]]}]}}).get("result") or {}
+        assert _zon103.get("tipo") == "zonas" and len(_zon103["zonas"]) == 2, \
+            "generar_zonas devuelve el compuesto con 2 alas"
+        assert _zon103["zonas"][0].get("rol") == "ala norte" \
+            and _zon103["zonas"][0].get("reparto"), \
+            "cada ala llega con rol y reparto dibujable"
+        _rej103 = _hc103({"jsonrpc": "2.0", "id": 2,
+                          "method": "generar_rejilla",
+                          "params": {"fichas": [
+                              {"space_type": "BEDROOM", "cantidad": 2},
+                              {"space_type": "LAVATORY", "cantidad": 1},
+                              {"space_type": "KITCHEN", "cantidad": 1}],
+                              "contorno": [[0, 0], [30, 0], [30, 14], [0, 14]],
+                              "columnas": 3}}).get("result") or {}
+        assert _rej103.get("tipo") == "rejilla" and len(_rej103["zonas"]) == 6, \
+            "generar_rejilla repite la unidad en las 6 celdas (3x2)"
+        assert _rej103.get("pasillo_central"), \
+            "el corredor central de la rejilla llega con su polígono"
+        _carp103 = tempfile.mkdtemp(prefix="arqgen_selftest_103_")
+        try:
+            _exp103 = _hc103({"jsonrpc": "2.0", "id": 3,
+                              "method": "aplicar_exportar",
+                              "params": {"id": _rej103["id"],
+                                         "carpeta": _carp103,
+                                         "nombre_base": "selftest_rejilla",
+                                         "formatos": ["DXF"],
+                                         "con_proyecto": False}}).get("result") or {}
+            assert "DXF" in (_exp103.get("archivos") or {}), \
+                "un compuesto (rejilla) se aplica y exporta como edificio"
+        finally:
+            shutil.rmtree(_carp103, ignore_errors=True)
+        checks.append("compuestos FASE C v3.50.0: OK (multi-ala con rol y "
+                      "reparto, rejilla 3x2 con corredor central; ambos se "
+                      "aplican y exportan a disco por RPC)")
     except Exception as exc:  # noqa: BLE001
         ok = False
         checks.append(f"FALLO: {type(exc).__name__}: {exc}")

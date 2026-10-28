@@ -1,4 +1,14 @@
-"""XLSX exporter via openpyxl: quantities, budget, resources (spec 68, 95)."""
+"""XLSX exporter: quantities, budget, resources (spec 68, 95).
+
+FASE B (v3.49.0): con el acelerador Rust activo (ARQ_GEN_ACELERADOR=rust
+o usar_rust=True, y el crate arqgen_core instalado) el libro lo escribe
+el núcleo Rust (`arqgen_core.xlsx_escribir`) con el MISMO formato
+profesional (cabecera azul 2F5496 con fuente blanca en negrita y
+centrada, pane congelado en A2, anchos de columna). Ante cualquier
+fallo de escritura Rust, la ruta openpyxl queda como fallback
+transparente. El formato de los datos es agnóstico: se recogen las
+hojas primero y el escritor se elige después.
+"""
 
 from __future__ import annotations
 
@@ -15,35 +25,31 @@ class XLSXExporter:
     HEADER_FILL = "FF2F5496"
     HEADER_FONT = "FFFFFF"
 
-    def export(self, context, out_path: str, include_budget: bool = True) -> str:
-        try:
-            from openpyxl import Workbook
-            from openpyxl.styles import Alignment, Font, PatternFill
-            from openpyxl.utils import get_column_letter
-        except ImportError as exc:  # pragma: no cover
-            raise ExportError(
-                message="openpyxl no está instalado; ejecute el bat de instalación de dependencias",
-                code="ARQ-EXP-040") from exc
+    def export(self, context, out_path: str, include_budget: bool = True,
+               usar_rust: Optional[bool] = None) -> str:
+        hojas = self._hojas(context, include_budget)
+        if usar_rust is None:
+            usar_rust = os.environ.get("ARQ_GEN_ACELERADOR", "").strip().lower() == "rust"
+        if usar_rust:
+            from core import acelerador
+            if acelerador.disponible():
+                try:
+                    import arqgen_core
+                    arqgen_core.xlsx_escribir(out_path, hojas)
+                    context.emit("EXPORT_COMPLETED", {"format": "XLSX", "path": out_path})
+                    return out_path
+                except Exception:
+                    pass  # fallback transparente: mismo contenido vía openpyxl
+        return self._exportar_openpyxl(context, out_path, hojas)
 
-        wb = Workbook()
-        header_fill = PatternFill("solid", fgColor=self.HEADER_FILL)
-        header_font = Font(color=self.HEADER_FONT, bold=True)
+    # ------------------------------------------------------------------
+    # datos de las hojas (formato-agnóstico)
+    # ------------------------------------------------------------------
 
-        def write_sheet(title: str, headers: List[str], rows: List[List[Any]],
-                        widths: List[int]) -> None:
-            ws = wb.create_sheet(title[:31])
-            ws.append(headers)
-            for cell in ws[1]:
-                cell.fill = header_fill
-                cell.font = header_font
-                cell.alignment = Alignment(horizontal="center")
-            for row in rows:
-                ws.append(row)
-            for index, width in enumerate(widths, start=1):
-                ws.column_dimensions[get_column_letter(index)].width = width
-            ws.freeze_panes = "A2"
+    def _hojas(self, context, include_budget: bool) -> List[Dict[str, Any]]:
+        hojas: List[Dict[str, Any]] = []
 
-        # Sheet 1: Cantidades
+        # Hoja 1: Cantidades
         quantities = context.quantities_repo.all(context.project.id)
         qty_rows = [
             [
@@ -54,12 +60,15 @@ class XLSXExporter:
             ]
             for q in quantities
         ]
-        write_sheet(
-            "Cantidades",
-            ["Objeto", "Tipo", "Fórmula", "Expresión", "Bruta", "Desperdicio",
-             "Final", "Unidad", "Hash", "Calculado"],
-            qty_rows, [16, 10, 20, 34, 10, 12, 10, 8, 14, 20])
+        hojas.append({
+            "titulo": "Cantidades",
+            "headers": ["Objeto", "Tipo", "Fórmula", "Expresión", "Bruta",
+                        "Desperdicio", "Final", "Unidad", "Hash", "Calculado"],
+            "filas": qty_rows,
+            "anchos": [16, 10, 20, 34, 10, 12, 10, 8, 14, 20],
+        })
 
+        # Hoja 2: Presupuesto (si lo hay)
         if include_budget:
             budget = context.budget_repo.latest_budget(context.project.id)
             if budget:
@@ -83,26 +92,61 @@ class XLSXExporter:
                 rows.append(["", "", f"INDIRECTOS ({budget['indirect_pct']}%)", "", "", "", "", indirect])
                 rows.append(["", "", f"OTROS ({budget['other_pct']}%)", "", "", "", "", other])
                 rows.append(["", "", "TOTAL", "", "", "", "", round(budget["total_cost"], 2)])
-                write_sheet(
-                    "Presupuesto",
-                    ["Capítulo", "Partida", "Descripción", "Unidad", "Cantidad",
-                     "Rendimiento", "Precio unit.", "Costo"],
-                    rows, [10, 10, 42, 8, 12, 12, 12, 14])
+                hojas.append({
+                    "titulo": "Presupuesto",
+                    "headers": ["Capítulo", "Partida", "Descripción", "Unidad", "Cantidad",
+                                "Rendimiento", "Precio unit.", "Costo"],
+                    "filas": rows,
+                    "anchos": [10, 10, 42, 8, 12, 12, 12, 14],
+                })
 
-        # Sheet 3: Recursos y precios
+        # Hoja 3: Recursos y precios
         resources = context.budget_repo.list_resources(context.project.id)
-        plist_code = (context.budget_repo.latest_budget(context.project.id) or {}).get(
-            "price_list_code", "") if context.budget_repo.list_budgets(context.project.id) else ""
         res_rows = []
         for resource in resources:
             res_rows.append([
                 resource["code"], resource["name"], resource["type"], resource["unit"],
                 resource["category"],
             ])
-        write_sheet(
-            "Recursos",
-            ["Código", "Nombre", "Tipo", "Unidad", "Categoría"],
-            res_rows, [14, 34, 12, 8, 16])
+        hojas.append({
+            "titulo": "Recursos",
+            "headers": ["Código", "Nombre", "Tipo", "Unidad", "Categoría"],
+            "filas": res_rows,
+            "anchos": [14, 34, 12, 8, 16],
+        })
+        return hojas
+
+    # ------------------------------------------------------------------
+    # escritor openpyxl (camino clásico y fallback)
+    # ------------------------------------------------------------------
+
+    def _exportar_openpyxl(self, context, out_path: str,
+                           hojas: List[Dict[str, Any]]) -> str:
+        try:
+            from openpyxl import Workbook
+            from openpyxl.styles import Alignment, Font, PatternFill
+            from openpyxl.utils import get_column_letter
+        except ImportError as exc:  # pragma: no cover
+            raise ExportError(
+                message="openpyxl no está instalado; ejecute el bat de instalación de dependencias",
+                code="ARQ-EXP-040") from exc
+
+        wb = Workbook()
+        header_fill = PatternFill("solid", fgColor=self.HEADER_FILL)
+        header_font = Font(color=self.HEADER_FONT, bold=True)
+
+        for hoja in hojas:
+            ws = wb.create_sheet(hoja["titulo"][:31])
+            ws.append(hoja["headers"])
+            for cell in ws[1]:
+                cell.fill = header_fill
+                cell.font = header_font
+                cell.alignment = Alignment(horizontal="center")
+            for row in hoja["filas"]:
+                ws.append(row)
+            for index, width in enumerate(hoja["anchos"], start=1):
+                ws.column_dimensions[get_column_letter(index)].width = width
+            ws.freeze_panes = "A2"
 
         if "Sheet" in wb.sheetnames:
             del wb["Sheet"]

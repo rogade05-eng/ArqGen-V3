@@ -724,7 +724,7 @@ class TestGanchosVentana(ARQGenTestCase):
 
     def test_version_coherente_con_v3410(self):
         from ui import help as h
-        self.assertEqual(APP_VERSION, "3.47.0")
+        self.assertEqual(APP_VERSION, "3.50.0")
         self.assertIn("desde_dibujo", h.TOOLTIPS)
 
 

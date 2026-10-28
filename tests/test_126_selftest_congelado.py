@@ -10,7 +10,7 @@ post-build completo.
 Desde v3.8.1 esa verificación de texto se omite al vuelo congelado
 (mismo criterio honesto que los scripts .bat del check 27) y la línea
 OK lo declara («verificación de fuente omitida: ejecutable»). El resto
-de las aserciones de esos checks (49 a 96) sí corren en el exe.
+de las aserciones de esos checks (49 a 100) sí corren en el exe.
 
 Estas pruebas SIMULAN el ejecutable (sys.frozen=True + sys._MEIPASS
 apuntando a la raíz del proyecto, donde están resources/ y todo lo
@@ -127,7 +127,7 @@ class TestSelftestCongelado(ARQGenTestCase):
         ok, checks = _run_congelado()
         self.assertTrue(ok)
         # las 86 líneas de verificación salen íntegras también en el exe
-        self.assertEqual(len(checks), 96)
+        self.assertEqual(len(checks), 103)
 
     def test_salida_consola_sobrevive_cp1252(self):
         """v3.13.1: el selftest impreso aguanta una consola cp1252.

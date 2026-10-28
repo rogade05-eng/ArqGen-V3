@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>ARQ GEN — Generador de arquitectura</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="app.css" />
+</head>
+<body>
+<header id="cabecera">
+  <div id="marca">
+    <span id="logo">ARQ<span>GEN</span></span>
+    <span id="submarca">generador de arquitectura · offline · determinista</span>
+  </div>
+  <div id="cabecera-chips">
+    <span class="chip" id="estado">Conectando con el motor…</span>
+    <span class="chip oculto" id="chip-acelerador"></span>
+  </div>
+</header>
+
+<nav id="menu">
+  <button class="nav-btn activo" data-vista="inicio">Inicio</button>
+  <button class="nav-btn" data-vista="programa">1 · Programa</button>
+  <button class="nav-btn" data-vista="contorno">2 · Contorno</button>
+  <button class="nav-btn" data-vista="formas">3 · Forma</button>
+  <button class="nav-btn" data-vista="resultado">4 · Resultado</button>
+  <button class="nav-btn" data-vista="exportar">5 · Exportar</button>
+  <button class="nav-btn" data-vista="proyecto">Proyecto</button>
+</nav>
+
+<main id="principal">
+
+<!-- ============================================================= INICIO -->
+<section class="vista activa" id="vista-inicio">
+  <h1>ARQ GEN</h1>
+  <p class="lead">Asistente generativo de edificación: describa el programa,
+  el contorno y la forma; el motor empaqueta los locales con sus normas
+  (DNA), calcula la circulación y exporta a BIM/CAD.</p>
+  <div class="tarjetas">
+    <div class="tarjeta">
+      <h3>Motor</h3>
+      <div class="par"><span>Versión</span><b id="ini-version">—</b></div>
+      <div class="par"><span>Python</span><b id="ini-python">—</b></div>
+      <div class="par"><span>Acelerador</span><b id="ini-acelerador">—</b></div>
+      <div class="par"><span>Motor (exe)</span><b id="ini-ruta" class="mono chica">—</b></div>
+    </div>
+    <div class="tarjeta">
+      <h3>Flujo de trabajo</h3>
+      <ol class="pasos">
+        <li><b>Programa</b>: texto rápido («dormitorio, 2 baño, cocina…»)
+            o fichas por uso con cantidades.</li>
+        <li><b>Contorno</b>: la parcela o el local donde encajar
+            (rectángulo, L, T, U o vértices a mano).</li>
+        <li><b>Forma</b>: encaje simple, planta radial, torre en Y,
+            hospital en X, multi-ala o rejilla tipo.</li>
+        <li><b>Resultado</b>: planta SVG por niveles con métricas explicadas.</li>
+        <li><b>Exportar</b>: IFC, DXF, DXF R12, JSON, CSV, XLSX y SVG
+            + instantánea del proyecto.</li>
+      </ol>
+    </div>
+    <div class="tarjeta">
+      <h3>Principios</h3>
+      <ul class="lista">
+        <li>Determinista: el mismo pedido da la misma planta.</li>
+        <li>Offline: sin red, sin IA, sin AutoCAD.</li>
+        <li>Trazable: cada decisión del motor llega con su aviso.</li>
+        <li>Normas vivas: el DNA fija mínimos (área, ancho, flujos).</li>
+      </ul>
+    </div>
+  </div>
+  <p class="pie-vista">
+    <button class="primario" data-ir="programa">Empezar →</button>
+  </p>
+</section>
+
+<!-- =========================================================== PROGRAMA -->
+<section class="vista" id="vista-programa">
+  <h1>1 · Programa</h1>
+  <p class="lead">¿Qué se construye? Texto rápido o fichas por uso.</p>
+
+  <div class="fila">
+    <label class="radio"><input type="radio" name="modo-programa"
+      value="texto" checked /> Texto rápido</label>
+    <label class="radio"><input type="radio" name="modo-programa"
+      value="fichas" /> Fichas por uso</label>
+  </div>
+
+  <div id="bloque-texto">
+    <label for="quick-texto">Quick-spec (vocabulario en español)</label>
+    <textarea id="quick-texto" rows="3"
+      placeholder="dormitorio, 2 baño, cocina, sala, patio, garaje">dormitorio, bano, cocina, sala, patio</textarea>
+    <div class="ayuda">Nombres conocidos: dormitorio, baño/bano, aseo,
+    cocina, sala, comedor, garaje, patio, lavadero, estudio, despacho,
+    vestíbulo… Cantidades con número: «2 baño», «3 dormitorio».
+    Niveles: «2 niveles».</div>
+  </div>
+
+  <div id="bloque-fichas" class="oculto">
+    <table id="tabla-fichas">
+      <thead><tr><th>Uso (space_type)</th><th>Cantidad</th><th></th></tr></thead>
+      <tbody></tbody>
+    </table>
+    <button class="secundario" id="btn-ficha">+ Añadir ficha</button>
+    <div class="ayuda">El desplegable lista el catálogo DNA del motor
+    (<span id="cuenta-catalogo">…</span> usos).</div>
+  </div>
+
+  <div class="fila">
+    <div>
+      <label for="nombre-prog">Nombre del edificio</label>
+      <input type="text" id="nombre-prog" value="Edificio ARQ GEN" />
+    </div>
+  </div>
+  <p class="pie-vista">
+    <button class="secundario" data-ir="inicio">← Inicio</button>
+    <button class="primario" data-ir="contorno">Contorno →</button>
+  </p>
+</section>
+
+<!-- =========================================================== CONTORNO -->
+<section class="vista" id="vista-contorno">
+  <h1>2 · Contorno</h1>
+  <p class="lead">Dónde encaja: la parcela o el local, en metros y en el
+  sentido de las agujas del reloj.</p>
+
+  <div class="fila envuelve" id="preset-contornos">
+    <button class="ficha-preset" data-preset="rect">Rectángulo 24×12</button>
+    <button class="ficha-preset" data-preset="l">En L 18×14</button>
+    <button class="ficha-preset" data-preset="t">En T 24×16</button>
+    <button class="ficha-preset" data-preset="u">En U 20×14</button>
+  </div>
+
+  <label for="json-contorno">Vértices [[x, y], …]</label>
+  <textarea id="json-contorno" rows="4" class="mono"></textarea>
+  <div id="aviso-contorno" class="aviso oculto"></div>
+  <div class="dos-col">
+    <div>
+      <h3>Vista previa</h3>
+      <svg id="prev-contorno" viewBox="0 0 420 240" role="img"
+        aria-label="Vista previa del contorno"></svg>
+    </div>
+    <div>
+      <h3>Medidas</h3>
+      <div id="medidas-contorno" class="par-lista"></div>
+      <div class="ayuda">En los modos radial / torre Y / hospital X el
+      contorno no se usa: la forma define su propia geometría. Multi-ala
+      usa los contornos de la pestaña Forma.</div>
+    </div>
+  </div>
+  <p class="pie-vista">
+    <button class="secundario" data-ir="programa">← Programa</button>
+    <button class="primario" data-ir="formas">Forma →</button>
+  </p>
+</section>
+
+<!-- ============================================================== FORMA -->
+<section class="vista" id="vista-formas">
+  <h1>3 · Forma</h1>
+  <p class="lead">Cómo se organiza el programa dentro del espacio.</p>
+
+  <div class="fila envuelve" id="modos-forma">
+    <button class="ficha-preset activo" data-modo="simple">Encaje simple</button>
+    <button class="ficha-preset" data-modo="radial">Radial</button>
+    <button class="ficha-preset" data-modo="y">Torre en Y</button>
+    <button class="ficha-preset" data-modo="x">Hospital en X</button>
+    <button class="ficha-preset" data-modo="zonas">Multi-ala</button>
+    <button class="ficha-preset" data-modo="rejilla">Rejilla tipo</button>
+  </div>
+
+  <!-- simple -->
+  <div class="panel-forma" data-panel="simple">
+    <div class="fila envuelve">
+      <div><label>Ajuste del programa</label>
+        <select id="ajuste">
+          <option value="ideal" selected>Ideal (áreas preferentes)</option>
+          <option value="minimo">Mínimo (DNA al mínimo)</option>
+          <option value="medio">Medio</option>
+          <option value="estricto">Estricto (sin reducción)</option>
+        </select></div>
+      <label class="radio"><input type="checkbox" id="chaflanes" checked />
+        Chaflanes 45°</label>
+      <label class="radio"><input type="checkbox" id="patio" />
+        Patio doméstico</label>
+    </div>
+  </div>
+
+  <!-- radial -->
+  <div class="panel-forma oculto" data-panel="radial">
+    <div class="fila envuelve">
+      <div><label>Radio exterior (m)</label>
+        <input type="number" id="rad-radio-ext" value="14" min="4" step="0.5" /></div>
+      <div><label>Radio núcleo (m)</label>
+        <input type="number" id="rad-nucleo" value="3" min="0" step="0.5" /></div>
+      <div><label>Corredor (m)</label>
+        <input type="number" id="rad-corredor" value="1.6" min="0" step="0.1" /></div>
+      <div><label>Sectores (3-36)</label>
+        <input type="number" id="rad-sectores" value="8" min="3" max="36" /></div>
+      <div><label>Niveles (1-20)</label>
+        <input type="number" id="rad-niveles" value="1" min="1" max="20" /></div>
+    </div>
+    <div class="ayuda">N locales alrededor de un núcleo circular con
+    corredor anular. El programa necesita vestíbulo/entrada para el núcleo.</div>
+  </div>
+
+  <!-- torre Y -->
+  <div class="panel-forma oculto" data-panel="y">
+    <div class="fila envuelve">
+      <div><label>Radio núcleo (m)</label>
+        <input type="number" id="y-nucleo" value="7" min="4" step="0.5" /></div>
+      <div><label>Largo ala (m)</label>
+        <input type="number" id="y-largo" value="16" min="3" step="0.5" /></div>
+      <div><label>Ancho ala (m)</label>
+        <input type="number" id="y-ancho" value="11" min="8" step="0.5" /></div>
+      <div><label>Nº alas</label>
+        <input type="number" id="y-alas" value="3" min="3" max="8" /></div>
+      <div><label>Corredor (m)</label>
+        <input type="number" id="y-corredor" value="1.5" min="0" step="0.1" /></div>
+      <div><label>Niveles (1-20)</label>
+        <input type="number" id="y-niveles" value="1" min="1" max="20" /></div>
+    </div>
+    <div><label>Largos desiguales por ala (opcional, separados por comas)</label>
+      <input type="text" id="y-largos" placeholder="18, 13, 20" /></div>
+    <div class="ayuda">La torre en Y real: núcleo circular con vestíbulo,
+    alas radiantes con corredor central y locales a ambos lados.</div>
+  </div>
+
+  <!-- hospital X -->
+  <div class="panel-forma oculto" data-panel="x">
+    <div class="fila envuelve">
+      <div><label>Largo barra (m)</label>
+        <input type="number" id="x-largo" value="64" min="6" step="1" /></div>
+      <div><label>Ancho barra (m)</label>
+        <input type="number" id="x-ancho" value="14" min="4" step="0.5" /></div>
+      <div><label>Corredor (m)</label>
+        <input type="number" id="x-corredor" value="2" min="0" step="0.1" /></div>
+      <div><label>Ángulo (grados)</label>
+        <input type="number" id="x-angulo" value="45" min="0" max="90" step="5" /></div>
+      <div><label>Niveles (1-20)</label>
+        <input type="number" id="x-niveles" value="1" min="1" max="20" /></div>
+    </div>
+    <div class="ayuda">Hospital en X real: dos barras perpendiculares que
+    se cruzan; el cruce es el hub central y los locales van a ambos lados
+    de cada corredor.</div>
+  </div>
+
+  <!-- multi-ala -->
+  <div class="panel-forma oculto" data-panel="zonas">
+    <table id="tabla-alas">
+      <thead><tr><th>Contorno del ala [[x,y],…]</th><th>Rol</th><th></th></tr></thead>
+      <tbody></tbody>
+    </table>
+    <button class="secundario" id="btn-ala">+ Añadir ala</button>
+    <div class="ayuda">Multi-ala: reparte UN programa entre N contornos;
+    los hubs públicos van al ala principal (la primera).</div>
+  </div>
+
+  <!-- rejilla -->
+  <div class="panel-forma oculto" data-panel="rejilla">
+    <div class="fila envuelve">
+      <div><label>Columnas</label>
+        <input type="number" id="rj-columnas" value="3" min="1" max="8" /></div>
+      <div><label>Filas (v3.44: 2)</label>
+        <input type="number" id="rj-filas" value="2" min="2" max="2" /></div>
+      <div><label>Pasillo central (m)</label>
+        <input type="number" id="rj-pasillo" value="1.6" min="0" step="0.1" /></div>
+    </div>
+    <div class="ayuda">Edificio tipo: repite LA MISMA unidad (el programa)
+    en cada celda de la rejilla del contorno rectangular.</div>
+  </div>
+
+  <p class="pie-vista">
+    <button class="primario" id="btn-generar">GENERAR →</button>
+    <button class="secundario" data-ir="contorno">← Contorno</button>
+  </p>
+  <div id="aviso-generar" class="aviso error oculto"></div>
+</section>
+
+<!-- ========================================================== RESULTADO -->
+<section class="vista" id="vista-resultado">
+  <h1>4 · Resultado</h1>
+  <div id="sin-resultado" class="aviso">Todavía no hay generación:
+  pulse <b>GENERAR</b> en la pestaña Forma.</div>
+  <div id="con-resultado" class="oculto">
+    <div id="chips-kpi" class="chips"></div>
+    <div id="tabs-contenedor" class="tabs oculto"></div>
+    <div class="dos-col">
+      <div>
+        <svg id="plano" role="img" aria-label="Planta generada"></svg>
+      </div>
+      <div id="panel-lateral">
+        <h3>Métricas</h3>
+        <div id="metricas" class="par-lista"></div>
+        <h3>Locales del nivel</h3>
+        <div id="tabla-locales"></div>
+      </div>
+    </div>
+    <h3>Chaflanes y avisos</h3>
+    <div id="avisos"></div>
+  </div>
+  <p class="pie-vista">
+    <button class="secundario" data-ir="formas">← Forma</button>
+    <button class="primario" data-ir="exportar">Exportar →</button>
+  </p>
+</section>
+
+<!-- =========================================================== EXPORTAR -->
+<section class="vista" id="vista-exportar">
+  <h1>5 · Exportar</h1>
+  <p class="lead">Del resultado a archivos reales: el motor aplica el
+  plan a un proyecto y escribe los formatos.</p>
+  <div id="sin-resultado-exp" class="aviso">Necesita un resultado
+  (GENERAR) antes de exportar.</div>
+  <div id="con-exportar" class="oculto">
+    <div class="fila envuelve">
+      <div class="crece">
+        <label for="exp-carpeta">Carpeta de destino</label>
+        <input type="text" id="exp-carpeta" class="mono"
+          placeholder="C:\Users\…\Downloads" /></div>
+      <div><label for="exp-base">Nombre base</label>
+        <input type="text" id="exp-base" value="proyecto_arqgen" /></div>
+    </div>
+    <h3>Formatos</h3>
+    <div class="fila envuelve" id="exp-formatos">
+      <label class="radio"><input type="checkbox" value="IFC" checked /> IFC (BIM)</label>
+      <label class="radio"><input type="checkbox" value="DXF" checked /> DXF R2010</label>
+      <label class="radio"><input type="checkbox" value="DXF_R12" /> DXF R12</label>
+      <label class="radio"><input type="checkbox" value="XLSX" checked /> XLSX</label>
+      <label class="radio"><input type="checkbox" value="JSON" /> JSON</label>
+      <label class="radio"><input type="checkbox" value="CSV" /> CSV</label>
+      <label class="radio"><input type="checkbox" value="SVG" /> SVG</label>
+    </div>
+    <h3>Opciones</h3>
+    <div class="fila envuelve">
+      <label class="radio"><input type="checkbox" id="exp-muros" checked />
+        Trazar muros</label>
+      <label class="radio"><input type="checkbox" id="exp-proyecto" checked />
+        Instantánea del proyecto (JSON)</label>
+      <label> Mobiliario
+        <select id="exp-mobiliario">
+          <option value="auto" selected>Automático (vivienda sí)</option>
+          <option value="si">Sí</option>
+          <option value="no">No</option>
+        </select></label>
+    </div>
+    <p class="pie-vista">
+      <button class="primario" id="btn-exportar">EXPORTAR</button>
+    </p>
+    <div id="aviso-exportar" class="aviso error oculto"></div>
+    <div id="exp-resultado" class="oculto">
+      <h3>Archivos generados</h3>
+      <table id="tabla-archivos"><thead>
+        <tr><th>Formato</th><th>Archivo</th><th>Tamaño</th></tr>
+      </thead><tbody></tbody></table>
+      <div id="exp-errores"></div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================== PROYECTO -->
+<section class="vista" id="vista-proyecto">
+  <h1>Proyecto</h1>
+  <p class="lead">Abrir una instantánea ARQ_GEN_SNAPSHOT exportada
+  (…_proyecto.json): lectura y recuentos, sin cambios.</p>
+  <input type="file" id="fichero-proyecto" accept=".json,application/json" />
+  <div id="proyecto-info" class="oculto">
+    <h3>Resumen</h3>
+    <div class="par-lista" id="proyecto-datos"></div>
+    <h3>Recuento de entidades</h3>
+    <div id="proyecto-recuentos" class="chips"></div>
+    <div id="proyecto-errores"></div>
+  </div>
+  <div class="ayuda">Para importar de verdad al motor use el CLI:
+  <span class="mono">ARQ_GEN import &lt;archivo&gt;</span>. La UI FASE C
+  lee y muestra; el import transaccional vive en el motor.</div>
+</section>
+
+</main>
+
+<footer id="pie">
+  <span id="pie-estado">ARQ GEN — Fase C (UI web sobre sidecar JSON-RPC)</span>
+  <span id="pie-error" class="oculto"></span>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

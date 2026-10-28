@@ -1,4 +1,4 @@
-"""Y DESIGUAL + NIVELES v3.47.0 — domain/radial.py.
+"""Y DESIGUAL + NIVELES v3.48.0 — domain/radial.py.
 
 ``largos_alas`` en ``plan_y``: la estrella radial de alas de
 longitudes DESIGUALES (el hospital oncológico de referencia: brazos

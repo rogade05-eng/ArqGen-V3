@@ -87,10 +87,11 @@ publicado en la pestaña **Releases** del repositorio.
 | 1. Checkout | Descarga tu código | — |
 | 2. Python 3.13 | Prepara el intérprete con caché | — |
 | 3. Dependencias | Instala ezdxf, openpyxl y PyInstaller | Run rojo (reintenta: Re-run) |
-| 4. Suite de pruebas | Las 2.579 pruebas del motor | **No bloquea**: queda marcado en amarillo y el exe se compila igual (el log completo queda en el artefacto `logs_pruebas_ci`) |
-| 5. PyInstaller | Empaqueta con `ARQ_GEN.spec` (el espejo exacto del 03_COMPILAR.bat, con la exclusión de bindings Qt que evita el error «multiple Qt bindings») | Run rojo — es el paso raro de fallar |
-| 6. Selftest del exe | El propio `ARQ_GEN.exe` ejecuta sus **96 comprobaciones** internas y verifica recursos dentro del bundle | Run rojo: el exe no se considera fiable y NO se sube |
-| 7. Artefacto | Sube `ARQ_GEN_Windows_x64.zip` a la página del run | — |
+| 4. Acelerador Rust (FASE B) | Compila el crate `arqgen_core` con maturin e instálalo — **opcional**: si falla, el run sigue y el exe sale en modo Python puro (todo funciona, sin la aceleración) | Paso amarillo, run verde |
+| 5. Suite de pruebas | Las 2.644 pruebas del motor | **No bloquea**: queda marcado en amarillo y el exe se compila igual (el log completo queda en el artefacto `logs_pruebas_ci`) |
+| 6. PyInstaller | Empaqueta con `ARQ_GEN.spec` (el espejo exacto del 03_COMPILAR.bat, con la exclusión de bindings Qt que evita el error «multiple Qt bindings») | Run rojo — es el paso raro de fallar |
+| 7. Selftest del exe | El propio `ARQ_GEN.exe` ejecuta sus **103 comprobaciones** internas y verifica recursos dentro del bundle (la 98 te dice si el exe lleva el acelerador Rust o va en modo Python; las 101-103 son la FASE C: catálogo/formas especiales/exportación por RPC) | Run rojo: el exe no se considera fiable y NO se sube |
+| 8. Artefacto | Sube `ARQ_GEN_Windows_x64.zip` a la página del run | — |
 
 Diseño deliberado: la **puerta de calidad que bloquea es el selftest del
 ejecutable** (lo mismo que hace tu 03_COMPILAR.bat local en la etapa 3), no
@@ -98,6 +99,14 @@ la suite CI completa, para que un retoque de entorno en la nube nunca te
 deje sin .exe.
 
 ## 6. Problemas frecuentes
+
+- **«all actions must be pinned to a full-length commit SHA»:** tu
+  repositorio (u organización) exige que cada action vaya fijada a un SHA
+  de commit completo, no a etiquetas como `@v4`. Desde v3.48.0 los dos
+  workflows de ARQ GEN ya van pinned (checkout v4.4.0, setup-python v5.6.0,
+  upload-artifact v4.6.2, download-artifact v4.3.0, gh-release v2.6.2);
+  si añades actions nuevas, fíjalas igual: copia el SHA de la página del
+  release de la action y usa `uses: owner/action@<sha-completo>`.
 
 - **La pestaña Actions no aparece o los runs no arrancan:** los repos
   **públicos** tienen Actions gratis e ilimitado. En los **privados** el
@@ -107,6 +116,9 @@ deje sin .exe.
 - **El run quedó verde pero con un paso amarillo:** normal si la suite de
   pruebas tuvo fallos en la nube. El exe está bien (pasó el selftest);
   el detalle está en el artefacto `logs_pruebas_ci`.
+- **El paso amarillo del «Acelerador Rust FASE B»:** no es un error. Si el
+  toolchain de Rust no cooperó en la nube, el exe se compila igual en modo
+  Python puro (el selftest del exe lo declara en el resumen del run).
 - **«ARQ_GEN_Windows_x64» no aparece:** solo aparece cuando el run ya
   terminó en verde. Refresca la página.
 - **Windows marca el exe como desconocido:** es normal en exes sin

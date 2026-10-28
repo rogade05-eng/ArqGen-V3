@@ -1,4 +1,4 @@
-"""HOSPITAL EN X REAL v3.47.0 — domain/radial.py.
+"""HOSPITAL EN X REAL v3.48.0 — domain/radial.py.
 
 ``plan_x`` genera la X real de la referencia (dos barras
 perpendiculares que se CRUZAN por el centro, el cruce es el HUB con
@@ -252,7 +252,7 @@ class TestPlanXErrores(unittest.TestCase):
         self.assertEqual(cm.exception.code, "ARQ-DDI-012")
 
     def test_version(self):
-        self.assertEqual(APP_VERSION, "3.47.0")
+        self.assertEqual(APP_VERSION, "3.50.0")
 
 
 class TestAplicarX(ARQGenTestCase):

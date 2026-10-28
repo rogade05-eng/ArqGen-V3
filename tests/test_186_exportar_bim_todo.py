@@ -1,4 +1,4 @@
-"""EXPORTAR TODO A BIM (v3.47.0) — IFC + DXF de todo lo generado.
+"""EXPORTAR TODO A BIM (v3.48.0) — IFC + DXF de todo lo generado.
 
 La petición del usuario era literal: «no tengo una manera de exportar
 todo lo generado a un formato BIM ó IFC, ó dxf». La sonda end-to-end
@@ -96,7 +96,7 @@ class TestMurosDegenerados(ARQGenTestCase):
 
 
 class TestExportarTodo(ARQGenTestCase):
-    """El paquete BIM + planos en una carpeta (v3.47.0)."""
+    """El paquete BIM + planos en una carpeta (v3.48.0)."""
 
     def _aplicar_casa(self, ctx):
         prog = dd.programa_quick(
@@ -187,7 +187,7 @@ class TestExportarTodo(ARQGenTestCase):
 class TestContratos(unittest.TestCase):
 
     def test_version_3460(self):
-        self.assertEqual(APP_VERSION, "3.47.0")
+        self.assertEqual(APP_VERSION, "3.50.0")
 
 
 if __name__ == "__main__":

@@ -367,7 +367,7 @@ class TestContratos(unittest.TestCase):
                          "estricto")
 
     def test_version_coherente_con_v3430(self):
-        self.assertEqual(APP_VERSION, "3.47.0")
+        self.assertEqual(APP_VERSION, "3.50.0")
 
 
 @unittest.skipUnless(DISPLAY, "sin display: pruebas Tk omitidas")

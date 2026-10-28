@@ -636,5 +636,5 @@ class TestVentanaV38(ARQGenTestCase):
 
     @unittest.skipUnless(DISPLAY, "requiere display Tk (Xvfb)")
     def test_version_coherente_con_v3410(self):
-        self.assertEqual(APP_VERSION, "3.47.0")
+        self.assertEqual(APP_VERSION, "3.50.0")
         self.assertIn(APP_VERSION, self.window.title())

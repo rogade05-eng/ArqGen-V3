@@ -1,0 +1,9 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Permisos base de la ventana principal de ARQ GEN (los comandos propios de la app no requieren plugins; este capability habilita el nucleo).",
+  "windows": ["main"],
+  "permissions": [
+    "core:default"
+  ]
+}

@@ -1,0 +1,144 @@
+# ============================================================================
+#  ARQ GEN - COMPILACION TAURI 2 EN GITHUB (FASE A)
+#  Produce el shell Tauri (instalador NSIS + zip portable) con el motor
+#  Python como sidecar dentro, segun la arquitectura del «ARQ GEN TAURI.txt»:
+#    1. Humo del canal RPC    : ping JSON-RPC por proceso (main.py rpc)
+#    2. Sidecar               : PyInstaller con ARQ_GEN.spec -> dist/ARQ_GEN
+#    3. Shell                 : cargo tauri build (NSIS, recursos engine/)
+#  Politica del repo: actions PINNED a SHA completo (ver compilar.yml).
+#  Trigger: manual (Run workflow) y etiquetas v* (el push de main ya
+#  compila el exe clasico con compilar.yml; duplicarlo aqui lo ralentiza).
+# ============================================================================
+
+name: Compilar ARQ GEN Tauri (Windows)
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+concurrency:
+  group: tauri-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  tauri:
+    name: Shell Tauri + sidecar
+    runs-on: windows-latest
+    timeout-minutes: 180
+    steps:
+      - name: Descargar el codigo del repositorio
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      - name: Instalar Python 3.13
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: '3.13'
+          cache: 'pip'
+
+      - name: Instalar dependencias
+        shell: pwsh
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt -r requirements-build.txt
+
+      - name: 'Paso 1 - Humo del canal JSON-RPC (ping por proceso)'
+        shell: pwsh
+        env:
+          PYTHONIOENCODING: utf-8
+        run: |
+          $salida = '{"jsonrpc":"2.0","id":1,"method":"ping","params":{}}' | python main.py rpc
+          Write-Host "Respuesta: $salida"
+          if ($salida -notmatch '"pong":true') {
+            throw "El canal RPC del sidecar no respondio pong: $salida"
+          }
+
+      - name: 'Paso 2 - Compilar el sidecar (motor PyInstaller, spec espejo)'
+        shell: pwsh
+        run: python -m PyInstaller --noconfirm --clean ARQ_GEN.spec
+
+      - name: Verificar el selftest del sidecar
+        shell: pwsh
+        env:
+          PYTHONIOENCODING: utf-8
+        run: python compilar_bundle.py --verify-only --dist dist
+
+      - name: 'Paso 3 - Herramientas Rust'
+        shell: pwsh
+        run: |
+          rustup default stable
+          cargo --version
+          rustc --version
+          cargo install tauri-cli --version 2 --locked
+
+      - name: 'Paso 4 - Compilar el shell Tauri (NSIS + recursos engine/)'
+        shell: pwsh
+        env:
+          PYTHONIOENCODING: utf-8
+        run: cargo tauri build
+
+      - name: Preparar el ZIP portable (shell + engine/)
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path stage\engine | Out-Null
+          Copy-Item dist\ARQ_GEN\* stage\engine\ -Recurse -Force
+          Copy-Item src-tauri\target\release\ARQ_GEN.exe stage\ -Force
+          Compress-Archive -Path stage\* -DestinationPath ARQ_GEN_Tauri_Portable.zip -Force
+
+      - name: Subir el instalador NSIS
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: ARQ_GEN_Tauri_Installer
+          path: src-tauri/target/release/bundle/nsis/*.exe
+          retention-days: 90
+          if-no-files-found: error
+
+      - name: Subir el ZIP portable
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: ARQ_GEN_Tauri_Portable
+          path: ARQ_GEN_Tauri_Portable.zip
+          retention-days: 90
+          if-no-files-found: error
+
+      - name: Resumen del run
+        if: ${{ always() }}
+        shell: pwsh
+        run: |
+          $lineas = @('## Compilacion Tauri ARQ GEN')
+          $lineas += ''
+          $lineas += '- Instalador NSIS: artefacto **ARQ_GEN_Tauri_Installer** (shell Tauri + motor Python dentro)'
+          $lineas += '- Portable: artefacto **ARQ_GEN_Tauri_Portable** (descomprimir y ejecutar ARQ_GEN.exe)'
+          $lineas += '- El canal JSON-RPC del sidecar se valido con un ping real antes de compilar'
+          Add-Content -Path $env:GITHUB_STEP_SUMMARY -Value ($lineas -join [Environment]::NewLine)
+
+  release:
+    name: Release permanente (solo etiquetas v*)
+    needs: tauri
+    if: ${{ startsWith(github.ref, 'refs/tags/v') }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Descargar el instalador
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: ARQ_GEN_Tauri_Installer
+
+      - name: Descargar el portable
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: ARQ_GEN_Tauri_Portable
+
+      - name: Publicar el Release
+        uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2.6.2
+        with:
+          files: |
+            *.exe
+            *.zip
+          body: |
+            ARQ GEN - shell Tauri 2 (FASE A) compilado automaticamente.
+
+            - **ARQ_GEN_x64-setup.exe**: instalador NSIS (shell + motor dentro)
+            - **ARQ_GEN_Tauri_Portable.zip**: descomprimir y ejecutar ARQ_GEN.exe
+            - Sin instalacion, sin Python, sin internet

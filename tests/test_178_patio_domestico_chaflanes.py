@@ -256,7 +256,7 @@ class TestChaflanesV3431(unittest.TestCase):
 class TestContratosV3431(unittest.TestCase):
 
     def test_version_coherente_con_v3431(self):
-        self.assertEqual(APP_VERSION, "3.47.0")
+        self.assertEqual(APP_VERSION, "3.50.0")
 
 
 if __name__ == "__main__":
