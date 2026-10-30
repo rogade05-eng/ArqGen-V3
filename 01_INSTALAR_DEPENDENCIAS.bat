@@ -7,7 +7,7 @@ rem =====================================================================
 rem  ARQ GEN - 01_INSTALAR_DEPENDENCIAS.bat
 rem  Ejecutar UNA sola vez (requiere internet solo aqui).
 rem  Crea el entorno virtual .venv e instala:
-rem    - requirements.txt        (ezdxf, openpyxl  -> ejecucion)
+rem    - requirements.txt        (ezdxf, openpyxl, matplotlib -> ejecucion)
 rem    - requirements-build.txt  (pyinstaller      -> compilacion)
 rem  Despues de esto, ARQ GEN funciona 100%% offline.
 rem  Registro completo en logs\setup\.
@@ -114,7 +114,7 @@ if errorlevel 1 (
 rem --- Verificar importaciones --------------------------------------------
 echo Verificando importaciones ...
 >>"%LOG%" echo [INFO] Verificacion de importaciones
-"%PYEXE%" -c "import ezdxf, openpyxl; print('ezdxf', ezdxf.__version__, '| openpyxl', openpyxl.__version__)" >> "%LOG%" 2>&1
+"%PYEXE%" -c "import ezdxf, openpyxl, matplotlib; print('ezdxf', ezdxf.__version__, '| openpyxl', openpyxl.__version__, '| matplotlib', matplotlib.__version__)" >> "%LOG%" 2>&1
 if errorlevel 1 (
     >>"%LOG%" echo [ERROR] Las dependencias no se importan correctamente.
     echo ERROR de importacion. Detalle:
@@ -129,7 +129,7 @@ rem --- Congelar versiones instaladas ---------------------------------------
 >>"%LOG%" echo [INFO] Versiones congeladas en logs\setup\pip_freeze_%STAMP%.txt
 
 set "LIBS=desconocidas"
-for /f "usebackq tokens=*" %%v in (`"%PYEXE%" -c "import ezdxf,openpyxl;print('ezdxf '+ezdxf.__version__+' / openpyxl '+openpyxl.__version__)" 2^>nul`) do set "LIBS=%%v"
+for /f "usebackq tokens=*" %%v in (`"%PYEXE%" -c "import ezdxf,openpyxl,matplotlib;print('ezdxf '+ezdxf.__version__+' / openpyxl '+openpyxl.__version__+' / matplotlib '+matplotlib.__version__)" 2^>nul`) do set "LIBS=%%v"
 
 echo.
 echo ============================================================

@@ -104,8 +104,8 @@ if errorlevel 1 (
 rem --- 4) Guardar eleccion (ruta completa; el resto de los .bat la cita) ---
 >"%CFG%\python_home.txt" echo %PYEXE%
 >>"%LOG%" echo [INFO] Interprete guardado en %CFG%\python_home.txt
->>"%LOG%" echo [INFO] Comprobando biblioteca estandar (sqlite3, json, logging, unittest)...
-"%PYEXE%" -c "import sqlite3, json, logging, unittest; print('stdlib OK')" >> "%LOG%" 2>&1
+>>"%LOG%" echo [INFO] Comprobando biblioteca estandar (sqlite3, json, logging, unittest, tkinter)...
+"%PYEXE%" -c "import sqlite3, json, logging, unittest, tkinter; print('stdlib OK')" >> "%LOG%" 2>&1
 if errorlevel 1 (
     >>"%LOG%" echo [ERROR] La biblioteca estandar no responde correctamente.
     type "%LOG%"

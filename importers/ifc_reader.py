@@ -4,7 +4,8 @@ Complemento del exportador (exporters.ifc_exporter): lee un archivo
 .ifc de TEXTO (STEP Physical File), resuelve las unidades, las
 colocaciones anidadas (IfcLocalPlacement), las extrusiones
 (IfcExtrudedAreaSolid con perfil rectangular o poligonal) y
-reconstruye NIVELES, MUROS, LOCALES, PUERTAS y VENTANAS sobre el
+reconstruye NIVELES, MUROS, LOCALES, PUERTAS y VENTANAS, y las
+escaleras exportadas por ARQ GEN con su Pset paramétrico, sobre el
 proyecto actual a través de services.architecture_service
 (ArchitectureService) — mismos comandos, códigos ARQ-XXX-nnn,
 auditoría y undo que el resto de la app. Nada de dependencias nuevas:
@@ -47,6 +48,7 @@ _CLASE_LOSA = ("IFCSLAB",)
 _CLASE_LOCAL = ("IFCSPACE",)
 _CLASE_PUERTA = ("IFCDOOR",)
 _CLASE_VENTANA = ("IFCWINDOW",)
+_CLASE_ESCALERA = ("IFCSTAIR",)
 
 
 # -- errores -------------------------------------------------------------------
@@ -140,6 +142,30 @@ def _partir_args(cuerpo: str) -> List[str]:
     return tokens
 
 
+def _step_text_decode(texto: str) -> str:
+    """Decodifica cadenas Unicode STEP X2/X4 y barras literales."""
+    salida = []
+    i = 0
+    while i < len(texto):
+        if texto[i:i+2] == "\\\\":
+            salida.append("\\")
+            i += 2
+        elif texto[i:i+4] in ("\\X2\\", "\\X4\\"):
+            fin = texto.find("\\X0\\", i + 4)
+            if fin != -1:
+                try:
+                    raw = bytes.fromhex(texto[i+4:fin])
+                    salida.append(raw.decode("utf-16-be" if texto[i+1:i+3] == "X2" else "utf-32-be"))
+                    i = fin + 4
+                    continue
+                except (ValueError, UnicodeDecodeError):
+                    pass
+            salida.append(texto[i]); i += 1
+        else:
+            salida.append(texto[i]); i += 1
+    return "".join(salida)
+
+
 def _parsear_token(tok: str) -> Any:
     """Convierte un token crudo SPF a Python (recursivo para listas).
 
@@ -152,7 +178,7 @@ def _parsear_token(tok: str) -> Any:
     if tok == "*":
         return "*"
     if tok.startswith("'") and tok.endswith("'") and len(tok) >= 2:
-        return tok[1:-1].replace("''", "'")
+        return _step_text_decode(tok[1:-1].replace("''", "'"))
     if tok.startswith("(") and tok.endswith(")"):
         return [_parsear_token(t) for t in _partir_args(tok[1:-1])]
     if tok.startswith(".") and tok.endswith(".") and len(tok) >= 3:
@@ -355,6 +381,10 @@ class IfcImporter:
         spf = self._cargar(path)
         escala = self._escala(spf)
         solidos, avisos = self._solidos(spf, escala)
+        parametros = self._parametros_escaleras(spf)
+        sin_parametros = sum(1 for s in solidos if s.clase == "STAIR" and not parametros.get(s.eid))
+        if sin_parametros:
+            avisos.append("%d escalera(s) sin parámetros ARQ GEN no se pueden reconstruir como editables." % sin_parametros)
         return {
             "schema": spf.schema(),
             "unidad": _nombre_unidad(escala),
@@ -364,6 +394,7 @@ class IfcImporter:
             "doors": sum(1 for s in solidos if s.clase == "DOOR"),
             "windows": sum(1 for s in solidos if s.clase == "WINDOW"),
             "slabs": sum(1 for s in solidos if s.clase == "SLAB"),
+            "stairs": sum(1 for s in solidos if s.clase == "STAIR"),
             "otros": sum(1 for s in solidos if s.clase == "OTRO"),
             "avisos": avisos,
         }
@@ -380,7 +411,8 @@ class IfcImporter:
         resumen: Dict[str, Any] = {
             "niveles": 0, "niveles_reutilizados": 0, "muros": 0,
             "locales": 0, "puertas": 0, "ventanas": 0,
-            "losas_omitidas": 0, "otros_omitidos": 0, "avisos": avisos,
+            "losas_omitidas": 0, "otros_omitidos": 0, "escaleras": 0,
+            "escaleras_omitidas": 0, "avisos": avisos,
         }
         # -- niveles por cota -------------------------------------------
         storeys: List[Tuple[int, str, float]] = []
@@ -399,7 +431,7 @@ class IfcImporter:
         niveles: Dict[int, str] = {}
         alturas: Dict[int, float] = {}
         for s in solidos:
-            if s.storey_ref and s.altura > 0.0:
+            if s.storey_ref and s.altura > 0.0 and s.clase != "STAIR":
                 alturas[s.storey_ref] = max(
                     alturas.get(s.storey_ref, 0.0), s.altura)
         existentes: Dict[str, str] = {}
@@ -425,6 +457,7 @@ class IfcImporter:
             cotas[nivel.name] = float(getattr(nivel, "elevation_m", 0.0)
                                       or 0.0)
         # -- muros, locales, losas/otros ---------------------------------
+        parametros_escalera = self._parametros_escaleras(spf)
         muros_creados: Dict[int, Any] = {}
         for indice, solido in enumerate(solidos):
             if solido.clase == "WALL":
@@ -466,6 +499,15 @@ class IfcImporter:
                                   % (solido.nombre, exc.message))
                     continue
                 resumen["locales"] += 1
+            elif solido.clase == "STAIR":
+                try:
+                    self._crear_escalera_arqgen(spf, solido, parametros_escalera,
+                                                niveles, cotas, architecture, escala)
+                    resumen["escaleras"] += 1
+                except (ValueError, DomainError, KeyError, TypeError, OverflowError) as exc:
+                    resumen["escaleras_omitidas"] += 1
+                    avisos.append("Escalera «%s» omitida: %s" %
+                                  (solido.nombre or solido.etiqueta, exc))
             elif solido.clase == "SLAB":
                 resumen["losas_omitidas"] += 1
             elif solido.clase == "OTRO":
@@ -476,10 +518,83 @@ class IfcImporter:
         resumen["puertas"] = puertas
         resumen["ventanas"] = ventanas
         if not (resumen["muros"] or resumen["locales"]
-                or resumen["puertas"] or resumen["ventanas"]):
+                or resumen["puertas"] or resumen["ventanas"] or resumen["escaleras"]):
             avisos.append("No se encontró geometría utilizable "
                           "(muros, locales o vanos) en el archivo.")
         return resumen
+
+    def _parametros_escaleras(self, spf: _SPF) -> Dict[int, Dict[str, Any]]:
+        """Solo interpreta el Pset propio; un IfcStair arbitrario no es paramétrico."""
+        resultado: Dict[int, Dict[str, Any]] = {}
+        for rid in spf.buscar_tipo(("IFCRELDEFINESBYPROPERTIES",)):
+            rel = spf.args(rid)
+            if len(rel) < 6 or not isinstance(rel[5], tuple):
+                continue
+            pset = spf.args(rel[5])
+            if spf.nombre(rel[5]) != "IFCPROPERTYSET" or len(pset) < 5 or pset[2] != "Pset_ARQGEN_Stair":
+                continue
+            params: Dict[str, Any] = {}
+            for ref in pset[4] if isinstance(pset[4], list) else []:
+                if not isinstance(ref, tuple) or spf.nombre(ref) != "IFCPROPERTYSINGLEVALUE":
+                    continue
+                prop = spf.args(ref)
+                if len(prop) < 3 or not isinstance(prop[0], str) or not isinstance(prop[2], str):
+                    continue
+                token = re.fullmatch(r"IFC(?:LABEL|REAL|INTEGER|LENGTHMEASURE)\((.*)\)", prop[2], re.I | re.S)
+                if token:
+                    params[prop[0]] = _parsear_token(token.group(1))
+            for ref in rel[4] if isinstance(rel[4], list) else []:
+                if isinstance(ref, tuple) and spf.nombre(ref) == "IFCSTAIR":
+                    resultado[ref[1]] = params
+        return resultado
+
+    def _crear_escalera_arqgen(self, spf, solido, parametros, niveles, cotas, architecture, escala):
+        from domain.escaleras import TIPOS, geometria, metadata_geometria
+        from domain.model import Stair
+        from services.commands_impl import CreateEntityCommand
+        params = parametros.get(solido.eid)
+        if not params:
+            raise ValueError("sin parámetros ARQ GEN; no se puede reconstruir fielmente")
+        nivel_nombre = niveles.get(solido.storey_ref)
+        if not nivel_nombre:
+            raise ValueError("sin nivel asociado")
+        nivel = architecture.get_level_by_name_or_code(nivel_nombre)
+        tipo = params.get("tipo")
+        if tipo not in TIPOS:
+            raise ValueError("tipología no reconocida")
+        width = float(params["width_m"]) * escala
+        desnivel = float(params["desnivel_m"]) * escala
+        huella = float(params["huella_m"]) * escala
+        contrahuella = float(params["contrahuella_m"]) * escala
+        rot = float(params["rotation_deg"])
+        n = int(params["n_contrahuellas"])
+        if not all(math.isfinite(v) for v in (width, desnivel, huella, contrahuella, rot)) or \
+                not (0.9 <= width <= 2.5 and 0.1 <= desnivel <= 20 and 0.05 <= huella <= 1 and
+                     0.05 <= contrahuella <= 1 and 1 <= n <= 200 and abs(rot) <= 3600):
+            raise ValueError("parámetros fuera del rango permitido")
+        if abs(desnivel/n - contrahuella) > 0.00001:
+            raise ValueError("número de peldaños incompatible con la contrahuella")
+        args = spf.args(solido.eid)
+        matriz = self._matriz_de_placement(spf, args[5])
+        # Admitimos giro en XY de un programa IFC externo; no inclinación o escala.
+        if abs(matriz[0][2]) > 1e-6 or abs(matriz[1][2]) > 1e-6 or abs(matriz[2][2]-1) > 1e-6:
+            raise ValueError("colocación inclinada no soportada")
+        angulo = math.degrees(math.atan2(matriz[1][0], matriz[0][0]))
+        x, y, z = (matriz[i][3] * escala for i in range(3))
+        offset = z-cotas[nivel_nombre]
+        if not all(math.isfinite(v) for v in (x, y, offset)) or abs(x) > 100000 or abs(y) > 100000 or abs(offset) > 100:
+            raise ValueError("posición fuera de rango")
+        geo = geometria(tipo, desnivel, desnivel/n, huella, width, rot+angulo)
+        meta = metadata_geometria(geo)
+        meta.update({"editor_base_offset_m": offset, "modo": "importado IFC",
+                     "aviso_ubicacion": "Compruebe recinto, niveles y barandillas tras importar IFC."})
+        ctx = architecture.ctx
+        obj = Stair(project_id=ctx.project.id, code=ctx.next_code("ARCHITECTURE", "STAIR"),
+                    level_id=nivel.id, tipo=tipo, x=x, y=y, rotation_deg=rot+angulo,
+                    width_m=width, desnivel_m=desnivel, contrahuella_m=geo["contrahuella_m"],
+                    huella_m=huella, metadata=meta)
+        ctx.command_bus.execute(CreateEntityCommand(obj), ctx)
+        architecture._finish("CREATE_ENTITY", obj, events=[("OBJECT_CREATED", {})])
 
     # -- carga -------------------------------------------------------------
     def _cargar(self, path: str) -> _SPF:
@@ -593,12 +708,24 @@ class IfcImporter:
             for producto in (args[4] if isinstance(args[4], list) else []):
                 if isinstance(producto, tuple):
                     storey_de[producto[1]] = storey_ref
+        # Los espacios son partes espaciales del piso (IfcRelAggregates),
+        # no elementos contenidos. Aceptar también IFC antiguos que usan
+        # IfcRelContainedInSpatialStructure para los espacios.
+        for rid in spf.buscar_tipo(("IFCRELAGGREGATES",)):
+            args = spf.args(rid)
+            if len(args) < 6 or not isinstance(args[4], tuple):
+                continue
+            if spf.nombre(args[4]) != "IFCBUILDINGSTOREY":
+                continue
+            for producto in (args[5] if isinstance(args[5], list) else []):
+                if isinstance(producto, tuple) and spf.nombre(producto) == "IFCSPACE":
+                    storey_de[producto[1]] = args[4][1]
         # Cadena de vanos: relleno → apertura (IfcRelFillsElement) y
         # apertura → muro (IfcRelVoidsElement); sirve para heredar el
         # nivel del muro anfitrión cuando el archivo no contiene a la
         # puerta/ventana en ningún piso.
         apertura_de: Dict[int, int] = {}
-        for rid in spf.buscar_tipo(("IFCRELFILLELEMENT",)):
+        for rid in spf.buscar_tipo(("IFCRELFILLSELEMENT", "IFCRELFILLELEMENT")):
             args = spf.args(rid)
             if len(args) >= 6 and isinstance(args[4], tuple):
                 relleno = _ref_primera(args[5])
@@ -631,7 +758,7 @@ class IfcImporter:
                 matriz = self._matriz_de_placement(spf, args[5])
                 resuelto = self._geometria_de(spf, args, matriz, escala)
             if resuelto is None:
-                if clase in ("WALL", "SLAB", "SPACE", "DOOR", "WINDOW"):
+                if clase in ("WALL", "SLAB", "SPACE", "DOOR", "WINDOW", "STAIR"):
                     extrusiones_raras += 1
                 continue
             contorno, z0, z1 = resuelto
@@ -663,6 +790,8 @@ class IfcImporter:
             return "DOOR"
         if nombre_ifc in _CLASE_VENTANA:
             return "WINDOW"
+        if nombre_ifc in _CLASE_ESCALERA:
+            return "STAIR"
         if nombre_ifc in ("IFCPROJECT", "IFCSITE", "IFCBUILDING",
                           "IFCBUILDINGSTOREY", "IFCOPENINGELEMENT",
                           "IFCGRID", "IFCANNOTATION"):
@@ -855,7 +984,7 @@ class IfcImporter:
         # puerta/ventana eid → apertura eid (IfcRelFillsElement:
         # RelatingOpeningElement[4], RelatedBuildingElement[5])
         apertura_de: Dict[int, int] = {}
-        for rid in spf.buscar_tipo(("IFCRELFILLELEMENT",)):
+        for rid in spf.buscar_tipo(("IFCRELFILLSELEMENT", "IFCRELFILLELEMENT")):
             args = spf.args(rid)
             if len(args) >= 6 and isinstance(args[4], tuple):
                 relleno = _ref_primera(args[5])

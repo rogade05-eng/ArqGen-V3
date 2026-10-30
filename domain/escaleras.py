@@ -168,7 +168,7 @@ def dimensionar(desnivel_m: float,
 
 def _caja_peldano(cx: float, cy: float, dx: float, dy: float,
                   z0: float, z1: float, rot: float = 0.0) -> Dict[str, Any]:
-    """Peldaño/meseta como caja 3D (para view3d, ya en mundo)."""
+    """Peldaño/meseta como caja 3D en coordenadas locales de la escalera."""
     return {"cx": round(cx, 4), "cy": round(cy, 4),
             "dx": round(dx, 4), "dy": round(dy, 4),
             "rot": round(rot, 2), "z0": round(z0, 4), "z1": round(z1, 4)}
@@ -421,6 +421,31 @@ def geometria(tipo: str, desnivel_m: float,
     return geo
 
 
+def metadata_geometria(geo: Dict[str, Any]) -> Dict[str, Any]:
+    """Campos geométricos derivados, relativos al centro de la entidad.
+
+    Se usa tanto al crear como al editar para evitar planos, peldaños y
+    mediciones inconsistentes. Las coordenadas se trasladan al dibujarlas.
+    """
+    datos = {
+        "outline": [[round(px, 4), round(py, 4)] for px, py in geo["outline"]],
+        "treads": [[[round(px, 4), round(py, 4)] for px, py in linea]
+                   for linea in geo["treads"]],
+        "pasos": geo["pasos"],
+        "n_contrahuellas": geo["n_contrahuellas"],
+        "contrahuella_m": geo["contrahuella_m"], "huella_m": geo["huella_m"],
+        "blondel_m": geo["blondel_m"], "blondel_ok": geo["blondel_ok"],
+        "pendiente_deg": geo["pendiente_deg"], "tramos": geo["tramos"],
+        "mesetas": geo["mesetas"], "desarrollo_m": geo["desarrollo_m"],
+        "area_huella_m2": geo["area_huella_m2"],
+        "barandilla_m": round(2.0 * float(geo["desarrollo_m"]), 3),
+        "ancho_m": geo["ancho_m"], "avisos_dimensionado": list(geo["avisos"]),
+    }
+    if geo.get("caracol"):
+        datos["caracol"] = geo["caracol"]
+    return datos
+
+
 # ---------------------------------------------------------------------------
 # colocación y generación en el proyecto
 # ---------------------------------------------------------------------------
@@ -551,24 +576,8 @@ def generar_escalera(ctx: Any, data: Any = None,
     if sitio.get("aviso"):
         resumen["avisos"].append(sitio["aviso"])
     barra = 2.0 * float(geo.get("desarrollo_m", 0.0))
-    extra_meta: Dict[str, Any] = {
-        "outline": [[round(px, 4), round(py, 4)] for px, py in
-                    geo["outline"]],
-        "treads": [[[round(px, 4), round(py, 4)] for px, py in linea]
-                   for linea in geo["treads"]],
-        "pasos": geo["pasos"],
-        "n_contrahuellas": geo["n_contrahuellas"],
-        "contrahuella_m": geo["contrahuella_m"],
-        "huella_m": geo["huella_m"], "blondel_m": geo["blondel_m"],
-        "blondel_ok": geo["blondel_ok"],
-        "pendiente_deg": geo["pendiente_deg"], "tramos": geo["tramos"],
-        "mesetas": geo["mesetas"],
-        "desarrollo_m": geo["desarrollo_m"],
-        "area_huella_m2": geo["area_huella_m2"],
-        "barandilla_m": round(barra, 3),
-        "ancho_m": ancho_m, "modo": sitio["modo"], "fuente": FUENTE}
-    if geo.get("caracol"):
-        extra_meta["caracol"] = geo["caracol"]
+    extra_meta = metadata_geometria(geo)
+    extra_meta.update({"modo": sitio["modo"], "fuente": FUENTE})
     if sitio.get("space_id"):
         extra_meta["space_id"] = sitio["space_id"]
     entidad = Stair(
@@ -649,6 +658,6 @@ __all__ = [
     "ANCHO_DEFECTO_M", "ALTO_DEFECTO_M", "CONTRAHUELLA_OBJETIVO_M",
     "CARACOL_R_INTERIOR_M", "CARACOL_R_MIN_M", "CARACOL_LINEA_PASO",
     "blondel_m", "blondel_ok", "regla_para_uso", "dimensionar",
-    "geometria", "sitio_para_escalera", "desnivel_del_proyecto",
+    "geometria", "metadata_geometria", "sitio_para_escalera", "desnivel_del_proyecto",
     "quitar_escaleras", "generar_escalera", "resumen_texto", "tabla_texto",
 ]

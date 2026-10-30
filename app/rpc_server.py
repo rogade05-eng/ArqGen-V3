@@ -25,11 +25,17 @@ Métodos FASE C (v3.50.0) — la UI web completa:
     generar_rejilla     -> repartir_rejilla (edificio tipo, compuesto)
     aplicar_exportar    -> aplicar_(plan|zonas) + exportar_todo (7 formatos)
     proyecto_abrir      -> vista previa de una instantánea JSON (.json)
+    vista_3d            -> caras proyectadas con identidad de entidad
+    elemento_3d         -> propiedades editables de una entidad
+    editar_3d           -> edición validada del modelo de sesión
+    crear_escalera_3d   -> añadir escalera sin reemplazar las existentes
+    borrar_escalera_3d  -> borrar una escalera con revisión y deshacer
+    deshacer_3d / rehacer_3d -> historial de la sesión web
+    proyecto_editar_3d  -> importar una instantánea a una sesión editable
 
 SESIÓN: cada generar_* guarda el análisis COMPLETO en una sesión LRU
-(máx. 8) y devuelve un ``id``; aplicar_exportar lo recupera por id.
-Así el canal sigue siendo sin estado para la web y el análisis íntegro
-(sin recortar) solo viaja una vez, de Python a Python.
+(máx. 8) y devuelve un ``id``. La vista 3D materializa un proyecto temporal
+por sesión; al editarlo, la exportación reutiliza ese mismo proyecto.
 
 Errores JSON-RPC: -32700 (JSON inválido), -32601 (método desconocido),
 -32600 (petición mal formada), -32602 (parámetros/domain: DomainError
@@ -39,14 +45,16 @@ protocolo. Determinista y offline: no lee red, no usa azar sin semilla.
 """
 from __future__ import annotations
 
+import atexit
 import json
+import math
 import os
 import platform
-import shutil
 import sys
 import tempfile
 import traceback
 from collections import OrderedDict
+from contextlib import contextmanager, nullcontext
 
 # Bootstrap de rutas: el sidecar puede lanzarse como script suelto
 # (python app/rpc_server.py) o por el subcomando rpc del ejecutable.
@@ -62,7 +70,9 @@ from core.errors import ARQGenError  # noqa: E402
 _METODOS = ("ping", "version", "selftest", "generar_quick",
             "generar_edificacion", "catalogo", "generar_radial",
             "generar_y", "generar_x", "generar_zonas", "generar_rejilla",
-            "aplicar_exportar", "proyecto_abrir")
+            "aplicar_exportar", "proyecto_abrir", "vista_3d",
+            "elemento_3d", "editar_3d", "crear_escalera_3d", "borrar_escalera_3d",
+            "proyecto_editar_3d", "deshacer_3d", "rehacer_3d")
 
 # Claves que se recortan de cada local para la UI (el motor devuelve más).
 _LOCAL_KEYS = ("codigo", "nombre", "space_type", "area_m2", "area_min",
@@ -76,6 +86,25 @@ _TOTALES_KEYS = ("area_programa", "area_pasillos", "area_escaleras",
 _SESION_MAX = 8
 _SESION: "OrderedDict[str, dict]" = OrderedDict()
 _CONTADOR_SESION = {"n": 0}
+# Los modelos editables viven mientras su análisis permanezca en la LRU.
+_PROYECTOS = {}
+
+
+def _cerrar_proyecto(sid):
+    entrada = _PROYECTOS.pop(sid, None)
+    if entrada:
+        try:
+            entrada["ctx"].close()
+        finally:
+            entrada["temporal"].cleanup()
+
+
+def _cerrar_proyectos():
+    for sid in list(_PROYECTOS):
+        _cerrar_proyecto(sid)
+
+
+atexit.register(_cerrar_proyectos)
 
 
 def _guardar_sesion(analisis: dict) -> str:
@@ -85,7 +114,8 @@ def _guardar_sesion(analisis: dict) -> str:
     _SESION[sid] = analisis
     _SESION.move_to_end(sid)
     while len(_SESION) > _SESION_MAX:
-        _SESION.popitem(last=False)
+        expirado, _ = _SESION.popitem(last=False)
+        _cerrar_proyecto(expirado)
     return sid
 
 
@@ -459,12 +489,9 @@ def _m_generar_rejilla(params: dict) -> dict:
 def _m_aplicar_exportar(params: dict) -> dict:
     """FASE C: del análisis de la sesión a ARCHIVOS REALES en disco.
 
-    1) crea un proyecto temporal headless (SQLite),
-    2) aplica el análisis con aplicar_plan (o aplicar_zonas si es
-       compuesto) con las opciones de la UI (muros, mobiliario),
-    3) ExportService.exportar_todo -> IFC/DXF/DXF_R12/JSON/CSV/XLSX/SVG,
-    4) instantánea JSON del proyecto (con_proyecto) y
-    5) devuelve rutas y tamaños; el proyecto temporal se elimina.
+    Con ediciones 3D reutiliza el proyecto de sesión; sin ediciones crea
+    uno temporal y aplica el análisis con las opciones de la UI. Exporta
+    los formatos solicitados y, opcionalmente, la instantánea JSON.
     """
     analisis = _analisis_de(params)
     carpeta = str(params.get("carpeta") or "").strip()
@@ -496,43 +523,287 @@ def _m_aplicar_exportar(params: dict) -> dict:
         else "edificacion",
     }
 
-    tmp_db = tempfile.mkdtemp(prefix="arqgen_export_")
-    try:
+    from services.export_service import ExportService
+    existente = _PROYECTOS.get(str(params.get("id") or ""))
+    if existente and existente["editado"]:
+        if not opciones["trazar_muros"] or opciones["mobiliario"] is not None or opciones["modo"] != "edificacion":
+            raise ValueError("Para exportar el modelo 3D editado o importado, active muros "
+                             "y seleccione mobiliario automático; no se regenerará el modelo.")
+        proyecto = nullcontext((existente["ctx"], existente["aplicacion"]))
+    else:
+        proyecto = _proyecto_temporal(analisis, opciones)
+    with proyecto as (ctx, _aplicacion):
+        exportador = ExportService()
+        res = exportador.exportar_todo(ctx, carpeta, base, formatos)
+        archivos = {}
+        for fmt, ruta in (res.get("archivos") or {}).items():
+            archivos[fmt] = {"ruta": ruta, "bytes": os.path.getsize(ruta)}
+        # Usar el mismo nombre saneado que el resto de exportaciones. El
+        # texto introducido por el usuario nunca debe escapar de la carpeta.
+        base_segura = res["base"]
+        resultado = {"carpeta": carpeta, "base": base_segura,
+                     "archivos": archivos,
+                     "errores": dict(res.get("errores") or {})}
+        if bool(params.get("con_proyecto", True)):
+            from exporters.json_io import JSONExporter
+            ruta_proy = os.path.join(carpeta, base_segura + "_proyecto.json")
+            JSONExporter().export(ctx, ruta_proy)
+            resultado["proyecto"] = {
+                "ruta": ruta_proy, "bytes": os.path.getsize(ruta_proy)}
+        return resultado
+
+
+@contextmanager
+def _proyecto_temporal(analisis: dict, opciones: dict):
+    """Materializa el análisis para exportación o visualización sin guardarlo."""
+    with tempfile.TemporaryDirectory(prefix="arqgen_rpc_") as tmp_db:
         from services.context import ApplicationContext
-        from services.export_service import ExportService
         app = ApplicationContext()
-        ctx = app.create_project(os.path.join(tmp_db, "proyecto.arqgen"),
-                                 base)
+        nombre = str(opciones.get("nombre_edificio") or "Vista previa")
+        ctx = app.create_project(os.path.join(tmp_db, "proyecto.arqgen"), nombre)
         try:
             if str(analisis.get("tipo") or "") in ("zonas", "rejilla"):
-                dd.aplicar_zonas(ctx, analisis, opciones)
+                aplicacion = dd.aplicar_zonas(ctx, analisis, opciones)
             else:
-                dd.aplicar_plan(ctx, analisis, opciones)
+                aplicacion = dd.aplicar_plan(ctx, analisis, opciones)
             ctx.session.commit()
-            exportador = ExportService()
-            res = exportador.exportar_todo(ctx, carpeta, base, formatos)
-            archivos = {}
-            for fmt, ruta in (res.get("archivos") or {}).items():
-                archivos[fmt] = {"ruta": ruta,
-                                 "bytes": os.path.getsize(ruta)}
-            resultado = {"carpeta": carpeta, "base": base,
-                         "archivos": archivos,
-                         "errores": dict(res.get("errores") or {})}
-            if bool(params.get("con_proyecto", True)):
-                from exporters.json_io import JSONExporter
-                ruta_proy = os.path.join(carpeta, base + "_proyecto.json")
-                JSONExporter().export(ctx, ruta_proy)
-                resultado["proyecto"] = {
-                    "ruta": ruta_proy,
-                    "bytes": os.path.getsize(ruta_proy)}
-            return resultado
+            yield ctx, aplicacion
         finally:
-            try:
-                ctx.session.close()
-            except Exception:  # noqa: BLE001 — cierre best effort
-                pass
-    finally:
-        shutil.rmtree(tmp_db, ignore_errors=True)
+            ctx.close()
+
+
+def _proyecto_sesion(params: dict):
+    """Materializa una sola vez el proyecto de la sesión para editarlo."""
+    analisis = _analisis_de(params)
+    sid = str(params["id"])
+    if sid in _PROYECTOS:
+        return _PROYECTOS[sid]
+    from services.context import ApplicationContext
+    temporal = tempfile.TemporaryDirectory(prefix="arqgen_modelo_")
+    ctx = None
+    try:
+        ctx = ApplicationContext().create_project(
+            os.path.join(temporal.name, "proyecto.arqgen"), "Vista previa")
+        opciones = {"nombre_edificio": "Vista previa", "trazar_muros": True,
+                    "mobiliario": None, "modo": "edificacion"}
+        if str(analisis.get("tipo") or "") in ("zonas", "rejilla"):
+            aplicacion = dd.aplicar_zonas(ctx, analisis, opciones)
+        else:
+            aplicacion = dd.aplicar_plan(ctx, analisis, opciones)
+        ctx.commit()
+        entrada = {"temporal": temporal, "ctx": ctx,
+                   "aplicacion": aplicacion, "editado": False}
+        _PROYECTOS[sid] = entrada
+        return entrada
+    except Exception:
+        if ctx is not None:
+            ctx.close()
+        temporal.cleanup()
+        raise
+
+
+def _m_vista_3d(params: dict) -> dict:
+    """Proyecta el modelo real aplicado, con el motor 3D de la GUI clásica.
+
+    El proyecto editable temporal conserva IDs y cambios durante la sesión.
+    El filtro de nivel usa un índice estable, no IDs del cliente.
+    """
+    _analisis_de(params)
+    azimut = _num(params, "azimut", 30.0)
+    elevacion = _num(params, "elevacion", 35.0)
+    explosion = _num(params, "explosion_m", 0.0)
+    if not all(math.isfinite(v) for v in (azimut, elevacion, explosion)):
+        raise ValueError("la cámara y la explosión deben ser números finitos")
+    if not 8.0 <= elevacion <= 80.0:
+        raise ValueError("elevacion debe estar entre 8 y 80 grados")
+    if not 0.0 <= explosion <= 10.0:
+        raise ValueError("explosion_m debe estar entre 0 y 10 metros")
+    perspectiva = params.get("perspectiva", False)
+    if not isinstance(perspectiva, bool):
+        raise ValueError("perspectiva debe ser verdadera o falsa")
+    nivel = params.get("nivel")
+    if nivel is not None and (isinstance(nivel, bool) or not isinstance(nivel, int) or nivel < 0):
+        raise ValueError("nivel debe ser un índice entero no negativo o null")
+
+    from ui import view3d as v3
+    entrada = _proyecto_sesion(params)
+    ctx, aplicacion = entrada["ctx"], entrada["aplicacion"]
+    modelo, avisos = v3.modelo3d_desde_proyecto(ctx)
+    niveles = [{"nombre": n.name, "cota_m": n.base_z} for n in modelo.niveles]
+    if nivel is not None and nivel >= len(modelo.niveles):
+        raise ValueError("nivel fuera de rango")
+    nivel_id = modelo.niveles[nivel].level_id if nivel is not None else ""
+    camara = v3.Camara3D(azimuth_deg=azimut % 360.0,
+                         elevacion_deg=elevacion, perspectiva=perspectiva)
+    caras = v3.construir_caras(modelo, camara, explotar_m=explosion,
+                               nivel_id=nivel_id)
+    # encuadre prepara el centro y distancia antes de proyectar perspectiva.
+    minx, miny, maxx, maxy = v3.encuadre(caras, camara)
+    poligonos = []
+    for cara in caras:
+        puntos = []
+        for punto in cara.puntos:
+            x, y = v3.proyecta(punto, camara)
+            puntos.append([round(x, 5), round(-y, 5)])
+        centro_cara = [sum(p[i] for p in cara.puntos) / len(cara.puntos) for i in range(3)]
+        poligonos.append({"puntos": puntos, "color": cara.color,
+                          "tipo": cara.kind, "entidad_id": cara.entidad_id,
+                          "entidad_tipo": cara.entidad_tipo,
+                          "centro_mundo": centro_cara})
+    return {"caras": poligonos,
+            "encuadre": [minx, -maxy, maxx - minx, maxy - miny],
+            "niveles": niveles,
+            "camara": {"perspectiva": perspectiva, "azimut": camara.azimuth_deg,
+                       "elevacion": camara.elevacion_deg,
+                       "centro": list(camara.centro or (0.0, 0.0, 0.0)),
+                       "distancia": camara.distancia_m,
+                       "cerca_fraccion": camara.PERSP_CERCA_FRACC},
+            "avisos": list(dict.fromkeys(avisos + list(aplicacion.get("avisos") or [])))}
+
+
+def _m_elemento_3d(params: dict) -> dict:
+    from services.edicion_3d import describir
+    entrada = _proyecto_sesion(params)
+    return describir(entrada["ctx"], params.get("tipo"), params.get("elemento_id"))
+
+
+def _m_editar_3d(params: dict) -> dict:
+    from services.edicion_3d import editar, entidad
+    from services.commands_impl import entity_snapshot
+    from services.historial_3d import registrar
+    entrada = _proyecto_sesion(params)
+    ctx = entrada["ctx"]
+    antes = entity_snapshot(entidad(ctx, params.get("tipo"), params.get("elemento_id")))
+    resultado = editar(ctx, params.get("tipo"), params.get("elemento_id"),
+                       params.get("valores"), params.get("revision"))
+    despues = entity_snapshot(entidad(ctx, resultado["tipo"], resultado["id"]))
+    registrar(entrada, antes, despues)
+    entrada["editado"] = True
+    return resultado
+
+
+def _m_crear_escalera_3d(params: dict) -> dict:
+    from services.edicion_3d import crear_escalera, entidad
+    from services.commands_impl import entity_snapshot
+    from services.historial_3d import registrar
+    entrada = _proyecto_sesion(params)
+    resultado = crear_escalera(entrada["ctx"], params.get("tipo"), params.get("nivel"))
+    registrar(entrada, None, entity_snapshot(entidad(entrada["ctx"], "STAIR", resultado["id"])))
+    entrada["editado"] = True
+    return resultado
+
+
+def _m_borrar_escalera_3d(params: dict) -> dict:
+    from services.edicion_3d import borrar_escalera, entidad
+    from services.commands_impl import entity_snapshot
+    from services.historial_3d import registrar
+    entrada = _proyecto_sesion(params)
+    ctx = entrada["ctx"]
+    uid = params.get("elemento_id")
+    antes = entity_snapshot(entidad(ctx, "STAIR", uid))
+    borrar_escalera(ctx, uid, params.get("revision"))
+    registrar(entrada, antes, None)
+    entrada["editado"] = True
+    return {"elemento_id": uid, "borrado": True}
+
+
+def _m_deshacer_3d(params: dict) -> dict:
+    from services.historial_3d import cambiar
+    return cambiar(_proyecto_sesion(params))
+
+
+def _m_rehacer_3d(params: dict) -> dict:
+    from services.historial_3d import cambiar
+    return cambiar(_proyecto_sesion(params), rehacer=True)
+
+
+def _m_proyecto_editar_3d(params: dict) -> dict:
+    """Importa una instantánea a un modelo de sesión aislado y editable."""
+    from exporters.json_io import ENTITY_ORDER
+    from services.context import ApplicationContext
+    from services.import_service import ImportService
+
+    texto = params.get("contenido")
+    if not isinstance(texto, str):
+        raise ValueError("La instantánea debe ser texto JSON de hasta 16 MiB")
+    try:
+        tamano = len(texto.encode("utf-8"))
+    except UnicodeEncodeError:
+        raise ValueError("La instantánea no contiene texto UTF-8 válido") from None
+    if tamano > 16 * 1024 * 1024:
+        raise ValueError("La instantánea debe ser texto JSON de hasta 16 MiB")
+    try:
+        def constante_invalida(_):
+            raise ValueError("La instantánea no admite números no finitos")
+        data = json.loads(texto, parse_constant=constante_invalida)
+    except (ValueError, RecursionError) as exc:
+        raise ValueError("Instantánea JSON inválida: " + str(exc)) from exc
+    if not isinstance(data, dict) or data.get("format") != "ARQ_GEN_SNAPSHOT":
+        raise ValueError("No es una instantánea ARQ_GEN_SNAPSHOT")
+    pendientes = [data]
+    while pendientes:
+        valor = pendientes.pop()
+        if isinstance(valor, float) and not math.isfinite(valor):
+            raise ValueError("La instantánea no admite números no finitos")
+        if isinstance(valor, dict):
+            pendientes.extend(valor.values())
+        elif isinstance(valor, list):
+            pendientes.extend(valor)
+    proyecto, entidades = data.get("project"), data.get("entities")
+    if not isinstance(proyecto, dict) or not isinstance(proyecto.get("id"), str) or not proyecto["id"]:
+        raise ValueError("La instantánea no tiene identificador de proyecto válido")
+    if not isinstance(entidades, dict) or set(entidades) - set(ENTITY_ORDER):
+        raise ValueError("La instantánea contiene tipos de entidad no admitidos")
+    total = 0
+    identidades = {}
+    for tipo, filas in entidades.items():
+        if not isinstance(filas, list):
+            raise ValueError("Lista de entidades inválida: " + tipo)
+        total += len(filas)
+        if total > 20000:
+            raise ValueError("La instantánea supera 20 000 registros de entidades")
+        vistos = set()
+        for fila in filas:
+            if not isinstance(fila, dict) or not isinstance(fila.get("id"), str) or not fila["id"]:
+                raise ValueError("Entidad sin identificador en " + tipo)
+            if fila["id"] in vistos:
+                raise ValueError("Identificador repetido en " + tipo)
+            vistos.add(fila["id"])
+            if fila.get("project_id") != proyecto["id"]:
+                raise ValueError("Entidad de otro proyecto en " + tipo)
+            if fila.get("ENTITY_TYPE") not in (("OPENING", "DOOR", "WINDOW") if tipo == "OPENING" else (tipo,)):
+                raise ValueError("Tipo de entidad incompatible en " + tipo)
+            anterior = identidades.get(fila["id"])
+            if anterior:
+                grupo, copia = anterior
+                espejo_vano = (fila.get("ENTITY_TYPE") in ("DOOR", "WINDOW") and
+                               {grupo, tipo} == {"OPENING", fila["ENTITY_TYPE"]} and copia == fila)
+                if not espejo_vano:
+                    raise ValueError("Identificador repetido entre entidades incompatibles")
+            else:
+                identidades[fila["id"]] = (tipo, fila)
+    temporal = tempfile.TemporaryDirectory(prefix="arqgen_modelo_")
+    ctx = None
+    try:
+        ruta_json = os.path.join(temporal.name, "instantanea.json")
+        with open(ruta_json, "w", encoding="utf-8") as fh:
+            fh.write(texto)
+        ruta_db = os.path.join(temporal.name, "proyecto.arqgen")
+        app = ApplicationContext()
+        ImportService(app).import_snapshot(ruta_json, ruta_db, approve=True)
+        ctx = app.open_project(ruta_db)
+        niveles = ctx.architecture.count("LEVEL", ctx.project.id)
+        sid = _guardar_sesion({"tipo": "proyecto_importado"})
+        _PROYECTOS[sid] = {"temporal": temporal, "ctx": ctx,
+                           "aplicacion": {"avisos": []}, "editado": True}
+        return {"id": sid, "tipo": "proyecto_importado", "nombre": ctx.project.name,
+                "niveles": niveles,
+                "avisos": ["Se importaron las entidades arquitectónicas; las cantidades y cálculos no se restauran automáticamente."]}
+    except Exception:
+        if ctx is not None:
+            ctx.close()
+        temporal.cleanup()
+        raise
 
 
 def _m_proyecto_abrir(params: dict) -> dict:
@@ -564,6 +835,14 @@ _DISPATCH = {
     "generar_rejilla": _m_generar_rejilla,
     "aplicar_exportar": _m_aplicar_exportar,
     "proyecto_abrir": _m_proyecto_abrir,
+    "proyecto_editar_3d": _m_proyecto_editar_3d,
+    "vista_3d": _m_vista_3d,
+    "elemento_3d": _m_elemento_3d,
+    "editar_3d": _m_editar_3d,
+    "crear_escalera_3d": _m_crear_escalera_3d,
+    "borrar_escalera_3d": _m_borrar_escalera_3d,
+    "deshacer_3d": _m_deshacer_3d,
+    "rehacer_3d": _m_rehacer_3d,
 }
 
 

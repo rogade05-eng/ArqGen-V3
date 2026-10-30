@@ -22,7 +22,7 @@ import unittest
 from tests.base import ARQGenTestCase
 
 GOLDEN_BUDGET_TOTAL = 1295093.90      # CUP, plantilla residential_full_v1
-GOLDEN_IFC_ENTITIES = 1804            # entidades IFC4 de la demo (v3.13.0: +1 IFCRELCONTAINEDINSPATIALSTRUCTURE por la contención de vanos en su piso)
+GOLDEN_IFC_ENTITIES = 1907  # perfiles con punto IFC propio y espacios agregados al nivel
 GOLDEN_DXF_WALL_ENTITIES = 7
 GOLDEN_QTO_OBJECTS = 161              # objetos con cantidades en la demo (12 redes)
 GOLDEN_PRECONS_TOTAL = 512763.83      # CUP análisis del proyecto

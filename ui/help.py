@@ -369,7 +369,8 @@ TOOLTIPS: Dict[str, str] = {
                      "no cambia).",
     "importar_ifc": "Importación IFC de entrada: analiza un archivo IFC4 "
                     "(ISO-10303-21) y crea en tu proyecto los niveles, "
-                    "muros, locales, puertas y ventanas que contenga.",
+                    "muros, locales, puertas y ventanas; las escaleras "
+                    "paramétricas exportadas por ARQ GEN se reconstruyen.",
     "cad_herramientas": "Panel de herramientas de edición tipo CAD: mover, "
                         "copiar, reflejar, girar, recortar, alargar, "
                         "chaflán, dividir, estirar y paralela sobre muros "

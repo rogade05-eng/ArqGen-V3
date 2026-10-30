@@ -1,0 +1,3 @@
+# Guardar los lanzadores CRLF tal cual, incluso en archivos ZIP de fuentes.
+# Los .bat deben mantenerse en ASCII y con terminaciones CRLF.
+*.bat -text whitespace=cr-at-eol

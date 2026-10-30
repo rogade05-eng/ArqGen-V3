@@ -28,6 +28,7 @@ class DXFExporter:
         "ARQ-SPACE": {"color": 8},
         "ARQ-TEXT": {"color": 1},
         "ARQ-AXIS": {"color": 5},
+        "ARQ-STAIR": {"color": 4},
     }
 
     def export(self, context, out_path: str, level_ref: Optional[str] = None,
@@ -51,6 +52,7 @@ class DXFExporter:
         walls = context.architecture.list("WALL", project_id)
         openings = context.architecture.list("OPENING", project_id)
         spaces = context.architecture.list("SPACE", project_id)
+        stairs = context.architecture.list("STAIR", project_id)
         levels = {l.id: l for l in context.architecture.list("LEVEL", project_id)}
 
         if level_ref:
@@ -58,11 +60,12 @@ class DXFExporter:
             walls = [w for w in walls if w.level_id == level.id]
             openings = [o for o in openings if o.level_id == level.id]
             spaces = [s for s in spaces if s.level_id == level.id]
+            stairs = [s for s in stairs if s.level_id == level.id]
             levels = {level.id: level}
 
-        if not walls and not spaces:
+        if not walls and not spaces and not any((s.metadata or {}).get("outline") for s in stairs):
             raise ExportError(
-                message="No hay geometría que exportar (muros o locales)",
+                message="No hay geometría que exportar (muros, locales o escaleras)",
                 code="ARQ-EXP-031",
                 suggested_action="Cree muros o locales antes de exportar el plano.",
             )
@@ -104,6 +107,8 @@ class DXFExporter:
                                     offset_y, r12=True)
                 for space in [s for s in spaces if s.level_id == level_id]:
                     self._draw_space(msp, space, offset_y, r12=True)
+                for stair in [s for s in stairs if s.level_id == level_id]:
+                    self._draw_stair(msp, stair, offset_y, r12=True)
         else:
             # One layout per level (paperspace layouts support the same entity factory).
             for index, (level_id, level) in enumerate(levels.items()):
@@ -120,6 +125,8 @@ class DXFExporter:
                                     offset_y)
                 for space in [s for s in spaces if s.level_id == level_id]:
                     self._draw_space(target, space, offset_y)
+                for stair in [s for s in stairs if s.level_id == level_id]:
+                    self._draw_stair(target, stair, offset_y)
 
         directory = os.path.dirname(os.path.abspath(out_path))
         os.makedirs(directory, exist_ok=True)
@@ -151,6 +158,19 @@ class DXFExporter:
         else:
             msp.add_lwpolyline(puntos, close=True,
                                dxfattribs={"layer": capa})
+
+    def _draw_stair(self, msp, stair, offset_y: float, r12: bool = False) -> None:
+        """Planta de la entidad: contorno y huellas en coordenadas de mundo."""
+        meta = stair.metadata or {}
+        def mundo(p):
+            return (float(p[0]) + stair.x, float(p[1]) + stair.y + offset_y)
+        outline = meta.get("outline") or []
+        if len(outline) >= 3:
+            self._polilinea(msp, [mundo(p) for p in outline], "ARQ-STAIR", r12)
+        for tread in meta.get("treads") or []:
+            if len(tread) >= 2:
+                msp.add_line(mundo(tread[0]), mundo(tread[1]),
+                             dxfattribs={"layer": "ARQ-STAIR"})
 
     def _draw_wall(self, msp, wall: Wall, openings: List[Opening],
                    offset_y: float, r12: bool = False) -> None:

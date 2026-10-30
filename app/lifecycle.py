@@ -21,6 +21,7 @@ _FORMAT_FILE = "%(asctime)s | %(levelname)-8s | %(name)s | %(message)s"
 _FORMAT_CONSOLE = "%(levelname)-8s %(message)s"
 
 _configured = False
+_owned_handlers: list[logging.Handler] = []
 
 
 def setup_logging(log_dir: str, level: str = "INFO", console: bool = True) -> None:
@@ -35,6 +36,10 @@ def setup_logging(log_dir: str, level: str = "INFO", console: bool = True) -> No
     root.setLevel(logging.DEBUG)
     for handler in list(root.handlers):
         root.removeHandler(handler)
+    # Cerrar solo los handlers propios; no debemos cerrar streams ajenos.
+    for handler in _owned_handlers:
+        handler.close()
+    _owned_handlers.clear()
 
     file_handler = logging.handlers.RotatingFileHandler(
         os.path.join(app_dir, "arqgen.log"), maxBytes=5_000_000, backupCount=5,
@@ -42,6 +47,7 @@ def setup_logging(log_dir: str, level: str = "INFO", console: bool = True) -> No
     file_handler.setLevel(logging.DEBUG)
     file_handler.setFormatter(logging.Formatter(_FORMAT_FILE))
     root.addHandler(file_handler)
+    _owned_handlers.append(file_handler)
 
     error_handler = logging.handlers.RotatingFileHandler(
         os.path.join(app_dir, "errors.log"), maxBytes=2_000_000, backupCount=5,
@@ -49,12 +55,14 @@ def setup_logging(log_dir: str, level: str = "INFO", console: bool = True) -> No
     error_handler.setLevel(logging.ERROR)
     error_handler.setFormatter(logging.Formatter(_FORMAT_FILE))
     root.addHandler(error_handler)
+    _owned_handlers.append(error_handler)
 
     if console:
         console_handler = logging.StreamHandler(sys.stdout)
         console_handler.setLevel(getattr(logging, level.upper(), logging.INFO))
         console_handler.setFormatter(logging.Formatter(_FORMAT_CONSOLE))
         root.addHandler(console_handler)
+        _owned_handlers.append(console_handler)
 
     logging.getLogger(__name__).debug(
         "Logging inicializado en %s (setup=%s build=%s tests=%s)",

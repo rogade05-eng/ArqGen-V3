@@ -215,6 +215,8 @@ class Cara3D:
     kind: str = ""
     profundidad: float = 0.0
     orden: int = 0
+    entidad_id: str = ""
+    entidad_tipo: str = ""
 
 
 # -- color -------------------------------------------------------------------
@@ -651,7 +653,7 @@ def caras_de_mueble(mueble: Any, base_z: float, z_extra: float,
     meta = getattr(mueble, "metadata", {}) or {}
     color = COLOR_MUEBLE.get(str(meta.get("categoria", "")),
                              COLOR_MUEBLE_DEFECTO)
-    z0 = base_z + z_extra + 0.02
+    z0 = base_z + z_extra + 0.02 + float(meta.get("editor_base_offset_m", 0.0) or 0.0)
     return _caja(piso, z0, z0 + alto, color, camara, "mueble")
 
 
@@ -913,7 +915,7 @@ def caras_de_rampa(rampa: Any, base_z: float, z_extra: float,
     corners = [tuple(p) for p in (getattr(rampa, "corners", []) or [])]
     if len(corners) < 4:
         return []
-    desnivel = float(getattr(rampa, "desnivel_m", 0.15) or 0.15)
+    desnivel = float(getattr(rampa, "desnivel_m", 0.15))
     z0 = base_z + z_extra + 0.02
     z1 = z0 + desnivel
     # corners: pie1, pie2, alto2, alto1 (o el par largo equivalente)
@@ -1258,7 +1260,10 @@ def construir_caras(modelo: Modelo3D,
     caras: List[Cara3D] = []
     contador = {"orden": 0}
 
-    def _emite(cara: Cara3D) -> None:
+    def _emite(cara: Cara3D, entidad: Any = None) -> None:
+        if entidad is not None:
+            cara.entidad_id = str(getattr(entidad, "id", "") or "")
+            cara.entidad_tipo = str(getattr(entidad, "ENTITY_TYPE", "") or "")
         cara.orden = contador["orden"]
         contador["orden"] += 1
         caras.append(cara)
@@ -1317,13 +1322,13 @@ def construir_caras(modelo: Modelo3D,
                 if (tope_plataforma is not None
                         and cara.profundidad <= tope_plataforma):
                     cara.profundidad = tope_plataforma + 1e-4
-                _emite(cara)
+                _emite(cara, espacio)
         muros_nivel = [m for m in modelo.muros
                        if modelo.nivel_por_id.get(m.level_id) is nivel]
         for muro in muros_nivel:
             for cara in caras_de_muro(muro, nivel.base_z, z_extra,
                                       camara, color_muro):
-                _emite(cara)
+                _emite(cara, muro)
         if mostrar_vanos:
             for vano in modelo.vanos:
                 if modelo.nivel_por_id.get(
@@ -1335,7 +1340,7 @@ def construir_caras(modelo: Modelo3D,
                     continue
                 for cara in caras_de_vano(vano, muro, nivel.base_z,
                                           z_extra, camara):
-                    _emite(cara)
+                    _emite(cara, vano)
         # MOBILIARIO (v3.15.0): cajas por pieza, dentro de su nivel.
         if mostrar_muebles:
             for mueble in modelo.muebles:
@@ -1343,7 +1348,7 @@ def construir_caras(modelo: Modelo3D,
                     continue
                 for cara in caras_de_mueble(mueble, nivel.base_z,
                                             z_extra, camara):
-                    _emite(cara)
+                    _emite(cara, mueble)
         # ACCESIBILIDAD (v3.15.0): rampas y barandillas de su nivel.
         if mostrar_accesibilidad:
             for rampa in modelo.rampas:
@@ -1351,13 +1356,13 @@ def construir_caras(modelo: Modelo3D,
                     continue
                 for cara in caras_de_rampa(rampa, nivel.base_z, z_extra,
                                            camara):
-                    _emite(cara)
+                    _emite(cara, rampa)
             for rail in modelo.barandillas:
                 if getattr(rail, "level_id", "") != nivel.level_id:
                     continue
                 for cara in caras_de_barandilla(rail, nivel.base_z,
                                                 z_extra, camara):
-                    _emite(cara)
+                    _emite(cara, rail)
         # CUBIERTA (v3.15.0): sobre SU nivel (el superior), tras muros.
         if mostrar_cubierta:
             for cubierta in modelo.cubiertas:
@@ -1365,7 +1370,7 @@ def construir_caras(modelo: Modelo3D,
                     continue
                 for cara in caras_de_cubierta(cubierta, nivel, z_extra,
                                               camara):
-                    _emite(cara)
+                    _emite(cara, cubierta)
         # ASCENSOR (v3.18.0): el hueco sube de su nivel de base hasta
         # arriba (altura_total_m), como el resto del edificio.
         for ascensor in modelo.ascensores:
@@ -1373,14 +1378,14 @@ def construir_caras(modelo: Modelo3D,
                 continue
             for cara in caras_de_ascensor(ascensor, nivel.base_z,
                                           z_extra, camara):
-                _emite(cara)
+                _emite(cara, ascensor)
         # ESCALERA (v3.19.0): peldaños y mesetas desde su nivel de base.
         for escalera in modelo.escaleras:
             if getattr(escalera, "level_id", "") != nivel.level_id:
                 continue
             for cara in caras_de_escalera(escalera, nivel.base_z,
                                           z_extra, camara):
-                _emite(cara)
+                _emite(cara, escalera)
         # FACHADA (v3.18.0): parasoles y pieles de su nivel de base.
         if mostrar_fachada:
             for parasol in modelo.parasoles:
@@ -1388,13 +1393,13 @@ def construir_caras(modelo: Modelo3D,
                     continue
                 for cara in caras_de_parasol(parasol, nivel.base_z,
                                              z_extra, camara):
-                    _emite(cara)
+                    _emite(cara, parasol)
             for piel in modelo.pieles:
                 if getattr(piel, "level_id", "") != nivel.level_id:
                     continue
                 for cara in caras_de_piel(piel, nivel.base_z,
                                           z_extra, camara):
-                    _emite(cara)
+                    _emite(cara, piel)
     caras.sort(key=lambda c: (c.profundidad, c.orden))
     return caras
 
@@ -1413,7 +1418,10 @@ def caras_de_escalera(escalera: Any, base_z: float, z_extra: float,
     caras: List[Cara3D] = []
     for paso in pasos:
         try:
-            cx, cy = float(paso["cx"]), float(paso["cy"])
+            # La geometría guardada por domain.escaleras es local a la
+            # entidad; aplicar su centro una sola vez, igual que en 2D.
+            cx = float(paso["cx"]) + float(escalera.x)
+            cy = float(paso["cy"]) + float(escalera.y)
             dx, dy = float(paso["dx"]), float(paso["dy"])
             rot = float(paso.get("rot", 0.0) or 0.0)
             z0, z1 = float(paso["z0"]), float(paso["z1"])
@@ -1428,8 +1436,9 @@ def caras_de_escalera(escalera: Any, base_z: float, z_extra: float,
             continue
         color = COLOR_ESCALERA_MESETA if es_meseta else COLOR_ESCALERA
         piso = _rect_girado(cx, cy, dx, dy, rot)
-        caras.extend(_caja(piso, base_z + z_extra + z0,
-                           base_z + z_extra + z1, color, camara,
+        offset_z = float(meta.get("editor_base_offset_m", 0.0) or 0.0)
+        caras.extend(_caja(piso, base_z + z_extra + offset_z + z0,
+                           base_z + z_extra + offset_z + z1, color, camara,
                            "peldano"))
     return caras
 

@@ -1,16 +1,16 @@
-# ARQ GEN — FASE C: la UI web completa sobre Tauri (v3.50.0)
+# ARQ GEN — FASE C: flujo generativo web sobre Tauri (v3.50.0)
 
 La FASE A (v3.48.0) demostró el canal; la FASE B (v3.49.0) aceleró el
-motor; la **FASE C convierte el canal en la INTERFAZ COMPLETA**: la
-pestaña web ya genera TODAS las formas del motor y exporta archivos
-reales. El motor Python (63.255 líneas) y la GUI clásica Tkinter quedan
-intactos: la web es la nueva cara, no un reemplazo destructivo.
+motor; la **FASE C ofrece el flujo generativo web**: la pestaña web genera
+las formas del motor y exporta archivos reales. La interfaz clásica Tkinter
+sigue disponible junto a la web. La web todavía no sustituye todas las
+herramientas de la GUI clásica; vea los límites al final.
 
 ## Qué hay en la FASE C
 
 | Pieza | Archivo | Qué hace |
 |---|---|---|
-| Sidecar RPC v3.50 | `app/rpc_server.py` | 13 métodos JSON-RPC: los 5 de FASE A + `catalogo`, `generar_radial`, `generar_y`, `generar_x`, `generar_zonas`, `generar_rejilla`, `aplicar_exportar`, `proyecto_abrir` |
+| Sidecar RPC | `app/rpc_server.py` | 20 métodos JSON-RPC, incluidos vista, edición, historial e importación 3D |
 | Sesión LRU | `app/rpc_server.py` | Los análisis íntegros viven en el sidecar (máx. 8, por id `an1…`); la web solo guarda el id |
 | UI web | `src/index.html` + `app.css` + `app.js` | 7 vistas: Inicio · Programa · Contorno · Forma · Resultado · Exportar · Proyecto |
 | Shell Tauri | `src-tauri/src/main.rs` | `rpc`, `motor_ruta` y **`carpeta_descargas`** (path resolver núcleo, sin plugins) |
@@ -28,18 +28,83 @@ intactos: la web es la nueva cara, no un reemplazo destructivo.
 | Multi-ala | `generar_zonas` | `ajustar_zonas()` — N contornos con rol, hubs al ala principal |
 | Rejilla tipo | `generar_rejilla` | `repartir_rejilla()` — la unidad repetida en celdas con corredor central |
 
+## Navegación y edición 3D
+
+Tras generar, pulse **Mostrar vista 3D** en Resultado:
+
+- Botón central arrastrado: orbitar. Mayús + central: desplazar.
+- Rueda: acercar/alejar hacia el cursor. Derecho arrastrado: desplazar;
+  clic derecho sin arrastrar: quitar la selección. Izquierdo: seleccionar.
+- También están disponibles los botones de cámara, proyección, nivel y
+  separación. Es una navegación inspirada en SketchUp, no una réplica completa.
+
+Las caras se asocian al identificador real de la entidad; las plataformas
+sintéticas no son seleccionables. El panel edita propiedades concretas de
+muros, mobiliario, puertas/ventanas/vanos, locales, cubiertas, rampas,
+barandillas, ascensores, parasoles, pieles y escaleras existentes. Solo se
+editan los campos que muestra el panel. Seleccione una escalera o mueble y
+arrástrelo con Mayús + botón izquierdo para moverlo en XY, tanto en proyección
+ortográfica como en perspectiva. Ctrl + Mayús + izquierdo mueve su cota Z;
+el panel también permite introducirla. El movimiento se confirma al soltar y
+se conserva en la instantánea; para escaleras también se exporta a IFC.
+Arrastrar cerca del horizonte o del plano de recorte se rechaza. El panel
+permite borrar una escalera con confirmación; no borra otros elementos.
+
+Para **añadir una escalera**, elija recta, L, U o caracol y pulse «Añadir al
+nivel seleccionado» (con «Todos», usa el primer nivel). No reemplaza otras
+escaleras. Se puede editar su posición, giro, tipología, ancho, desnivel,
+contrahuella objetivo y huella; se regeneran la planta y los peldaños. Los
+avisos de dimensionado se muestran en el panel. Si no encuentra un hueco de
+escalera en el nivel, se coloca en el origen y hay que situarla manualmente.
+La geometría es aproximada; el hueco, las conexiones y barandillas no se
+recalculan. El panel comprueba prismas 3D de muebles, peldaños y mesetas
+contra muros con sus vanos rectangulares y contra otros muebles y escaleras,
+incluso en niveles distintos. Advierte si un vértice sale del recinto asociado.
+Es una aproximación: no incluye estructura, instalaciones, superficies curvas
+exactas ni espacios libres. La ausencia de avisos no garantiza seguridad ni
+cumplimiento: revise colisiones, accesibilidad y normativa profesionalmente.
+
+**Deshacer/Rehacer cambio 3D** actúa sobre las últimas 100 ediciones de
+propiedades y creaciones o borrados de escaleras de la sesión, no sobre las operaciones
+de la GUI clásica ni sobre ediciones anteriores a la apertura de un archivo.
+Una edición nueva descarta el historial de rehacer. Ambos usan auditoría y
+revisiones nuevas; el historial se pierde al cerrar la sesión.
+
+Para continuar un proyecto, en **Proyecto** seleccione una instantánea
+`ARQ_GEN_SNAPSHOT` (hasta 16 MiB) y pulse **Abrir en editor 3D**. Se crea
+una copia temporal de sus entidades arquitectónicas; los cálculos y cantidades
+no se restauran automáticamente. Al exportar, la instantánea conserva las
+escaleras y permite volver a editarlas. DXF R2010/R12 y SVG incluyen su
+contorno y huellas en planta; el IFC incluye `IfcStair` con peldaños y
+mesetas aproximados, situado en su nivel. El IFC exportado por ARQ GEN incorpora
+parámetros propios que permiten reimportar y editar esas escaleras. Otros IFC
+sin dichos parámetros no se reconstruyen como escaleras editables y se avisa;
+no incluye barandillas ni huecos de escalera.
+Los demás tipos pueden tener cobertura diferente según el formato: conserve
+siempre la instantánea JSON y revise los archivos producidos.
+
+`vista_3d` mantiene un SQLite temporal por sesión y `editar_3d` actualiza
+propiedades con revisión, auditoría e invalidación. Las ediciones se pierden
+al salir/reiniciar el sidecar o al expirar la sesión LRU: exporte la
+instantánea JSON antes. Las métricas y planta del resultado generado siguen
+siendo las del análisis original, no un recálculo de las ediciones.
+
+El modelo usa muros y mobiliario automáticos. Si se editó, la exportación
+utiliza el mismo proyecto y exige **muros activados y mobiliario automático**;
+no regenera silenciosamente otro modelo. Sin ediciones, las opciones de
+exportación pueden producir un modelo diferente al de la vista.
+
 ## Exportar desde la web
 
 `aplicar_exportar {id, carpeta, nombre_base, formatos, trazar_muros,
 mobiliario, con_proyecto}`:
 
-1. crea un proyecto temporal headless (SQLite),
-2. aplica el plan (`aplicar_plan` o `aplicar_zonas` si es compuesto),
-3. escribe los formatos pedidos con `ExportService.exportar_todo`
+1. si no hay ediciones 3D, crea un proyecto temporal y aplica el plan;
+   si las hay, reutiliza el proyecto editado de la sesión,
+2. escribe los formatos pedidos con `ExportService.exportar_todo`
    (IFC · DXF · DXF_R12 · JSON · CSV · XLSX · SVG),
-4. guarda la instantánea `nombre_base_proyecto.json` (reabrible con
-   `proyecto_abrir` o `ARQ_GEN import`),
-5. devuelve rutas y tamaños y borra el proyecto temporal.
+3. opcionalmente guarda `nombre_base_proyecto.json` (instantánea),
+4. devuelve rutas y tamaños. El modelo de sesión se cierra al expirar o salir.
 
 La carpeta se propone con el comando Tauri `carpeta_descargas`
 (normalmente `C:\Users\<tú>\Downloads\ARQ_GEN`); también se puede
@@ -52,8 +117,8 @@ escribir cualquier ruta absoluta a mano.
 python main.py rpc
 -> {"jsonrpc":"2.0","id":1,"method":"catalogo","params":{}}
 
-:: 2) la suite completa
-python -m unittest discover -s tests -p "test_191*.py" -v
+:: 2) las pruebas del flujo y del editor 3D
+python -m unittest tests.test_191_fase_c_ui_web tests.test_193_vista_3d_web tests.test_194_edicion_3d_web tests.test_195_escaleras_editor_3d -v
 
 :: 3) el selftest (103 checks)
 python main.py selftest
@@ -63,7 +128,7 @@ python main.py selftest
 
 ```bat
 python -m PyInstaller --noconfirm --clean ARQ_GEN.spec   :: motor (dist\ARQ_GEN)
-cargo install tauri-cli --version 2 --locked             :: una vez
+cargo install tauri-cli --version "^2" --locked             :: una vez
 cargo tauri build                                        :: instalador NSIS + portable
 ```
 
@@ -90,12 +155,13 @@ instalador + portable como artefactos.
 
 ## Límites honestos de la FASE C/1
 
-- La web cubre el FLUJO GENERATIVO completo + exportación + lectura de
-  snapshots. El editor CAD del dibujo de entrada (boceto interactivo),
-  el 3D, las disciplinas y el presupuesto se siguen manejando en la GUI
-  clásica (`09_GUI.bat`) o por CLI — quedan para una FASE C/2.
-- El shell Rust sigue sin compilarse en este sandbox (falta webkit2gtk);
-  su primera compilación real ocurre en el runner de GitHub (como en
-  FASE A). El canal Python sí está probado extremo a extremo por proceso.
-- La sesión LRU guarda 8 análisis; si genera 9 formas distintas y quiere
-  exportar la primera, vuélvala a generar antes de exportar.
+- La web cubre el flujo generativo, la vista previa 3D del resultado,
+  la exportación y la edición de snapshots arquitectónicos. Un editor CAD completo,
+  las disciplinas y el presupuesto se
+  siguen manejando en la GUI clásica (`09_GUI.bat`) o por CLI.
+- La compilación y una prueba de arranque del shell instalado deben
+  verificarse en Windows; que los tests del canal Python pasen no demuestra
+  por sí solo que el instalador o la ventana Tauri funcionen. El workflow
+  de Tauri compila el shell y ejecuta la suite antes de publicar.
+- La sesión LRU guarda 8 análisis; al expirar uno también se pierde su
+  modelo 3D temporal y cualquier edición no exportada.

@@ -72,9 +72,14 @@ Cadena de fallback en `ruta_motor()`:
 1. `<resource_dir>/engine/ARQ_GEN.exe` — así lo empaqueta `tauri.conf.json`
    (`bundle.resources: {"../dist/ARQ_GEN/": "engine/"}`), tanto el instalador
    NSIS como el zip portable.
-2. `<exe_dir>/ARQ_GEN.exe` — modo acoplado.
-3. `<exe_dir>/dist/ARQ_GEN/ARQ_GEN.exe` — dist de desarrollo.
-4. `ARQ_ENGINE_PATH` — escape manual.
+2. `<exe_dir>/engine/ARQ_GEN.exe` — modo portable.
+3. `<exe_dir>/ARQ_GEN.exe` — modo acoplado, solo si el shell tiene otro nombre.
+4. `<exe_dir>/dist/ARQ_GEN/ARQ_GEN.exe` — dist de desarrollo.
+5. `ARQ_ENGINE_PATH` — escape manual.
+
+En todos los casos se rechaza el propio shell (incluidos enlaces a él),
+para evitar lanzarlo recursivamente si falta el sidecar. Si no se puede
+identificar el ejecutable actual, se informa del error en vez de adivinar.
 
 El proceso se lanza con `CREATE_NO_WINDOW` (sin consola parpadeante en
 Windows) y nace perezoso en la primera invocación; si muere, el siguiente
@@ -88,7 +93,7 @@ python -m pip install -r requirements.txt -r requirements-build.txt
 python -m PyInstaller --noconfirm --clean ARQ_GEN.spec
 
 :: 2) shell Tauri (requiere Rust estable: rustup)
-cargo install tauri-cli --version 2 --locked
+cargo install tauri-cli --version "^2" --locked
 cargo tauri build
 :: -> src-tauri\target\release\bundle\nsis\ARQ_GEN_3.48.0_x64-setup.exe
 ```

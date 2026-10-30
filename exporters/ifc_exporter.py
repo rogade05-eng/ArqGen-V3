@@ -34,7 +34,33 @@ def ifc_guid(uuid_str: str) -> str:
     for _ in range(22):
         chars.append(_B64[value & 0x3F])
         value >>= 6
-    return "".join(chars) or "0" * 22
+    return "".join(reversed(chars)) or "0" * 22
+
+
+def _real(value: float) -> str:
+    """Un REAL STEP requiere decimal o exponente, incluso si es entero."""
+    number = float(value)
+    if not math.isfinite(number):
+        raise ValueError("Coordenada IFC no finita")
+    text = format(number, ".15g")
+    return text if "." in text or "e" in text.lower() else text + "."
+
+
+def _step_text(text: str) -> str:
+    """Codifica cadenas STEP (ISO 10303-21) sin perder Unicode."""
+    out = []
+    for ch in str(text):
+        if ch == "'":
+            out.append("''")
+        elif ch == "\\":
+            out.append("\\\\")
+        elif ord(ch) > 0xFFFF:
+            out.append("\\X4\\" + ch.encode("utf-32-be").hex().upper() + "\\X0\\")
+        elif ord(ch) < 32 or ord(ch) > 126:
+            out.append("\\X2\\" + ch.encode("utf-16-be").hex().upper() + "\\X0\\")
+        else:
+            out.append(ch)
+    return "".join(out)
 
 
 class _IfcFile:
@@ -58,6 +84,7 @@ class _IfcFile:
         return "(" + ",".join(ids) + ")" if ids else "$"
 
     def serialize(self, name: str) -> str:
+        name = _step_text(name)
         header = [
             "ISO-10303-21;",
             "HEADER;",
@@ -113,49 +140,67 @@ class IfcExporter:
                       axis_z: Optional[Tuple[float, float, float]] = None,
                       ref_direction: Optional[Tuple[float, float]] = None) -> int:
             f = self.f
-            context3d = f.add("IFCCARTESIANPOINT((%g,%g,%g))" % (x, y, z))
+            context3d = f.add(f"IFCCARTESIANPOINT(({_real(x)},{_real(y)},{_real(z)}))")
             if axis_z is None:
                 axis_z = (0.0, 0.0, 1.0)
             if ref_direction is None:
                 ref_direction = (1.0, 0.0)
-            z_dir = f.add("IFCDIRECTION((%g,%g,%g))" % axis_z)
-            x_dir = f.add("IFCDIRECTION((%g,%g,0.))" % ref_direction)
+            z_dir = f.add("IFCDIRECTION((" + ",".join(_real(v) for v in axis_z) + "))")
+            x_dir = f.add("IFCDIRECTION((" + ",".join(_real(v) for v in ref_direction) + ",0.))")
             axis = f.add(f"IFCAXIS2PLACEMENT3D({f.ref(context3d)},"
                          f"{f.ref(z_dir)},{f.ref(x_dir)})")
             return f.add(f"IFCLOCALPLACEMENT($,{f.ref(axis)})")
 
         def extruded_solid(self, footprint: Sequence[Sequence[float]],
-                           height: float, placement: int) -> int:
+                           height: float, placement: int, z: float = 0.0) -> int:
             """IfcExtrudedAreaSolid con perfil poligonal cerrado."""
             f = self.f
             points = []
             for point in footprint:
-                points.append(f.add("IFCCARTESIANPOINT((%g,%g))"
-                                    % (point[0], point[1])))
+                points.append(f.add(f"IFCCARTESIANPOINT(({_real(point[0])},{_real(point[1])}))"))
             polyline = f.add(f"IFCPOLYLINE({f.refs(points + [points[0]])})")
             profile = f.add(f"IFCARBITRARYCLOSEDPROFILEDEF(.AREA.,$,"
                             f"{f.ref(polyline)})")
-            position = f.add("IFCAXIS2PLACEMENT3D(IFCCARTESIANPOINT((0.,0.,0.)),$,$)")
+            origin = f.add(f"IFCCARTESIANPOINT((0.,0.,{_real(z)}))")
+            position = f.add(f"IFCAXIS2PLACEMENT3D({f.ref(origin)},$,$)")
             direction = f.add("IFCDIRECTION((0.,0.,1.))")
             return f.add(f"IFCEXTRUDEDAREASOLID({f.ref(profile)},"
-                         f"{f.ref(position)},{f.ref(direction)},{height:g})")
+                         f"{f.ref(position)},{f.ref(direction)},{_real(height)})")
 
         def product(self, ifc_class: str, guid: str, name: str,
-                    placement: int, solid: int, tag: str = "") -> int:
+                    placement: int, solid, tag: str = "", elevation: float | None = None,
+                    predefined: str = "") -> int:
             f = self.f
+            solids = solid if isinstance(solid, list) else [solid]
             shape_repr = f.add(
-                "IFCSHAPEREPRESENTATION($,'Body','SweptSolid',"
-                f"({f.ref(solid)}))")
+                f"IFCSHAPEREPRESENTATION({f.ref(self.context)},'Body','SweptSolid',"
+                f"{f.refs(solids)})")
             product_shape = f.add(f"IFCPRODUCTDEFINITIONSHAPE($,$,"
                                   f"({f.ref(shape_repr)}))")
-            return f.add(
-                f"{ifc_class.upper()}('{guid}',{f.ref(self.owner_history)},"
-                f"'{self._esc(name)}',$,$,{f.ref(placement)},"
-                f"{f.ref(product_shape)},'{self._esc(tag)}',$)")
+            base = (f"'{guid}',{f.ref(self.owner_history)},"
+                    f"'{self._esc(name)}',$,$,{f.ref(placement)},"
+                    f"{f.ref(product_shape)}")
+            cls = ifc_class.upper()
+            if cls in ("IFCSITE", "IFCBUILDING", "IFCBUILDINGSTOREY", "IFCSPACE"):
+                # IfcSpatialStructureElement: LongName, CompositionType,
+                # seguidos de atributos propios de cada subtipo.
+                suffix = {"IFCSITE": ",$,.ELEMENT.,$,$,$,$,$",
+                          "IFCBUILDING": ",$,.ELEMENT.,$,$,$",
+                          "IFCBUILDINGSTOREY": ",$,.ELEMENT.," + (_real(elevation) if elevation is not None else "$"),
+                          "IFCSPACE": ",$,.ELEMENT.,$,$"}[cls]
+            else:
+                extras = {"IFCDISTRIBUTIONELEMENT": 0, "IFCDOOR": 5,
+                          "IFCWINDOW": 5, "IFCELEMENTASSEMBLY": 2,
+                          "IFCMECHANICALFASTENER": 3}.get(cls, 1)
+                suffix = f",'{self._esc(tag)}'" + ",$" * extras
+                if cls == "IFCSTAIR" and predefined:
+                    suffix = f",'{self._esc(tag)}',.{predefined}."
+            return f.add(f"{cls}({base}{suffix})")
 
         @staticmethod
         def _esc(text: str) -> str:
-            return str(text).replace("'", "\\'")[:96] or "Object"
+            # ISO 10303-21: apóstrofe y barra invertida se duplican.
+            return _step_text(str(text)[:96]) or "Object"
 
         # -- model ----------------------------------------------------------
         def _build(self, project_name: str) -> None:
@@ -195,8 +240,7 @@ class IfcExporter:
             project_entity = f.add(
                 f"IFCPROJECT('{self.guid(project['code'], 'project')}',"
                 f"{f.ref(self.owner_history)},'{self._esc(project_name or project['name'])}',"
-                f"'Proyecto ARQ GEN',$,{f.ref(project_placement)},"
-                f"{f.ref(self.context)},$,{f.refs([units])})")
+                f"'Proyecto ARQ GEN',$,$,$,({f.ref(self.context)}),{f.ref(units)})")
 
             site = tree["site"]
             site_placement = self.placement()
@@ -231,10 +275,11 @@ class IfcExporter:
                     storey.get("name", f"Nivel {index + 1}"),
                     placement,
                     self.extruded_solid([(0.0, 0.0), (1.0, 0.0), (1.0, 1.0)],
-                                        0.05, placement))
+                                        0.05, placement), elevation=elevation)
                 storey_refs.append(storey_entity)
                 elements: List[int] = []
 
+                spaces = []
                 # Locales: IfcSpace con su contorno real.
                 for space in storey.get("spaces", []):
                     footprint = space["geometry"].get("footprint") or \
@@ -252,7 +297,11 @@ class IfcExporter:
                         "IfcSpace", self.guid(space["code"], "space"),
                         space.get("name", space["code"]), space_placement,
                         solid, tag=space["code"])
-                    elements.append(space_entity)
+                    spaces.append(space_entity)
+                if spaces:
+                    f.add(f"IFCRELAGGREGATES('{self.guid(storey['code'] + '-spaces', 'rel')}',"
+                          f"{f.ref(self.owner_history)},$,$,{f.ref(storey_entity)},"
+                          f"{f.refs(spaces)})")
 
                 # Muros: sólido extruido del contorno del eje con espesor.
                 for wall in storey.get("walls", []):
@@ -273,6 +322,55 @@ class IfcExporter:
                     self._wall_geom[wall["code"]] = (axis, thickness)
                     self._wall_elev[wall["code"]] = elevation
                     self._wall_storey[wall["code"]] = storey_entity
+
+                # Peldaños y mesetas, las mismas cajas locales que el visor.
+                for stair in storey.get("stairs", []):
+                    geom = stair["geometry"]
+                    pasos = geom.get("steps") or []
+                    if not pasos:
+                        raise ValueError(f"Escalera {stair['code']} sin geometría de peldaños; regenérela antes de exportar IFC")
+                    x, y = geom.get("position", [0.0, 0.0])
+                    stair_placement = self.placement(float(x), float(y), elevation + float(geom.get("base_offset_m", 0.0)))
+                    solids = []
+                    for paso in pasos:
+                        cx, cy = float(paso["cx"]), float(paso["cy"])
+                        dx, dy = float(paso["dx"]), float(paso["dy"])
+                        z0, z1 = float(paso["z0"]), float(paso["z1"])
+                        rot = math.radians(float(paso.get("rot", 0.0)))
+                        if not all(math.isfinite(v) for v in (cx, cy, dx, dy, z0, z1, rot)) or dx <= 0 or dy <= 0:
+                            raise ValueError(f"Geometría inválida en escalera {stair['code']}")
+                        if z1 <= z0 + 1e-9:
+                            z1 = z0 + 0.04  # igual que la vista 3D
+                        c, sn = math.cos(rot), math.sin(rot)
+                        corners = [(cx + px*c - py*sn, cy + px*sn + py*c)
+                                   for px, py in ((-dx/2,-dy/2), (dx/2,-dy/2),
+                                                  (dx/2,dy/2), (-dx/2,dy/2))]
+                        solids.append(self.extruded_solid(corners, z1-z0, stair_placement, z0))
+                    stair_types = {"recta": "STRAIGHT_RUN_STAIR", "L": "QUARTER_TURN_STAIR",
+                                   "U": "HALF_TURN_STAIR", "caracol": "SPIRAL_STAIR"}
+                    stair_entity = self.product("IfcStair", self.guid(stair["id"], "stair"),
+                                                stair.get("name", stair["code"]),
+                                                stair_placement, solids, tag=stair["code"],
+                                                predefined=stair_types.get(geom.get("stair_type"), "NOTDEFINED"))
+                    elements.append(stair_entity)
+                    # Propiedades explícitas para poder reabrir el subconjunto
+                    # generado por ARQ GEN sin inferir parámetros de una malla.
+                    props = []
+                    for key, value in geom.get("parameters", {}).items():
+                        if key == "tipo":
+                            typed = f"IFCLABEL('{self._esc(value)}')"
+                        elif key == "n_contrahuellas":
+                            typed = f"IFCINTEGER({int(value)})"
+                        elif key in ("width_m", "desnivel_m", "contrahuella_m", "huella_m"):
+                            typed = f"IFCLENGTHMEASURE({_real(value)})"
+                        else:
+                            typed = f"IFCREAL({_real(value)})"
+                        props.append(f.add(f"IFCPROPERTYSINGLEVALUE('{key}',$,{typed},$)"))
+                    if props:
+                        pset = f.add(f"IFCPROPERTYSET('{self.guid(stair['id'], 'stair-pset')}',"
+                                     f"{f.ref(self.owner_history)},'Pset_ARQGEN_Stair',$,{f.refs(props)})")
+                        f.add(f"IFCRELDEFINESBYPROPERTIES('{self.guid(stair['id'], 'stair-pset-rel')}',"
+                              f"{f.ref(self.owner_history)},$,$,({f.ref(stair_entity)}),{f.ref(pset)})")
 
                 # Estructura (spec 33-34 → IfcBeam/IfcColumn/IfcMember).
                 for element in storey.get("elements", []):
@@ -381,7 +479,7 @@ class IfcExporter:
                 # IfcRelFillsElement(RelatingOpeningElement,
                 # RelatedBuildingElement): apertura primero, relleno
                 # después (estaba invertido hasta v3.12.0).
-                f.add(f"IFCRELFILLELEMENT('{self.guid(opening['code'] + '-fill', 'rel')}',"
+                f.add(f"IFCRELFILLSELEMENT('{self.guid(opening['code'] + '-fill', 'rel')}',"
                       f"{f.ref(self.owner_history)},$,$,"
                       f"{f.ref(opening_entity)},{f.ref(fill_entity)})")
                 storey_del_muro = self._wall_storey.get(host_code)
@@ -405,7 +503,7 @@ class IfcExporter:
                 f.add(f"IFCDISTRIBUTIONSYSTEM('{self.guid(network['code'], 'system')}',"
                       f"{f.ref(self.owner_history)},"
                       f"'{self._esc(network.get('name', network['code']))}',"
-                      f"'{network.get('system', '')}',$,$,$)")
+                      f"'{self._esc(network.get('system', ''))}',$,$,$)")
 
         def _host_code(self, opening: Dict[str, Any]) -> str:
             for relation in opening.get("relationships", []):

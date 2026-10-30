@@ -39,6 +39,7 @@ def export_plan_svg(context, out_path: str, level_ref: Optional[str] = None,
     walls = context.architecture.list("WALL", project_id)
     openings = context.architecture.list("OPENING", project_id)
     spaces = context.architecture.list("SPACE", project_id)
+    stairs = context.architecture.list("STAIR", project_id)
     levels = {lvl.id: lvl for lvl in context.architecture.list("LEVEL", project_id)}
 
     if level_ref:
@@ -46,11 +47,12 @@ def export_plan_svg(context, out_path: str, level_ref: Optional[str] = None,
         walls = [w for w in walls if w.level_id == level.id]
         openings = [o for o in openings if o.level_id == level.id]
         spaces = [s for s in spaces if s.level_id == level.id]
+        stairs = [s for s in stairs if s.level_id == level.id]
         levels = {level.id: level}
 
-    if not walls and not spaces:
+    if not walls and not spaces and not any((s.metadata or {}).get("outline") for s in stairs):
         raise ExportError(
-            message="No hay geometría que exportar (muros o locales)",
+            message="No hay geometría que exportar (muros, locales o escaleras)",
             code="ARQ-EXP-034",
             suggested_action="Cree muros o locales antes de exportar el plano.")
 
@@ -75,11 +77,13 @@ def export_plan_svg(context, out_path: str, level_ref: Optional[str] = None,
                                     offset_y))
         for space in level_spaces:
             bodies.append(_space_svg(space, offset_y))
+        for stair in [s for s in stairs if s.level_id == level_id]:
+            bodies.extend(_stair_svg(stair, offset_y))
         if eaves_m and eaves_m > 0:
             bodies.extend(_eaves_svg(level_spaces, eaves_m, offset_y))
         bodies.append("</g>")
 
-    min_x, min_y, max_x, max_y = _bounds(walls, spaces, levels)
+    min_x, min_y, max_x, max_y = _bounds(walls, spaces, levels, stairs)
     pad = 5.0
     view = (f"{min_x - pad:.2f} {min_y - pad - 8:.2f} "
             f"{(max_x - min_x) + 2 * pad:.2f} "
@@ -99,6 +103,7 @@ def export_plan_svg(context, out_path: str, level_ref: Optional[str] = None,
     .etq {{ fill: {PALETTE['text']}; font-size: 0.9px;
             text-anchor: middle; }}
     .nivel {{ fill: {PALETTE['wall']}; font-size: 1.6px; font-weight: bold; }}
+    .escalera {{ fill: none; stroke: #7c3aed; stroke-width: 0.025; }}
     .arco {{ fill: none; stroke: {PALETTE['opening']};
              stroke-width: 0.02; stroke-dasharray: 0.1 0.06; }}
     .alero {{ fill: none; stroke: {PALETTE['eaves']};
@@ -267,8 +272,23 @@ def _space_svg(space: Space, offset_y: float) -> str:
     return "\n    ".join(parts)
 
 
+def _stair_svg(stair, offset_y: float) -> List[str]:
+    meta = stair.metadata or {}
+    def coord(p):
+        return f"{float(p[0]) + stair.x:.3f},{float(p[1]) + stair.y + offset_y:.3f}"
+    out = []
+    outline = meta.get("outline") or []
+    if len(outline) >= 3:
+        puntos = " ".join(coord(p) for p in outline)
+        out.append(f'<polygon class="escalera" points="{puntos}"><title>Escalera {escape(stair.code)}</title></polygon>')
+    for linea in meta.get("treads") or []:
+        if len(linea) >= 2:
+            out.append(f'<polyline class="escalera" points="{coord(linea[0])} {coord(linea[1])}"/>')
+    return out
+
+
 def _bounds(walls: List[Wall], spaces: List[Space],
-            levels: Dict[str, Level]) -> Tuple[float, float, float, float]:
+            levels: Dict[str, Level], stairs=None) -> Tuple[float, float, float, float]:
     xs: List[float] = []
     ys: List[float] = []
     for wall in walls:
@@ -282,6 +302,12 @@ def _bounds(walls: List[Wall], spaces: List[Space],
         for point in polygon.points:
             xs.append(point.x)
             ys.append(point.y)
+    indices = {level_id: index for index, level_id in enumerate(levels)}
+    for stair in stairs or []:
+        offset = indices.get(stair.level_id, 0) * 100.0
+        for x, y in (stair.metadata or {}).get("outline") or []:
+            xs.append(float(x) + stair.x)
+            ys.append(float(y) + stair.y + offset)
     for index, level in enumerate(levels.items()):
         ys.append(index * 100.0)
     if not xs:

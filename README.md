@@ -2852,8 +2852,8 @@ verificado por la suite de regresión).
 El árbol incluye `.github/workflows/compilar.yml`: al subir este código al
 repositorio (push a `main`), GitHub Actions compila `ARQ_GEN.exe` en la
 nube con Windows + Python 3.13 usando el pipeline completo (suite de
-pruebas informativa → PyInstaller con `ARQ_GEN.spec` → selftest del
-ejecutable con sus 96 comprobaciones y verificación de recursos) y publica
+pruebas obligatoria → PyInstaller con `ARQ_GEN.spec` → selftest del
+ejecutable y verificación de recursos) y publica
 el resultado como artefacto descargable `ARQ_GEN_Windows_x64` (90 días).
 Los pushes de etiquetas `v*` crean además un Release permanente. No hace
 falta Python ni PyInstaller en el PC: la guía paso a paso con GitHub

@@ -165,7 +165,7 @@ tr:nth-child(even) td { background: #f7f9fc; }
 .tabs button.activo { background: var(--azul); border-color: var(--azul); color: #fff; }
 
 /* --------------------------------------------------------------- plano */
-#plano {
+#plano, #modelo-3d {
   width: 100%; max-width: 860px; aspect-ratio: 2 / 1;
   background: #f8f9fa; border: 1px solid var(--linea); border-radius: 10px;
 }
@@ -192,3 +192,11 @@ tr:nth-child(even) td { background: #f7f9fc; }
 .borrar {
   border-color: #e6b0aa; color: var(--mal); padding: 4px 10px; font-size: 12px;
 }
+
+/* Navegación y selección 3D */
+#modelo-3d { touch-action: none; cursor: crosshair; user-select: none; }
+#modelo-3d polygon[data-entidad-id] { cursor: pointer; }
+#propiedades-3d { max-width: 860px; margin: 12px 0; }
+#propiedades-3d form { display: flex; gap: 12px; flex-wrap: wrap; align-items: end; }
+#propiedades-3d label { min-width: 120px; }
+#propiedades-3d input { max-width: 180px; }

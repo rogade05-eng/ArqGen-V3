@@ -47,6 +47,7 @@ IFC_CATEGORY: Dict[str, str] = {
     "MATERIAL": "IfcMaterial", "SECTION": "IfcProfileDef",
     "NETWORK": "IfcDistributionSystem", "NODE": "IfcDistributionElement",
     "SEGMENT": "IfcDistributionElement", "ELEMENT": "IfcElement",
+    "STAIR": "IfcStair",
     "LOAD_CASE": "IfcGroup", "COMBINATION": "IfcGroup",
 }
 
@@ -148,6 +149,14 @@ class BimService:
         position = (getattr(entity, "x", None), getattr(entity, "y", None))
         if position[0] is not None:
             geometry["position"] = [position[0], position[1]]
+        if entity.ENTITY_TYPE == "STAIR":
+            geometry["steps"] = list((entity.metadata or {}).get("pasos") or [])
+            geometry["stair_type"] = entity.tipo
+            geometry["base_offset_m"] = float((entity.metadata or {}).get("editor_base_offset_m", 0.0))
+            geometry["parameters"] = {"tipo": entity.tipo, "rotation_deg": entity.rotation_deg,
+                                      "width_m": entity.width_m, "desnivel_m": entity.desnivel_m,
+                                      "contrahuella_m": entity.contrahuella_m, "huella_m": entity.huella_m,
+                                      "n_contrahuellas": (entity.metadata or {}).get("n_contrahuellas", 0)}
         elevation = getattr(entity, "elevation_m", None)
         if elevation is not None:
             geometry["elevation"] = elevation
@@ -243,6 +252,7 @@ class BimService:
         walls = self.ctx.architecture.list("WALL", self.ctx.project.id)
         openings = self.ctx.architecture.list("OPENING", self.ctx.project.id)
         elements = self.ctx.structure.list("ELEMENT", self.ctx.project.id)
+        stairs = self.ctx.architecture.list("STAIR", self.ctx.project.id)
         networks = self.ctx.installations.list("NETWORK", self.ctx.project.id)
 
         spaces_by_level: Dict[str, List] = {}
@@ -266,6 +276,10 @@ class BimService:
                                          "name": "Nivel por defecto",
                                          "elevation_m": 0.0,
                                          "height_m": 3.0})()]
+        niveles_validos = {level.id for level in levels}
+        for escalera in stairs:
+            if escalera.level_id and escalera.level_id not in niveles_validos:
+                raise ValueError(f"La escalera {escalera.code} pertenece a un nivel inexistente")
         for level_index, level in enumerate(levels):
             level_spaces = [self._record(s) for s in
                             spaces_by_level.get(level.id, [])]
@@ -275,6 +289,9 @@ class BimService:
                              nodes_by_level.get(level.id, [])]
             level_elements = [self._record(e) for e in elements
                               if e.level_id == level.id]
+            level_stairs = [self._record(e) for e in stairs
+                            if e.level_id == level.id or
+                            (level_index == 0 and not e.level_id and level.id)]
             if level_index == 0:
                 # Elementos y dispositivos sin nivel se adscriben al primer
                 # storey (comportamiento documentado del mapeo conceptual).
@@ -287,6 +304,7 @@ class BimService:
                 "elevation_m": level.elevation_m, "height_m": level.height_m,
                 "spaces": level_spaces, "walls": level_walls,
                 "devices": level_devices, "elements": level_elements,
+                "stairs": level_stairs,
             })
         return {
             "project": {"code": project.code, "name": project.name,

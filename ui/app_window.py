@@ -13074,6 +13074,7 @@ class ARQGenWindow(tk.Tk):
                 ("Locales", datos.get("spaces", 0)),
                 ("Puertas", datos.get("doors", 0)),
                 ("Ventanas", datos.get("windows", 0)),
+                ("Escaleras (parámetros ARQ GEN)", datos.get("stairs", 0)),
                 ("Losas (omitidas)", datos.get("slabs", 0)),
                 ("Otros productos (omitidos)", datos.get("otros", 0)),
             ]
@@ -13114,11 +13115,13 @@ class ARQGenWindow(tk.Tk):
                 return
             estado_var.set(
                 "Importado: %d nivel(es) nuevo(s), %d reutilizado(s), "
-                "%d muros, %d locales, %d puertas, %d ventanas." % (
+                "%d muros, %d locales, %d puertas, %d ventanas, "
+                "%d escaleras (%d omitidas)." % (
                     datos.get("niveles", 0),
                     datos.get("niveles_reutilizados", 0),
                     datos.get("muros", 0), datos.get("locales", 0),
-                    datos.get("puertas", 0), datos.get("ventanas", 0)))
+                    datos.get("puertas", 0), datos.get("ventanas", 0),
+                    datos.get("escaleras", 0), datos.get("escaleras_omitidas", 0)))
             self._say("IFC importado desde " + os.path.basename(ruta)
                       + ": " + estado_var.get(), ruta)
             for aviso in datos.get("avisos", []):

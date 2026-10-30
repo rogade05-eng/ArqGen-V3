@@ -63,6 +63,10 @@ def snapshot_to_entity(snapshot: Dict[str, Any]) -> Entity:
         "ROOF": domain_model.Roof,
         "RAMP": domain_model.Ramp,
         "HANDRAIL": domain_model.Handrail,
+        "ELEVATOR": domain_model.Elevator,
+        "PARASOL": domain_model.Parasol,
+        "SKIN": domain_model.FacadeSkin,
+        "STAIR": domain_model.Stair,
     }
     cls = registry.get(entity_type)
     if cls is None:

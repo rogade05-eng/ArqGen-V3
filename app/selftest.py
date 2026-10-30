@@ -613,16 +613,18 @@ def run_selftest(console: bool = True) -> Tuple[bool, List[str]]:
         from exporters.pdf_exporter import export_budget_pdf as _ebp
         _pdf_path = os.path.join(tmp, "selftest_presu.pdf")
         _ebp(_tree, _pdf_path, context.project.name)
-        assert open(_pdf_path, "rb").read(8).startswith(b"%PDF"), "PDF"
+        with open(_pdf_path, "rb") as _archivo_pdf:
+            assert _archivo_pdf.read(8).startswith(b"%PDF"), "PDF"
         from exporters.png_exporter import export_budget_chart_png as _epng
         _png_path = os.path.join(tmp, "selftest_grafico.png")
         _epng(_tree, _png_path, context.project.name)
-        assert open(_png_path, "rb").read(8) == \
-            b"\x89PNG\r\n\x1a\n", "PNG del gráfico"
+        with open(_png_path, "rb") as _archivo_png:
+            assert _archivo_png.read(8) == b"\x89PNG\r\n\x1a\n", "PNG del gráfico"
         _svg_path = os.path.join(tmp, "selftest_plano.svg")
         from exporters.svg_exporter import export_plan_svg as _esvg
         _esvg(context, _svg_path, title=context.project.name)
-        assert "<svg" in open(_svg_path, encoding="utf-8").read(), "SVG"
+        with open(_svg_path, encoding="utf-8") as _archivo_svg:
+            assert "<svg" in _archivo_svg.read(), "SVG"
         checks.append("salto v2.0.0: OK (análisis oficial, presupuesto "
                       "por catálogo persistente, PDF/SVG/PNG stdlib)")
 
@@ -873,7 +875,8 @@ def run_selftest(console: bool = True) -> Tuple[bool, List[str]]:
         _rsvg = os.path.join(tmp, "selftest_vista.svg")
         _ve39.export_view_svg(_rvar, _rdata, _rsvg, view="Planta",
                               title="selftest v2.6.0")
-        _rsvg_txt = open(_rsvg, encoding="utf-8").read()
+        with open(_rsvg, encoding="utf-8") as _archivo_rsvg:
+            _rsvg_txt = _archivo_rsvg.read()
         assert "<pattern" in _rsvg_txt, "trama como patrón SVG"
         checks.append("representación v2.6.0: OK (columnas por "
                       "tipología, tramas de material, 4 elevaciones, "
@@ -1148,10 +1151,10 @@ def run_selftest(console: bool = True) -> Tuple[bool, List[str]]:
             # paridad del bundle (en el ejecutable el spec/bat no viajan)
             _root46 = os.path.dirname(os.path.dirname(
                 os.path.abspath(__file__)))
-            _spec46 = open(os.path.join(_root46, "ARQ_GEN.spec"),
-                           "r", encoding="utf-8").read()
-            _bat46 = open(os.path.join(_root46, "03_COMPILAR.bat"),
-                          "r", encoding="ascii").read()
+            with open(os.path.join(_root46, "ARQ_GEN.spec"), "r", encoding="utf-8") as _archivo_spec:
+                _spec46 = _archivo_spec.read()
+            with open(os.path.join(_root46, "03_COMPILAR.bat"), "r", encoding="ascii") as _archivo_bat:
+                _bat46 = _archivo_bat.read()
             assert '("resources", "resources")' in _spec46 \
                 and 'name="ARQ_GEN"' in _spec46, "spec del bundle"
             for _qt46 in ("PySide6", "shiboken6", "PySide2", "shiboken2",
@@ -1324,7 +1327,8 @@ def run_selftest(console: bool = True) -> Tuple[bool, List[str]]:
                  "| col_a | col_b |\n| - | - |\n| 1 | 2 |\n\nPárrafo final.")
         _pdf50 = os.path.join(tmp, "selftest_v38.pdf")
         _emp50(_md50, _pdf50)
-        _raw50 = open(_pdf50, "rb").read()
+        with open(_pdf50, "rb") as _archivo_pdf50:
+            _raw50 = _archivo_pdf50.read()
         assert _raw50.startswith(b"%PDF-1.4") and len(_raw50) > 800, \
             "markdown -> PDF del selftest válido"
         # Mismo trato que el check 49: el texto del fuente solo se
@@ -2387,6 +2391,11 @@ def run_selftest(console: bool = True) -> Tuple[bool, List[str]]:
     #        el presupuesto vivo y ficha imprimible del local
     #        (v3.21.0) -------------------------------------------------
     try:
+        # Cada comprobación importa sus propias dependencias. Si la 62
+        # falla, la 63 debe informar su causa real, no un UnboundLocalError.
+        from ui import building_wizard as _bw63
+        from ui import editor_espacios as _edi63
+        from services.architecture_service import ArchitectureService as _Arc63
         from ui import variant_budget as _vb63
         from exporters import ficha_local as _fl63
         from engines.precons_engine import PreconsRuleset as _pr63
@@ -2394,7 +2403,7 @@ def run_selftest(console: bool = True) -> Tuple[bool, List[str]]:
         _nota63 = "" if not getattr(sys, "frozen", False) \
             else " (verificación de fuente omitida: ejecutable)"
         if not getattr(sys, "frozen", False):
-            with open(_bw62.__file__, "r", encoding="utf-8") as _fh63:
+            with open(_bw63.__file__, "r", encoding="utf-8") as _fh63:
                 _src63 = _fh63.read()
             assert "def suggested_corridor_width_for_rooms" in _src63 \
                 and "def pasillo_minimo_de_uso" in _src63, \
@@ -2412,11 +2421,11 @@ def run_selftest(console: bool = True) -> Tuple[bool, List[str]]:
                 "ficha imprimible del local con su planta dibujada"
         # conductual: el DNA de cada local trae su pasillo_m y el
         # pasillo sube al local más exigente, citando al culpable
-        assert _bw62.pasillo_minimo_de_uso("CT_ROOM") == 2.4 \
-            and _bw62.pasillo_minimo_de_uso("MORGUE") == 2.0 \
-            and _bw62.pasillo_minimo_de_uso("ROOM") is None, \
+        assert _bw63.pasillo_minimo_de_uso("CT_ROOM") == 2.4 \
+            and _bw63.pasillo_minimo_de_uso("MORGUE") == 2.0 \
+            and _bw63.pasillo_minimo_de_uso("ROOM") is None, \
             "pasillo_m en el DNA de las especialidades (2,40 camillas)"
-        _ancho63, _culpable63 = _bw62.suggested_corridor_width_for_rooms(
+        _ancho63, _culpable63 = _bw63.suggested_corridor_width_for_rooms(
             "Oficina", ["OFFICE", "CT_ROOM"])
         assert _ancho63 == 2.4 and _culpable63 == "CT_ROOM", \
             "el pasillo sube al DNA del local más exigente del programa"
@@ -2425,15 +2434,18 @@ def run_selftest(console: bool = True) -> Tuple[bool, List[str]]:
         # precios de referencia y sin avisos de catálogo
         _rs63 = _pr63.from_file(_rp63("rulesets",
                                       "precons_iii_rospres_330.json"))
-        _vs63 = _bw62.generate_variants(_data62)
-        _filas63 = _vb63.variant_takeoff(_data62, _vs63[0])
+        _data63 = _bw63.BuildingWizardData()
+        _data63.usage_type = "Hospital"
+        _bw63.apply_usage_program(_data63)
+        _vs63 = _bw63.generate_variants(_data63)
+        _filas63 = _vb63.variant_takeoff(_data63, _vs63[0])
         _eq63 = [f for f in _filas63 if f["category"] == "Equipos"]
         assert _eq63 and any("Tomógrafo" in f["concept"] for f in _eq63), \
             "el presupuesto vivo factura el tomógrafo de la tomografía"
-        _costo63 = _vb63.estimate_variant_cost(_data62, _vs63[0], _rs63)
+        _costo63 = _vb63.estimate_variant_cost(_data63, _vs63[0], _rs63)
         assert _costo63.categories.get("Equipos", 0.0) > 0.0, \
             "categoría Equipos con importe en la estimación"
-        _eco63 = _vb63.estimate_variant_cost(_data62, _vs63[0], _rs63,
+        _eco63 = _vb63.estimate_variant_cost(_data63, _vs63[0], _rs63,
                                              calidad="Económica")
         assert _eco63.categories.get("Equipos") == \
             _costo63.categories.get("Equipos"), \
@@ -2442,7 +2454,7 @@ def run_selftest(console: bool = True) -> Tuple[bool, List[str]]:
         # el commit lo hace el GUI), local morgue con puerta y planta
         _ctx63 = ApplicationContext().create_project(
             os.path.join(tmp, "check63.arqgen"), name="Check 63")
-        _arq63 = _Arc61(_ctx63)
+        _arq63 = _Arc63(_ctx63)
         _n63 = _arq63.create_level("Planta", 0.0, 3.0)
         for _a63, _b63 in (((0, 0), (5, 0)), ((0, 0), (0, 3.5)),
                            ((0, 3.5), (5, 3.5)), ((5, 0), (5, 3.5))):
@@ -2450,8 +2462,8 @@ def run_selftest(console: bool = True) -> Tuple[bool, List[str]]:
         _loc63 = _arq63.create_space(
             _n63.code, "Morgue de prueba", "MORGUE",
             [(0.0, 0.0), (5.0, 0.0), (5.0, 3.5), (0.0, 3.5)])
-        _edi62.crear_acceso(_ctx63, _loc63.id)
-        _geo63 = _edi62.geometria_local(_ctx63, _loc63.id)
+        _edi63.crear_acceso(_ctx63, _loc63.id)
+        _geo63 = _edi63.geometria_local(_ctx63, _loc63.id)
         assert len(_geo63["boundary"]) >= 3 and _geo63["muros"] \
             and any(v["kind"] == "DOOR" and v.get("muro")
                     for v in _geo63["vanos"]), \

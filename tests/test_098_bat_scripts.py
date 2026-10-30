@@ -106,6 +106,12 @@ class BatIntegrityTest(unittest.TestCase):
         self.assertIn(b"python_home.txt", raw)
         self.assertIn(b"ARQ_PY_EXE", raw)
 
+    def test_dependencias_elevacion_y_tk_se_verifican(self) -> None:
+        with open(os.path.join(ROOT, "requirements.txt"), encoding="utf-8") as fh:
+            self.assertRegex(fh.read(), r"(?m)^matplotlib\s*>=")
+        self.assertIn(b"import ezdxf, openpyxl, matplotlib", read_bat("01_INSTALAR_DEPENDENCIAS.bat"))
+        self.assertIn(b"import sqlite3, json, logging, unittest, tkinter", read_bat("00_VERIFICAR_ENTORNO.bat"))
+
     def test_11_gui_lanza_main_gui(self) -> None:
         raw = read_bat("08_GUI.bat")
         self.assertIn(b"main.py gui", raw)

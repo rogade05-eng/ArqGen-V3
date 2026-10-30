@@ -12,7 +12,8 @@ from services.context import ProjectContext
 
 ENTITY_ORDER = ("SITE", "BUILDING", "LEVEL", "ZONE", "SPACE", "WALL",
                 "DOOR", "WINDOW", "OPENING", "SPACE_RELATIONSHIP",
-                "FURNITURE", "ROOF", "RAMP", "HANDRAIL")
+                "FURNITURE", "ROOF", "RAMP", "HANDRAIL", "ELEVATOR",
+                "PARASOL", "SKIN", "STAIR")
 
 
 class JSONExporter:

@@ -63,8 +63,8 @@ programa (v3.47.0) más dos cosas nuevas para GitHub:
 
 En la pestaña **Actions** → «Compilar ARQ GEN (Windows)» → botón
 **Run workflow** → rama `main` → **Run workflow**.
-Ahí hay una casilla para decidir si esa corrida ejecuta o no la suite de
-pruebas (sáltala si solo quieres el .exe rápido).
+La suite de pruebas es obligatoria también en las ejecuciones manuales;
+si falla, no se publica el ejecutable.
 
 ## 4. Release permanente (opcional)
 
@@ -88,15 +88,15 @@ publicado en la pestaña **Releases** del repositorio.
 | 2. Python 3.13 | Prepara el intérprete con caché | — |
 | 3. Dependencias | Instala ezdxf, openpyxl y PyInstaller | Run rojo (reintenta: Re-run) |
 | 4. Acelerador Rust (FASE B) | Compila el crate `arqgen_core` con maturin e instálalo — **opcional**: si falla, el run sigue y el exe sale en modo Python puro (todo funciona, sin la aceleración) | Paso amarillo, run verde |
-| 5. Suite de pruebas | Las 2.644 pruebas del motor | **No bloquea**: queda marcado en amarillo y el exe se compila igual (el log completo queda en el artefacto `logs_pruebas_ci`) |
+| 5. Suite de pruebas | Suite completa del motor | **Bloquea** la compilación si falla; el log queda en el artefacto `logs_pruebas_ci` |
 | 6. PyInstaller | Empaqueta con `ARQ_GEN.spec` (el espejo exacto del 03_COMPILAR.bat, con la exclusión de bindings Qt que evita el error «multiple Qt bindings») | Run rojo — es el paso raro de fallar |
 | 7. Selftest del exe | El propio `ARQ_GEN.exe` ejecuta sus **103 comprobaciones** internas y verifica recursos dentro del bundle (la 98 te dice si el exe lleva el acelerador Rust o va en modo Python; las 101-103 son la FASE C: catálogo/formas especiales/exportación por RPC) | Run rojo: el exe no se considera fiable y NO se sube |
 | 8. Artefacto | Sube `ARQ_GEN_Windows_x64.zip` a la página del run | — |
 
-Diseño deliberado: la **puerta de calidad que bloquea es el selftest del
-ejecutable** (lo mismo que hace tu 03_COMPILAR.bat local en la etapa 3), no
-la suite CI completa, para que un retoque de entorno en la nube nunca te
-deje sin .exe.
+La suite completa y el selftest del ejecutable son **puertas de calidad
+obligatorias**: un fallo detiene la entrega. Ambos workflows se ejecutan
+además para pull requests; el de Tauri compila el shell real y verifica la
+selección del sidecar.
 
 ## 6. Problemas frecuentes
 
@@ -113,9 +113,8 @@ deje sin .exe.
   plan gratuito da 2.000 minutos/mes y los equipos Windows consumen el
   doble de minutos. Para usarlo sin límites, pon el repositorio público
   (Settings → General → Danger Zone → Change visibility).
-- **El run quedó verde pero con un paso amarillo:** normal si la suite de
-  pruebas tuvo fallos en la nube. El exe está bien (pasó el selftest);
-  el detalle está en el artefacto `logs_pruebas_ci`.
+- **La suite falla:** el run queda rojo y no se publica el ejecutable.
+  Consulta el detalle en el artefacto `logs_pruebas_ci`.
 - **El paso amarillo del «Acelerador Rust FASE B»:** no es un error. Si el
   toolchain de Rust no cooperó en la nube, el exe se compila igual en modo
   Python puro (el selftest del exe lo declara en el resumen del run).

@@ -121,7 +121,8 @@ class VersionService:
         for table in (
             "budget_item_resources", "budget_items", "budget_chapters", "budgets",
             "quantities", "prices", "price_lists", "resources",
-            "calculations", "handrails", "ramps", "roofs", "furniture",
+            "calculations", "stairs", "skins", "parasols", "elevators",
+            "handrails", "ramps", "roofs", "furniture",
             "space_relationships", "openings", "walls",
             "spaces", "zones", "levels", "buildings", "sites",
         ):
@@ -147,10 +148,8 @@ class VersionService:
                 ruleset_code=project_data.get("ruleset_code", ""),
                 currency=project_data.get("currency", "CUP")))
         # Insert entities in dependency order
-        order = ("SITE", "BUILDING", "LEVEL", "ZONE", "SPACE", "WALL",
-                 "DOOR", "WINDOW", "OPENING", "SPACE_RELATIONSHIP",
-                 "FURNITURE", "ROOF", "RAMP", "HANDRAIL")
-        for entity_type in order:
+        from exporters.json_io import ENTITY_ORDER
+        for entity_type in ENTITY_ORDER:
             for snapshot in data.get("entities", {}).get(entity_type, []):
                 arch.save(snapshot_to_entity(snapshot))
 

@@ -49,6 +49,16 @@ class TestSelftestCongelado(ARQGenTestCase):
         self.assertIn("scripts .bat: omitido (ejecutable compilado)",
                       checks)
 
+    def test_check_63_es_independiente_del_fallo_del_62(self):
+        from app import selftest as st
+        with mock.patch("ui.editor_espacios.cambiar_identidad", side_effect=RuntimeError("fallo forzado 62")):
+            ok, checks = st.run_selftest(console=False)
+        self.assertFalse(ok)
+        self.assertTrue(any("fallo forzado 62" in c for c in checks))
+        self.assertTrue(any(c.startswith("pasillos hospitalarios, equipos en el presupuesto")
+                            and ": OK" in c for c in checks), checks)
+        self.assertFalse(any("UnboundLocalError" in c for c in checks), checks)
+
     def test_checks_49_al_60_declaran_la_omision(self):
         ok, checks = _run_congelado()
         self.assertTrue(ok)

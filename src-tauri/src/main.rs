@@ -14,7 +14,9 @@ use serde_json::Value;
 use std::io::{BufRead, BufReader, Write};
 use std::process::{Child, Command, Stdio};
 use std::sync::Mutex;
-use tauri::Manager;
+use tauri::{Manager, State};
+
+mod motor_path;
 
 /// Estado global: el proceso del motor (nace perezoso en la 1a llamada).
 struct Motor(Mutex<Option<Child>>);
@@ -22,41 +24,17 @@ struct Motor(Mutex<Option<Child>>);
 #[cfg(windows)]
 use std::os::windows::process::CommandExt;
 
-/// Resuelve la ruta del binario del motor con la cadena de fallback:
-///   1) recurso empaquetado  <resource_dir>/engine/ARQ_GEN.exe
-///   2) junto al shell       <exe_dir>/ARQ_GEN.exe
-///   3) dist de desarrollo   <exe_dir>/dist/ARQ_GEN/ARQ_GEN.exe
-///   4) variable de entorno  ARQ_ENGINE_PATH
+/// Busca el motor en recursos, junto al shell y en ARQ_ENGINE_PATH.
+/// El propio shell se rechaza, aunque ambos tengan el mismo nombre.
 fn ruta_motor(app: &tauri::AppHandle) -> Result<std::path::PathBuf, String> {
     let exe = if cfg!(windows) { "ARQ_GEN.exe" } else { "ARQ_GEN" };
-
-    if let Ok(res) = app.path().resource_dir() {
-        let p = res.join("engine").join(exe);
-        if p.is_file() {
-            return Ok(p);
-        }
-    }
-    if let Ok(cur) = std::env::current_exe() {
-        if let Some(dir) = cur.parent() {
-            let p = dir.join(exe);
-            if p.is_file() {
-                return Ok(p);
-            }
-            let dev = dir.join("dist").join("ARQ_GEN").join(exe);
-            if dev.is_file() {
-                return Ok(dev);
-            }
-        }
-    }
-    if let Ok(envp) = std::env::var("ARQ_ENGINE_PATH") {
-        let p = std::path::PathBuf::from(envp);
-        if p.is_file() {
-            return Ok(p);
-        }
-    }
-    Err("No encuentro el motor ARQ_GEN (sidecar). Compila el motor \
-         (PyInstaller ARQ_GEN.spec) o define ARQ_ENGINE_PATH."
-        .to_string())
+    let recursos = app.path().resource_dir().ok();
+    let shell = std::env::current_exe().ok();
+    let explicita = std::env::var_os("ARQ_ENGINE_PATH").map(std::path::PathBuf::from);
+    motor_path::buscar_motor(recursos.as_deref(), shell.as_deref(), explicita.as_deref(), exe)
+        .ok_or_else(|| "No encuentro el motor ARQ_GEN (sidecar). Compila el motor \
+             (PyInstaller ARQ_GEN.spec) o define ARQ_ENGINE_PATH."
+            .to_string())
 }
 
 /// Lanza el sidecar si no vive (o lo relanza si murio).

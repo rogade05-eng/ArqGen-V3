@@ -683,7 +683,7 @@ class CanvasModel:
             outline = meta.get("outline") or []
             if len(outline) >= 3:
                 primitives.append(Primitive(
-                    "stair", tuple((p[0], p[1]) for p in outline),
+                    "stair", tuple((p[0] + escalera.x, p[1] + escalera.y) for p in outline),
                     ObjectRow(uid=escalera.id, code=escalera.code,
                               name=f"Escalera {escalera.tipo}",
                               type="STAIR", discipline="ARCHITECTURE",
@@ -696,7 +696,7 @@ class CanvasModel:
             for linea in (meta.get("treads") or []):
                 if len(linea) >= 2:
                     primitives.append(Primitive(
-                        "stair_tread", tuple((p[0], p[1]) for p in linea),
+                        "stair_tread", tuple((p[0] + escalera.x, p[1] + escalera.y) for p in linea),
                         ObjectRow(uid=escalera.id, code=escalera.code,
                                   name="", type="STAIR",
                                   discipline="ARCHITECTURE"),

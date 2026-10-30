@@ -6,7 +6,7 @@ from typing import Any, Dict
 
 from core.errors import ImportErrorARQ
 from domain.model import Project
-from exporters.json_io import JSONImporter
+from exporters.json_io import ENTITY_ORDER, JSONImporter
 from services.commands_impl import snapshot_to_entity
 from services.context import ApplicationContext, ProjectContext
 
@@ -53,10 +53,8 @@ class ImportService:
             ProjectRepository(context.session).save(restored_project)
             context.project = restored_project
 
-            order = ("SITE", "BUILDING", "LEVEL", "ZONE", "SPACE", "WALL",
-                     "DOOR", "WINDOW", "OPENING", "SPACE_RELATIONSHIP")
             inserted = {}
-            for entity_type in order:
+            for entity_type in ENTITY_ORDER:
                 count = 0
                 for snapshot in data.get("entities", {}).get(entity_type, []):
                     context.architecture.save(snapshot_to_entity(snapshot))

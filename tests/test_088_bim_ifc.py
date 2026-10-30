@@ -110,12 +110,30 @@ class TestIfcExporter(ARQGenTestCase):
         self.assertEqual(content.count("IFCDOOR("), 4)
         self.assertEqual(content.count("IFCWINDOW("), 3)
         self.assertEqual(content.count("IFCRELVOIDSELEMENT("), 7)
-        self.assertEqual(content.count("IFCRELFILLELEMENT("), 7)
+        self.assertEqual(content.count("IFCRELFILLSELEMENT("), 7)
         # Un elemento de distribución por dispositivo de red (77 nodos).
         self.assertEqual(content.count("IFCDISTRIBUTIONELEMENT("), 77)
         # Un sistema de distribución por red de instalaciones (12 redes).
         self.assertEqual(content.count("IFCDISTRIBUTIONSYSTEM("), 12)
         ctx.close()
+
+    def test_ifc_demo_parser_externo_no_trunca_despues_del_primer_vano(self):
+        try:
+            import ifcopenshell
+            import ifcopenshell.validate
+        except ImportError:
+            self.skipTest("ifcopenshell opcional no instalado")
+        ctx = self.demo_context()
+        self.addCleanup(ctx.close)
+        path, _ = self._export(ctx)
+        modelo = ifcopenshell.open(path)
+        self.assertEqual(len(modelo.by_type("IfcDoor")), 4)
+        self.assertEqual(len(modelo.by_type("IfcWindow")), 3)
+        self.assertEqual(len(modelo.by_type("IfcRelFillsElement")), 7)
+        self.assertEqual(len(modelo.by_type("IfcDistributionSystem")), 12)
+        logger = ifcopenshell.validate.json_logger()
+        ifcopenshell.validate.validate(modelo, logger)
+        self.assertFalse(logger.statements, logger.statements[:3])
 
     def test_no_dangling_references(self):
         ctx = self.demo_context()
